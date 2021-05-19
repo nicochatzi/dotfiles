@@ -1,0 +1,19 @@
+[credential]
+	helper = osxkeychain
+[alias]
+	co = checkout
+	s = status
+	cm = commit -m
+	l = log --decorate --graph
+	f = fetch --all
+	a = add -p
+	ca = commit --amend
+	fix = commit --amend --no-edit
+	pr = pull --rebase
+[user]
+	name = Nico Chatzi
+	email = nico.chatzigianis@focusrite.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
