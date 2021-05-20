@@ -136,3 +136,4 @@ export PATH="$SCCACHE_PATH:$PATH"
 fpath+=~/.zfunc
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME/'
+
