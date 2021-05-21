@@ -42,7 +42,7 @@ Plugin 'tpope/vim-surround' " (ys) delete, change and insert surroundings
 Plugin 'vim-scripts/ReplaceWithRegister' " (gr)
 " Requires: python3 -m pip install pynvim
 Plugin 'Chiel92/vim-autoformat'
-"Plugin 'sheerun/vim-polyglot'
+Plugin 'sheerun/vim-polyglot'
 " Colors
 Plugin 'sainnhe/sonokai' " Theme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
@@ -177,6 +177,8 @@ let g:tsuquyomi_completion_detail = 1
 let g:python3_host_prog="/Users/nicochatzi/.pyenv/versions/3.8.9/bin/python3"
 let g:gitgutter_preview_win_floating = 1
 "let g:yats_host_keyword = 1
+
+let g:rainbow_conf = { 'guifgs': ['wheat3', 'aquamarine3', 'LightGoldenrod3', 'plum1' ] }
 
 " Format on save
 "au BufWrite * :Autoformat
