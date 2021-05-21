@@ -111,7 +111,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>rn  <Plug>(coc-rename)
 nmap <leader>qf  <Plug>(coc-fix-current)
 nmap <Leader>f :Autoformat<CR>
 
@@ -126,5 +129,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType")
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 autocmd FileType yaml,typescript.tsx,javascript.jsx,javascript,typescript
             \ let g:indent_guides_guide_size = 2
-" autocmd FileType *.rs :CocCommand rust-analyzer.upgrade
+"autocmd FileType *.rs b:CocCommand rust-analyzer.upgrade
 
