@@ -14,38 +14,47 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-Plugin 'dense-analysis/ale'
-
-" Requires: python3 -m pip install pynvim
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'sheerun/vim-polyglot'
-
-" Colors
-Plugin 'sainnhe/sonokai'
-Plugin 'luochen1990/rainbow'
-
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Yggdroot/indentLine'
-Plugin 'preservim/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ryanoasis/vim-devicons'
+Plugin 'dense-analysis/ale' " Async Linter Engine
+Plugin 'preservim/nerdtree' " File tree
+Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " enable colors for filetype
+Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
 Plugin 'scrooloose/nerdtree-project-plugin'
 Plugin 'PhilRunninger/nerdtree-visual-selection'
+"Plugin 'tomtom/tcomment_vim' " comment/uncomment command with support to embbeded types
+Plugin 'vim-airline/vim-airline' " Lean & mean status/tabline
+Plugin 'vim-airline/vim-airline-themes' " Airline themes
+Plugin 'tpope/vim-fugitive' " Git integration
+Plugin 'rbong/vim-flog' " git branch viewer
+Plugin 'airblade/vim-gitgutter' " Git status indicator
+Plugin 'ctrlpvim/ctrlp.vim' " Fuzzy file, buffer, mru, tag, ... finder for Vim
+Plugin 'Yggdroot/indentLine'
 Plugin 'pangloss/vim-javascript'    " JavaScript support
 Plugin 'leafgarland/typescript-vim' " TypeScript syntax
+"Plugin 'HerringtonDarkholme/yats.vim' " TypeScript syntax - rainbow breaks
 Plugin 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
-Plugin 'Quramy/tsuquyomi'
-Plugin 'jparise/vim-graphql'        " GraphQL syntax
 Plugin 'styled-components/vim-styled-components'
+Plugin 'jparise/vim-graphql'        " GraphQL syntax
 Plugin 'moll/vim-node'
-Plugin 'tpope/vim-flagship'
+"Plugin 'Quramy/tsuquyomi'
+Plugin 'Raimondi/delimitMate' " auto-closing braces
+Plugin 'tpope/vim-surround' " (ys) delete, change and insert surroundings
+Plugin 'vim-scripts/ReplaceWithRegister' " (gr)
+" Requires: python3 -m pip install pynvim
+Plugin 'Chiel92/vim-autoformat'
+"Plugin 'sheerun/vim-polyglot'
+" Colors
+Plugin 'sainnhe/sonokai' " Theme
+Plugin 'luochen1990/rainbow' " Bracket highlighting
+Plugin 'etdev/vim-hexcolor' " highlights hex and rgb color codes in css files
 
 call vundle#end()            " required
 
-let g:coc_global_extensions = [ 'coc-tsserver', 'coc-rust-analyzer' ]
+let g:coc_global_extensions = [
+            \ 'coc-tsserver',
+            \ 'coc-rust-analyzer',
+            \ 'coc-python',
+            \ ]
 
 " Add CoC Prettier if prettier is installed
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
@@ -82,7 +91,8 @@ let g:LanguageClient_serverCommands = {
             \ 'python': ['pyls'],
             \ 'rust': ['rustup', 'run', 'nightly', 'rust-analyzer'],
             \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'go': ['go-langserver'] }
+            \ 'go': ['go-langserver']
+            \ }
 
 noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
 noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
@@ -93,7 +103,10 @@ noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
-let g:ale_linters = { 'rust': ['analyzer'] }
+let g:ale_linters = {
+            \ 'rust': ['analyzer'],
+            \ 'typescript': ['tsserver'],
+            \ }
 let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'] }
 let g:ale_rust_analyzer_config = {
             \ 'diagnostics': { 'disabled': ['unresolved-import'] },
@@ -137,7 +150,7 @@ set smartindent
 set laststatus=2
 set showtabline=2
 set guioptions-=e
-set spell spelllang=en_uk
+"set spell spelllang=en_us
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -162,9 +175,12 @@ let g:rustfmt_autosave = 1
 let g:rust_cargo_use_clippy = 1
 let g:tsuquyomi_completion_detail = 1
 let g:python3_host_prog="/Users/nicochatzi/.pyenv/versions/3.8.9/bin/python3"
+let g:gitgutter_preview_win_floating = 1
+"let g:yats_host_keyword = 1
 
 " Format on save
-au BufWrite * :Autoformat
+"au BufWrite * :Autoformat
+nmap <Leader>f :Autoformat<CR>
 
 " Exit Vim if NERDTree is the only window left.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
