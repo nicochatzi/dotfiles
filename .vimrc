@@ -38,7 +38,6 @@ Plugin 'Chiel92/vim-autoformat' " Requires: python3 -m pip install pynvim
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sainnhe/sonokai' " Monokai Pro style theme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
-Plugin 'etdev/vim-hexcolor' " highlights hex and rgb color codes in css files
 call vundle#end()
 filetype plugin indent on " (required)
 
@@ -49,6 +48,7 @@ let g:coc_global_extensions = [
             \ 'coc-tsserver',
             \ 'coc-rust-analyzer',
             \ 'coc-python',
+            \ 'coc-spell-checker', 
             \ ]
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
     let g:coc_global_extensions += ['coc-prettier']
@@ -113,9 +113,9 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <leader>ac  <Plug>(coc-codeaction)
-nmap <leader>rn  <Plug>(coc-rename)
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>a  <Plug>(coc-codeaction)
+nmap <leader>r  <Plug>(coc-rename)
+nmap <leader>q  <Plug>(coc-fix-current)
 nmap <Leader>f :Autoformat<CR>
 
 """""""""""""""""""""""""""""""""""""
@@ -129,5 +129,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType")
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 autocmd FileType yaml,typescript.tsx,javascript.jsx,javascript,typescript
             \ let g:indent_guides_guide_size = 2
-"autocmd FileType *.rs b:CocCommand rust-analyzer.upgrade
+autocmd BufNewFile *.rs :CocCommand rust-analyzer.upgrade
 
