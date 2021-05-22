@@ -84,6 +84,7 @@ set backspace=indent,eol,start " OSX stupid backspace fix
 set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type completions
 "set spell spelllang=en_us
 let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeShowHidden=1
 let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_enable = 1
 let g:rainbow_active = 1
