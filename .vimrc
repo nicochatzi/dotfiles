@@ -31,6 +31,7 @@ Plugin 'styled-components/vim-styled-components'
 Plugin 'jparise/vim-graphql' " GraphQL syntax
 Plugin 'moll/vim-node'
 Plugin 'Quramy/tsuquyomi'
+Plugin 'terryma/vim-multiple-cursors' " VSCode style multi-cursors
 Plugin 'Raimondi/delimitMate' " auto-closing braces
 Plugin 'tpope/vim-surround' " (ys) delete, change and insert surroundings
 Plugin 'vim-scripts/ReplaceWithRegister' " (gr)
