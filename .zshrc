@@ -48,8 +48,10 @@ alias t="exa -a -T -L 2"
 
 # fzf and fzf-tab options
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
-# preview directory's content with exa when completing cd
+# fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always $realpath'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
