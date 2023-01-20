@@ -12,10 +12,12 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 fpath=( ~/.zfunc "${fpath[@]}" )
+
+###########################################################################
+# Source ZPlug
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
-###########################################################################
 # Plugins
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -41,21 +43,24 @@ else
   export EDITOR='nvim'
 fi
 
-# for colorized tree
 alias tree="tree -C"
 alias l="exa -la"
 alias t="exa -a -T -L 2"
+alias dotfiles='/usr/bin/git --git-dir=$HOME/code/me/.dotfiles/ --work-tree=$HOME'
 
+###########################################################################
 # fzf and fzf-tab options
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
+
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always $realpath'
+zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always $realpath || exa -a -T -L 1 --color=always $realpath'
+#zstyle ':fzf-tab:complete:t:*' fzf-preview 'exa -a -T -L 1 --color=always $realpath'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-alias dotfiles='/usr/bin/git --git-dir=$HOME/code/me/.dotfiles/ --work-tree=$HOME'
-
+###########################################################################
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
