@@ -1,0 +1,16 @@
+[alias]
+	co = checkout
+	s = status
+	a = add -p
+	cm = commit -m
+    ca = commit --amend
+	f = fetch --all
+	l = log --decorate --graph
+    fix = !git reset --soft HEAD~0 && git commit --amend
+[user]
+	name = Nico Chatzi
+	email = nico.chatzigianis@focusrite.com
+[init]
+    defaultBranch = main
+[core]
+	editor = vim
