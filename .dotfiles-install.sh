@@ -19,6 +19,7 @@ install_packages() {
         nvim
         bat
         zplug
+        git-delta
     )
 
     for package in "${package[@]}"

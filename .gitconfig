@@ -14,3 +14,6 @@
     defaultBranch = main
 [core]
 	editor = vim
+	pager = delta --line-numbers --dark
+[interactive]
+    diffFilter = delta --color-only --line-numbers --dark
