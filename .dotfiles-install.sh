@@ -5,6 +5,15 @@
 
 install_packages() {
     packages=(
+        just
+        watchexec
+        sccache
+        gh
+        circleci
+        clang-format
+        hadolint
+        n
+        poetry
         exa
         tig
         nvim
@@ -17,6 +26,10 @@ install_packages() {
         brew install "$package"
     done
     exit
+}
+
+install_rust() {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
 }
 
 install_fonts() {
@@ -32,6 +45,7 @@ install_prezto() {
 run_setup() {
     brew update
     install_fonts
+    install_rust
     install_packages
     install_prezto
 }
