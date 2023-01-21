@@ -110,10 +110,16 @@ let g:tsuquyomi_completion_detail = 1
 let g:python3_host_prog="/Users/nicochatzi/.pyenv/versions/3.8.9/bin/python3"
 let g:gitgutter_preview_win_floating = 1
 let g:yats_host_keyword = 1
-let g:rainbow_conf = { 'guifgs': ['wheat3', 'aquamarine3', 'LightGoldenrod3', 'plum1' ] }
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
+let g:rainbow_conf = { 'guifgs': ['wheat3', 'aquamarine3', 'LightGoldenrod3', 'plum1' ] }
+" https://github.com/luochen1990/rainbow/issues/77
+let g:rainbow_conf = {
+\   'separately': {
+\       'cmake': 0,
+\   }
+\}
 
 """""""""""""""""""""""""""""""""""""
 " Mappings
