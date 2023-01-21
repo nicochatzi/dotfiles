@@ -14,7 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'preservim/nerdtree' " File tree
 Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " enable colors for filetype
+"Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " enable colors for filetype
 Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
 Plugin 'tomtom/tcomment_vim' " (gc) comment/uncomment
 Plugin 'vim-airline/vim-airline' " Lean & mean status/tabline
@@ -39,7 +39,7 @@ Plugin 'Chiel92/vim-autoformat' " Requires: python3 -m pip install pynvim
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sainnhe/sonokai' " Monokai Pro style theme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
-Plugin 'NoahTheDuke/vim-just' " justfile support 
+Plugin 'NoahTheDuke/vim-just' " justfile support
 call vundle#end()
 filetype plugin indent on " (required)
 
@@ -57,7 +57,7 @@ let g:coc_global_extensions = [
             \ 'coc-json',
             \ 'coc-go',
             \ 'coc-sh',
-            \ 'coc-spell-checker', 
+            \ 'coc-spell-checker',
             \ ]
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
     let g:coc_global_extensions += ['coc-prettier']
@@ -116,10 +116,10 @@ let g:vim_markdown_conceal_code_blocks = 0
 let g:rainbow_conf = { 'guifgs': ['wheat3', 'aquamarine3', 'LightGoldenrod3', 'plum1' ] }
 " https://github.com/luochen1990/rainbow/issues/77
 let g:rainbow_conf = {
-\   'separately': {
-\       'cmake': 0,
-\   }
-\}
+            \   'separately': {
+            \       'cmake': 0,
+            \   }
+            \}
 
 """""""""""""""""""""""""""""""""""""
 " Mappings
