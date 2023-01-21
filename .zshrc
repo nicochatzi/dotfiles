@@ -58,7 +58,7 @@ setopt globdots
 zstyle ':fzf-tab:complete:(cd|exa|ls):*' fzf-preview 'exa -T -L 1 --color=always $realpath'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
-    'bat --color=always $realpath || exa -a -T -L 1 --color=always $realpath'
+    'if test -f $realpath; then; bat --color=always $realpath; else; exa -a -T -L 1 --color=always $realpath; fi'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
