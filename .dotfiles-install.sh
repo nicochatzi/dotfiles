@@ -20,6 +20,7 @@ install_packages() {
         bat
         zplug
         git-delta
+        ripgrep
     )
 
     for package in "${package[@]}"
@@ -43,12 +44,18 @@ install_prezto() {
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 }
 
+install_coc_requirements() {
+    pip3 install cmake-language-server
+}
+
 run_setup() {
     brew update
+
     install_fonts
     install_rust
     install_packages
     install_prezto
+    install_coc_requirements
 }
 
 run_setup

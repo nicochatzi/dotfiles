@@ -47,9 +47,16 @@ filetype plugin indent on " (required)
 " Conquer of Completion
 """""""""""""""""""""""""""""""""""""
 let g:coc_global_extensions = [
-            \ 'coc-tsserver',
+            \ 'coc-clangd',
+            \ 'coc-cmake',
             \ 'coc-rust-analyzer',
+            \ 'coc-tsserver',
             \ 'coc-python',
+            \ 'coc-julia',
+            \ 'coc-markdownlint',
+            \ 'coc-json',
+            \ 'coc-go',
+            \ 'coc-sh',
             \ 'coc-spell-checker', 
             \ ]
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')

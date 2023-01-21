@@ -51,6 +51,8 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/code/me/.dotfiles/ --work-tree=$HOM
 ###########################################################################
 # fzf and fzf-tab options
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
+export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+setopt globdots
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
