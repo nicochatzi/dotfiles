@@ -55,11 +55,10 @@ export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always $realpath'
-zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always $realpath || exa -a -T -L 1 --color=always $realpath'
-#zstyle ':fzf-tab:complete:t:*' fzf-preview 'exa -a -T -L 1 --color=always $realpath'
+zstyle ':fzf-tab:complete:(cd|exa|ls):*' fzf-preview 'exa -T -L 1 --color=always $realpath'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
+    'bat --color=always $realpath || exa -a -T -L 1 --color=always $realpath'
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
