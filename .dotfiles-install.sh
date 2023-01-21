@@ -21,6 +21,7 @@ install_packages() {
         zplug
         git-delta
         ripgrep
+        shellcheck
     )
 
     for package in "${package[@]}"
