@@ -112,9 +112,15 @@ let g:yats_host_keyword = 1
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
-let g:rainbow_conf = { 'guifgs': ['wheat3', 'aquamarine3', 'LightGoldenrod3', 'plum1' ] }
 " https://github.com/luochen1990/rainbow/issues/77
 let g:rainbow_conf = {
+            \ 'guifgs': [
+            \       'peachpuff2',
+            \       'aquamarine3',
+            \       'lightcoral',
+            \       'darkseagreen2',
+            \       'plum1'
+            \   ],
             \   'separately': {
             \       'cmake': 0,
             \   }
