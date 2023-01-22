@@ -52,6 +52,9 @@ install_tui() {
         nvim
         bat
         fd
+        procs
+        dust
+        bottom
         zplug
         git-delta
         ripgrep

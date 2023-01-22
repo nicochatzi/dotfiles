@@ -55,7 +55,6 @@ let g:coc_global_extensions = [
             \ 'coc-julia',
             \ 'coc-markdownlint',
             \ 'coc-json',
-            \ 'coc-go',
             \ 'coc-sh',
             \ 'coc-spell-checker',
             \ ]
