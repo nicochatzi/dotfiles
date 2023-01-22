@@ -89,11 +89,11 @@ install_dotfiles() {
         /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
     }
 
-    if [[ test -f $HOME/.zshrc ]]; then
+    if [ -f $HOME/.zshrc ]; then
         echo $DOTFILE_ALIAS > $HOME/.zshrc
     fi
 
-    if [[ test -f $HOME/.bashrc ]]; then
+    if [ -f $HOME/.bashrc ]; then
         echo $DOTFILE_ALIAS > $HOME/.bashrc
     fi
 
@@ -115,8 +115,18 @@ install_dotfiles() {
     dotfiles config status.showUntrackedFiles no
 }
 
+INSTALL_LANUGAGES=0
+INSTALL_TUI=0
+INSTALL_DOTFILES=0
+
 while [[ $# -gt 0 ]]; do
     case $1 in
+        -a|--all)
+            INSTALL_LANUGAGES=1
+            INSTALL_TUI=1
+            INSTALL_DOTFILES=1
+            shift 2
+            ;;
         -l|--langs)
             INSTALL_LANUGAGES=1
             shift 2
@@ -136,7 +146,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ $INTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES -eq 1 ]; then
+if [ $INSTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES -eq 1 ]; then
     if [[ $OS == "Darwin" ]]; then
         brew update
     else
@@ -144,14 +154,19 @@ if [ $INTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES 
     fi
 fi
 
-if [ $INTALL_TUI -eq 1 ]; then
+if [ $INSTALL_TUI -eq 1 ]; then
+    echo "~> Installing terminal UI tools"
     install_tui
 fi
 
 if [ $INSTALL_LANUGAGES -eq 1 ]; then
+    echo "~> Installing languages"
     install_languages
 fi
 
 if [ $INSTALL_DOTFILES -eq 1 ]; then
+    echo "~> Installing dotfiles"
     install_dotfiles
 fi
+
+echo "Done"
