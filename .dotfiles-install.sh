@@ -1,4 +1,4 @@
-# #!/bin/bash
+#!/bin/bash
 
 # dotfile git setup from:
 # https://www.atlassian.com/git/tutorials/dotfiles
@@ -22,9 +22,10 @@ install_packages() {
         git-delta
         ripgrep
         shellcheck
+        fd
     )
 
-    for package in "${package[@]}"
+    for package in "${packages[@]}"
     do
         brew install "$package"
     done
