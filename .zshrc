@@ -50,15 +50,18 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ###########################################################################
 # fzf and fzf-tab options
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
-zstyle ':fzf-tab:complete:(cd|exa|ls):*' fzf-preview 'exa -T -L 1 --color=always $realpath'
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:(cd|exa|ls):*' fzf-preview \
+    'exa -T -L 1 --color=always $realpath'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
+    'git diff $word | delta'
 zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; exa -a -T -L 1 --color=always $realpath; fi'
+
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
