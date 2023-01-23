@@ -33,15 +33,14 @@ install_base_packages() {
 
     install_system_packages "${base_packages[@]}"
 
-    if ! [[ $OS == "Darwin" ]]; then
+    if ! [ $OS == "Darwin" ]; then
         $SUDO apt install -y python3-pip
     fi
 }
 
 install_languages() {
     lang_packages=(\
-        node \
-        n \
+        nodejs \
     )
 
     linters_packages=(\
@@ -61,6 +60,9 @@ install_languages() {
 
     # Poerty
     curl -sSL https://install.python-poetry.org | python3 -
+
+    # node version manager
+    npm i -g n
 }
 
 install_tui() {
