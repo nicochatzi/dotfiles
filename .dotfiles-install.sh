@@ -66,24 +66,24 @@ install_languages() {
 }
 
 install_tui() {
-    tool_packages=(/
-        just/
-        exa/
-        tig/
-        nvim/
-        bat/
-        fd/
-        procs/
-        dust
-        bottom/
-        zplug/
-        git-delta/
-        ripgrep/
-        watchexec/
-        sccache/
-        gh/
-        circleci/
-        tmux/
+    tool_packages=(\
+        just \
+        exa \
+        tig \
+        nvim \
+        bat \
+        fd \
+        procs \
+        dust \
+        bottom \
+        zplug \
+        git-delta \
+        ripgrep \
+        watchexec \
+        sccache \
+        gh \
+        circleci \
+        tmux \
     )
 
     install_system_packages "${tool_packages[@]}"
