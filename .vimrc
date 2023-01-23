@@ -91,6 +91,8 @@ set showtabline=2
 set guioptions-=e
 set backspace=indent,eol,start " OSX stupid backspace fix
 set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type completions
+set list
+set lcs+=space:.
 "set spell spelllang=en_us
 let g:sonokai_transparent_background=2
 let g:NERDTreeGitStatusUseNerdFonts = 1
