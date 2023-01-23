@@ -40,6 +40,7 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'sainnhe/sonokai' " Monokai Pro style theme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
 Plugin 'NoahTheDuke/vim-just' " justfile support
+Plugin 'kergoth/vim-bitbake' " BitBake support
 call vundle#end()
 filetype plugin indent on " (required)
 
