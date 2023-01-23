@@ -17,3 +17,5 @@
     pager = delta --line-numbers --dark
 [interactive]
     diffFilter = delta --color-only --line-numbers --dark
+[fetch]
+    prune = true
