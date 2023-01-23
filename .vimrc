@@ -77,6 +77,7 @@ set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set shiftwidth=4
+set timeoutlen=0
 set smarttab
 set expandtab
 set guifont=JetBrainsMono_Nerd_Font:h11
@@ -172,4 +173,3 @@ autocmd BufNewFile *.rs :CocCommand rust-analyzer.upgrade
 "   Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-
