@@ -31,8 +31,8 @@ install_languages() {
         shellcheck
     )
 
-    install_system_packages lang_packages
-    install_system_packages linters_packages
+    install_system_packages $lang_packages
+    install_system_packages $linters_packages
 
     # Rust
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
@@ -65,7 +65,7 @@ install_tui() {
         tmux
     )
 
-    install_system_packages tool_packages
+    install_system_packages $tool_packages
 
     # Prezto
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
@@ -82,6 +82,12 @@ install_tui() {
             ./install.sh && \
             popd
     fi
+
+    # tmux-plugins
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+    # python support for neovim
+    pip3 install --user pynvim
 }
 
 install_dotfiles() {
