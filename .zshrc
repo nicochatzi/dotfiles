@@ -45,6 +45,7 @@ fi
 
 alias tree="tree -C"
 alias l="exa -la"
+alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
