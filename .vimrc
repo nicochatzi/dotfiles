@@ -71,10 +71,11 @@ endif
 """""""""""""""""""""""""""""""""""""
 set termguicolors
 colorscheme sonokai
-set number
 set ruler
+set number
 set relativenumber
-set tabstop=4
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 set shiftwidth=4
 set smarttab
 set expandtab
