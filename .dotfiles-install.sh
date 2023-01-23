@@ -62,6 +62,7 @@ install_tui() {
         sccache
         gh
         circleci
+        tmux
     )
 
     install_system_packages tool_packages
