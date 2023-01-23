@@ -14,7 +14,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'preservim/nerdtree' " File tree
 Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
-"Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " enable colors for filetype
 Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
 Plugin 'tomtom/tcomment_vim' " (gc) comment/uncomment
 Plugin 'vim-airline/vim-airline' " Lean & mean status/tabline
@@ -27,7 +26,6 @@ Plugin 'Yggdroot/indentLine' "vertical lines at each indentation
 Plugin 'pangloss/vim-javascript' " JavaScript support
 Plugin 'maxmellon/vim-jsx-pretty' " JS and JSX syntax
 Plugin 'peitalin/vim-jsx-typescript' " TSX syntax
-Plugin 'styled-components/vim-styled-components'
 Plugin 'jparise/vim-graphql' " GraphQL syntax
 Plugin 'moll/vim-node'
 Plugin 'Quramy/tsuquyomi'
@@ -70,7 +68,6 @@ endif
 " Configurations
 """""""""""""""""""""""""""""""""""""
 set termguicolors
-colorscheme sonokai
 set ruler
 set number
 set relativenumber
@@ -95,6 +92,8 @@ set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type c
 set list
 set lcs+=space:.
 "set spell spelllang=en_us
+
+let g:sonokai_better_performance = 1
 let g:sonokai_transparent_background=2
 let g:NERDTreeGitStatusUseNerdFonts = 1
 let g:NERDTreeShowHidden=1
@@ -131,6 +130,7 @@ let g:rainbow_conf = {
             \       'cmake': 0,
             \   }
             \}
+colorscheme sonokai
 
 """""""""""""""""""""""""""""""""""""
 " Mappings
