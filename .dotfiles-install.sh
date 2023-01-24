@@ -11,12 +11,29 @@ then
     SUDO=
 fi
 
+preinstall() {
+    if [ $OS == "Darwin" ]; then
+        brew update
+    else
+        $SUDO apt update
+    fi
+}
+
+postinstall() {
+    if [ $OS == "Darwin" ]; then
+        brew cleanup
+    else
+        apt clean 
+        rm -rf /var/lib/apt/lists/*d
+    fi
+}
+
 install_system_packages() {
     packages_to_install=("$@")
 
     for package in "${packages_to_install[@]}"
     do
-        if [[ $OS == "Darwin" ]]; then
+        if [ $OS == "Darwin" ]; then
             brew install "$package"
         else
             $SUDO apt install "$package" -y
@@ -67,6 +84,7 @@ install_languages() {
 
 install_tui() {
     tool_packages=(\
+        zsh \
         just \
         exa \
         tig \
@@ -109,6 +127,11 @@ install_tui() {
 
     # python support for neovim
     pip3 install --user pynvim
+}
+
+set_zsh() {
+    chsh -s $(which zsh)
+    zsh
 }
 
 install_dotfiles() {
@@ -182,12 +205,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+ANY_INSTALLS_REQUESTED=0
 if [ $INSTALL_SYS -eq 1 ] || [ $INSTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES -eq 1 ]; then
-    if [[ $OS == "Darwin" ]]; then
-        brew update
-    else
-        $SUDO apt update
-    fi
+    ANY_INSTALLS_REQUESTED=1 
+fi
+
+if [ $ANY_INSTALLS_REQUESTED -eq 1 ]; then
+    echo "~> Running pre-install update"
+    preinstall
 fi
 
 if [ $INSTALL_SYS -eq 1 ]; then
@@ -210,4 +235,15 @@ if [ $INSTALL_DOTFILES -eq 1 ]; then
     install_dotfiles
 fi
 
-echo "Done"
+if [ $ANY_INSTALLS_REQUESTED -eq 1 ]; then
+    echo "~> Running post-install cleanup"
+    postinstall
+fi
+
+if [ $INSTALL_TUI -eq 1 ]; then
+    echo "~> Setting default shell to zsh"
+    set_zsh
+fi
+
+echo "~~> Done setting up"
+

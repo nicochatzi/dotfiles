@@ -12,6 +12,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdtree' " File tree
 Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
 Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
@@ -74,7 +76,7 @@ set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set shiftwidth=4
-set timeoutlen=0
+set ts=4 sw=4
 set smarttab
 set expandtab
 set guifont=JetBrainsMono_Nerd_Font:h11
@@ -108,7 +110,7 @@ let g:airline_powerline_fonts = 1
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_root_markers = ['Cargo.toml', 'package.json', 'Pipfile']
+let g:ctrlp_root_markers = ['Cargo.toml', 'package.json', 'Pipfile', 'CMakeLists.txt']
 let g:rust_cargo_use_clippy = 1
 let g:tsuquyomi_completion_detail = 1
 let g:python3_host_prog="/Users/nicochatzi/.pyenv/versions/3.8.9/bin/python3"
@@ -147,6 +149,8 @@ nmap <leader>a  <Plug>(coc-codeaction)
 nmap <leader>r  <Plug>(coc-rename)
 nmap <leader>q  <Plug>(coc-fix-current)
 nmap <Leader>f :Autoformat<CR>
+nmap <leader>s :Rg<CR>
+" <leader>p is mapped by CtrlP plugin 
 
 """""""""""""""""""""""""""""""""""""
 " Automatic Commands
