@@ -99,8 +99,7 @@ install_tui() {
         ripgrep \
         watchexec \
         sccache \
-        gh \
-        circleci \
+        hyperfine \
         tmux \
     )
 
