@@ -21,9 +21,9 @@ source $ZPLUG_HOME/init.zsh
 # Plugins
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "Aloxaf/fzf-tab"
 zplug "unixorn/fzf-zsh-plugin"
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # zplug self-managing
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -53,7 +53,15 @@ alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ###########################################################################
-# fzf and fzf-tab options
+# Plugin config
+
+# Ctrl+a : accept suggestion
+bindkey '^a' autosuggest-accept
+# Ctrl+z : accept and execute suggesetion
+bindkey '^z' autosuggest-execute
+
+###########################################################################
+# FZF config
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
