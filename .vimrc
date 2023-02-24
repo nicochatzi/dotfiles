@@ -41,6 +41,7 @@ Plugin 'sainnhe/sonokai' " Monokai Pro style theme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
 Plugin 'NoahTheDuke/vim-just' " justfile support
 Plugin 'kergoth/vim-bitbake' " BitBake support
+Plugin 'iamcco/markdown-preview.nvim' " post installation, run :call mkdp#util#install()
 call vundle#end()
 filetype plugin indent on " (required)
 
