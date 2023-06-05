@@ -83,3 +83,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+# source nli config
+source $HOME/.config/fael/nli.sh

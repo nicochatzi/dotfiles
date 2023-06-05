@@ -11,7 +11,8 @@ filetype off " Disable file type for vundle (required)
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'neoclide/coc.nvim', {'branch': 'master'}
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdtree' " File tree
@@ -38,6 +39,7 @@ Plugin 'vim-scripts/ReplaceWithRegister' " (gr)
 Plugin 'Chiel92/vim-autoformat' " Requires: python3 -m pip install pynvim
 Plugin 'sheerun/vim-polyglot'
 Plugin 'sainnhe/sonokai' " Monokai Pro style theme
+Plugin 'rebelot/kanagawa.nvim' "colorscheme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
 Plugin 'NoahTheDuke/vim-just' " justfile support
 Plugin 'kergoth/vim-bitbake' " BitBake support
@@ -55,7 +57,6 @@ let g:coc_global_extensions = [
             \ 'coc-rust-analyzer',
             \ 'coc-tsserver',
             \ 'coc-jedi',
-            \ 'coc-julia',
             \ 'coc-markdownlint',
             \ 'coc-json',
             \ 'coc-sh',
@@ -96,7 +97,7 @@ set backspace=indent,eol,start " OSX stupid backspace fix
 set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type completions
 set list
 set lcs+=space:.
-"set spell spelllang=en_us
+set spell spelllang=en_us
 
 let g:sonokai_better_performance = 1
 let g:sonokai_transparent_background=2
@@ -135,6 +136,7 @@ let g:rainbow_conf = {
             \       'cmake': 0,
             \   }
             \}
+"colorscheme kanagawa-dragon
 colorscheme sonokai
 
 """""""""""""""""""""""""""""""""""""
@@ -153,7 +155,7 @@ nmap <leader>r  <Plug>(coc-rename)
 nmap <leader>q  <Plug>(coc-fix-current)
 nmap <Leader>f :Autoformat<CR>
 nmap <leader>s :Rg<CR>
-" <leader>p is mapped by CtrlP plugin 
+" <leader>p is mapped by CtrlP plugin
 
 """""""""""""""""""""""""""""""""""""
 " Automatic Commands
@@ -166,7 +168,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType")
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 autocmd FileType yaml,typescript.tsx,javascript.jsx,javascript,typescript
             \ let g:indent_guides_guide_size = 2
-autocmd BufNewFile *.rs :CocCommand rust-analyzer.upgrade
+"autocmd BufNewFile *.rs :CocCommand rust-analyzer.upgrade
 
 " Use a line cursor within insert mode and a block cursor everywhere else.
 "
