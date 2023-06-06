@@ -5,7 +5,8 @@
     cm = commit -m
     ca = commit --amend
     f = fetch --all
-    l = log --decorate --graph
+    l = log --decorate --graph --all --oneline
+    ll = log --decorate --graph --all
     fix = !git reset --soft HEAD~0 && git commit --amend
 [user]
     name = Nico Chatzi
