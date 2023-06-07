@@ -101,14 +101,11 @@ require('lazy').setup({
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
     },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',          opts = {} },
+  -- { 'folke/which-key.nvim',          opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -151,7 +148,7 @@ require('lazy').setup({
             visible = true,
           },
           follow_current_file = true,
-          use_libuv_file_watcher = true,
+          use_libuv_file_watcher = false,
         },
         -- patch for symbols
         default_component_configs = {
@@ -228,15 +225,65 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = 'auto',
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-        always_divide_middle = false,
-      },
-    },
+    config = function()
+      local config = {
+        options = {
+          icons_enabled = true,
+          theme = 'iceberg_dark',
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+          always_divide_middle = false,
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch' },
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = { 'filetype' },
+          lualine_z = { {
+            'datetime',
+            -- options: default, us, uk, iso, or your own format string ("%H:%M", etc..)
+            style = '%H:%M'
+          } },
+        },
+        inactive_sections = {
+          lualine_a = { 'filename' },
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'location' },
+        },
+      }
+
+      local function insert_to_x(component)
+        table.insert(config.sections.lualine_x, component)
+      end
+
+      local cmake = require("cmake-tools")
+
+      insert_to_x {
+        function()
+          local b_preset = cmake.get_build_preset()
+          return "[" .. (b_preset and b_preset or "X") .. "]"
+        end,
+        cond = function()
+          return cmake.is_cmake_project() and cmake.has_cmake_preset()
+        end,
+      }
+
+      insert_to_x {
+        function()
+          local b_target = cmake.get_build_target()
+          return "[" .. (b_target and b_target or "X") .. "]"
+        end,
+        cond = cmake.is_cmake_project,
+      }
+
+
+
+      require('lualine').setup(config)
+    end
   },
 
   {
@@ -266,6 +313,7 @@ require('lazy').setup({
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  -- {'nvim-telescope/telescope-ui-select.nvim' },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -295,23 +343,48 @@ require('lazy').setup({
   {
     'mfussenegger/nvim-dap',
     config = function()
+      vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end)
+      vim.keymap.set('n', '<leader>ds', function() require('dap').step_over() end)
+      vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end)
+      vim.keymap.set('n', '<leader>do', function() require('dap').step_out() end)
+      vim.keymap.set('n', '<leader>dl', function() require('dap').run_last() end)
+      vim.keymap.set('n', '<leader>db', function() require('dap').toggle_breakpoint() end)
+
+      vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
+
       local dap = require('dap')
       dap.adapters.codelldb = {
         type = 'server',
-        port = "${port}",
-        executable = {
-          -- CHANGE THIS to your path!
-          command = '/absolute/path/to/codelldb/extension/adapter/codelldb',
-          args = { "--port", "${port}" },
-          -- On windows you may have to uncomment this:
-          -- detached = false,
-        }
+        host = '127.0.0.1',
+        port = 13000, -- 💀 Use the port printed out or specified with `--port`
+        -- type = 'server',
+        -- port = "${port}",
+        -- executable = {
+        --   -- CHANGE THIS to your path!
+        --   command = '~/.codelldb/extension/adapter/codelldb',
+        --   args = { "--port", "${port}" },
+        --   -- On windows you may have to uncomment this:
+        --   -- detached = false,
+        -- }
       }
     end
   },
   {
     'rcarriga/nvim-dap-ui',
-    dependencies = { 'mfussenegger/nvim-dap' }
+    dependencies = { 'mfussenegger/nvim-dap' },
+    config = function()
+      require("dapui").setup()
+      local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+    end
   },
   {
     'folke/neodev.nvim',
@@ -352,15 +425,15 @@ require('lazy').setup({
   'vim-scripts/ReplaceWithRegister', -- gr
   'kergoth/vim-bitbake',
   'Raimondi/delimitMate',            -- auto-closing braces
-  {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    requires = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      vim.opt.termguicolors = true
-      require('bufferline').setup({})
-    end
-  },
+  -- {
+  --   'akinsho/bufferline.nvim',
+  --   version = "*",
+  --   requires = 'nvim-tree/nvim-web-devicons',
+  --   config = function()
+  --     vim.opt.termguicolors = true
+  --     require('bufferline').setup({})
+  --   end
+  -- },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -383,7 +456,7 @@ require('lazy').setup({
 vim.o.relativenumber = true
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
@@ -434,6 +507,10 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '<Tab>', ':bnext<CR>')
 vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
 
+vim.keymap.set('n', '<leader>h', ':ClangdSwitchSourceHeader<CR>')
+vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>')
+vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -455,8 +532,9 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
-  },
+  }
 }
+-- require('telescope').load_extension("ui-select")
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -575,7 +653,7 @@ local on_attach = function(_, bufnr)
   nmap('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap

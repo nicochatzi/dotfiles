@@ -14,6 +14,11 @@ fi
 fpath=( ~/.zfunc "${fpath[@]}" )
 
 ###########################################################################
+
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
+
+###########################################################################
 # Source ZPlug
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
@@ -55,10 +60,10 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ###########################################################################
 # Plugin config
 
-# Ctrl+a : accept suggestion
-bindkey '^a' autosuggest-accept
-# Ctrl+z : accept and execute suggesetion
-bindkey '^z' autosuggest-execute
+# Ctrl+z : accept suggestion
+bindkey '^z' autosuggest-accept
+# Ctrl+x : accept and execute suggesetion
+bindkey '^x' autosuggest-execute
 
 ###########################################################################
 # FZF config
