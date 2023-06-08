@@ -108,7 +108,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',          opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -207,7 +207,7 @@ require('lazy').setup({
         vim.keymap.set('n', 'P', api.node.open.preview, opts('Help'))
 
         api.tree.toggle_gitignore_filter()
-        api.tree.toggle_custom_filter()
+        api.tree.toggle_hidden_filter()
       end
 
       require('nvim-tree').setup({
@@ -347,11 +347,41 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',         opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
-  -- {'nvim-telescope/telescope-ui-select.nvim' },
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    lazy = true,
+    config = function()
+      local telescope = require('telescope')
+      telescope.setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+              -- even more opts
+              width = 0.8,
+              previewer = false,
+              prompt_title = false,
+              borderchars = {
+                { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+                prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+                results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+                preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+              },
+            }
+          },
+        }
+      })
+      telescope.load_extension("ui-select")
+    end
+  },
+  {
+    'nvim-telescope/telescope-ui-select.nvim',
+    lazy = true,
+  },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -471,25 +501,25 @@ require('lazy').setup({
     'Civitasv/cmake-tools.nvim',
     config = function()
       vim.defer_fn(function()
-      require("cmake-tools").setup {
-        cmake_command = "cmake",
-        cmake_build_directory = "",
-        cmake_build_directory_prefix = "cmake_build_",                                     -- when cmake_build_directory is "", this option will be activated
-        cmake_generate_options = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
-        cmake_regenerate_on_save = true,                                                   -- Saves CMakeLists.txt file only if mofified.
-        cmake_soft_link_compile_commands = true,                                           -- if softlink compile commands json file
-        cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp
-        cmake_build_options = {},
-        cmake_console_size = 10,                                                           -- cmake output window height
-        cmake_console_position = "belowright",                                             -- "belowright", "aboveleft", ...
-        cmake_show_console = "always",                                                     -- "always", "only_on_error"
-        cmake_kits_path = nil,                                                             -- global cmake kits path
-        cmake_dap_configuration = { name = "cpp", type = "codelldb", request = "launch" }, -- dap configuration, optional
-        cmake_variants_message = {
-          short = { show = true },
-          long = { show = true, max_length = 40 }
+        require("cmake-tools").setup {
+          cmake_command = "cmake",
+          cmake_build_directory = "",
+          cmake_build_directory_prefix = "cmake_build_",                                     -- when cmake_build_directory is "", this option will be activated
+          cmake_generate_options = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
+          cmake_regenerate_on_save = true,                                                   -- Saves CMakeLists.txt file only if mofified.
+          cmake_soft_link_compile_commands = true,                                           -- if softlink compile commands json file
+          cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp
+          cmake_build_options = {},
+          cmake_console_size = 10,                                                           -- cmake output window height
+          cmake_console_position = "belowright",                                             -- "belowright", "aboveleft", ...
+          cmake_show_console = "always",                                                     -- "always", "only_on_error"
+          cmake_kits_path = nil,                                                             -- global cmake kits path
+          cmake_dap_configuration = { name = "cpp", type = "codelldb", request = "launch" }, -- dap configuration, optional
+          cmake_variants_message = {
+            short = { show = true },
+            long = { show = true, max_length = 40 }
+          }
         }
-      }
       end, 1000)
     end
   },
@@ -585,6 +615,7 @@ vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
 vim.keymap.set('n', '<leader>h', ':ClangdSwitchSourceHeader<CR>')
 vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>')
 vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
+vim.keymap.set('n', '<leader>cs', ':CMakeSelectBuildPreset<CR>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
