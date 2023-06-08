@@ -1,0 +1,56 @@
+window:
+  padding:
+    x: 0
+    y: 5
+  position:
+    x: 500
+    y: 200
+  dimensions:
+    columns: 150
+    lines: 40
+  opacity: 0.87
+
+  # Window decorations
+  #
+  # Values for `decorations`:
+  #     - full: Borders and title bar
+  #     - none: Neither borders nor title bar
+  #
+  # Values for `decorations` (macOS only):
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background and no title bar buttons
+  decorations: full
+
+scrolling:
+  history: 10000
+  multiplier: 3
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+    style:  Regular
+  bold:
+    family: JetBrainsMono Nerd Font
+    style:  Bold
+  italic:
+    family: JetBrainsMono Nerd Font
+    style:  Italic
+  bold_italic:
+    family: JetBrainsMono Nerd Font
+    style: Bold Italic
+  size: 11
+draw_bold_text_with_bright_colors: true
+
+import:
+  - ~/.config/alacritty/theme.yaml
+    # from alacritty themes : citylights.yaml
+
+mouse:
+  hide_when_typing: true
+
+selection:
+  save_to_clipboard: false
+
+key_bindings:
+  - { key: Return, mods: Super, action: ToggleSimpleFullscreen }
+

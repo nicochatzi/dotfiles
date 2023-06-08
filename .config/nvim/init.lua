@@ -108,7 +108,11 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  {
+    'folke/which-key.nvim',
+    opts = {},
+    lazy = true
+  },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -130,65 +134,6 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   "nvim-neo-tree/neo-tree.nvim",
-  --   branch = "v2.x",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-  --     "MunifTanjim/nui.nvim",
-  --   },
-  --   config = function()
-  --     -- Unless you are still migrating, remove the deprecated commands from v1.x
-  --     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-  --     require('neo-tree').setup({
-  --       -- config
-  --       window = {
-  --         width = 30,
-  --       },
-  --       filesystem = {
-  --         filtered_items = {
-  --           visible = true,
-  --         },
-  --         follow_current_file = true,
-  --         use_libuv_file_watcher = false,
-  --       },
-  --       -- patch for symbols
-  --       default_component_configs = {
-  --         icon = {
-  --           folder_empty = "󰜌",
-  --           folder_empty_open = "󰜌",
-  --         },
-  --         git_status = {
-  --           symbols = {
-  --             renamed  = "󰁕",
-  --             unstaged = "󰄱",
-  --           },
-  --         },
-  --       },
-  --       document_symbols = {
-  --         kinds = {
-  --           File = { icon = "󰈙", hl = "Tag" },
-  --           Namespace = { icon = "󰌗", hl = "Include" },
-  --           Package = { icon = "󰏖", hl = "Label" },
-  --           Class = { icon = "󰌗", hl = "Include" },
-  --           Property = { icon = "󰆧", hl = "@property" },
-  --           Enum = { icon = "󰒻", hl = "@number" },
-  --           Function = { icon = "󰊕", hl = "Function" },
-  --           String = { icon = "󰀬", hl = "String" },
-  --           Number = { icon = "󰎠", hl = "Number" },
-  --           Array = { icon = "󰅪", hl = "Type" },
-  --           Object = { icon = "󰅩", hl = "Type" },
-  --           Key = { icon = "󰌋", hl = "" },
-  --           Struct = { icon = "󰌗", hl = "Type" },
-  --           Operator = { icon = "󰆕", hl = "Operator" },
-  --           TypeParameter = { icon = "󰊄", hl = "Type" },
-  --           StaticMethod = { icon = '󰠄 ', hl = 'Function' },
-  --         }
-  --       },
-  --     })
-  --   end
-  -- },
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -295,31 +240,29 @@ require('lazy').setup({
         },
       }
 
-      local function insert_to_x(component)
-        table.insert(config.sections.lualine_x, component)
-      end
-
-      local cmake = require("cmake-tools")
-
-      insert_to_x {
-        function()
-          local b_preset = cmake.get_build_preset()
-          return "[" .. (b_preset and b_preset or "X") .. "]"
-        end,
-        cond = function()
-          return cmake.is_cmake_project() and cmake.has_cmake_preset()
-        end,
-      }
-
-      insert_to_x {
-        function()
-          local b_target = cmake.get_build_target()
-          return "[" .. (b_target and b_target or "X") .. "]"
-        end,
-        cond = cmake.is_cmake_project,
-      }
-
-
+      -- local function insert_to_x(component)
+      --   table.insert(config.sections.lualine_x, component)
+      -- end
+      --
+      -- local cmake = require("cmake-tools")
+      --
+      -- insert_to_x {
+      --   function()
+      --     local b_preset = cmake.get_build_preset()
+      --     return "[" .. (b_preset and b_preset or "X") .. "]"
+      --   end,
+      --   cond = function()
+      --     return cmake.is_cmake_project() and cmake.has_cmake_preset()
+      --   end,
+      -- }
+      --
+      -- insert_to_x {
+      --   function()
+      --     local b_target = cmake.get_build_target()
+      --     return "[" .. (b_target and b_target or "X") .. "]"
+      --   end,
+      --   cond = cmake.is_cmake_project(),
+      -- }
 
       require('lualine').setup(config)
     end
@@ -347,7 +290,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -524,7 +467,13 @@ require('lazy').setup({
     end
   },
 
-  'iamcco/markdown-preview.nvim',
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  },
+
   'tpope/vim-surround',              -- (ys) delete, change and insert surroundings
   'vim-scripts/ReplaceWithRegister', -- gr
   -- 'kergoth/vim-bitbake',
@@ -615,7 +564,9 @@ vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
 vim.keymap.set('n', '<leader>h', ':ClangdSwitchSourceHeader<CR>')
 vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>')
 vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
-vim.keymap.set('n', '<leader>cs', ':CMakeSelectBuildPreset<CR>')
+vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>')
+vim.keymap.set('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
+vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
