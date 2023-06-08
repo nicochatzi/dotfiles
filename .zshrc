@@ -46,8 +46,8 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
   export VISUAL='vim'
 else
-  export EDITOR='nvim'
-  export VISUAL='nvim'
+  export EDITOR='vim'
+  export VISUAL='vim'
 fi
 
 alias tree="tree -C"

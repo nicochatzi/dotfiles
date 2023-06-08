@@ -11,64 +11,64 @@ filetype off " Disable file type for vundle (required)
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'nvim-lua/plenary.nvim'
-Plugin 'neoclide/coc.nvim', {'branch': 'master'}
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'junegunn/fzf.vim'
-Plugin 'preservim/nerdtree' " File tree
-Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
-Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
+" Plugin 'nvim-lua/plenary.nvim'
+" Plugin 'neoclide/coc.nvim', {'branch': 'master'}
+" Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plugin 'junegunn/fzf.vim'
+" Plugin 'preservim/nerdtree' " File tree
+" Plugin 'Xuyuanp/nerdtree-git-plugin' "  Nerdtree Git file status
+" Plugin 'ryanoasis/vim-devicons'  " Filetype icons support (requires patched font)
 Plugin 'tomtom/tcomment_vim' " (gc) comment/uncomment
-Plugin 'vim-airline/vim-airline' " Lean & mean status/tabline
-Plugin 'vim-airline/vim-airline-themes' " Airline themes
-Plugin 'tpope/vim-fugitive' " Git integration
-Plugin 'rbong/vim-flog' " :Flog git branch viewer
-Plugin 'airblade/vim-gitgutter' " Git status indicator
-Plugin 'ctrlpvim/ctrlp.vim' " Fuzzy file, buffer, mru, tag, ... finder for Vim
-Plugin 'Yggdroot/indentLine' "vertical lines at each indentation
-Plugin 'pangloss/vim-javascript' " JavaScript support
-Plugin 'maxmellon/vim-jsx-pretty' " JS and JSX syntax
-Plugin 'peitalin/vim-jsx-typescript' " TSX syntax
-Plugin 'jparise/vim-graphql' " GraphQL syntax
-Plugin 'moll/vim-node'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'terryma/vim-multiple-cursors' " VSCode style multi-cursors
+" Plugin 'vim-airline/vim-airline' " Lean & mean status/tabline
+" Plugin 'vim-airline/vim-airline-themes' " Airline themes
+" Plugin 'tpope/vim-fugitive' " Git integration
+" Plugin 'rbong/vim-flog' " :Flog git branch viewer
+" Plugin 'airblade/vim-gitgutter' " Git status indicator
+" Plugin 'ctrlpvim/ctrlp.vim' " Fuzzy file, buffer, mru, tag, ... finder for Vim
+" Plugin 'Yggdroot/indentLine' "vertical lines at each indentation
+" Plugin 'pangloss/vim-javascript' " JavaScript support
+" Plugin 'maxmellon/vim-jsx-pretty' " JS and JSX syntax
+" Plugin 'peitalin/vim-jsx-typescript' " TSX syntax
+" Plugin 'jparise/vim-graphql' " GraphQL syntax
+" Plugin 'moll/vim-node'
+" Plugin 'Quramy/tsuquyomi'
+" Plugin 'terryma/vim-multiple-cursors' " VSCode style multi-cursors
 Plugin 'Raimondi/delimitMate' " auto-closing braces
 Plugin 'tpope/vim-surround' " (ys) delete, change and insert surroundings
 Plugin 'vim-scripts/ReplaceWithRegister' " (gr)
-Plugin 'Chiel92/vim-autoformat' " Requires: python3 -m pip install pynvim
-Plugin 'sheerun/vim-polyglot'
+" Plugin 'Chiel92/vim-autoformat' " Requires: python3 -m pip install pynvim
+" Plugin 'sheerun/vim-polyglot'
 Plugin 'sainnhe/sonokai' " Monokai Pro style theme
-Plugin 'rebelot/kanagawa.nvim' "colorscheme
+" Plugin 'rebelot/kanagawa.nvim' "colorscheme
 Plugin 'luochen1990/rainbow' " Bracket highlighting
-Plugin 'NoahTheDuke/vim-just' " justfile support
-Plugin 'kergoth/vim-bitbake' " BitBake support
-Plugin 'iamcco/markdown-preview.nvim' " post installation, run :call mkdp#util#install()
+" Plugin 'NoahTheDuke/vim-just' " justfile support
+" Plugin 'kergoth/vim-bitbake' " BitBake support
+" Plugin 'iamcco/markdown-preview.nvim' " post installation, run :call mkdp#util#install()
 call vundle#end()
 filetype plugin indent on " (required)
 
 """""""""""""""""""""""""""""""""""""
 " Conquer of Completion
 """""""""""""""""""""""""""""""""""""
-let g:coc_global_extensions = [
-            \ 'coc-fzf-preview',
-            \ 'coc-clangd',
-            \ 'coc-cmake',
-            \ 'coc-rust-analyzer',
-            \ 'coc-tsserver',
-            \ 'coc-jedi',
-            \ 'coc-markdownlint',
-            \ 'coc-json',
-            \ 'coc-sh',
-            \ 'coc-zig',
-            \ 'coc-spell-checker',
-            \ ]
-if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-    let g:coc_global_extensions += ['coc-prettier']
-endif
-if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-    let g:coc_global_extensions += ['coc-eslint']
-endif
+" let g:coc_global_extensions = [
+"             \ 'coc-fzf-preview',
+"             \ 'coc-clangd',
+"             \ 'coc-cmake',
+"             \ 'coc-rust-analyzer',
+"             \ 'coc-tsserver',
+"             \ 'coc-jedi',
+"             \ 'coc-markdownlint',
+"             \ 'coc-json',
+"             \ 'coc-sh',
+"             \ 'coc-zig',
+"             \ 'coc-spell-checker',
+"             \ ]
+" if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+"     let g:coc_global_extensions += ['coc-prettier']
+" endif
+" if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+"     let g:coc_global_extensions += ['coc-eslint']
+" endif
 
 """""""""""""""""""""""""""""""""""""
 " Configurations
@@ -109,7 +109,7 @@ let g:rainbow_active = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='sonokai'
+ " let g:airline_theme='sonokai'
 let g:airline_powerline_fonts = 1
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
@@ -136,7 +136,7 @@ let g:rainbow_conf = {
             \       'cmake': 0,
             \   }
             \}
-"colorscheme kanagawa-dragon
+" colorscheme kanagawa-dragon
 colorscheme sonokai
 
 """""""""""""""""""""""""""""""""""""
@@ -144,17 +144,17 @@ colorscheme sonokai
 """""""""""""""""""""""""""""""""""""
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <leader>a  <Plug>(coc-codeaction)
-nmap <leader>r  <Plug>(coc-rename)
-nmap <leader>q  <Plug>(coc-fix-current)
-nmap <Leader>f :Autoformat<CR>
-nmap <leader>s :Rg<CR>
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <leader>a  <Plug>(coc-codeaction)
+" nmap <leader>r  <Plug>(coc-rename)
+" nmap <leader>q  <Plug>(coc-fix-current)
+" nmap <Leader>f :Autoformat<CR>
+" nmap <leader>s :Rg<CR>
 " <leader>p is mapped by CtrlP plugin
 
 """""""""""""""""""""""""""""""""""""

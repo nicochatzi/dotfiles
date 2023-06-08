@@ -41,6 +41,9 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -66,8 +69,8 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+  -- 'tpope/vim-fugitive',
+  -- 'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -84,7 +87,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      -- { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -105,7 +108,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  -- { 'folke/which-key.nvim',          opts = {} },
+  { 'folke/which-key.nvim',          opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -127,66 +130,105 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   branch = "v2.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+  --     "MunifTanjim/nui.nvim",
+  --   },
+  --   config = function()
+  --     -- Unless you are still migrating, remove the deprecated commands from v1.x
+  --     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+  --     require('neo-tree').setup({
+  --       -- config
+  --       window = {
+  --         width = 30,
+  --       },
+  --       filesystem = {
+  --         filtered_items = {
+  --           visible = true,
+  --         },
+  --         follow_current_file = true,
+  --         use_libuv_file_watcher = false,
+  --       },
+  --       -- patch for symbols
+  --       default_component_configs = {
+  --         icon = {
+  --           folder_empty = "󰜌",
+  --           folder_empty_open = "󰜌",
+  --         },
+  --         git_status = {
+  --           symbols = {
+  --             renamed  = "󰁕",
+  --             unstaged = "󰄱",
+  --           },
+  --         },
+  --       },
+  --       document_symbols = {
+  --         kinds = {
+  --           File = { icon = "󰈙", hl = "Tag" },
+  --           Namespace = { icon = "󰌗", hl = "Include" },
+  --           Package = { icon = "󰏖", hl = "Label" },
+  --           Class = { icon = "󰌗", hl = "Include" },
+  --           Property = { icon = "󰆧", hl = "@property" },
+  --           Enum = { icon = "󰒻", hl = "@number" },
+  --           Function = { icon = "󰊕", hl = "Function" },
+  --           String = { icon = "󰀬", hl = "String" },
+  --           Number = { icon = "󰎠", hl = "Number" },
+  --           Array = { icon = "󰅪", hl = "Type" },
+  --           Object = { icon = "󰅩", hl = "Type" },
+  --           Key = { icon = "󰌋", hl = "" },
+  --           Struct = { icon = "󰌗", hl = "Type" },
+  --           Operator = { icon = "󰆕", hl = "Operator" },
+  --           TypeParameter = { icon = "󰊄", hl = "Type" },
+  --           StaticMethod = { icon = '󰠄 ', hl = 'Function' },
+  --         }
+  --       },
+  --     })
+  --   end
+  -- },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      -- Unless you are still migrating, remove the deprecated commands from v1.x
-      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-      require('neo-tree').setup({
-        -- config
-        window = {
+      local function on_attach_hook(bufnr)
+        local api = require "nvim-tree.api"
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
+        -- default mappings
+        api.config.mappings.default_on_attach(bufnr)
+
+        -- custom mappings
+        vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+        vim.keymap.set('n', 'P', api.node.open.preview, opts('Help'))
+
+        api.tree.toggle_gitignore_filter()
+        api.tree.toggle_custom_filter()
+      end
+
+      require('nvim-tree').setup({
+        on_attach = on_attach_hook,
+        sort_by = "case_sensitive",
+        view = {
           width = 30,
         },
-        filesystem = {
-          filtered_items = {
-            visible = true,
-          },
-          follow_current_file = true,
-          use_libuv_file_watcher = false,
+        renderer = {
+          add_trailing = true,
+          group_empty = true,
+          highlight_git = true,
         },
-        -- patch for symbols
-        default_component_configs = {
-          icon = {
-            folder_empty = "󰜌",
-            folder_empty_open = "󰜌",
-          },
-          git_status = {
-            symbols = {
-              renamed  = "󰁕",
-              unstaged = "󰄱",
-            },
-          },
-        },
-        document_symbols = {
-          kinds = {
-            File = { icon = "󰈙", hl = "Tag" },
-            Namespace = { icon = "󰌗", hl = "Include" },
-            Package = { icon = "󰏖", hl = "Label" },
-            Class = { icon = "󰌗", hl = "Include" },
-            Property = { icon = "󰆧", hl = "@property" },
-            Enum = { icon = "󰒻", hl = "@number" },
-            Function = { icon = "󰊕", hl = "Function" },
-            String = { icon = "󰀬", hl = "String" },
-            Number = { icon = "󰎠", hl = "Number" },
-            Array = { icon = "󰅪", hl = "Type" },
-            Object = { icon = "󰅩", hl = "Type" },
-            Key = { icon = "󰌋", hl = "" },
-            Struct = { icon = "󰌗", hl = "Type" },
-            Operator = { icon = "󰆕", hl = "Operator" },
-            TypeParameter = { icon = "󰊄", hl = "Type" },
-            StaticMethod = { icon = '󰠄 ', hl = 'Function' },
-          }
+        filters = {
+          dotfiles = true,
         },
       })
     end
   },
 
+  -- theme(s)
   {
     'rebelot/kanagawa.nvim',
     priority = 1000,
@@ -207,9 +249,6 @@ require('lazy').setup({
           palette = {},
           theme = { all = { ui = { bg_gutter = 'none' } } },
         },
-        overrides = function(colors) -- add/modify highlights
-          return {}
-        end,
         theme = "wave", -- Load "wave" theme when 'background' option is not set
         background = {
           -- map the value of 'background' option to a theme
@@ -230,7 +269,7 @@ require('lazy').setup({
         options = {
           icons_enabled = true,
           theme = 'iceberg_dark',
-          component_separators = { left = '', right = '' },
+          component_separators = { left = '|', right = '|' },
           section_separators = { left = '', right = '' },
           always_divide_middle = false,
         },
@@ -291,19 +330,18 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
     config = function()
       vim.opt.list = true
-      vim.opt.listchars:append "space:⋅"
-      -- vim.opt.listchars:append "eol:↴"
+
+      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
 
       require("indent_blankline").setup {
+        char = "",
         space_char_blankline = " ",
+        show_trailing_blankline_indent = true,
         show_current_context = true,
-        show_current_context_start = true,
+        show_current_context_start = false,
       }
     end
   },
@@ -373,7 +411,36 @@ require('lazy').setup({
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap' },
     config = function()
-      require("dapui").setup()
+      require("dapui").setup({
+        layouts = { {
+          elements = { {
+            id = "scopes",
+            size = 0.40
+          }, {
+            id = "stacks",
+            size = 0.40
+          }, {
+            id = "breakpoints",
+            size = 0.10
+          }, {
+            id = "watches",
+            size = 0.10
+          } },
+          position = "right",
+          size = 100
+        }, {
+          elements = { {
+            id = "repl",
+            size = 0.5
+          }, {
+            id = "console",
+            size = 0.5
+          } },
+          position = "bottom",
+          size = 15
+        } },
+      })
+
       local dap, dapui = require("dap"), require("dapui")
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -421,9 +488,10 @@ require('lazy').setup({
     end
   },
 
+  'iamcco/markdown-preview.nvim'
   'tpope/vim-surround',              -- (ys) delete, change and insert surroundings
   'vim-scripts/ReplaceWithRegister', -- gr
-  'kergoth/vim-bitbake',
+  -- 'kergoth/vim-bitbake',
   'Raimondi/delimitMate',            -- auto-closing braces
   -- {
   --   'akinsho/bufferline.nvim',
@@ -488,6 +556,7 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
+-- this
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
