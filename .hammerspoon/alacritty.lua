@@ -97,7 +97,7 @@ function toggleAlacritty()
 end
 
 -- Bind toggling the Alacritty application
-hs.hotkey.bind({"alt", "shift"}, "Qaa", toggleAlacritty)
+hs.hotkey.bind({"alt", "shift"}, "Q", toggleAlacritty)
 
 -- Subscribe to events in order to hide the Alacritty application if focus is lost
 if CONFIG['HIDE_ON_FOCUS_LOST'] then
