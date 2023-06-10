@@ -57,4 +57,3 @@ selection:
 
 key_bindings:
   - { key: Return, mods: Super, action: ToggleSimpleFullscreen }
-

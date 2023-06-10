@@ -4,7 +4,6 @@ local spaces = require('hs.spaces')
 
 local ALACRITTY_NAME = 'Alacritty'
 local ALACRITTY_SELECTOR = 'org.alacritty'
-local ALACRITTY_TOGGLE_FULLSCREEN_KEYBIND = {'cmd', 'return'}
 
 -- Configuration options for the Alacritty script
 local CONFIG = {
@@ -12,13 +11,6 @@ local CONFIG = {
     HEIGHT_SCALE = 1,
     HIDE_ON_FOCUS_LOST = false,
 }
-
--- Handle aatriggering the Alacritty application's fullscreen keybind
---
--- @param app The Alacritty application
-function toggleAlacrittyFullscreen(app)
-    hs.eventtap.keyStroke(table.unpack(ALACRITTY_TOGGLE_FULLSCREEN_KEYBIND), 0, app)
-end
 
 -- Handle moving the Alacritty application to the specified space and screen
 --
@@ -38,10 +30,6 @@ function moveAlacritty(app, space, screen, widthScale, heightScale)
         window = app:mainWindow()
     end
 
-    if window:isFullscreen() then
-        toggleAlacrittyFullscreen(app)
-    end
-
     local windowFrame = window:frame()
     local screenFrame = screen:fullFrame()
 
@@ -58,10 +46,6 @@ function moveAlacritty(app, space, screen, widthScale, heightScale)
     -- Attempt to move the application to the active space
     spaces.moveWindowToSpace(window, space)
 
-    if not window:isFullscreen() then
-        toggleAlacrittyFullscreen(app)
-    end
-  
     -- Draw focus to the applications main window
     window:focus()
 end
@@ -97,7 +81,7 @@ function toggleAlacritty()
 end
 
 -- Bind toggling the Alacritty application
-hs.hotkey.bind({"alt", "shift"}, "Q", toggleAlacritty)
+hs.hotkey.bind({"alt", "shift"}, "`", toggleAlacritty)
 
 -- Subscribe to events in order to hide the Alacritty application if focus is lost
 if CONFIG['HIDE_ON_FOCUS_LOST'] then
