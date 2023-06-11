@@ -488,13 +488,24 @@ require('lazy').setup({
   'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
   'Raimondi/delimitMate', -- auto-closing braces
   'mbbill/undotree',
+
   {
     'akinsho/bufferline.nvim',
-    version = "*",
-    requires = 'nvim-tree/nvim-web-devicons',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       vim.opt.termguicolors = true
-      require('bufferline').setup({})
+      local bufferline = require('bufferline')
+      bufferline.setup {
+        options = {
+          themable = true,
+          close_command = '',
+          right_mouse_command = '',
+          left_mouse_command = '',
+          buffer_close_icon = '',
+          diagnostics = 'nvim_lsp',
+          separator_style = 'thin',
+        }
+      }
     end
   },
 
