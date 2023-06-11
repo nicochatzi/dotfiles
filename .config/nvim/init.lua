@@ -1,41 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-  And then you can explore or search through `:help lua-guide`
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
--- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -69,7 +31,7 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  -- 'tpope/vim-fugitive',
+  'tpope/vim-fugitive',
   -- 'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
@@ -93,6 +55,26 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
+  {
+    'simrat39/rust-tools.nvim',
+    dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
+    config = function()
+      require('rust-tools').setup()
+    end
+  },
+  {
+    'Saecki/crates.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+      local crates = require('crates')
+      local opts = { silent = true }
+      vim.keymap.set('n', '<leader>rv', crates.show_versions_popup, opts)
+      vim.keymap.set('n', '<leader>rf', crates.show_features_popup, opts)
+      vim.keymap.set('n', '<leader>rd', crates.show_dependencies_popup, opts)
+    end,
+  },
+  'ThePrimeagen/vim-be-good',
 
   {
     -- Autocompletion
@@ -134,46 +116,7 @@ require('lazy').setup({
     },
   },
 
-  {
-    'nvim-tree/nvim-tree.lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      local function on_attach_hook(bufnr)
-        local api = require "nvim-tree.api"
-        local function opts(desc)
-          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        end
-
-        -- default mappings
-        api.config.mappings.default_on_attach(bufnr)
-
-        -- custom mappings
-        vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-        vim.keymap.set('n', 'P', api.node.open.preview, opts('Help'))
-
-        api.tree.toggle_gitignore_filter()
-        api.tree.toggle_hidden_filter()
-      end
-
-      require('nvim-tree').setup({
-        on_attach = on_attach_hook,
-        sort_by = "case_sensitive",
-        view = {
-          width = 30,
-        },
-        renderer = {
-          add_trailing = true,
-          group_empty = true,
-          highlight_git = true,
-        },
-        filters = {
-          dotfiles = true,
-        },
-      })
-    end
-  },
-
-  -- theme(s)
+  -- theme
   {
     'rebelot/kanagawa.nvim',
     priority = 1000,
@@ -201,7 +144,18 @@ require('lazy').setup({
           light = "lotus"
         },
       })
-      vim.cmd.colorscheme 'kanagawa'
+
+      local yellow = "#a96b2c"
+      local teal = "#89B482"
+      vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = teal, bg = "none" })
+      vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = teal, bg = "none" })
+      vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = teal, bg = "none" })
+      vim.cmd.colorscheme('kanagawa')
     end
   },
 
@@ -221,7 +175,11 @@ require('lazy').setup({
         sections = {
           lualine_a = { 'mode' },
           lualine_b = { 'branch' },
-          lualine_c = { 'filename' },
+          lualine_c = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          } },
           lualine_x = {},
           lualine_y = { 'filetype' },
           lualine_z = { {
@@ -290,18 +248,53 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    lazy = true,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'debugloop/telescope-undo.nvim',
+    },
     config = function()
       local telescope = require('telescope')
       telescope.setup({
+        defaults = {
+          border = true,
+          sorting_strategy = 'ascending',
+          layout_strategy = 'bottom_pane',
+          layout_config = {
+            height = 0.4,
+            preview_width = 0.6,
+            prompt_position = 'top',
+          },
+        },
+        pickers = {
+          find_files = {
+            theme = "ivy",
+          }
+        },
         extensions = {
+          undo = {
+            side_by_side = true,
+            sorting_strategy = 'ascending',
+            layout_strategy = 'bottom_pane',
+            layout_config = {
+              height = 0.4,
+              preview_width = 0.6,
+              prompt_position = 'top',
+            },
+          },
+          project = {},
+          file_browser = {
+            grouped = true,
+            hijack_netrw = true,
+            auto_depth = true,
+            initial_browser = "tree",
+            depth = 1,
+          },
           ["ui-select"] = {
             require("telescope.themes").get_dropdown {
               -- even more opts
@@ -318,12 +311,23 @@ require('lazy').setup({
           },
         }
       })
+      telescope.load_extension('undo')
+      telescope.load_extension('project')
+      telescope.load_extension("file_browser")
       telescope.load_extension("ui-select")
     end
   },
   {
     'nvim-telescope/telescope-ui-select.nvim',
     lazy = true,
+  },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    branch = "feat/tree"
+  },
+  {
+    'nvim-telescope/telescope-project.nvim',
   },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -346,6 +350,13 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
+    config = function()
+      require 'nvim-treesitter.configs'.setup {
+        indent = {
+          enable = true
+        }
+      }
+    end
   },
 
   'NoahTheDuke/vim-just',
@@ -474,32 +485,20 @@ require('lazy').setup({
     build = function() vim.fn["mkdp#util#install"]() end,
   },
 
-  'tpope/vim-surround',              -- (ys) delete, change and insert surroundings
-  'vim-scripts/ReplaceWithRegister', -- gr
-  -- 'kergoth/vim-bitbake',
-  'Raimondi/delimitMate',            -- auto-closing braces
-  -- {
-  --   'akinsho/bufferline.nvim',
-  --   version = "*",
-  --   requires = 'nvim-tree/nvim-web-devicons',
-  --   config = function()
-  --     vim.opt.termguicolors = true
-  --     require('bufferline').setup({})
-  --   end
-  -- },
+  'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
+  'Raimondi/delimitMate', -- auto-closing braces
+  'mbbill/undotree',
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      vim.opt.termguicolors = true
+      require('bufferline').setup({})
+    end
+  },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins,
-  { import = 'custom.plugins' },
+  { import = 'htz.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -520,7 +519,7 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -547,6 +546,10 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldenable = 0
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -567,6 +570,28 @@ vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
 vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>')
 vim.keymap.set('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
 vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
+
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<space>fo",
+--   ":Telescope file_browser<CR>",
+--   { noremap = true }
+-- )
+
+-- open file_browser with the path of the current buffer
+vim.api.nvim_set_keymap(
+  "n",
+  "<space>f",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
+
+vim.api.nvim_set_keymap(
+  'n',
+  '<C-p>',
+  ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
+  { noremap = true, silent = true }
+)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -591,7 +616,6 @@ require('telescope').setup {
     },
   }
 }
--- require('telescope').load_extension("ui-select")
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -613,6 +637,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>u', "<cmd>Telescope undo<cr>")
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -737,7 +762,6 @@ end
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
 --  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   clangd = {},
   cmake = {},
