@@ -2,13 +2,17 @@ return {
   -- Git related plugins
   'tpope/vim-fugitive',
   -- 'tpope/vim-rhubarb',
-  'tpope/vim-sleuth',      -- detect tabstop and shiftwidth automatically
-  'tpope/vim-surround',    -- (ys) delete, change and insert surroundings
-  'Raimondi/delimitMate',  -- auto-closing braces
-  'ThePrimeagen/vim-be-good',
-  'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+  'tpope/vim-sleuth',     -- detect tabstop and shiftwidth automatically
+  'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
+  'Raimondi/delimitMate', -- auto-closing braces
   'aca/marp.nvim',
   'NoahTheDuke/vim-just',
+
+  {
+    -- "gcc" => line,  gc" visual, "gc" + motion
+    'numToStr/Comment.nvim',
+    opts = {}
+  },
 
   {
     -- LSP Configuration & Plugins
@@ -44,12 +48,23 @@ return {
 
   {
     'Saecki/crates.nvim',
+    ft = 'toml',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    version = 'v0.3.x',
+    config = function()
+      require('crates').setup()
+      local crates = require('crates')
+      local opts = { silent = true }
+      vim.keymap.set('n', '<leader>rv', crates.show_versions_popup, opts)
+      vim.keymap.set('n', '<leader>rf', crates.show_features_popup, opts)
+      vim.keymap.set('n', '<leader>rd', crates.show_dependencies_popup, opts)
+    end,
   },
 
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
+    -- event = "InsertEnter",
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
     },
