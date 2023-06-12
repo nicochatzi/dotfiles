@@ -160,7 +160,7 @@ return {
       close_if_last_window = true,
       window = {
         position = "left",
-        width = 40,
+        width = 30,
       },
       filesystem = {
         filtered_items = {
@@ -195,14 +195,9 @@ return {
             file_status = true, -- displays file status (readonly status, modified status)
             path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
           } },
-          lualine_c = { {
-            color = { bg = "none" }
-          } },
-          lualine_x = { {
-            color = { bg = "none" }
-          } },
-          lualine_y = {
-          },
+          lualine_c = { 'diagnostics' },
+          lualine_x = { 'progress' },
+          lualine_y = { 'location' },
           lualine_z = { 'filetype' },
         },
         inactive_sections = {
@@ -278,7 +273,6 @@ return {
           layout_strategy = 'bottom_pane',
           layout_config = {
             height = 0.4,
-            preview_width = 0.6,
             prompt_position = 'top',
           },
         },
@@ -294,7 +288,6 @@ return {
             layout_strategy = 'bottom_pane',
             layout_config = {
               height = 0.4,
-              preview_width = 0.6,
               prompt_position = 'top',
             },
           },
@@ -368,13 +361,13 @@ return {
     end
   },
 
-  {
-    "nvim-telescope/telescope-frecency.nvim",
-    dependencies = { "kkharji/sqlite.lua" },
-    config = function()
-      require "telescope".load_extension("frecency")
-    end,
-  },
+  -- {
+  --   "nvim-telescope/telescope-frecency.nvim",
+  --   dependencies = { "kkharji/sqlite.lua" },
+  --   config = function()
+  --     require "telescope".load_extension("frecency")
+  --   end,
+  -- },
 
   {
     -- Highlight, edit, and navigate code
