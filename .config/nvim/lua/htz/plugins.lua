@@ -32,16 +32,14 @@ return {
   {
     'simrat39/rust-tools.nvim',
     dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
-    config = function()
-      require('rust-tools').setup({
-        tools = {
-          inlay_hints = {
-            auto = true,
-            only_current_line = true,
-          }
+    opts = {
+      tools = {
+        inlay_hints = {
+          auto = true,
+          only_current_line = true,
         }
-      })
-    end
+      }
+    }
   },
 
   {
@@ -143,24 +141,22 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     },
-    config = function()
-      require('neo-Tree').setup({
-        close_if_last_window = true,
-        window = {
-          position = "left",
-          width = 40,
+    opts = {
+      close_if_last_window = true,
+      window = {
+        position = "left",
+        width = 40,
+      },
+      filesystem = {
+        filtered_items = {
+          visible = false,
+          hide_dotfiles = true,
+          hide_gitignored = true,
+          hide_hidden = true,
         },
-        filesystem = {
-          filtered_items = {
-            visible = false,
-            hide_dotfiles = true,
-            hide_gitignored = true,
-            hide_hidden = true,
-          },
-          follow_current_file = false,
-        },
-      })
-    end
+        follow_current_file = false,
+      },
+    }
   },
 
   {
@@ -259,7 +255,8 @@ return {
       'debugloop/telescope-undo.nvim',
     },
     config = function()
-      require('telescope').setup({
+      local telescope = require('telescope')
+      telescope.setup({
         defaults = {
           border = true,
           sorting_strategy = 'ascending',
@@ -310,11 +307,10 @@ return {
           },
         }
       })
-
-      require('telescope').load_extension("file_browser")
-      require('telescope').load_extension('undo')
-      require('telescope').load_extension("ui-select")
-      require('telescope').load_extension('project')
+      telescope.load_extension("file_browser")
+      telescope.load_extension('undo')
+      telescope.load_extension("ui-select")
+      telescope.load_extension('project')
     end
   },
 
@@ -409,6 +405,7 @@ return {
       end, 1000)
     end
   },
+
   {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap' },
@@ -443,7 +440,6 @@ return {
             size = 15
           } },
         })
-
         local dap, dapui = require("dap"), require("dapui")
         dap.listeners.after.event_initialized["dapui_config"] = function()
           dapui.open()
@@ -460,39 +456,33 @@ return {
 
   {
     'folke/neodev.nvim',
-    opts = {},
-    config = function()
-      require("neodev").setup({
-        library = { plugins = { "nvim-dap-ui" }, types = true },
-      })
-    end
+    opts = {
+      library = { plugins = { "nvim-dap-ui" }, types = true },
+    }
   },
 
   {
     'Civitasv/cmake-tools.nvim',
-    config = function()
-      vim.defer_fn(function()
-        require("cmake-tools").setup {
-          cmake_command = "cmake",
-          cmake_build_directory = "",
-          cmake_build_directory_prefix = "cmake_build_",                                     -- when cmake_build_directory is "", this option will be activated
-          cmake_generate_options = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
-          cmake_regenerate_on_save = true,                                                   -- Saves CMakeLists.txt file only if mofified.
-          cmake_soft_link_compile_commands = true,                                           -- if softlink compile commands json file
-          cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp
-          cmake_build_options = {},
-          cmake_console_size = 10,                                                           -- cmake output window height
-          cmake_console_position = "belowright",                                             -- "belowright", "aboveleft", ...
-          cmake_show_console = "always",                                                     -- "always", "only_on_error"
-          cmake_kits_path = nil,                                                             -- global cmake kits path
-          cmake_dap_configuration = { name = "cpp", type = "codelldb", request = "launch" }, -- dap configuration, optional
-          cmake_variants_message = {
-            short = { show = true },
-            long = { show = true, max_length = 40 }
-          }
-        }
-      end, 1000)
-    end
+    lazy = true,
+    opts = {
+      cmake_command = "cmake",
+      cmake_build_directory = "",
+      cmake_build_directory_prefix = "cmake_build_",                                     -- when cmake_build_directory is "", this option will be activated
+      cmake_generate_options = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
+      cmake_regenerate_on_save = true,                                                   -- Saves CMakeLists.txt file only if mofified.
+      cmake_soft_link_compile_commands = true,                                           -- if softlink compile commands json file
+      cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp
+      cmake_build_options = {},
+      cmake_console_size = 10,                                                           -- cmake output window height
+      cmake_console_position = "belowright",                                             -- "belowright", "aboveleft", ...
+      cmake_show_console = "always",                                                     -- "always", "only_on_error"
+      cmake_kits_path = nil,                                                             -- global cmake kits path
+      cmake_dap_configuration = { name = "cpp", type = "codelldb", request = "launch" }, -- dap configuration, optional
+      cmake_variants_message = {
+        short = { show = true },
+        long = { show = true, max_length = 40 }
+      }
+    }
   },
 
   {
@@ -505,20 +495,16 @@ return {
   {
     'akinsho/bufferline.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      vim.opt.termguicolors = true
-      local bufferline = require('bufferline')
-      bufferline.setup {
-        options = {
-          themable = true,
-          close_command = '',
-          right_mouse_command = '',
-          left_mouse_command = '',
-          buffer_close_icon = '',
-          diagnostics = 'nvim_lsp',
-          separator_style = 'thin',
-        }
+    opts = {
+      options = {
+        themable = true,
+        close_command = '',
+        right_mouse_command = '',
+        left_mouse_command = '',
+        buffer_close_icon = '',
+        diagnostics = 'nvim_lsp',
+        separator_style = 'thin',
       }
-    end
+    }
   },
 }
