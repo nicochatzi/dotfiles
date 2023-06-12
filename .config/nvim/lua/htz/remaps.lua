@@ -1,5 +1,7 @@
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set('n', '<leader>E', ':Neotree toggle<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -21,12 +23,10 @@ vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
 vim.api.nvim_set_keymap("n", "<leader>gL", ":Git ll<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>gl", ":Git l<CR>", { noremap = true })
 
--- telescope remaps
-vim.api.nvim_set_keymap("n", "<leader>r", ":Telescope registers<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>m", ":Telescope marks<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>f", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>p', ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
-  { noremap = true, silent = true })
+-- rust
+vim.keymap.set('n', '<leader>rv', require('crates').show_versions_popup, { silent = true })
+vim.keymap.set('n', '<leader>rf', require('crates').show_features_popup, { silent = true })
+vim.keymap.set('n', '<leader>rd', require('crates').show_dependencies_popup, { silent = true })
 
 -- debugging remaps
 vim.keymap.set('n', '<leader>dc', require('dap').continue)
@@ -42,23 +42,24 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- telescope
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+-- telescope remaps
+vim.keymap.set("n", "<leader>r", ":Telescope registers<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>m", ":Telescope marks<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>f", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
+vim.keymap.set('n', '<leader>y', ':Telescope frecency<CR>', { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>u', ":Telescope undo<CR>")
+vim.keymap.set('n', '<leader>p', ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
+  { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find,
+  { desc = '[/] Fuzzily search in current buffer' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>u', "<cmd>Telescope undo<cr>")
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

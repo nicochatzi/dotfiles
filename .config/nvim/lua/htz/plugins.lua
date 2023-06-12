@@ -2,13 +2,13 @@ return {
   -- Git related plugins
   'tpope/vim-fugitive',
   -- 'tpope/vim-rhubarb',
-  'tpope/vim-sleuth',     -- detect tabstop and shiftwidth automatically
-  'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
-  'Raimondi/delimitMate', -- auto-closing braces
-  'mbbill/undotree',
+  'tpope/vim-sleuth',      -- detect tabstop and shiftwidth automatically
+  'tpope/vim-surround',    -- (ys) delete, change and insert surroundings
+  'Raimondi/delimitMate',  -- auto-closing braces
   'ThePrimeagen/vim-be-good',
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+  'aca/marp.nvim',
+  'NoahTheDuke/vim-just',
 
   {
     -- LSP Configuration & Plugins
@@ -47,14 +47,6 @@ return {
   {
     'Saecki/crates.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('crates').setup()
-      local crates = require('crates')
-      local opts = { silent = true }
-      vim.keymap.set('n', '<leader>rv', crates.show_versions_popup, opts)
-      vim.keymap.set('n', '<leader>rf', crates.show_features_popup, opts)
-      vim.keymap.set('n', '<leader>rd', crates.show_dependencies_popup, opts)
-    end,
   },
 
   {
@@ -68,8 +60,12 @@ return {
   -- Useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
     opts = {},
-    lazy = true
   },
 
   {
@@ -112,7 +108,7 @@ return {
         colors = {
           -- add/modify theme and palette colors
           palette = {},
-          theme = { all = { ui = { bg_gutter = 'none' } } },
+          theme = { all = { ui = { bg = 'none', bg_gutter = 'none' } } },
         },
         theme = "wave", -- Load "wave" theme when 'background' option is not set
         background = {
@@ -123,6 +119,9 @@ return {
       })
       local yellow = "#a96b2c"
       local teal = "#89B482"
+      vim.api.nvim_set_hl(0, "Title", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
+      vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
       vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })
@@ -131,15 +130,43 @@ return {
       vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = teal, bg = "none" })
-      vim.api.nvim_set_hl(0, "FidgetTitle", { bg = "none" })
-      vim.api.nvim_set_hl(0, "FidgetTask", { bg = "none" })
       vim.cmd.colorscheme('kanagawa')
+    end
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    cmd = { "Neotree" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require('neo-Tree').setup({
+        close_if_last_window = true,
+        window = {
+          position = "left",
+          width = 40,
+        },
+        filesystem = {
+          filtered_items = {
+            visible = false,
+            hide_dotfiles = true,
+            hide_gitignored = true,
+            hide_hidden = true,
+          },
+          follow_current_file = false,
+        },
+      })
     end
   },
 
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     -- See `:help lualine.txt`
     config = function()
       local config = {
@@ -151,28 +178,33 @@ return {
           always_divide_middle = false,
         },
         sections = {
-          lualine_a = { 'mode' },
-          lualine_b = { 'branch' },
-          lualine_c = { {
+          lualine_a = { 'branch' },
+          lualine_b = { {
             'filename',
             file_status = true, -- displays file status (readonly status, modified status)
             path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
           } },
-          lualine_x = {},
-          lualine_y = { 'filetype' },
-          lualine_z = { {
-            'datetime',
-            -- options: default, us, uk, iso, or your own format string ("%H:%M", etc..)
-            style = '%H:%M'
+          lualine_c = { {
+            color = { bg = "none" }
           } },
+          lualine_x = { {
+            color = { bg = "none" }
+          } },
+          lualine_y = {
+          },
+          lualine_z = { 'filetype' },
         },
         inactive_sections = {
-          lualine_a = { 'filename' },
+          lualine_a = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          } },
           lualine_b = {},
           lualine_c = {},
           lualine_x = {},
           lualine_y = {},
-          lualine_z = { 'location' },
+          lualine_z = { 'filetype' },
         },
       }
       -- local function insert_to_x(component)
@@ -227,8 +259,7 @@ return {
       'debugloop/telescope-undo.nvim',
     },
     config = function()
-      local telescope = require('telescope')
-      telescope.setup({
+      require('telescope').setup({
         defaults = {
           border = true,
           sorting_strategy = 'ascending',
@@ -279,28 +310,29 @@ return {
           },
         }
       })
-      telescope.load_extension('undo')
-      telescope.load_extension('project')
-      telescope.load_extension("file_browser")
-      telescope.load_extension("ui-select")
+
+      require('telescope').load_extension("file_browser")
+      require('telescope').load_extension('undo')
+      require('telescope').load_extension("ui-select")
+      require('telescope').load_extension('project')
     end
   },
+
   {
     'nvim-telescope/telescope-ui-select.nvim',
     lazy = true,
   },
+
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    branch = "feat/tree"
+    branch = "feat/tree",
   },
+
   {
     'nvim-telescope/telescope-project.nvim',
   },
 
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-  -- Only load if `make` is available. Make sure you have the system
-  -- requirements installed.
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     -- NOTE: If you are having trouble with this installation,
@@ -326,6 +358,14 @@ return {
   },
 
   {
+    "nvim-telescope/telescope-frecency.nvim",
+    dependencies = { "kkharji/sqlite.lua" },
+    config = function()
+      require "telescope".load_extension("frecency")
+    end,
+  },
+
+  {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
@@ -341,7 +381,9 @@ return {
     end
   },
 
-  'NoahTheDuke/vim-just',
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+  },
 
   -- debugging
   {
@@ -454,7 +496,7 @@ return {
   },
 
   {
-    "iamcco/markdown-preview.nvim",
+    'iamcco/markdown-preview.nvim',
     cmd = { "MarkdownPreviewToggle" },
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,

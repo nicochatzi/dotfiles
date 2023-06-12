@@ -1,10 +1,12 @@
 vim.o.relativenumber = true
 vim.o.hlsearch = true
+vim.o.incsearch = true
 vim.wo.number = true
 vim.o.mouse = 'a'
 -- Enable break indent
 vim.o.breakindent = true
 vim.o.undofile = true
+vim.o.wrap = false
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -14,7 +16,7 @@ vim.o.smartcase = true
 vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
+vim.o.updatetime = 200
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
@@ -29,3 +31,18 @@ vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldenable = 0
 
+vim.o.spell = true
+vim.o.spelllang = "en"
+
+-- hack to remove lualine background
+vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
+vim.api.nvim_set_hl(0, "lualine_x_normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "lualine_x_insert", { bg = "none" })
+
+-- thanks primagean!
+-- move a block in visual mode with J/K
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+-- dont move cursor when using J
+vim.keymap.set("n", "J", "mzJ`z")
