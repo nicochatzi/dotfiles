@@ -2,7 +2,7 @@
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>E', ':Neotree toggle<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>S', ':Neotree git_status toggle<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

@@ -12,6 +12,7 @@ vim.go.ruler = false
 vim.go.showmode = false
 vim.go.showcmd = false
 vim.opt.fillchars = { eob = " ", stl = "—" }
+vim.go.shortmess = 'a'
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true

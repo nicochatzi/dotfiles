@@ -177,6 +177,28 @@ return {
       window = {
         position = "left",
         width = 30,
+        mappings = {
+          ["<C-x>"] = "open_split",
+          ["<C-v>"] = "open_vsplit",
+          ["a"] = {
+            "add",
+            config = {
+              show_path = "relative" -- "none", "relative", "absolute"
+            }
+          },
+          ["c"] = {
+            "copy",
+            config = {
+              show_path = "relative" -- "none", "relative", "absolute"
+            }
+          },
+          ["m"] = {
+            "move",
+            config = {
+              show_path = "relative" -- "none", "relative", "absolute"
+            }
+          },
+        }
       },
       filesystem = {
         filtered_items = {
@@ -185,10 +207,13 @@ return {
           hide_gitignored = true,
           hide_hidden = true,
         },
-        follow_current_file = false,
+        follow_current_file = true,
       },
       source_selector = {
-        winbar = true,
+        winbar = false,
+      },
+      buffers = {
+        follow_current_file = true,
       },
     }
   },
@@ -220,8 +245,9 @@ return {
     config = function()
       local config = {
         options = {
-          icons_enabled = true,
           theme = 'auto',
+          icons_enabled = true,
+          disabled_filetypes = { 'neo-tree' },
           component_separators = { left = '', right = '' },
           section_separators = { left = '|', right = '|' },
           -- section_separators = { left = '', right = '' },
