@@ -7,6 +7,8 @@ vim.o.mouse = 'a'
 vim.o.breakindent = true
 vim.o.undofile = true
 vim.o.wrap = false
+vim.o.laststatus=0
+vim.go.showmode = false
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -33,12 +35,6 @@ vim.o.foldenable = 0
 
 vim.o.spell = true
 vim.o.spelllang = "en"
-
--- hack to remove lualine background
-vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
-vim.api.nvim_set_hl(0, "lualine_x_normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "lualine_x_insert", { bg = "none" })
 
 -- thanks primagean!
 -- move a block in visual mode with J/K

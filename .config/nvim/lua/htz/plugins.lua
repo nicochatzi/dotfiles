@@ -42,6 +42,19 @@ return {
           auto = true,
           only_current_line = true,
         }
+      },
+      server = {
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              autoReload = true
+            },
+            inlayHints = {
+              bindingModeHints = true,
+              chainingHints = true,
+            }
+          }
+        }
       }
     }
   },
@@ -171,70 +184,10 @@ return {
         },
         follow_current_file = false,
       },
+      source_selector = {
+        winbar = true,
+      },
     }
-  },
-
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    -- See `:help lualine.txt`
-    config = function()
-      local config = {
-        options = {
-          icons_enabled = true,
-          theme = 'iceberg_dark',
-          component_separators = { left = '|', right = '|' },
-          section_separators = { left = '', right = '' },
-          always_divide_middle = false,
-        },
-        sections = {
-          lualine_a = { 'branch' },
-          lualine_b = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          } },
-          lualine_c = { 'diagnostics' },
-          lualine_x = { 'progress' },
-          lualine_y = { 'location' },
-          lualine_z = { 'filetype' },
-        },
-        inactive_sections = {
-          lualine_a = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          } },
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = { 'filetype' },
-        },
-      }
-      -- local function insert_to_x(component)
-      --   table.insert(config.sections.lualine_x, component)
-      -- end
-      -- local cmake = require("cmake-tools")
-      -- insert_to_x {
-      --   function()
-      --     local b_preset = cmake.get_build_preset()
-      --     return "[" .. (b_preset and b_preset or "X") .. "]"
-      --   end,
-      --   cond = function()
-      --     return cmake.is_cmake_project() and cmake.has_cmake_preset()
-      --   end,
-      -- }
-      -- insert_to_x {
-      --   function()
-      --     local b_target = cmake.get_build_target()
-      --     return "[" .. (b_target and b_target or "X") .. "]"
-      --   end,
-      --   cond = cmake.is_cmake_project(),
-      -- }
-      require('lualine').setup(config)
-    end
   },
 
   {
@@ -253,6 +206,99 @@ return {
         show_current_context = true,
         show_current_context_start = false,
       }
+    end
+  },
+
+  {
+    -- Set lualine as statusline
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    -- See `:help lualine.txt`
+    config = function()
+      local config = {
+        options = {
+          icons_enabled = true,
+          theme = 'auto',
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '|', right = '|' },
+          -- section_separators = { left = '', right = '' },
+          always_divide_middle = false,
+          -- section_separators = { left = '', right = '' },
+        },
+        sections = {
+          lualine_a = { 'branch' },
+          lualine_b = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          } },
+          lualine_c = { 'diagnostics' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'filetype' },
+        },
+        inactive_sections = {
+          lualine_a = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          } },
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'filetype' },
+        },
+        winbar = {
+          lualine_a = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          } },
+          lualine_b = { 'branch', 'diagnostics' },
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+        inactive_winbar = {
+          lualine_a = {},
+          lualine_b = { {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+          }, 'diagnostics' },
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        }
+      }
+      require('lualine').setup(config)
+      require('lualine').hide({
+        place = { 'statusline', 'tabline' }, -- The segment this change applies to.
+        unhide = false,                      -- whether to re-enable lualine again/
+      })
+      -- hack to remove lualine background
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
+      vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_b_normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_x_normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_x_insert", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_a_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_b_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_c_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_x_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_y_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_z_inactive", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualine_a_normal", { fg = "#282a2e", bg = "#81a2be" })
+      vim.api.nvim_set_hl(0, "lualine_a_insert", { fg = "#282a2e", bg = "#b5bd68" })
+      vim.api.nvim_set_hl(0, "lualine_a_visual", { fg = "#282a2e", bg = "#b294bb" })
+      vim.api.nvim_set_hl(0, "lualine_a_command", { fg = "#282a2e", bg = "#81a2be" })
+      vim.api.nvim_set_hl(0, "lualine_a_replace", { fg = "#282a2e", bg = "#de935f" })
+      vim.api.nvim_set_hl(0, "lualine_a_terminal", { fg = "#282a2e", bg = "#b5bd68" })
     end
   },
 
@@ -300,7 +346,7 @@ return {
             depth = 1,
           },
           ["ui-select"] = {
-            require("telescope.themes").get_dropdown {
+            require("telescope.themes").get_cursor {
               -- even more opts
               width = 0.8,
               previewer = false,
@@ -500,19 +546,19 @@ return {
     build = function() vim.fn["mkdp#util#install"]() end,
   },
 
-  {
-    'akinsho/bufferline.nvim',
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    opts = {
-      options = {
-        themable = true,
-        close_command = '',
-        right_mouse_command = '',
-        left_mouse_command = '',
-        buffer_close_icon = '',
-        diagnostics = 'nvim_lsp',
-        separator_style = 'thin',
-      }
-    }
-  },
+  -- {
+  --   'akinsho/bufferline.nvim',
+  --   dependencies = 'nvim-tree/nvim-web-devicons',
+  --   opts = {
+  --     options = {
+  --       themable = true,
+  --       close_command = '',
+  --       right_mouse_command = '',
+  --       left_mouse_command = '',
+  --       buffer_close_icon = '',
+  --       diagnostics = 'nvim_lsp',
+  --       separator_style = 'thin',
+  --     }
+  --   }
+  -- },
 }
