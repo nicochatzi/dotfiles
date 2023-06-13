@@ -27,8 +27,13 @@ return {
       },
       {
         'j-hui/fidget.nvim',
-        opts = {},
         version = 'legacy',
+        opts = {
+          window = {
+            blend = 0,
+            border = "none",
+          }
+        },
       },
     },
   },
@@ -143,20 +148,18 @@ return {
           light = "lotus"
         },
       })
+      vim.cmd.colorscheme('kanagawa')
+
       local yellow = "#a96b2c"
       local teal = "#89B482"
-      vim.api.nvim_set_hl(0, "Title", { bg = "none" })
-      vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
-      vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
-      vim.api.nvim_set_hl(0, "Normal", { bg = "none", fg = yellow })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", fg = yellow })
+      vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = yellow })
+      -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = teal, bg = "none" })
-      vim.cmd.colorscheme('kanagawa')
     end
   },
 
