@@ -7,8 +7,11 @@ vim.o.mouse = 'a'
 vim.o.breakindent = true
 vim.o.undofile = true
 vim.o.wrap = false
-vim.o.laststatus=0
+vim.go.laststatus = 3
+vim.go.ruler = false
 vim.go.showmode = false
+vim.go.showcmd = false
+vim.opt.fillchars = { eob = " ", stl = "—" }
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
