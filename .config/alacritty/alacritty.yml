@@ -47,7 +47,8 @@ import:
     # from alacritty themes : citylights.yaml
 
 shell:
-  program: /usr/local/bin/fish
+  program: /bin/zsh
+  # program: /usr/local/bin/fish
 
 mouse:
   hide_when_typing: true

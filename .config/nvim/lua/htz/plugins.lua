@@ -176,6 +176,7 @@ return {
       "mrbjarksen/neo-tree-diagnostics.nvim",
     },
     opts = {
+      popup_border_style = "rounded",
       close_if_last_window = true,
       sources = {
         "filesystem",
@@ -208,7 +209,14 @@ return {
               show_path = "relative" -- "none", "relative", "absolute"
             }
           },
-        }
+        },
+        popup = {
+          position = "50%",
+          size = {
+            height = "80%",
+            width = "100%",
+          },
+        },
       },
       filesystem = {
         filtered_items = {

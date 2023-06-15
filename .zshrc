@@ -12,6 +12,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 fpath=( ~/.zfunc "${fpath[@]}" )
+export PATH=$PATH:/usr/local/bin
 
 ###########################################################################
 
@@ -81,8 +82,9 @@ zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# source nli config
+# work
 source $HOME/.config/fael/nli.sh
+source $HOME/.creds/.faelrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
