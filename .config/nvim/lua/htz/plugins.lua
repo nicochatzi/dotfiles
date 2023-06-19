@@ -5,9 +5,21 @@ return {
   'tpope/vim-sleuth',     -- detect tabstop and shiftwidth automatically
   'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
   'Raimondi/delimitMate', -- auto-closing braces
-  'aca/marp.nvim',
-  'NoahTheDuke/vim-just',
-  'sindrets/diffview.nvim',
+
+  {
+    'aca/marp.nvim',
+    ft = 'markdown',
+  },
+
+  {
+    'NoahTheDuke/vim-just',
+    ft = 'just',
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    lazy = true,
+  },
 
   {
     -- "gcc" => line,  gc" visual, "gc" + motion
@@ -42,6 +54,7 @@ return {
   {
     'simrat39/rust-tools.nvim',
     dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
+    ft = 'rust',
     opts = {
       tools = {
         inlay_hints = {
@@ -154,6 +167,8 @@ return {
       local yellow = "#bca17c"
       local teal = "#89B482"
       vim.api.nvim_set_hl(0, "WinSeparator", { fg = yellow })
+      vim.api.nvim_set_hl(0, "StatusLine", { fg = "none" })
+      vim.api.nvim_set_hl(0, "StatusLineNc", { bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = yellow })
       -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })
@@ -170,6 +185,7 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
+    lazy = true,
     cmd = { "Neotree" },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -279,6 +295,7 @@ return {
   {
     "mrbjarksen/neo-tree-diagnostics.nvim",
     dependencies = { "nvim-neo-tree/neo-tree.nvim" },
+    lazy = true,
   },
 
   {
@@ -300,104 +317,11 @@ return {
     end
   },
 
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-    -- See `:help lualine.txt`
-    config = function()
-      local config = {
-        options = {
-          theme = 'auto',
-          icons_enabled = true,
-          disabled_filetypes = { 'neo-tree' },
-          component_separators = { left = '', right = '' },
-          section_separators = { left = '|', right = '|' },
-          -- section_separators = { left = '', right = '' },
-          always_divide_middle = false,
-          -- section_separators = { left = '', right = '' },
-        },
-        sections = {
-          lualine_a = { 'branch' },
-          lualine_b = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          } },
-          lualine_c = { 'diagnostics' },
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = { 'filetype' },
-        },
-        inactive_sections = {
-          lualine_a = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          } },
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = { 'filetype' },
-        },
-        winbar = {
-          lualine_a = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          } },
-          lualine_b = { 'branch', 'diagnostics' },
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {},
-        },
-        inactive_winbar = {
-          lualine_a = {},
-          lualine_b = { {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-          }, 'diagnostics' },
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {}
-        }
-      }
-      require('lualine').setup(config)
-      require('lualine').hide({
-        place = { 'statusline', 'tabline' }, -- The segment this change applies to.
-        unhide = false,                      -- whether to re-enable lualine again/
-      })
-      -- hack to remove lualine background
-      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-      vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_b_normal", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_x_normal", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_x_insert", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_a_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_b_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_c_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_x_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_y_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_z_inactive", { bg = "none" })
-      vim.api.nvim_set_hl(0, "lualine_a_normal", { fg = "#282a2e", bg = "#81a2be" })
-      vim.api.nvim_set_hl(0, "lualine_a_insert", { fg = "#282a2e", bg = "#b5bd68" })
-      vim.api.nvim_set_hl(0, "lualine_a_visual", { fg = "#282a2e", bg = "#b294bb" })
-      vim.api.nvim_set_hl(0, "lualine_a_command", { fg = "#282a2e", bg = "#81a2be" })
-      vim.api.nvim_set_hl(0, "lualine_a_replace", { fg = "#282a2e", bg = "#de935f" })
-      vim.api.nvim_set_hl(0, "lualine_a_terminal", { fg = "#282a2e", bg = "#b5bd68" })
-    end
-  },
-
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    lazy = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
@@ -469,10 +393,12 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     branch = "feat/tree",
+    lazy = true,
   },
 
   {
     'nvim-telescope/telescope-project.nvim',
+    lazy = true,
   },
 
   {
@@ -480,6 +406,7 @@ return {
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
     build = 'make',
+    lazy = true,
     cond = function()
       return vim.fn.executable 'make' == 1
     end,
@@ -525,78 +452,77 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter-context',
+    lazy = true,
   },
 
   -- debugging
   {
     'mfussenegger/nvim-dap',
+    lazy = true,
     config = function()
-      vim.defer_fn(function()
-        vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-        local dap = require('dap')
-        dap.adapters.codelldb = {
-          type = 'server',
-          host = '127.0.0.1',
-          port = 13000, -- 💀 Use the port printed out or specified with `--port`
-          -- type = 'server',
-          -- port = "${port}",
-          -- executable = {
-          --   -- CHANGE THIS to your path!
-          --   command = '~/.codelldb/extension/adapter/codelldb',
-          --   args = { "--port", "${port}" },
-          --   -- On windows you may have to uncomment this:
-          --   -- detached = false,
-          -- }
-        }
-      end, 1000)
+      vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
+      local dap = require('dap')
+      dap.adapters.codelldb = {
+        type = 'server',
+        host = '127.0.0.1',
+        port = 13000, -- 💀 Use the port printed out or specified with `--port`
+        -- type = 'server',
+        -- port = "${port}",
+        -- executable = {
+        --   -- CHANGE THIS to your path!
+        --   command = '~/.codelldb/extension/adapter/codelldb',
+        --   args = { "--port", "${port}" },
+        --   -- On windows you may have to uncomment this:
+        --   -- detached = false,
+        -- }
+      }
     end
   },
 
   {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap' },
+    lazy = true,
     config = function()
-      vim.defer_fn(function()
-        require("dapui").setup({
-          layouts = { {
-            elements = { {
-              id = "scopes",
-              size = 0.40
-            }, {
-              id = "stacks",
-              size = 0.40
-            }, {
-              id = "breakpoints",
-              size = 0.10
-            }, {
-              id = "watches",
-              size = 0.10
-            } },
-            position = "right",
-            size = 100
+      require("dapui").setup({
+        layouts = { {
+          elements = { {
+            id = "scopes",
+            size = 0.40
           }, {
-            elements = { {
-              id = "repl",
-              size = 0.5
-            }, {
-              id = "console",
-              size = 0.5
-            } },
-            position = "bottom",
-            size = 15
+            id = "stacks",
+            size = 0.40
+          }, {
+            id = "breakpoints",
+            size = 0.10
+          }, {
+            id = "watches",
+            size = 0.10
           } },
-        })
-        local dap, dapui = require("dap"), require("dapui")
-        dap.listeners.after.event_initialized["dapui_config"] = function()
-          dapui.open()
-        end
-        dap.listeners.before.event_terminated["dapui_config"] = function()
-          dapui.close()
-        end
-        dap.listeners.before.event_exited["dapui_config"] = function()
-          dapui.close()
-        end
-      end, 1000)
+          position = "right",
+          size = 100
+        }, {
+          elements = { {
+            id = "repl",
+            size = 0.5
+          }, {
+            id = "console",
+            size = 0.5
+          } },
+          position = "bottom",
+          size = 15
+        } },
+      })
+      local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     end
   },
 
@@ -637,29 +563,4 @@ return {
     ft = { "markdown" },
     build = function() vim.fn["mkdp#util#install"]() end,
   },
-
-  {
-    'akinsho/toggleterm.nvim',
-    version = "*",
-    config = true,
-    opts = {
-      open_mapping = [[<c-`>]],
-    }
-  },
-
-  -- {
-  --   'akinsho/bufferline.nvim',
-  --   dependencies = 'nvim-tree/nvim-web-devicons',
-  --   opts = {
-  --     options = {
-  --       themable = true,
-  --       close_command = '',
-  --       right_mouse_command = '',
-  --       left_mouse_command = '',
-  --       buffer_close_icon = '',
-  --       diagnostics = 'nvim_lsp',
-  --       separator_style = 'thin',
-  --     }
-  --   }
-  -- },
 }
