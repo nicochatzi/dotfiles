@@ -164,16 +164,16 @@ return {
       })
       vim.cmd.colorscheme('kanagawa')
 
-      local yellow = "#bca17c"
-      local teal = "#89B482"
-      vim.api.nvim_set_hl(0, "WinSeparator", { fg = yellow })
-      vim.api.nvim_set_hl(0, "StatusLine", { fg = "none" })
-      vim.api.nvim_set_hl(0, "StatusLineNc", { bg = "none" })
-      vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = yellow })
-      -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none", fg = yellow })
-      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })
-      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "none", fg = yellow })
-      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "none", fg = yellow })
+      local deep = "#346152"
+      local teal = "#5faf94"
+      vim.api.nvim_set_hl(0, "WinSeparator", { fg = deep })
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = 'none', fg = deep })
+      vim.api.nvim_set_hl(0, "StatusLineNc", { bg = 'none', fg = deep })
+      vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = deep })
+      -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none", fg = deep })
+      vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = deep })
+      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = "none", fg = deep })
+      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = "none", fg = deep })
       vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = teal, bg = "none" })
       vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = teal, bg = "none" })
@@ -452,7 +452,6 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter-context',
-    lazy = true,
   },
 
   -- debugging
@@ -626,8 +625,6 @@ return {
         unhide = false,                      -- whether to re-enable lualine again/
       })
       -- hack to remove lualine background
-      vim.api.nvim_set_hl(0, "StatusLine", { bg = "none" })
-      vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_b_normal", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
