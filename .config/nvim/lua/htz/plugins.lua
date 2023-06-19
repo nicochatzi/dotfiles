@@ -7,6 +7,7 @@ return {
   'Raimondi/delimitMate', -- auto-closing braces
   'aca/marp.nvim',
   'NoahTheDuke/vim-just',
+  'sindrets/diffview.nvim',
 
   {
     -- "gcc" => line,  gc" visual, "gc" + motion
@@ -150,7 +151,7 @@ return {
       })
       vim.cmd.colorscheme('kanagawa')
 
-      local yellow = "#a96b2c"
+      local yellow = "#bca17c"
       local teal = "#89B482"
       vim.api.nvim_set_hl(0, "WinSeparator", { fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = yellow })
