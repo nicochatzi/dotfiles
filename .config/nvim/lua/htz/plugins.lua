@@ -152,6 +152,7 @@ return {
 
       local yellow = "#a96b2c"
       local teal = "#89B482"
+      vim.api.nvim_set_hl(0, "WinSeparator", { fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none", fg = yellow })
       -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none", fg = yellow })
       vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none", fg = yellow })

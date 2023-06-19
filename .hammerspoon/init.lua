@@ -1,2 +1,2 @@
-require('alacritty')
+require('kitty')
 
