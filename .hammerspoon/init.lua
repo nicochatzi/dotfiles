@@ -1,2 +1,3 @@
-require('kitty')
+require('alacritty')
+-- require('kitty')
 
