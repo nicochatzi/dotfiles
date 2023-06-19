@@ -16,10 +16,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({{ import = 'htz.plugins' }}, {})
-require('htz.opts')
-require('htz.remaps')
-require('htz.lsp')
+require('lazy').setup({ { import = 'plugins' } }, {})
+require('opts')
+require('remaps')
+require('lsp')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
