@@ -25,18 +25,18 @@ export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 # Plugins
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "Aloxaf/fzf-tab"
-zplug "unixorn/fzf-zsh-plugin"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "unixorn/fzf-zsh-plugin", defer:3
+zplug "Aloxaf/fzf-tab", defer:3
 
 # zplug self-managing
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    zplug install
-fi
+# # Install plugins if there are plugins that have not been installed
+# if ! zplug check --verbose; then
+#     zplug install
+# fi
 
 zplug load 
 

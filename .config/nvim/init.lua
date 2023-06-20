@@ -1,5 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.loader.enable()
 
 -- https://github.com/folke/lazy.nvim
 -- `:help lazy.nvim.txt`

@@ -55,6 +55,7 @@ return {
     'simrat39/rust-tools.nvim',
     dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
     ft = 'rust',
+    lazy = true,
     opts = {
       tools = {
         inlay_hints = {
@@ -81,6 +82,7 @@ return {
   {
     'Saecki/crates.nvim',
     ft = 'toml',
+    lazy = true,
     dependencies = { 'nvim-lua/plenary.nvim' },
     version = 'v0.3.x',
     config = function()
@@ -96,7 +98,8 @@ return {
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
-    -- event = "InsertEnter",
+    lazy = true,
+    event = "InsertEnter",
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
     },
@@ -166,6 +169,8 @@ return {
 
       local deep = "#346152"
       local teal = "#5faf94"
+      -- vim.api.nvim_set_hl(0, "CursorLine", { fg = '#4b5356' })
+      vim.api.nvim_set_hl(0, "Visual", { bg = '#323d3d' })
       vim.api.nvim_set_hl(0, "WinSeparator", { fg = deep })
       vim.api.nvim_set_hl(0, "StatusLine", { bg = 'none', fg = deep })
       vim.api.nvim_set_hl(0, "StatusLineNc", { bg = 'none', fg = deep })
