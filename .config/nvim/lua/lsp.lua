@@ -124,8 +124,6 @@ local servers = {
   tsserver = {},
   taplo = {},
   dockerls = {},
-  -- gopls = {},
-
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
