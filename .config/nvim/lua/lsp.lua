@@ -1,11 +1,8 @@
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
-
-  -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'toml', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -103,12 +100,12 @@ local on_attach = function(_, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
 
-  -- Create a command `:Format` local to the LSP buffer
-  nmap('<leader>af', vim.lsp.buf.format, '[A]uto [F]ormat')
-
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  -- Create a command `:Format` local to the LSP buffer
+  nmap('<leader>af', vim.lsp.buf.format, '[A]uto [F]ormat')
 end
 
 -- Enable the following language servers
@@ -120,7 +117,11 @@ local servers = {
   cmake = {},
   zls = {},
   pyright = {},
-  rust_analyzer = {},
+  rust_analyzer = {
+    checkOnSave = {
+      command = "clippy",
+    },
+  },
   tsserver = {},
   taplo = {},
   dockerls = {},

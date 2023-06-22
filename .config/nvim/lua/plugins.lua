@@ -53,9 +53,11 @@ return {
 
   {
     'simrat39/rust-tools.nvim',
-    dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
-    ft = 'rust',
-    lazy = true,
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+      'mfussenegger/nvim-dap',
+    },
     opts = {
       tools = {
         inlay_hints = {
@@ -72,7 +74,10 @@ return {
             inlayHints = {
               bindingModeHints = true,
               chainingHints = true,
-            }
+            },
+            checkOnSave = {
+              command = "clippy",
+            },
           }
         }
       }
@@ -539,7 +544,7 @@ return {
 
   {
     'Civitasv/cmake-tools.nvim',
-    lazy = true,
+    ft = 'cpp',
     opts = {
       cmake_command = "cmake",
       cmake_build_directory = "",
@@ -630,7 +635,7 @@ return {
         unhide = false,                      -- whether to re-enable lualine again/
       })
       -- hack to remove lualine background
-      vim.api.nvim_set_hl(0, "lualine_b_normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "lualin_b_normal", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_c_normal", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_c_insert", { bg = "none" })
       vim.api.nvim_set_hl(0, "lualine_x_normal", { bg = "none" })
@@ -654,14 +659,14 @@ return {
     'krady21/compiler-explorer.nvim',
     opts = {
       url = "https://godbolt.org",
-      infer_lang = true,    -- Try to infer possible language based on file extension.
+      infer_lang = true,      -- Try to infer possible language based on file extension.
       line_match = {
-        highlight = true,  -- highlight the matching line(s) in the other buffer.
-        jump = true,       -- move the cursor in the other buffer to the first matching line.
+        highlight = true,     -- highlight the matching line(s) in the other buffer.
+        jump = true,          -- move the cursor in the other buffer to the first matching line.
       },
-      open_qflist = false,  --  Open qflist after compilation if there are diagnostics.
-      split = "split",      -- How to split the window after the second compile (split/vsplit).
-      compiler_flags = "",  -- Default flags passed to the compiler.
+      open_qflist = false,    --  Open qflist after compilation if there are diagnostics.
+      split = "split",        -- How to split the window after the second compile (split/vsplit).
+      compiler_flags = "",    -- Default flags passed to the compiler.
       job_timeout_ms = 25000, -- Timeout for libuv job in milliseconds.
       -- languages = {         -- Language specific default compiler/flags
       --   c = {
@@ -670,5 +675,10 @@ return {
       --   },
       -- },
     }
+  },
+
+  {
+    'alopatindev/cargo-limit',
+    build = 'cargo install cargo-limit nvim-send',
   },
 }
