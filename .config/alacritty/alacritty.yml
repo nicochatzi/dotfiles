@@ -9,6 +9,7 @@ window:
     columns: 150
     lines: 40
   opacity: 0.87
+  option_as_alt: Both
 
   # Window decorations
   #
@@ -57,3 +58,6 @@ selection:
 
 key_bindings:
   - { key: Return, mods: Super, action: ToggleSimpleFullscreen }
+  - { key: Key2,     mods: Alt,     chars: "€"                           }
+  - { key: Key3,     mods: Alt,     chars: "#"                           }
+

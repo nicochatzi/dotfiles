@@ -13,6 +13,8 @@ fi
 
 fpath=( ~/.zfunc "${fpath[@]}" )
 export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:$HOME/.zvm/bin
+export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 
 ###########################################################################
 
