@@ -31,13 +31,10 @@ return {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
+      'simrat39/rust-tools.nvim',
       'williamboman/mason-lspconfig.nvim',
-      {
-        'folke/neodev.nvim',
-        opts = {}
-      },
+      'folke/neodev.nvim',
       {
         'j-hui/fidget.nvim',
         branch = 'legacy',
@@ -51,38 +48,15 @@ return {
     },
   },
 
-  {
-    'simrat39/rust-tools.nvim',
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'nvim-lua/plenary.nvim',
-      'mfussenegger/nvim-dap',
-    },
-    opts = {
-      tools = {
-        inlay_hints = {
-          auto = true,
-          only_current_line = true,
-        }
-      },
-      server = {
-        settings = {
-          ['rust-analyzer'] = {
-            cargo = {
-              autoReload = true
-            },
-            inlayHints = {
-              bindingModeHints = true,
-              chainingHints = true,
-            },
-            checkOnSave = {
-              command = "clippy",
-            },
-          }
-        }
-      }
-    }
-  },
+  -- {
+  --   'simrat39/rust-tools.nvim',
+  --   dependencies = {
+  --     'neovim/nvim-lspconfig',
+  --     'nvim-lua/plenary.nvim',
+  --     'mfussenegger/nvim-dap',
+  --   },
+  --   ft = 'rust',
+  -- },
 
   {
     'Saecki/crates.nvim',

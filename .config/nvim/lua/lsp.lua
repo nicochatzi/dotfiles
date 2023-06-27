@@ -1,9 +1,20 @@
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'toml', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = {
+    'c',
+    'cpp',
+    'go',
+    'lua',
+    'python',
+    'rust',
+    'toml',
+    'tsx',
+    'typescript',
+    'vimdoc',
+    'vim',
+  },
   auto_install = true,
-
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
@@ -63,13 +74,33 @@ require('nvim-treesitter.configs').setup {
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
+local on_attach = function(client, bufnr)
+  -- setup vim.lsp.codelens.refresh() autocmd
+  local status_ok, codelens_supported = pcall(function()
+    return client.supports_method "textDocument/codeLens"
+  end)
+  if not status_ok or not codelens_supported then
+    return
+  end
+  local group = "lsp_code_lens_refresh"
+  local cl_events = { "BufEnter", "InsertLeave" }
+  local ok, cl_autocmds = pcall(vim.api.nvim_get_autocmds, {
+    group = group,
+    buffer = bufnr,
+    event = cl_events,
+  })
+
+  if ok and #cl_autocmds > 0 then
+    return
+  end
+  vim.api.nvim_create_augroup(group, { clear = false })
+  vim.api.nvim_create_autocmd(cl_events, {
+    group = group,
+    buffer = bufnr,
+    callback = vim.lsp.codelens.refresh,
+  })
+
+  -- setup all the keymaps to use when LSP is attached
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -109,19 +140,12 @@ local on_attach = function(_, bufnr)
 end
 
 -- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
 local servers = {
   clangd = {},
   cmake = {},
   zls = {},
   pyright = {},
-  rust_analyzer = {
-    checkOnSave = {
-      command = "clippy",
-    },
-  },
+  rust_analyzer = {},
   tsserver = {},
   taplo = {},
   dockerls = {},
@@ -152,6 +176,84 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
     }
   end,
+  ["rust_analyzer"] = function()
+    -- still need to
+    -- 1: call vim.lsp.codelens.refresh() on buffer change
+    -- ~~2: call require'rust-tools'.inlay_hints.enable()~~
+    -- 3: find out how to list implementations of references
+    local extension_path = vim.env.HOME .. "/.local/share/nvim/mason/packages/codelldb/extension/"
+    local codelldb_path = extension_path .. "adapter/codelldb"
+    local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+    require("rust-tools").setup({
+      capabilities = capabilities,
+      server = {
+        path = vim.env.HOME .. "/toolchain/ra-multiplex/target/release",
+        on_attach = on_attach,
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              autoReload = true,
+              allFeatures = true,
+            },
+            inlayHints = {
+              bindingModeHints = true,
+              chainingHints = true,
+              closingBraceHints = true,
+              closureReturnTypeHints = { enable = "with_block", },
+              lifetimeElisionHints = { enable = "skip_trivial", },
+            },
+            checkOnSave = {
+              enable = true,
+              command = "clippy",
+            },
+            lens = {
+              enable = true,
+              references = {
+                implementatios = { enable = true },
+                enumVariant = { enable = true },
+                adt = { enable = true },
+                method = { enable = true },
+                trait = { enable = true },
+              }
+            },
+          }
+        }
+      },
+      tools = {
+        executor = require("rust-tools.executors").quickfix,
+        on_initialized = nil,
+        reload_workspace_from_cargo_toml = true,
+        inlay_hints = {
+          auto = true,
+          only_current_line = false,
+          show_parameter_hints = true,
+          parameter_hints_prefix = "<- ",
+          other_hints_prefix = "=> ",
+          max_len_align = false,
+          max_len_align_padding = 1,
+          right_align = false,
+          right_align_padding = 7,
+          highlight = "Comment",
+        },
+        hover_actions = {
+          border = {
+            { "╭", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "╮", "FloatBorder" },
+            { "│", "FloatBorder" },
+            { "╯", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "╰", "FloatBorder" },
+            { "│", "FloatBorder" },
+          },
+          max_width = nil,
+          max_height = nil,
+          auto_focus = false,
+        },
+      },
+      dap = { adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path) },
+    })
+  end
 }
 
 -- [[ Configure nvim-cmp ]]
