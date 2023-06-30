@@ -47,7 +47,7 @@ import:
   - ~/.config/alacritty/theme.yaml
 
 shell:
-  program: /bin/zsh
+  program: /usr/local/bin/fish
   # program: /usr/local/bin/fish
 
 mouse:

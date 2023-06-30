@@ -17,6 +17,10 @@ export PATH=$PATH:$HOME/.zvm/bin
 export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
 
+# setup sccache
+# export RUSTC_WRAPPER=/usr/local/bin/sccache
+# ulimit -n 10240
+
 ###########################################################################
 
 bindkey '^P' history-beginning-search-backward
