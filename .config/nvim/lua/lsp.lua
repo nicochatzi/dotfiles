@@ -61,7 +61,7 @@ require('nvim-treesitter.configs').setup {
       },
     },
     swap = {
-      enable = true,
+      enable = false,
       swap_next = {
         ['<leader>a'] = '@parameter.inner',
       },
@@ -111,6 +111,7 @@ local on_attach = function(client, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>cr', vim.lsp.codelens.run, '[C]ode-lens [R]un')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -177,17 +178,12 @@ mason_lspconfig.setup_handlers {
     }
   end,
   ["rust_analyzer"] = function()
-    -- still need to
-    -- 1: call vim.lsp.codelens.refresh() on buffer change
-    -- ~~2: call require'rust-tools'.inlay_hints.enable()~~
-    -- 3: find out how to list implementations of references
     local extension_path = vim.env.HOME .. "/.local/share/nvim/mason/packages/codelldb/extension/"
     local codelldb_path = extension_path .. "adapter/codelldb"
     local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
     require("rust-tools").setup({
       capabilities = capabilities,
       server = {
-        path = vim.env.HOME .. "/toolchain/ra-multiplex/target/release",
         on_attach = on_attach,
         settings = {
           ['rust-analyzer'] = {
@@ -204,6 +200,7 @@ mason_lspconfig.setup_handlers {
             },
             checkOnSave = {
               enable = true,
+              allTargets = false,
               command = "clippy",
             },
             lens = {
@@ -293,3 +290,13 @@ cmp.setup {
     { name = 'nvim_lsp' },
   },
 }
+
+-- setup file associations
+-- local associate_filetype = function(pattern, filetype)
+--   vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+--     pattern = { pattern },
+--     callback = 'setfiletype ' .. filetype,
+--   })
+-- end
+--
+-- associate_filetype("*.mir", "rust")

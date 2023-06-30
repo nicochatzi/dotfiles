@@ -5,6 +5,7 @@ return {
   'tpope/vim-sleuth',     -- detect tabstop and shiftwidth automatically
   'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
   'Raimondi/delimitMate', -- auto-closing braces
+  'mhinz/vim-startify',
 
   {
     'aca/marp.nvim',
@@ -48,15 +49,14 @@ return {
     },
   },
 
-  -- {
-  --   'simrat39/rust-tools.nvim',
-  --   dependencies = {
-  --     'neovim/nvim-lspconfig',
-  --     'nvim-lua/plenary.nvim',
-  --     'mfussenegger/nvim-dap',
-  --   },
-  --   ft = 'rust',
-  -- },
+  {
+    'simrat39/rust-tools.nvim',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+      'mfussenegger/nvim-dap',
+    },
+  },
 
   {
     'Saecki/crates.nvim',
@@ -150,6 +150,7 @@ return {
       local teal = "#5faf94"
       -- vim.api.nvim_set_hl(0, "CursorLine", { fg = '#4b5356' })
       vim.api.nvim_set_hl(0, "Visual", { bg = '#323d3d' })
+      vim.api.nvim_set_hl(0, "FloatBorder", { bg = 'none' })
       vim.api.nvim_set_hl(0, "WinSeparator", { fg = deep })
       vim.api.nvim_set_hl(0, "StatusLine", { bg = 'none', fg = deep })
       vim.api.nvim_set_hl(0, "StatusLineNc", { bg = 'none', fg = deep })
@@ -434,9 +435,7 @@ return {
     end
   },
 
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-  },
+  'nvim-treesitter/nvim-treesitter-context',
 
   -- debugging
   {
@@ -544,6 +543,7 @@ return {
     'iamcco/markdown-preview.nvim',
     cmd = { "MarkdownPreviewToggle" },
     ft = { "markdown" },
+    lazy = true,
     build = function() vim.fn["mkdp#util#install"]() end,
   },
 
@@ -630,29 +630,36 @@ return {
   },
 
   {
-    'krady21/compiler-explorer.nvim',
-    opts = {
-      url = "https://godbolt.org",
-      infer_lang = true,      -- Try to infer possible language based on file extension.
-      line_match = {
-        highlight = true,     -- highlight the matching line(s) in the other buffer.
-        jump = true,          -- move the cursor in the other buffer to the first matching line.
-      },
-      open_qflist = false,    --  Open qflist after compilation if there are diagnostics.
-      split = "split",        -- How to split the window after the second compile (split/vsplit).
-      compiler_flags = "",    -- Default flags passed to the compiler.
-      job_timeout_ms = 25000, -- Timeout for libuv job in milliseconds.
-      -- languages = {         -- Language specific default compiler/flags
-      --   c = {
-      --    compiler = "g121",
-      --    compiler_flags = "-O2 -Wall",
-      --   },
-      -- },
-    }
+    'alopatindev/cargo-limit',
+    ft = 'rust',
+    build = 'cargo install cargo-limit nvim-send',
   },
 
   {
-    'alopatindev/cargo-limit',
-    build = 'cargo install cargo-limit nvim-send',
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    opts = {
+      preview = {
+        winblend = 0,
+      }
+    }
   },
+
+  -- {
+  --   "folke/persistence.nvim",
+  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  --   module = "persistence",
+  --   config = function()
+  --     require("persistence").setup {
+  --       dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+  --       options = { "buffers", "curdir", "tabpages", "winsize" },
+  --     }
+  --     -- restore the session for the current directory
+  --     vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {})
+  --     -- restore the last session
+  --     vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
+  --     -- stop Persistence => session won't be saved on exit
+  --     vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
+  --   end,
+  -- },
 }
