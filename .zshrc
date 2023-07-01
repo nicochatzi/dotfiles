@@ -1,4 +1,6 @@
-# Enable Powerlevel11k instant prompt. Should stay close to the top of ~/.zshrc.
+# zmodload zsh/zprof
+#
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -6,16 +8,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ###########################################################################
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
 fpath=( ~/.zfunc "${fpath[@]}" )
 export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:$HOME/.zvm/bin
 export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
-export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
+# export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
 
 # setup sccache
 # export RUSTC_WRAPPER=/usr/local/bin/sccache
@@ -27,25 +24,19 @@ bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
 ###########################################################################
-# Source ZPlug
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
 # Plugins
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-autosuggestions", defer:2
-zplug "unixorn/fzf-zsh-plugin", defer:3
-zplug "Aloxaf/fzf-tab", defer:3
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
+zinit load zsh-users/zsh-syntax-highlighting
+zinit load zsh-users/zsh-autosuggestions
+zinit load unixorn/fzf-zsh-plugin
+zinit load Aloxaf/fzf-tab
 
-# zplug self-managing
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# # Install plugins if there are plugins that have not been installed
-# if ! zplug check --verbose; then
-#     zplug install
-# fi
-
-zplug load 
 
 ###########################################################################
 # Preferred editor for local and remote sessions
@@ -63,6 +54,7 @@ alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias vi='nvim'
 
 ###########################################################################
 # Plugin config
@@ -95,3 +87,5 @@ source $HOME/.creds/.faelrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# zprof

@@ -13,6 +13,7 @@ require('nvim-treesitter.configs').setup {
     'typescript',
     'vimdoc',
     'vim',
+    'yaml',
   },
   auto_install = true,
   highlight = { enable = true },
@@ -117,7 +118,8 @@ local on_attach = function(client, bufnr)
   nmap('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '[S]earch [O]objets/Symbols')
+  nmap('<leader>sc', require('telescope.builtin').lsp_document_symbols, '[S]earch [C]ommands')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
@@ -156,6 +158,9 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+  yamlls = {
+    schemaStore = { enable = true },
+  }
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers

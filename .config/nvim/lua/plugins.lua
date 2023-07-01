@@ -8,6 +8,11 @@ return {
   'mhinz/vim-startify',
 
   {
+    'nvim-pack/nvim-spectre',
+    lazy = true,
+  },
+
+  {
     'aca/marp.nvim',
     ft = 'markdown',
   },
@@ -56,6 +61,8 @@ return {
       'nvim-lua/plenary.nvim',
       'mfussenegger/nvim-dap',
     },
+    ft = "rust",
+    lazy = true,
   },
 
   {
