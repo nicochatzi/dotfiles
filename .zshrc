@@ -6,6 +6,12 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+#
+###########################################################################
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
 ###########################################################################
 fpath=( ~/.zfunc "${fpath[@]}" )
@@ -24,19 +30,17 @@ bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
 ###########################################################################
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
-
 # Plugins
-zinit ice depth"1" # git clone depth
-zinit light romkatv/powerlevel10k
-zinit load zsh-users/zsh-syntax-highlighting
-zinit load zsh-users/zsh-autosuggestions
-zinit load unixorn/fzf-zsh-plugin
-zinit load Aloxaf/fzf-tab
+zinit ice depth"1"; zinit light zsh-users/zsh-completions
 
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+
+zinit light Aloxaf/fzf-tab
+zpcompinit; zpcdreplay
+
+zinit light unixorn/fzf-zsh-plugin
+zinit light romkatv/powerlevel10k
 
 ###########################################################################
 # Preferred editor for local and remote sessions
