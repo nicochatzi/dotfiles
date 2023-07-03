@@ -207,6 +207,7 @@ mason_lspconfig.setup_handlers {
               enable = true,
               allTargets = false,
               command = "clippy",
+              extraArgs = { "--all", "--", "-W", "clippy::all" },
             },
             lens = {
               enable = true,
@@ -263,7 +264,8 @@ mason_lspconfig.setup_handlers {
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
-    expand = function()
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
@@ -292,8 +294,18 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp' },
+    { name = 'path' },                                       -- file paths
+    { name = 'nvim_lsp',               keyword_length = 3 }, -- from language server
+    { name = 'nvim_lsp_signature_help' },                    -- display function signatures with current parameter emphasized
+    { name = 'nvim_lua',               keyword_length = 2 }, -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'buffer',                 keyword_length = 2 }, -- source current buffer
+    { name = 'vsnip',                  keyword_length = 2 }, -- nvim-cmp source for vim-vsnip
+    { name = 'calc' },                                       -- source for math calculation
   },
+  -- window = {
+  --   completion = cmp.config.window.bordered(),
+  --   documentation = cmp.config.window.bordered(),
+  -- },
 }
 
 -- setup file associations

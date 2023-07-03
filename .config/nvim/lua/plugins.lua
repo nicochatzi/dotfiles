@@ -61,7 +61,7 @@ return {
       'nvim-lua/plenary.nvim',
       'mfussenegger/nvim-dap',
     },
-    ft = "rust",
+    ft = { 'rust', 'rs' },
     lazy = true,
   },
 
@@ -90,6 +90,14 @@ return {
       'hrsh7th/cmp-nvim-lsp',
     },
   },
+  { 'hrsh7th/nvim-cmp' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-nvim-lua' },
+  { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+  { 'hrsh7th/cmp-vsnip' },
+  { 'hrsh7th/cmp-path' },
+  { 'hrsh7th/cmp-buffer' },
+  { 'hrsh7th/vim-vsnip' },
 
   -- Useful plugin to show you pending keybinds.
   {
