@@ -13,6 +13,8 @@ require('nvim-treesitter.configs').setup {
     'typescript',
     'vimdoc',
     'vim',
+    'markdown',
+    'markdown_inline',
     'yaml',
   },
   auto_install = true,
@@ -114,20 +116,33 @@ local on_attach = function(client, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   nmap('<leader>cr', vim.lsp.codelens.run, '[C]ode-lens [R]un')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gR', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '[S]earch [O]objets/Symbols')
-  nmap('<leader>sc', require('telescope.builtin').lsp_document_symbols, '[S]earch [C]ommands')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  -- Text conversions
+  nmap('<leader>tcU', require('textcase').lsp_rename('to_upper_case'), '[T]o [C]ase upper')
+  nmap('<leader>tcL', require('textcase').lsp_rename('to_lower_case'), '[T]o [C]ase lower')
+  nmap('<leader>tcS', require('textcase').lsp_rename('to_snake_case'), '[T]o [C]ase snake')
+  nmap('<leader>tcD', require('textcase').lsp_rename('to_dash_case'), '[T]o [C]ase dash')
+  nmap('<leader>tcN', require('textcase').lsp_rename('to_constant_case'), '[T]o [C]ase constant')
+  nmap('<leader>tcD', require('textcase').lsp_rename('to_dot_case'), '[T]o [C]ase dot')
+  nmap('<leader>tcA', require('textcase').lsp_rename('to_phrase_case'), '[T]o [C]ase phrase')
+  nmap('<leader>tcC', require('textcase').lsp_rename('to_camel_case'), '[T]o [C]ase camel')
+  nmap('<leader>tcP', require('textcase').lsp_rename('to_pascal_case'), '[T]o [C]ase pascal')
+  nmap('<leader>tcT', require('textcase').lsp_rename('to_title_case'), '[T]o [C]ase title')
+  nmap('<leader>tcF', require('textcase').lsp_rename('to_path_case'), '[T]o [C]ase path')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  -- Lesser used LSP functionality
+  -- LSP functionality
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('gR', vim.lsp.buf.references, '[G]oto [R]eferences')
+  nmap('gC', vim.lsp.buf.incoming_calls, '[G]oto [C]alls')
+  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>so', require('telescope.builtin').lsp_document_symbols, '[S]earch [O]objets/Symbols')
+  nmap('<leader>sr', require('telescope.builtin').lsp_references, '[S]earch [R]eferences')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>wl', function()
@@ -301,6 +316,7 @@ cmp.setup {
     { name = 'buffer',                 keyword_length = 2 }, -- source current buffer
     { name = 'vsnip',                  keyword_length = 2 }, -- nvim-cmp source for vim-vsnip
     { name = 'calc' },                                       -- source for math calculation
+    { name = "crates" },
   },
   -- window = {
   --   completion = cmp.config.window.bordered(),

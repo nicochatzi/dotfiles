@@ -1,10 +1,10 @@
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>E', ':Neotree toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -51,7 +51,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set("n", "<leader>r", ":Telescope registers<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>m", ":Telescope marks<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>f", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
-vim.keymap.set('n', '<leader>y', ':Telescope frecency<CR>', { desc = '[?] Find recently opened files' })
+-- vim.keymap.set('n', '<leader>y', ':Telescope frecency<CR>', { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>u', ":Telescope undo<CR>")
 vim.keymap.set('n', '<leader>p', ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
   { noremap = true, silent = true })
@@ -65,6 +65,9 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+
+vim.keymap.set('n', '<leader>sro', require('spectre').open, { desc = '[S]pect[R]e [O]pen' })
+vim.keymap.set('n', '<leader>srw', require('spectre').open, { desc = '[S]pect[R]e search [W]ord' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
