@@ -52,13 +52,18 @@ else
   export VISUAL='vim'
 fi
 
+# disable vim-mode if we're already in vim!
+if [[ -z "$VIMRUNTIME" ]]; then
+    bindkey -v # Enable vim keybindings
+fi
+
 alias tree="tree -C"
 alias l="exa -la"
 alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias vi='nvim'
+alias v='nvim'
 
 ###########################################################################
 # Plugin config
