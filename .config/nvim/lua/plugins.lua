@@ -1,53 +1,47 @@
 local obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
 
 return {
+  -- 'tpope/vim-rhubarb',
+  'tpope/vim-sleuth', -- detect tabstop and shiftwidth automatically
+
   -- Git related plugins
   'tpope/vim-fugitive',
-  -- 'tpope/vim-rhubarb',
-  'tpope/vim-sleuth',     -- detect tabstop and shiftwidth automatically
-  'tpope/vim-surround',   -- (ys) delete, change and insert surroundings
+
+  -- 'gcc' => line,  gc' visual, 'gc' + motion
+  { 'numToStr/Comment.nvim', opts = {} },
+
+  -- (ys) delete, change and insert surroundings
+  'tpope/vim-surround',
+
+  { 'stevearc/dressing.nvim', event = "VeryLazy" },
+
+  -- auto-closing braces
+  { 'Raimondi/delimitMate',   event = 'InsertEnter', },
+
+  -- 'mhinz/vim-startify',
+
+  { 'nvim-pack/nvim-spectre', event = 'VeryLazy', },
+  { 'aca/marp.nvim',          ft = 'markdown', },
+  { 'NoahTheDuke/vim-just',   ft = 'just', },
+  { 'sindrets/diffview.nvim', event = 'VeryLazy', },
 
   {
-   -- auto-closing braces
-    'Raimondi/delimitMate',
+    'mg979/vim-visual-multi',
     event = 'VeryLazy',
-  },
-
-  'mhinz/vim-startify',
-
-  {
-    'nvim-pack/nvim-spectre',
-    event = 'VeryLazy',
-  },
-
-  {
-    'aca/marp.nvim',
-    ft = 'markdown',
-  },
-
-  {
-    'NoahTheDuke/vim-just',
-    ft = 'just',
-  },
-
-  {
-    'sindrets/diffview.nvim',
-    lazy = true,
-  },
-
-  {
-    -- 'gcc' => line,  gc' visual, 'gc' + motion
-    'numToStr/Comment.nvim',
-    opts = {}
+    config = function()
+      vim.cmd [[
+         let g:VM_maps = {}
+         let g:VM_maps["Add Cursor Down"]    = '<M-j>'
+         let g:VM_maps["Add Cursor Up"]      = '<M-k>'
+      ]]
+    end
   },
 
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    lazy = true,
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
-      'simrat39/rust-tools.nvim',
       'williamboman/mason-lspconfig.nvim',
       'folke/neodev.nvim',
       {
@@ -71,13 +65,11 @@ return {
       'mfussenegger/nvim-dap',
     },
     ft = { 'rust', 'rs' },
-    lazy = true,
   },
 
   {
     'Saecki/crates.nvim',
     ft = 'toml',
-    lazy = true,
     dependencies = { 'nvim-lua/plenary.nvim' },
     version = 'v0.3.x',
     config = function()
@@ -102,13 +94,36 @@ return {
       'hrsh7th/cmp-nvim-lsp',
     },
   },
-  { 'hrsh7th/nvim-cmp',                    lazy = true },
-  { 'hrsh7th/cmp-nvim-lsp',                lazy = true },
-  { 'hrsh7th/cmp-nvim-lua',                lazy = true },
-  { 'hrsh7th/cmp-nvim-lsp-signature-help', lazy = true },
-  { 'hrsh7th/cmp-path',                    lazy = true },
-  { 'hrsh7th/cmp-buffer',                  lazy = true },
-  { 'hrsh7th/vim-vsnip',                   lazy = true },
+  {
+    'hrsh7th/cmp-nvim-lsp',
+    lazy = true,
+    event = 'InsertEnter'
+  },
+  {
+    'hrsh7th/cmp-nvim-lua',
+    lazy = true,
+    event = 'InsertEnter'
+  },
+  {
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    lazy = true,
+    event = 'InsertEnter'
+  },
+  {
+    'hrsh7th/cmp-path',
+    lazy = true,
+    event = 'InsertEnter'
+  },
+  {
+    'hrsh7th/cmp-buffer',
+    lazy = true,
+    event = 'InsertEnter'
+  },
+  {
+    'hrsh7th/vim-vsnip',
+    lazy = true,
+    event = 'InsertEnter'
+  },
 
   -- Useful plugin to show you pending keybinds.
   {
@@ -196,7 +211,6 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',
-    lazy = true,
     cmd = { 'Neotree' },
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -306,7 +320,7 @@ return {
   {
     'mrbjarksen/neo-tree-diagnostics.nvim',
     dependencies = { 'nvim-neo-tree/neo-tree.nvim' },
-    lazy = true,
+    event = 'VeryLazy',
   },
 
   {
@@ -332,7 +346,6 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    lazy = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
@@ -371,6 +384,7 @@ return {
             auto_depth = true,
             initial_browser = 'tree',
             depth = 1,
+            hidden = true,
           },
           ['ui-select'] = {
             require('telescope.themes').get_cursor {
@@ -397,19 +411,19 @@ return {
 
   {
     'nvim-telescope/telescope-ui-select.nvim',
-    lazy = true,
+    event = 'VeryLazy',
   },
 
   {
     'nvim-telescope/telescope-file-browser.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    branch = 'feat/tree',
-    lazy = true,
+    -- branch = 'feat/tree',
+    event = 'VeryLazy',
   },
 
   {
     'nvim-telescope/telescope-project.nvim',
-    lazy = true,
+    event = 'VeryLazy',
   },
 
   {
@@ -417,7 +431,7 @@ return {
     -- NOTE: If you are having trouble with this installation,
     --       refer to the README for telescope-fzf-native for more instructions.
     build = 'make',
-    lazy = true,
+    event = 'VeryLazy',
     cond = function()
       return vim.fn.executable 'make' == 1
     end,
@@ -539,6 +553,7 @@ return {
 
   {
     'folke/neodev.nvim',
+    event = 'VeryLazy',
     opts = {
       library = { plugins = { 'nvim-dap-ui' }, types = true },
     }
@@ -546,6 +561,7 @@ return {
 
   {
     'Civitasv/cmake-tools.nvim',
+    event = 'VeryLazy',
     ft = 'cpp',
     opts = {
       cmake_command = 'cmake',
@@ -572,14 +588,14 @@ return {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle' },
     ft = { 'markdown' },
-    lazy = true,
+    event = 'VeryLazy',
     build = function() vim.fn['mkdp#util#install']() end,
   },
 
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
     config = function()
       local config = {
@@ -676,7 +692,6 @@ return {
 
   {
     "epwalsh/obsidian.nvim",
-    lazy = true,
     event = { "BufReadPre " .. vim.fn.expand "~" .. obsidian_vault_path .. "/**.md" },
     dependencies = {
       "nvim-lua/plenary.nvim",

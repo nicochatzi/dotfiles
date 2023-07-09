@@ -114,7 +114,8 @@ local on_attach = function(client, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>cr', vim.lsp.codelens.run, '[C]ode-lens [R]un')
+  nmap('<leader>cr', vim.lsp.codelens.refresh, '[C]ode-lens [R]refresh')
+  nmap('<leader>cn', vim.lsp.codelens.run, '[C]ode-lens ru[N]')
 
   -- Text conversions 
   -- nmap('<leader>tcU', require('textcase').ls_rename('to_upper_case'), '[T]o [C]ase upper')
