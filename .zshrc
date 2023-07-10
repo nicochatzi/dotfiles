@@ -48,8 +48,8 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
   export VISUAL='vim'
 else
-  export EDITOR='vim'
-  export VISUAL='vim'
+  export EDITOR='nvim'
+  export VISUAL='nvim'
 fi
 
 # disable vim-mode if we're already in vim!
@@ -63,7 +63,8 @@ alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias v='nvim'
+alias vi='nvim'
+alias f='nvim $(fzf)'
 
 ###########################################################################
 # Plugin config

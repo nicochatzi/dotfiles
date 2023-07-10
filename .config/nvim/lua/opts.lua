@@ -43,9 +43,3 @@ vim.o.termguicolors = true
 vim.o.spell = true
 vim.o.spelllang = "en"
 
--- thanks primagean!
--- move a block in visual mode with J/K
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
--- dont move cursor when using J
-vim.keymap.set("n", "J", "mzJ`z")
