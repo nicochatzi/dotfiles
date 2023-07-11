@@ -25,6 +25,7 @@ return {
         light = 'lotus'
       },
     })
+    -- vim.cmd.colorscheme('kanagawa-lotus')
     vim.cmd.colorscheme('kanagawa')
 
     local deep = '#346152'

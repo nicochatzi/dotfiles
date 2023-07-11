@@ -29,13 +29,13 @@ scrolling:
 font:
   normal:
     family: JetBrainsMono Nerd Font
-    style:  Regular
+    style: Regular
   bold:
     family: JetBrainsMono Nerd Font
-    style:  Bold
+    style: Bold
   italic:
     family: JetBrainsMono Nerd Font
-    style:  Italic
+    style: Italic
   bold_italic:
     family: JetBrainsMono Nerd Font
     style: Bold Italic
@@ -44,7 +44,8 @@ draw_bold_text_with_bright_colors: true
 use_thin_strokes: true
 
 import:
-  - ~/.config/alacritty/theme.yaml
+  # - ~/.config/alacritty/theme-light.yml
+  - ~/.config/alacritty/theme-dark.yml
 
 shell:
   program: /bin/zsh
@@ -57,7 +58,10 @@ selection:
   save_to_clipboard: false
 
 key_bindings:
-  - { key: Return, mods: Super, action: ToggleSimpleFullscreen }
-  - { key: Key2,     mods: Alt,     chars: "€"                           }
-  - { key: Key3,     mods: Alt,     chars: "#"                           }
-
+  - {
+      key: Return,
+      mods: Super,
+      action: ToggleSimpleFullscreen
+    }
+  - { key: Key2, mods: Alt, chars: "€" }
+  - { key: Key3, mods: Alt, chars: "#" }

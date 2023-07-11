@@ -33,8 +33,8 @@ return {
       winbar = {
         lualine_a = { {
           'filename',
-          file_status = true,   -- displays file status (readonly status, modified status)
-          path = 1              -- 0 = just filename, 1 = relative path, 2 = absolute path
+          file_status = true, -- displays file status (readonly status, modified status)
+          path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
         } },
         lualine_b = { 'branch', 'diagnostics' },
         lualine_c = {},
@@ -46,8 +46,8 @@ return {
         lualine_a = {},
         lualine_b = { {
           'filename',
-          file_status = true,   -- displays file status (readonly status, modified status)
-          path = 1              -- 0 = just filename, 1 = relative path, 2 = absolute path
+          file_status = true, -- displays file status (readonly status, modified status)
+          path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
         }, 'diagnostics' },
         lualine_c = {},
         lualine_x = {},
@@ -57,8 +57,8 @@ return {
     }
     require('lualine').setup(config)
     require('lualine').hide({
-      place = { 'statusline', 'tabline' },   -- The segment this change applies to.
-      unhide = false,                        -- whether to re-enable lualine again/
+      place = { 'statusline', 'tabline' }, -- The segment this change applies to.
+      unhide = false,                      -- whether to re-enable lualine again/
     })
     -- hack to remove lualine background
     vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = 'none' })
