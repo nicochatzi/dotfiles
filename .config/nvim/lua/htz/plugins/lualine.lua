@@ -1,7 +1,7 @@
 return {
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
-  event = 'VimEnter',
+  event = 'VeryLazy',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   -- See `:help lualine.txt`
   config = function()

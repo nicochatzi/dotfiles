@@ -4,41 +4,40 @@ return {
   'tpope/vim-sleuth',
 
   -- Git related plugins
-  { 'tpope/vim-fugitive',     event = 'VimEnter' },
+  { 'tpope/vim-fugitive',    event = 'VimEnter' },
 
   -- 'gcc' => line,  gc' visual, 'gc' + motion
-  { 'numToStr/Comment.nvim',  event = 'BufReadPre', opts = {} },
+  { 'numToStr/Comment.nvim', event = 'BufReadPre', opts = {} },
 
   -- (ys) delete, change and insert surroundings
-  { 'tpope/vim-surround',     event = 'BufReadPre' },
-  { 'stevearc/dressing.nvim', event = "VimEnter" },
+  -- { 'tpope/vim-surround',     event = 'BufReadPre' },
+  -- { 'stevearc/dressing.nvim', event = "VimEnter" },
 
-  -- auto-closing braces
-  { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
+  -- -- auto-closing braces
+  -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
 
   'mhinz/vim-startify',
 
-  { 'nvim-pack/nvim-spectre', event = 'VeryLazy', },
-  { 'aca/marp.nvim',          ft = 'markdown', },
+  { 'nvim-pack/nvim-spectre', cmd = 'Spectre', },
   { 'NoahTheDuke/vim-just',   ft = 'just', },
   { 'sindrets/diffview.nvim', event = 'VeryLazy', },
 
-  {
-    'mg979/vim-visual-multi',
-    event = 'BufReadPre',
-    config = function()
-      vim.cmd [[
-         let g:VM_maps = {}
-         let g:VM_maps["Add Cursor Down"]    = '<M-j>'
-         let g:VM_maps["Add Cursor Up"]      = '<M-k>'
-      ]]
-    end
-  },
+  -- {
+  --   'mg979/vim-visual-multi',
+  --   event = 'BufReadPre',
+  --   config = function()
+  --     vim.cmd [[
+  --        let g:VM_maps = {}
+  --        let g:VM_maps["Add Cursor Down"]    = '<M-j>'
+  --        let g:VM_maps["Add Cursor Up"]      = '<M-k>'
+  --     ]]
+  --   end
+  -- },
 
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    event = 'BufReadPre',
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
@@ -55,32 +54,14 @@ return {
       },
     },
     config = function()
-      require('lsp')
+      require('htz.lsp')
     end
-  },
-
-  {
-    'simrat39/rust-tools.nvim',
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'nvim-lua/plenary.nvim',
-      'mfussenegger/nvim-dap',
-    },
-    ft = { 'rust', 'rs' },
-  },
-
-  {
-    'Saecki/crates.nvim',
-    event = { "BufReadPre Cargo.toml" },
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    version = 'v0.3.x',
-    opts = {},
   },
 
   -- Useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
-    event = 'VimEnter',
+    event = 'VeryLazy',
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
@@ -91,7 +72,7 @@ return {
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    event = 'BufEnter',
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
@@ -113,7 +94,7 @@ return {
   -- Add indentation guides even on blank lines
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'VimEnter',
+    event = { "BufReadPost", "BufNewFile" },
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     config = function()
@@ -133,6 +114,8 @@ return {
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSUpdateSync" },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
@@ -147,91 +130,6 @@ return {
   },
 
   { 'nvim-treesitter/nvim-treesitter-context', event = 'BufReadPre' },
-
-  -- debugging
-  {
-    'mfussenegger/nvim-dap',
-    event = 'VeryLazy',
-    config = function()
-      vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-      local dap = require('dap')
-      dap.adapters.codelldb = {
-        -- type = 'server',
-        -- host = '127.0.0.1',
-        -- port = 13000, -- 💀 Use the port printed out or specified with `--port`
-        type = 'server',
-        port = '${port}',
-        executable = {
-          -- CHANGE THIS to your path!
-          command = '~/.codelldb/extension/adapter/codelldb',
-          args = { '--port', '${port}' },
-          -- On windows you may have to uncomment this:
-          -- detached = false,
-        }
-      }
-      dap.configurations.rust = {
-        name = 'Launch file',
-        type = 'codelldb',
-        request = 'launch',
-        program = function()
-          return vim.fin.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = true,
-      }
-      require('dapui').setup({})
-    end
-  },
-
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = { 'mfussenegger/nvim-dap' },
-    event = 'VeryLazy',
-    config = function()
-      require('dapui').setup({
-        layouts = { {
-          elements = { {
-            id = 'scopes',
-            size = 0.40
-          }, {
-            id = 'stacks',
-            size = 0.40
-          }, {
-            id = 'breakpoints',
-            size = 0.10
-          }, {
-            id = 'watches',
-            size = 0.10
-          } },
-          position = 'right',
-          size = 100
-        }, {
-          elements = { {
-            id = 'repl',
-            size = 0.5
-          }, {
-            id = 'console',
-            size = 0.5
-          } },
-          position = 'bottom',
-          size = 15
-        } },
-      })
-      local dap, dapui = require('dap'), require('dapui')
-      dap.listeners.after.event_initialized['dapui_config'] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated['dapui_config'] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited['dapui_config'] = function()
-        dapui.close()
-      end
-      require("neodev").setup({
-        library = { plugins = { "nvim-dap-ui" }, types = true },
-      })
-    end
-  },
 
   {
     'Civitasv/cmake-tools.nvim',
@@ -258,16 +156,15 @@ return {
   },
 
   {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle' },
-    ft = { 'markdown' },
-    build = function() vim.fn['mkdp#util#install']() end,
+    'aca/marp.nvim',
+    ft = { 'markdown', 'md' },
   },
 
   {
-    'alopatindev/cargo-limit',
-    ft = 'rust',
-    build = 'cargo install cargo-limit nvim-send',
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle' },
+    ft = { 'markdown', 'md' },
+    build = function() vim.fn['mkdp#util#install']() end,
   },
 
   {
@@ -279,4 +176,16 @@ return {
       }
     }
   },
+
+  -- {
+  --   "folke/persistence.nvim",
+  --   event = "BufReadPre",
+  --   opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
+  --     { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+  --     { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
+  --   },
+  -- },
 }
