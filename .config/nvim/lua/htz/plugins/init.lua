@@ -4,13 +4,13 @@ return {
   'tpope/vim-sleuth',
 
   -- Git related plugins
-  { 'tpope/vim-fugitive',     event = 'VimEnter' },
+  { 'tpope/vim-fugitive',     event = 'VeryLazy' },
 
   -- 'gcc' => line,  gc' visual, 'gc' + motion
   { 'numToStr/Comment.nvim',  event = 'BufReadPre', opts = {} },
 
   -- (ys) delete, change and insert surroundings
-  { 'stevearc/dressing.nvim', event = "VimEnter" },
+  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
 
   -- auto-closing braces
   -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
@@ -36,7 +36,8 @@ return {
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    event = { "BufReadPre", "BufNewFile" },
+    event = 'VeryLazy',
+    -- event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
@@ -116,7 +117,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSUpdateSync" },
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      { 'nvim-treesitter/nvim-treesitter-textobjects', },
     },
     build = ':TSUpdate',
     config = function()
@@ -140,7 +141,7 @@ return {
       cmake_generate_options = { '-D', 'CMAKE_EXPORT_COMPILE_COMMANDS=1' },
       cmake_regenerate_on_save = true,                                                   -- Saves CMakeLists.txt file only if mofified.
       cmake_soft_link_compile_commands = true,                                           -- if softlink compile commands json file
-      cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp
+      cmake_compile_commands_from_lsp = false,                                           -- automatically set compile commands location using lsp },
       cmake_build_options = {},
       cmake_console_size = 10,                                                           -- cmake output window height
       cmake_console_position = 'belowright',                                             -- 'belowright', 'aboveleft', ...
