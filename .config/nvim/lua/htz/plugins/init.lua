@@ -4,16 +4,15 @@ return {
   'tpope/vim-sleuth',
 
   -- Git related plugins
-  { 'tpope/vim-fugitive',    event = 'VimEnter' },
+  { 'tpope/vim-fugitive',     event = 'VimEnter' },
 
   -- 'gcc' => line,  gc' visual, 'gc' + motion
-  { 'numToStr/Comment.nvim', event = 'BufReadPre', opts = {} },
+  { 'numToStr/Comment.nvim',  event = 'BufReadPre', opts = {} },
 
   -- (ys) delete, change and insert surroundings
-  -- { 'tpope/vim-surround',     event = 'BufReadPre' },
-  -- { 'stevearc/dressing.nvim', event = "VimEnter" },
+  { 'stevearc/dressing.nvim', event = "VimEnter" },
 
-  -- -- auto-closing braces
+  -- auto-closing braces
   -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
 
   'mhinz/vim-startify',
@@ -188,4 +187,12 @@ return {
   --     { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
   --   },
   -- },
+
+  -- {
+  --   'stevearc/oil.nvim',
+  --   -- event = 'VimEnter',
+  --   opts = {},
+  --   -- Optional dependencies
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  -- }
 }
