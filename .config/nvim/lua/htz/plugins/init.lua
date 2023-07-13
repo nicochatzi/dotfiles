@@ -91,31 +91,11 @@ return {
     },
   },
 
-  -- Add indentation guides even on blank lines
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    event = { "BufReadPost", "BufNewFile" },
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    config = function()
-      vim.opt.list = true
-      vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
-      require('indent_blankline').setup {
-        char = '',
-        space_char_blankline = ' ',
-        show_trailing_blankline_indent = true,
-        show_current_context = true,
-        show_current_context_start = false,
-      }
-    end
-  },
-
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSUpdateSync" },
+    -- cmd = { "TSUpdateSync" },
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects', },
     },
@@ -176,24 +156,4 @@ return {
       }
     }
   },
-
-  -- {
-  --   "folke/persistence.nvim",
-  --   event = "BufReadPre",
-  --   opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<leader>qs", function() require("persistence").load() end,                desc = "Restore Session" },
-  --     { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-  --     { "<leader>qd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
-  --   },
-  -- },
-
-  -- {
-  --   'stevearc/oil.nvim',
-  --   -- event = 'VimEnter',
-  --   opts = {},
-  --   -- Optional dependencies
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  -- }
 }

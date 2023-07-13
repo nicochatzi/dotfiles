@@ -125,6 +125,7 @@ local set_options = function()
   -- vim.g.loaded_netrw = 1
   -- vim.g.loaded_netrwPlugin = 1
 
+  vim.o.cursorline = true
   vim.o.relativenumber = true
   vim.o.hlsearch = true
   vim.o.incsearch = true
@@ -169,6 +170,12 @@ local set_options = function()
 
   vim.o.spell = true
   vim.o.spelllang = "en"
+
+  vim.cmd [[
+    autocmd InsertEnter * :set norelativenumber
+    autocmd InsertLeave * :set relativenumber
+  ]]
+
 end
 
 function M.setup()
