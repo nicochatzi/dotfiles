@@ -15,8 +15,6 @@ return {
   -- auto-closing braces
   -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
 
-  'mhinz/vim-startify',
-
   { 'nvim-pack/nvim-spectre', cmd = 'Spectre', },
   { 'NoahTheDuke/vim-just',   ft = 'just', },
   { 'sindrets/diffview.nvim', event = 'VeryLazy', },
@@ -36,8 +34,8 @@ return {
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
-    -- event = { "BufReadPre", "BufNewFile" },
+    -- event = 'VeryLazy',
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',

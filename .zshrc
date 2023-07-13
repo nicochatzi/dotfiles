@@ -63,7 +63,7 @@ alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias vi='nvim'
+alias nv='nvim'
 alias f='nvim $(fzf)'
 
 ###########################################################################
