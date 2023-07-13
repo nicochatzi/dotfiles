@@ -153,9 +153,9 @@ local set_options = function()
   vim.wo.signcolumn = 'yes'
 
   -- Decrease update time
-  vim.o.updatetime = 200
   vim.o.timeout = true
-  vim.o.timeoutlen = 300
+  vim.o.updatetime = 100
+  vim.o.timeoutlen = 100
 
   -- Set completeopt to have a better completion experience
   -- this

@@ -35,7 +35,7 @@ return {
       vim.api.nvim_set_hl(0, 'CursorLine', { fg = teal, bg = '#323d3d' })
       -- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#323d3d', bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = teal, bg = 'none' })
-      vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none', bg = '#323d3d' })
+      vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
 
       vim.api.nvim_set_hl(0, 'Visual', { bg = '#323d3d' })
       vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })

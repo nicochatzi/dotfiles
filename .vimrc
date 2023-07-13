@@ -1,27 +1,28 @@
-set nocompatible
-syntax on set nowrap
-set encoding=UTF-8
-
-" keep vim stupid fast by using 0 plugins!
-" theme:
-" $ mkdir -p ~/.vim/colors
-" $ cd ~/.vim/colors
-" $ curl https://raw.githubusercontent.com/leviosa42/kanagawa-mini.vim/master/colors/kanagawa-mini.vim -o kanagawa-mini.vim
+"""""""""""""""""""""""""""""""""""""
+" Pure VIM! keep it fast and standard
+"""""""""""""""""""""""""""""""""""""
+" theme is from: leviosa42/kanagawa-mini.vim
 
 """""""""""""""""""""""""""""""""""""
 " Configurations
 """""""""""""""""""""""""""""""""""""
+set nocompatible
+syntax on
+set nowrap
+set encoding=UTF-8
+set timeout
+set updatetime=100
+set timeoutlen=100
+set cursorline
 set termguicolors
+set undofile
 set ruler
 set number
-set relativenumber
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
-set shiftwidth=4
-set ts=4 sw=4
 set smarttab
 set expandtab
-set guifont=JetBrainsMono_Nerd_Font:h11
+set tabstop=4
+set shiftwidth=4
+set nofoldenable
 set ignorecase              " case insensitive searching
 set smartcase               " case-sensitive if expresson contains a capital letter
 set hlsearch                " highlight search results
@@ -35,8 +36,15 @@ set backspace=indent,eol,start " OSX stupid backspace fix
 set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type completions
 set list
 set lcs+=space:.
+set guifont=JetBrainsMono_Nerd_Font:h11
+set relativenumber
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 " set spell spelllang=en_us
 
+"""""""""""""""""""""""""""""""""""""
+" Theme / Highlights
+"""""""""""""""""""""""""""""""""""""
 let g:kanagawa_mini = {
     \ 'undercurl': v:true,
     \ 'commentStyle': 'italic',
@@ -51,7 +59,9 @@ let g:kanagawa_mini = {
     \ 'theme': 'default'
     \ }
 colorscheme kanagawa-mini
-" colorscheme sonokai
+highlight CursorLine NONE
+highlight CursorLineNr NONE
+highlight CursorLineNr guifg=#FFA066
 
 """""""""""""""""""""""""""""""""""""
 " Mappings
@@ -59,15 +69,9 @@ colorscheme kanagawa-mini
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
+"""""""""""""""""""""""""""""""""""""
+" Other
+"""""""""""""""""""""""""""""""""""""
 " Use a line cursor within insert mode and a block cursor everywhere else.
-"
-" Reference chart of values:
-"   Ps = 0  -> blinking block.
-"   Ps = 1  -> blinking block (default).
-"   Ps = 2  -> steady block.
-"   Ps = 3  -> blinking underline.
-"   Ps = 4  -> steady underline.
-"   Ps = 5  -> blinking bar (xterm).
-"   Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
