@@ -6,8 +6,8 @@ colors:
 
   # Cursor colors
   cursor:
-    text:   '0xfafafa'
-    cursor: '0x008780'
+    text:   '0x303030'
+    cursor: '0x5FAE87'
 
   # Normal colors
   normal:

@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""
 " Pure VIM! keep it fast and standard
 """""""""""""""""""""""""""""""""""""
 " theme is from: leviosa42/kanagawa-mini.vim
@@ -40,7 +40,7 @@ set guifont=JetBrainsMono_Nerd_Font:h11
 set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
-" set spell spelllang=en_us
+set spell spelllang=en_us
 
 """""""""""""""""""""""""""""""""""""
 " Theme / Highlights
@@ -62,6 +62,14 @@ colorscheme kanagawa-mini
 highlight CursorLine NONE
 highlight CursorLineNr NONE
 highlight CursorLineNr guifg=#FFA066
+highlight SpellBad NONE
+highlight SpellBad cterm=underline guisp=#C34043
+highlight SpellCap NONE
+highlight SpellCap cterm=underline guisp=#DCA561
+highlight SpellRare NONE
+highlight SpellRare cterm=underline guisp=#DCA561
+highlight SpellLocal NONE
+highlight SpellLocal cterm=underline guisp=#DCA561
 
 """""""""""""""""""""""""""""""""""""
 " Mappings

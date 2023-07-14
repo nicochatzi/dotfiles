@@ -19,27 +19,16 @@ return {
   { 'NoahTheDuke/vim-just',   ft = 'just', },
   { 'sindrets/diffview.nvim', event = 'VeryLazy', },
 
-  -- {
-  --   'mg979/vim-visual-multi',
-  --   event = 'BufReadPre',
-  --   config = function()
-  --     vim.cmd [[
-  --        let g:VM_maps = {}
-  --        let g:VM_maps["Add Cursor Down"]    = '<M-j>'
-  --        let g:VM_maps["Add Cursor Up"]      = '<M-k>'
-  --     ]]
-  --   end
-  -- },
-
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     -- event = 'VeryLazy',
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-      { 'folke/neodev.nvim',       opts = {} },
+      { 'williamboman/mason.nvim',          config = true },
+      { 'williamboman/mason-lspconfig.nvim' },
+      { 'p00f/clangd_extensions.nvim' },
+      { 'folke/neodev.nvim',                opts = {} },
       {
         'j-hui/fidget.nvim',
         branch = 'legacy',
@@ -52,7 +41,6 @@ return {
       },
     },
     config = function()
-      require('htz.lsp')
     end
   },
 
@@ -111,7 +99,8 @@ return {
 
   {
     'Civitasv/cmake-tools.nvim',
-    ft = 'cpp',
+    cmd = 'CMakeGenerate',
+    -- ft = 'cpp',
     opts = {
       cmake_command = 'cmake',
       cmake_build_directory = '',
@@ -154,61 +143,4 @@ return {
       }
     }
   },
-
-  {
-    'someone-stole-my-name/yaml-companion.nvim',
-    ft = 'yaml',
-    dependencies = {
-      { 'neovim/nvim-lspconfig' },
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope.nvim' },
-    },
-    config = function()
-      require('telescope').load_extension('yaml_schema')
-      require('yaml-companion').setup({
-        builtin_matchers = {
-          kubernetes = { enabled = true },
-          cloud_init = { enabled = true }
-        },
-        -- Additional schemas available in Telescope picker
-        schemas = {
-          --{
-          --name = "Kubernetes 1.22.4",
-          --uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json",
-          --},
-        },
-        -- Pass any additional options that will be merged in the final LSP config
-        lspconfig = {
-          flags = {
-            debounce_text_changes = 150,
-          },
-          settings = {
-            redhat = { telemetry = { enabled = false } },
-            yaml = {
-              validate = true,
-              format = { enable = true },
-              hover = true,
-              schemaStore = {
-                enable = true,
-                url = "https://www.schemastore.org/api/json/catalog.json",
-              },
-              schemaDownload = { enable = true },
-              schemas = {},
-              trace = { server = "debug" },
-            },
-          },
-        },
-      })
-      local function get_current_schema()
-        local schema = require("yaml-companion").get_buf_schema(0)
-        if schema.result[1].name == "none" then
-          return ""
-        end
-        return schema.result[1].name
-      end
-      vim.api.nvim_create_user_command('YamlWhichSchema', function(_)
-        print(get_current_schema())
-      end, { desc = 'YAML: Show Schema for Current Buffer' })
-    end,
-  }
 }
