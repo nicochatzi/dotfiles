@@ -30,19 +30,6 @@ function moveAlacritty(app, space, screen, widthScale, heightScale)
         window = app:mainWindow()
     end
 
-    local windowFrame = window:frame()
-    local screenFrame = screen:fullFrame()
-
-    if not window:isFullscreen() then
-        -- Scale the application's window according to the provided modifiers
-        windowFrame.w = screenFrame.w * widthScale
-        windowFrame.h = screenFrame.h * heightScale
-        window:setFrame(windowFrame)
-
-        -- Center the application on the current screen
-        window:centerOnScreen(screen)
-    end
-
     -- Attempt to move the application to the active space
     spaces.moveWindowToSpace(window, space)
 
