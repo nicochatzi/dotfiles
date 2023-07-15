@@ -7,6 +7,7 @@ vim.keymap.set("n", "J", "mzJ`z")
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>E', ':Neotree toggle<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
@@ -85,13 +86,13 @@ vim.keymap.set('n', '<leader>/', ":lua require'telescope.builtin'.current_buffer
 vim.keymap.set('n', '<leader>sh', ":lua require'telescope.builtin'.help_tags() <CR>", { desc = '[S]earch [H]elp' })
 --
 -- Search [F]iles
-vim.keymap.set('n', '<leader>sfg', ":lua require'telescope.builtin'.git_files() <CR>",
-  { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sff', ":lua require'telescope.builtin'.find_files() <CR>", { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sgs', ":lua require'telescope.builtin'.grep_string() <CR>",
-  { desc = '[S]earch [G]rep [S]tring' })
-vim.keymap.set('n', '<leader>sgl', ":lua require'telescope.builtin'.live_grep() <CR>",
-  { desc = '[S]earch by [G]rep [L]ive' })
+vim.keymap.set('n', '<leader>sf', ":lua require'telescope.builtin'.find_files() <CR>", { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sg', ":lua require'telescope.builtin'.git_files() <CR>",
+  { desc = '[S]earch [G]it Files' })
+vim.keymap.set('n', '<leader>sh', ":lua require'telescope.builtin'.grep_string() <CR>",
+  { desc = '[S]earch Grep String' })
+vim.keymap.set('n', '<leader>sj', ":lua require'telescope.builtin'.live_grep() <CR>",
+  { desc = '[S]earch by Grep Live' })
 
 -- [S]earch Others
 vim.keymap.set('n', '<leader>sd', ":lua require'telescope.builtin'.diagnostics() <CR>",

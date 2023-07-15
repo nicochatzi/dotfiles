@@ -1,6 +1,6 @@
 -- disable netrw
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 vim.o.cursorline = true
 vim.o.relativenumber = true
@@ -18,6 +18,7 @@ vim.go.showmode = false
 vim.go.showcmd = false
 vim.opt.fillchars = { eob = " ", stl = "—" }
 vim.go.shortmess = 'a'
+vim.go.shortmess = vim.go.shortmess .. 'F'
 
 vim.go.tabstop = 4
 vim.go.shiftwidth = 4
@@ -48,7 +49,7 @@ vim.o.termguicolors = true
 vim.o.spell = true
 vim.o.spelllang = "en"
 
-vim.cmd [[
+vim.cmd([[
     autocmd InsertEnter * :set norelativenumber
     autocmd InsertLeave * :set relativenumber
-  ]]
+]])
