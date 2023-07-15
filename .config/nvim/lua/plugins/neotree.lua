@@ -50,8 +50,17 @@ return {
           'move',
           config = {
             show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+          },
         },
+          ['Y'] = function(state)
+            local node = state.tree:get_node()
+            local content = node.path
+            -- relative
+            -- local content = node.path:gsub(state.path, ""):sub(2)
+            vim.fn.setreg('"', content)
+            vim.fn.setreg("1", content)
+            vim.fn.setreg("+", content)
+          end,
       },
       popup = {
         position = '50%',
