@@ -4,11 +4,21 @@ return {
   cmd = { 'Neotree' },
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',   -- not strictly required, but recommended
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
     'mrbjarksen/neo-tree-diagnostics.nvim',
   },
   opts = {
+    event_handlers = {
+      {
+        event = "neo_tree_buffer_enter",
+        handler = function()
+          vim.cmd [[
+          setlocal relativenumber
+        ]]
+        end,
+      }
+    },
     popup_border_style = 'rounded',
     close_if_last_window = true,
     sources = {
@@ -20,26 +30,26 @@ return {
     },
     window = {
       position = 'left',
-      width = 25,
+      width = 30,
       mappings = {
         ['<C-x>'] = 'open_split',
         ['<C-v>'] = 'open_vsplit',
         ['a'] = {
           'add',
           config = {
-            show_path = 'relative'   -- 'none', 'relative', 'absolute'
+            show_path = 'relative' -- 'none', 'relative', 'absolute'
           }
         },
         ['c'] = {
           'copy',
           config = {
-            show_path = 'relative'   -- 'none', 'relative', 'absolute'
+            show_path = 'relative' -- 'none', 'relative', 'absolute'
           }
         },
         ['m'] = {
           'move',
           config = {
-            show_path = 'relative'   -- 'none', 'relative', 'absolute'
+            show_path = 'relative' -- 'none', 'relative', 'absolute'
           }
         },
       },
