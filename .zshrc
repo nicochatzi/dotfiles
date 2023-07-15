@@ -25,11 +25,6 @@ export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 # ulimit -n 10240
 
 ###########################################################################
-
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
-
-###########################################################################
 # Plugins
 zinit ice depth"1"; zinit light zsh-users/zsh-completions
 
@@ -66,13 +61,27 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
 alias f='nvim $(fzf)'
 
-###########################################################################
-# Plugin config
+nvim() {
+    if [[ -d $1 ]]; then
+        cd "$1"
+        command nvim
+    else
+        command nvim "$@"
+    fi
+}
 
-# Ctrl+z : accept suggestion
-bindkey '^z' autosuggest-accept
-# Ctrl+x : accept and execute suggesetion
-bindkey '^x' autosuggest-execute
+###########################################################################
+# Bindings and Widgets
+
+function clear-screen-and-scrollback() { clear && printf '\e[3J' && zle reset-prompt }
+zle -N clear-screen-and-scrollback
+
+# bind the clear to B so that i don't accidentally press it when using a vim motion
+bindkey '^B' clear-screen-and-scrollback
+bindkey '^Z' autosuggest-accept
+# bindkey '^X' autosuggest-execute
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
 
 ###########################################################################
 # FZF config
