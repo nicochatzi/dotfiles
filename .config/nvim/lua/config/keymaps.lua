@@ -6,7 +6,8 @@ vim.keymap.set("n", "J", "mzJ`z")
 
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set('n', '<leader>E', ':Neotree toggle<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>E', ':Neotree left toggle<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>W', ':Neotree float toggle<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })

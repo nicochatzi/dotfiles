@@ -74,4 +74,9 @@ return {
     cmd = 'SymbolsOutline',
     opts = {},
   },
+
+  {
+    'CraneStation/cranelift.vim',
+    ft = 'clif',
+  },
 }

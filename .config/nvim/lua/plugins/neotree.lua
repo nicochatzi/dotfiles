@@ -77,7 +77,10 @@ return {
         hide_gitignored = false,
         hide_hidden = false,
       },
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = true,
+      },
     },
     source_selector = {
       winbar = true,
@@ -91,7 +94,10 @@ return {
       },
     },
     buffers = {
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = true,
+      },
     },
     -- These are the defaults
     diagnostics = {
@@ -111,7 +117,10 @@ return {
         expand_followed = true,    -- Ensure the node of the followed file is expanded
         collapse_others = true,    -- Ensure other nodes are collapsed
       },
-      follow_current_file = true,
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = true,
+      },
       group_dirs_and_files = true,        -- when true, empty folders and files will be grouped together
       group_empty_dirs = true,            -- when true, empty directories will be grouped together
       show_unloaded = true,               -- show diagnostics from unloaded buffers
