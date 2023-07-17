@@ -2,17 +2,32 @@ return {
   -- detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- 'gcc' => line,  gc' visual, 'gc' + motion
-  { 'numToStr/Comment.nvim',  event = 'BufReadPre', opts = {} },
+  {
+    -- 'gcc' => line,  gc' visual, 'gc' + motion
+    'numToStr/Comment.nvim',
+    event = 'BufReadPre',
+    opts = {}
+  },
 
-  { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+  {
+    -- fancier `vim.ui`
+    'stevearc/dressing.nvim',
+    event = 'VeryLazy'
+  },
 
   -- auto-closing braces
   -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
 
-  { 'nvim-pack/nvim-spectre', cmd = 'Spectre', },
+  {
+    -- global search and replace utils
+    'nvim-pack/nvim-spectre',
+    cmd = 'Spectre',
+  },
 
-  { 'NoahTheDuke/vim-just',   ft = 'just', },
+  {
+    'NoahTheDuke/vim-just',
+    ft = 'just',
+  },
 
   {
     'folke/which-key.nvim',
@@ -25,6 +40,7 @@ return {
   },
 
   {
+    -- quickfix previewer
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
@@ -53,6 +69,7 @@ return {
   },
 
   {
+    -- show all symbols in a source file
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
     opts = {},

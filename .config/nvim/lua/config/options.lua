@@ -53,3 +53,6 @@ vim.cmd([[
     autocmd InsertEnter * :set norelativenumber
     autocmd InsertLeave * :set relativenumber
 ]])
+
+vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype mir]])
+vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
