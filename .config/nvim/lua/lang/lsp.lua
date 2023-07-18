@@ -134,3 +134,5 @@ mason_lspconfig.setup_handlers {
     require("rust-tools").setup(require('lang.rust')(capabilities, on_attach))
   end
 }
+
+require('ufo').setup()

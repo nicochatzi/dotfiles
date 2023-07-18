@@ -4,6 +4,9 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- dont move cursor when using J
 vim.keymap.set("n", "J", "mzJ`z")
 
+vim.keymap.set('n', 'zR', ":lua require'ufo'.openAllFolds()<CR>")
+vim.keymap.set('n', 'zM', ":lua require'ufo'.closeAllFolds<CR>")
+
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>E', ':Neotree left toggle<CR>', { noremap = true })
@@ -70,7 +73,7 @@ vim.keymap.set("n", "<leader>m", ":Telescope marks<CR>", { noremap = true })
 -- this places the browser at the current directory
 vim.keymap.set("n", "<leader>F", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
 -- this starts the browser at `:pwd`
-vim.keymap.set("n", "<leader>f", ":Telescope file_browser path=:pwd select_buffer=true<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>f", ":Telescope file_browser select_buffer=true<CR>", { noremap = true })
 
 -- vim.keymap.set('n', '<leader>y', ':Telescope frecency<CR>', { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>u', ":Telescope undo<CR>")

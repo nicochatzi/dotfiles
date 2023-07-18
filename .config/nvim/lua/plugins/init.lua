@@ -79,4 +79,39 @@ return {
     'CraneStation/cranelift.vim',
     ft = 'clif',
   },
+
+  {
+    "brymer-meneses/grammar-guard.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    ft = { 'markdown', 'latex', 'tex' },
+    config = function()
+      require("lspconfig").grammar_guard.setup({
+        settings = {
+          ltex = {
+            enabled = { "latex", "tex", "bib", "markdown" },
+            language = "en-GB",
+            diagnosticSeverity = "information",
+            setenceCacheSize = 2000,
+            additionalRules = {
+              enablePickyRules = true,
+              motherTongue = "en-GB",
+            },
+            trace = { server = "verbose" },
+            dictionary = {},
+            disabledRules = {},
+            hiddenFalsePositives = {},
+          },
+        },
+      })
+      require("grammar-guard").init()
+    end
+  },
+
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+    event = 'VeryLazy',
+  }
 }
