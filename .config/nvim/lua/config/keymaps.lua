@@ -8,8 +8,9 @@ vim.keymap.set('n', 'zR', ":lua require'ufo'.openAllFolds()<CR>")
 vim.keymap.set('n', 'zM', ":lua require'ufo'.closeAllFolds<CR>")
 
 -- `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<C-Z>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set('n', '<leader>E', ':Neotree left toggle<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>E', ':Neotree right toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>W', ':Neotree float toggle<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })

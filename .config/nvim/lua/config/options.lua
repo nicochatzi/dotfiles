@@ -1,3 +1,6 @@
+vim.opt.listchars = {trail = "."}
+vim.opt.list = true
+
 vim.o.cursorline = true
 vim.o.relativenumber = true
 vim.o.hlsearch = true

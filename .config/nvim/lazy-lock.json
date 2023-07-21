@@ -11,7 +11,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cranelift.vim": { "branch": "main", "commit": "9fb80156f59c92399ce085445bd701ea87864456" },
   "crates.nvim": { "branch": "main", "commit": "1dffccc0a95f656ebe00cacb4de282473430c5a1" },
-  "diffview.nvim": { "branch": "main", "commit": "285ce7a8c2b2c9ab1e1acddad4e132d656af5815" },
+  "diffview.nvim": { "branch": "main", "commit": "73cb92d6e58c9a2d5835c490016725bfb2c3431a" },
   "dressing.nvim": { "branch": "master", "commit": "39611852fd7bbac117e939a26759bb37361f0c90" },
   "fidget.nvim": { "branch": "legacy", "commit": "90c22e47be057562ee9566bad313ad42d622c1d3" },
   "gitsigns.nvim": { "branch": "main", "commit": "adcf2c7f2f495f5df148683764bf7cba6a70f34c" },
