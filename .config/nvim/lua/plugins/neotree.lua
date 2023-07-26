@@ -79,24 +79,24 @@ return {
       },
       follow_current_file = {
         enabled = true,
-        leave_dirs_open = true,
+        leave_files_open = true,
       },
     },
     source_selector = {
       winbar = true,
       statusline = false,
       sources = {
-        { source = 'filesystem',       display_name = '  󰉓  ' },
-        { source = 'git_status',       display_name = '  󰊢  ' },
-        { source = 'buffers',          display_name = '    ' },
-        { source = 'document_symbols', display_name = '    ' },
-        { source = 'diagnostics',      display_name = '    ' },
+        { source = 'filesystem',       display_name = ' 󰉓 ' },
+        { source = 'git_status',       display_name = ' 󰊢 ' },
+        { source = 'buffers',          display_name = '  ' },
+        { source = 'document_symbols', display_name = '  ' },
+        { source = 'diagnostics',      display_name = '  ' },
       },
     },
     buffers = {
       follow_current_file = {
         enabled = true,
-        leave_dirs_open = true,
+        leave_files_open = true,
       },
     },
     -- These are the defaults
@@ -111,15 +111,9 @@ return {
       diag_sort_function = 'severity', -- 'severity' means diagnostic items are sorted by severity in addition to their positions.
       -- 'position' means diagnostic items are sorted strictly by their positions.
       -- May also be a function.
-      follow_behavior = {
-        -- Behavior when `follow_current_file` is true
-        always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
-        expand_followed = true,    -- Ensure the node of the followed file is expanded
-        collapse_others = true,    -- Ensure other nodes are collapsed
-      },
       follow_current_file = {
         enabled = true,
-        leave_dirs_open = true,
+        leave_files_open = true,
       },
       group_dirs_and_files = true,        -- when true, empty folders and files will be grouped together
       group_empty_dirs = true,            -- when true, empty directories will be grouped together

@@ -70,7 +70,7 @@ install_languages() {
     install_system_packages "${linters_packages[@]}"
 
     # Rust
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -- -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
     # CMake LSP for Coc
     pip3 install cmake-language-server
@@ -101,6 +101,8 @@ install_tui() {
         sccache \
         hyperfine \
         tmux \
+        alacritty \
+        hammerspoon \
     )
 
     install_system_packages "${tool_packages[@]}"

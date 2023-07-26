@@ -58,7 +58,7 @@ return {
     require('lualine').setup(config)
     require('lualine').hide({
       place = { 'statusline', 'tabline' }, -- The segment this change applies to.
-      unhide = false,                      -- whether to re-enable lualine again/
+      unhide = false,           -- whether to re-enable lualine again/
     })
     -- hack to remove lualine background
     vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = 'none' })

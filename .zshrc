@@ -1,3 +1,4 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # zmodload zsh/zprof
 #
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -100,9 +101,8 @@ zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# work
-source $HOME/.config/fael/nli.sh
-source $HOME/.creds/.faelrc
+# source $HOME/.config/fael/nli.sh
+# source $HOME/.creds/.faelrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
