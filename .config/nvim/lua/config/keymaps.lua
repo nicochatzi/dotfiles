@@ -30,9 +30,9 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Buffers!
-vim.keymap.set('n', '<Tab>', ':bnext<CR>')
-vim.keymap.set('n', '<S-Tab>', ':bprev<CR>')
-vim.keymap.set('n', '<leader>bt', ':%bd|e#<CR>', { noremap = true })
+vim.keymap.set('n', '<Tab>', ':BufferNext<CR>')
+vim.keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>')
+vim.keymap.set('n', '<leader>bt', ':BufferCloseAllButVisible<CR>', { noremap = true })
 
 -- c/cpp/cmake remaps
 vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
