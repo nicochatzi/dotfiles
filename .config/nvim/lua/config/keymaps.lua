@@ -109,7 +109,13 @@ vim.keymap.set('n', '<leader>sr', ":lua require'telescope.builtin'.lsp_reference
 vim.keymap.set('n', '<leader>sw', ":lua require'telescope.builtin'.lsp_dynamic_workspace_symbols() <CR>",
   { desc = '[W]orkspace [S]ymbols' })
 
-vim.keymap.set('n', '<leader>sro', ':Spectre<CR>', { desc = '[S]pect[R]e [O]pen' })
+vim.keymap.set('n', '<leader>sao', ':Spectre<CR>', { desc = '[S]pect[R]e [O]pen' })
+vim.keymap.set('n', '<leader>saw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+  desc = "[S]earch [A]ll current [W]ord"
+})
+vim.keymap.set('v', '<leader>saw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = "[S]earch [A]ll current [W]ord"
+})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
