@@ -1,4 +1,5 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 # zmodload zsh/zprof
 #
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -24,6 +25,8 @@ export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 # setup sccache
 # export RUSTC_WRAPPER=/usr/local/bin/sccache
 # ulimit -n 10240
+
+export RUST_BACKTRACE=1
 
 ###########################################################################
 # Plugins
@@ -60,7 +63,7 @@ alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
-alias f='nvim $(fzf)'
+alias f='nvim $(find `pwd` -type f | fzf)'
 
 nvim() {
     if [[ -d $1 ]]; then
@@ -101,8 +104,7 @@ zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# source $HOME/.config/fael/nli.sh
-# source $HOME/.creds/.faelrc
+source $HOME/.creds/.faelrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

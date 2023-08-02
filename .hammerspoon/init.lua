@@ -11,6 +11,11 @@ setup_hotkey({
 }, 'Arc', 'org.arc')
 
 -- setup_hotkey({
+--    mods = { "alt" },
+--    key = '3'
+-- }, 'Spotify', 'org.spotify')
+
+-- setup_hotkey({
 --     mods = { "alt" },
 --     key = '1'
 -- }, 'Kitty', 'net.kovidgoyal.kitty')
