@@ -21,6 +21,7 @@ export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:$HOME/.zvm/bin
 export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 # export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
+export PATH=$PATH:$HOME/.zvm/bin:$HOME/.zvm/zvm
 
 # setup sccache
 # export RUSTC_WRAPPER=/usr/local/bin/sccache

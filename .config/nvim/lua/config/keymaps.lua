@@ -47,11 +47,17 @@ vim.api.nvim_set_keymap("n", "<leader>gd", ":Gvdiff<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>gL", ":Git ll<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>gl", ":Git l<CR>", { noremap = true })
 
--- rust
-vim.keymap.set('n', '<leader>rv', ":lua require'crates'.show_versions_popup() <CR>", { silent = true })
-vim.keymap.set('n', '<leader>rf', ":lua require'crates'.show_features_popup() <CR>", { silent = true })
-vim.keymap.set('n', '<leader>rd', ":lua require'crates'.show_dependencies_popup() <CR>", { silent = true })
-vim.keymap.set('n', '<leader>rg', ":lua require'crates'.open_repository() <CR>", { silent = true })
+-- package management
+vim.keymap.set('n', '<leader>vv', ":lua require'crates'.show_versions_popup() <CR>", { silent = true })
+vim.keymap.set('n', '<leader>vf', ":lua require'crates'.show_features_popup() <CR>", { silent = true })
+vim.keymap.set('n', '<leader>vd', ":lua require'crates'.show_dependencies_popup() <CR>", { silent = true })
+vim.keymap.set('n', '<leader>vg', ":lua require'crates'.open_repository() <CR>", { silent = true })
+vim.keymap.set('n', '<leader>vv', ":lua require'package-info'.change_version() <CR>", { silent = true, noremap = true })
+-- vim.keymap.set('n', '<leader>vt', ":lua require'package-info'.toggle() <CR>", { silent = true, noremap = true })
+-- vim.keymap.set('n', '<leader>vu', ":lua require'package-info'.update() <CR>", { silent = true, noremap = true })
+-- vim.keymap.set('n', '<leader>vd', ":lua require'package-info'.delete() <CR>", { silent = true, noremap = true })
+-- vim.keymap.set('n', '<leader>vi', ":lua require'package-info'.install() <CR>", { silent = true, noremap = true })
+-- vim.keymap.set('n', '<leader>vc', ":lua require'package-info'.change_version() <CR>", { silent = true, noremap = true })
 
 -- debugging remaps
 vim.keymap.set('n', '<leader>dc', ':DapContinue <CR>', { noremap = true })

@@ -134,4 +134,21 @@ return {
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
+
+  {
+    'vuki656/package-info.nvim',
+    ft = "json",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require('package-info').setup()
+    end
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end
+  },
 }
