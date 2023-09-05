@@ -64,6 +64,7 @@ alias t="exa -a -T -L 2"
 alias py="python3"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
+alias j='just'
 alias f='nvim $(find `pwd` -type f | fzf)'
 
 nvim() {

@@ -1,5 +1,11 @@
-vim.opt.listchars = {trail = "."}
 vim.opt.list = true
+vim.opt.listchars = {
+  eol = ' ',
+  space = ' ',
+  trail = '.',
+  extends = ' ',
+  precedes = ' ',
+}
 
 vim.o.cursorline = true
 vim.o.relativenumber = true
@@ -59,5 +65,6 @@ vim.cmd([[
     autocmd InsertLeave * :set relativenumber
 ]])
 
+vim.cmd([[autocmd BufRead,BufNewFile *.mdx setfiletype markdown]])
 vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype mir]])
 vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
