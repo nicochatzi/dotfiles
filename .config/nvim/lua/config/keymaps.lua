@@ -1,9 +1,4 @@
--- move a block in visual mode with J/K
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
--- dont move cursor when using J
-vim.keymap.set("n", "J", "mzJ`z")
-
+-- folds
 vim.keymap.set('n', 'zR', ":lua require'ufo'.openAllFolds()<CR>")
 vim.keymap.set('n', 'zM', ":lua require'ufo'.closeAllFolds<CR>")
 
