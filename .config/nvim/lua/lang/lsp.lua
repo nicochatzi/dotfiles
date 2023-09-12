@@ -129,10 +129,10 @@ mason_lspconfig.setup_handlers {
     }
   end,
   ["clangd"] = function()
-    require("clangd_extensions").setup(require('lang.clangd')(capabilities, on_attach))
+    require('lang.clangd')(capabilities, on_attach)
   end,
   ["rust_analyzer"] = function()
-    require("rust-tools").setup(require('lang.rust')(capabilities, on_attach))
+    require('lang.rust')(capabilities, on_attach)
   end
 }
 

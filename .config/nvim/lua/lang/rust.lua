@@ -3,7 +3,7 @@ return function(capabilities, on_attach)
   local codelldb_path = extension_path .. "adapter/codelldb"
   local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
 
-  return {
+  require("rust-tools").setup {
     capabilities = capabilities,
     on_attach = on_attach,
     server = {
