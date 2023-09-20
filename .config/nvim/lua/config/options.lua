@@ -24,6 +24,8 @@ vim.go.showcmd = false
 vim.opt.fillchars = { eob = " ", stl = "—" }
 vim.go.shortmess = 'a'
 vim.go.shortmess = vim.go.shortmess .. 'F'
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 vim.go.tabstop = 4
 vim.go.shiftwidth = 4
