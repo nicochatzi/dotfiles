@@ -29,7 +29,7 @@ return {
       'diagnostics',
     },
     window = {
-      position = 'left',
+      position = 'right',
       width = 30,
       mappings = {
         ['<C-x>'] = 'open_split',
@@ -86,11 +86,11 @@ return {
       winbar = true,
       statusline = false,
       sources = {
-        { source = 'filesystem',       display_name = ' 󰉓 ' },
-        { source = 'git_status',       display_name = ' 󰊢 ' },
-        { source = 'buffers',          display_name = '  ' },
+        { source = 'filesystem', display_name = ' 󰉓 ' },
+        { source = 'git_status', display_name = ' 󰊢 ' },
+        { source = 'buffers', display_name = '  ' },
         { source = 'document_symbols', display_name = '  ' },
-        { source = 'diagnostics',      display_name = '  ' },
+        { source = 'diagnostics', display_name = '  ' },
       },
     },
     buffers = {

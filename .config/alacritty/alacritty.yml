@@ -8,7 +8,7 @@ window:
   dimensions:
     columns: 150
     lines: 40
-  opacity: 0.87
+  opacity: 0.90
   option_as_alt: Both
 
   # Window decorations

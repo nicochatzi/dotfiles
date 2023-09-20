@@ -91,6 +91,7 @@ local servers = {
     },
   },
   rust_analyzer = {},
+  luau_lsp = {},
   tsserver = {},
   taplo = {},
   dockerls = {},
@@ -133,7 +134,7 @@ mason_lspconfig.setup_handlers {
   end,
   ["rust_analyzer"] = function()
     require('lang.rust')(capabilities, on_attach)
-  end
+  end,
 }
 
 require('ufo').setup()
