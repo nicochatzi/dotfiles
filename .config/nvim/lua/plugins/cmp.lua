@@ -34,6 +34,7 @@ local function config_completion()
     },
     sources = {
       { name = 'path' },                                       -- file paths
+      { name = "copilot",                group_index = 2 },
       { name = 'nvim_lsp',               keyword_length = 1 }, -- from language server
       { name = 'nvim_lsp_signature_help' },                    -- display function signatures with current parameter emphasized
       { name = 'nvim_lua',               keyword_length = 2 }, -- complete neovim's Lua runtime API such vim.lsp.*

@@ -1,11 +1,13 @@
 vim.opt.list = true
 vim.opt.listchars = {
-  eol = ' ',
-  space = ' ',
-  trail = '.',
-  extends = ' ',
-  precedes = ' ',
+  eol = ' ',      -- Space for end of line
+  space = ' ',    -- Space for spaces
+  tab = '  ',     -- spaces for tabs
+  trail = '.',    -- Visible dot for trailing spaces
+  extends = ' ',  -- Space for extends
+  precedes = ' ', -- Space for precedes
 }
+
 
 vim.o.cursorline = true
 vim.o.relativenumber = true
@@ -49,15 +51,16 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- vim.o.foldmethod = "expr"
--- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 -- vim.o.foldenable = 0
 
 -- from https://github.com/kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '0' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+vim.g.markdown_folding = 1 -- enable markdown folding
 
 vim.o.spell = true
 vim.o.spelllang = "en_gb"

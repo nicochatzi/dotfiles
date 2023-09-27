@@ -1,6 +1,7 @@
+# zmodload zsh/zprof
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
-# zmodload zsh/zprof
 #
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -22,6 +23,7 @@ export PATH=$PATH:$HOME/.zvm/bin
 export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
 # export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
 export PATH=$PATH:$HOME/.zvm/bin:$HOME/.zvm/zvm
+export PATH=$PATH:$HOME/code/me/aud/out
 
 # setup sccache
 # export RUSTC_WRAPPER=/usr/local/bin/sccache
@@ -41,6 +43,8 @@ zpcompinit; zpcdreplay
 
 zinit light unixorn/fzf-zsh-plugin
 zinit light romkatv/powerlevel10k
+
+source $HOME/code/me/aud/out/aud.zsh
 
 ###########################################################################
 # Preferred editor for local and remote sessions
@@ -112,3 +116,12 @@ source $HOME/.creds/.faelrc
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # zprof
+
+[ -f "/Users/nico/.ghcup/env" ] && source "/Users/nico/.ghcup/env" # ghcup-env
+
+# bun completions
+[ -s "/Users/nico/.bun/_bun" ] && source "/Users/nico/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

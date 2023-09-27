@@ -1,22 +1,16 @@
-local setup_hotkey = require('hotkey')
+local keys = require('hotkey')
 
-setup_hotkey({
+keys.setup_hotkey({
     mods = { "alt" },
     key = '1'
 }, 'Alacritty', 'org.alacritty')
 
-setup_hotkey({
+keys.setup_hotkey_macos({
     mods = { "alt" },
     key = '2'
-}, 'Arc', 'org.arc')
+}, 'com.apple.Safari')
 
--- setup_hotkey({
---    mods = { "alt" },
---    key = '3'
--- }, 'Spotify', 'org.spotify')
-
--- setup_hotkey({
---     mods = { "alt" },
---     key = '1'
--- }, 'Kitty', 'net.kovidgoyal.kitty')
-
+keys.setup_hotkey_macos({
+    mods = { "alt" },
+    key = '3'
+}, 'com.apple.Safari.WebApp.7E7AB543-CC1C-40CA-8943-87A42825EB3A')

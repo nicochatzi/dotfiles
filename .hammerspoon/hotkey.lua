@@ -1,7 +1,9 @@
+local M = {}
+
 -- @param hotkey_binding (.mods = { "alt", "shift" }, .key = "`")
 -- @param app_name
 -- @param app_selector
-local M = function(hotkey_binding, app_name, app_selector)
+function M.setup_hotkey(hotkey_binding, app_name, app_selector)
     -- Hammerspoon Spaces Management Library
     -- https://github.com/asmagill/hs._asm.spaces
     local spaces = require('hs.spaces')
@@ -80,6 +82,42 @@ local M = function(hotkey_binding, app_name, app_selector)
             end
         end)
     end
+end
+
+function generate_hide_focus_applescript(bundle_id)
+    return [[
+        tell application "System Events"
+            set isRunning to (count of (every process whose bundle identifier is "]] .. bundle_id .. [["))
+        end tell
+
+        if isRunning = 0 then
+            -- Application is not running, so launch Application and focus it
+            tell application id "]] .. bundle_id .. [["
+                activate
+            end tell
+        else
+            -- Application is running
+            tell application "System Events"
+                set frontmostProcess to bundle identifier of the first process whose frontmost is true
+            end tell
+            if frontmostProcess is "]] .. bundle_id .. [[" then
+                -- Application is in focus, so hide it
+                tell application "System Events" to set visible of (first process whose bundle identifier is "]] ..
+        bundle_id .. [[") to false
+            else
+                -- Application is not in focus or is hidden, so focus it
+                tell application id "]] .. bundle_id .. [["
+                    activate
+                end tell
+            end if
+        end if
+    ]]
+end
+
+function M.setup_hotkey_macos(hotkey_binding, bundle_id)
+    hs.hotkey.bind(hotkey_binding.mods, hotkey_binding.key, function()
+        ok, result = hs.osascript.applescript(generate_hide_focus_applescript(bundle_id))
+    end)
 end
 
 return M
