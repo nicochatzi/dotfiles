@@ -18,4 +18,5 @@ keys.setup_hotkey_macos({
 keys.setup_hotkey_macos({
     mods = { "alt" },
     key = '4'
-}, 'com.apple.Safari.WebApp.42CFC3A7-A873-4F70-AA0D-1640F387A562')
+}, 'com.apple.Music')
+

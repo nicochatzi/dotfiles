@@ -9,6 +9,10 @@ return {
     "nvim-telescope/telescope.nvim",
   },
   opts = {
+    mappings = {},
+    -- mappings = {
+    --   ["fo"] = require("obsidian.mapping").gf_passthrough(),
+    -- },
     dir = vim.fn.expand "~" .. obsidian_vault_path,
     notes_subdir = "notes",
     -- Optional, set the log level for Obsidian. This is an integer corresponding to one of the log
@@ -92,17 +96,7 @@ return {
     -- remaining finders will be attempted in the original order.
     finder = "telescope.nvim",
   },
-  config = function(_, opts)
-    require("obsidian").setup(opts)
-
-    -- Optional, override the 'gf' keymap to utilize Obsidian's search functionality.
-    -- see also: 'follow_url_func' config option above.
-    vim.keymap.set("n", "gf", function()
-      if require("obsidian").util.cursor_on_markdown_link() then
-        return "<cmd>ObsidianFollowLink<CR>"
-      else
-        return "gf"
-      end
-    end, { noremap = false, expr = true })
-  end,
+  -- config = function(_, opts)
+  --   require("obsidian").setup(opts)
+  -- end,
 }
