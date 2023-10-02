@@ -71,6 +71,30 @@ alias nv='nvim'
 alias j='just'
 alias f='nvim $(find `pwd` -type f | fzf)'
 
+we() {
+    local filter_flag=""
+    local zparseopts_return
+    zparseopts -D -E -a zparseopts_return f:=filter_flag
+
+    if (( ${#filter_flag} == 1 )); then
+        filter_flag="-f=${ignore_flag[1]}"
+    fi
+
+    if (( ${#zparseopts_return} > 0 )); then
+        echo "Usage: we [-f=\"FILTER_PATTERN\"] 'command [ARG]...'"
+        return 1
+    fi
+
+    local cmd="${1}"
+    if [[ -z "$cmd" ]]; then
+        echo "Please provide a command to run with we."
+        return 1
+    fi
+
+    watchexec -c -r -w . $filter_flag -- $cmd
+}
+
+
 cht() {
   curl "cht.sh/$1"
 }
