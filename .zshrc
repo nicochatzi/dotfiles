@@ -71,6 +71,10 @@ alias nv='nvim'
 alias j='just'
 alias f='nvim $(find `pwd` -type f | fzf)'
 
+cht() {
+  curl "cht.sh/$1"
+}
+
 nvim() {
     if [[ -d $1 ]]; then
         cd "$1"

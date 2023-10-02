@@ -4,6 +4,8 @@ local M = {}
 -- @param app_name
 -- @param app_selector
 function M.setup_hotkey(hotkey_binding, app_name, app_selector)
+    hs.application.enableSpotlightForNameSearches(true)
+
     -- Hammerspoon Spaces Management Library
     -- https://github.com/asmagill/hs._asm.spaces
     local spaces = require('hs.spaces')

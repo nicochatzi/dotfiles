@@ -4,20 +4,14 @@ return {
   cmd = 'Telescope',
   dependencies = {
     { 'nvim-lua/plenary.nvim', },
-    {
-      'debugloop/telescope-undo.nvim',
-    },
-    {
-      'nvim-telescope/telescope-ui-select.nvim',
-    },
+    { 'debugloop/telescope-undo.nvim', },
+    { 'nvim-telescope/telescope-ui-select.nvim', },
     {
       'nvim-telescope/telescope-file-browser.nvim',
       dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
       -- branch = 'feat/tree',
     },
-    {
-      'nvim-telescope/telescope-project.nvim',
-    },
+    { 'nvim-telescope/telescope-project.nvim', },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       -- NOTE: If you are having trouble with this installation,
