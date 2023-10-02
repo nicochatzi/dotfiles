@@ -1,16 +1,27 @@
-local keys = require('hotkey')
+local _ = require('lib')
 
-keys.setup_hotkey({
+_.setup_hotkey {
     mods = { "alt" },
-    key = '1'
-}, 'Alacritty', 'org.alacritty')
+    key = '1',
+    app_name = 'Alacritty',
+    bundle_id = 'org.alacritty',
+    scaled = true,
+}
 
-keys.setup_hotkey_macos({
+_.setup_hotkey {
     mods = { "alt" },
-    key = '2'
-}, 'company.thebrowser.Browser')
+    key = '2',
+    app_name = 'Arc',
+    bundle_id = 'company.thebrowser.Browser',
+    scaled = false,
+}
 
-keys.setup_hotkey_macos({
+_.setup_hotkey {
     mods = { "alt" },
-    key = '3'
-}, 'com.spotify.client')
+    key = '3',
+    app_name = 'Spotify',
+    bundle_id = 'com.spotify.client',
+    scaled = false,
+}
+
+_.start_spotify_notifications()

@@ -1,9 +1,6 @@
 local M = {}
 
--- @param hotkey_binding (.mods = { "alt", "shift" }, .key = "`")
--- @param app_name
--- @param app_selector
-function M.setup_hotkey(hotkey_binding, app_name, app_selector)
+function M.setup_hotkey(args)
     hs.application.enableSpotlightForNameSearches(true)
 
     -- Hammerspoon Spaces Management Library
@@ -32,14 +29,12 @@ function M.setup_hotkey(hotkey_binding, app_name, app_selector)
             window = app:mainWindow()
         end
 
-        local windowFrame = window:frame()
-        local screenFrame = screen:fullFrame()
-
-        if not window:isFullscreen() then
+        if not window:isFullscreen() and args.fullscreen then
+            local windowFrame = window:frame()
+            local screenFrame = screen:fullFrame()
             windowFrame.w = screenFrame.w * widthScale
             windowFrame.h = screenFrame.h * heightScale
             window:setFrame(windowFrame)
-
             window:centerOnScreen(screen)
         end
 
@@ -48,7 +43,7 @@ function M.setup_hotkey(hotkey_binding, app_name, app_selector)
     end
 
     function toggleApp()
-        local application = hs.application.get(app_selector)
+        local application = hs.application.get(args.bundle_id)
 
         if application ~= nil and application:isFrontmost() then
             application:hide()
@@ -56,10 +51,10 @@ function M.setup_hotkey(hotkey_binding, app_name, app_selector)
             local focusedSpace = spaces.focusedSpace()
             local mainScreen = hs.screen.find(spaces.spaceDisplay(focusedSpace))
 
-            if application == nil and hs.application.launchOrFocus(app_name) then
+            if application == nil and hs.application.launchOrFocus(args.app_name) then
                 local appWatcher = nil
                 appWatcher = hs.application.watcher.new(function(name, event, app)
-                    if event == hs.application.watcher.launched and name == app_name then
+                    if event == hs.application.watcher.launched and name == args.app_name then
                         app:hide()
                         moveApp(app, focusedSpace, mainScreen)
                         appWatcher:stop()
@@ -74,11 +69,11 @@ function M.setup_hotkey(hotkey_binding, app_name, app_selector)
         end
     end
 
-    hs.hotkey.bind(hotkey_binding.mods, hotkey_binding.key, toggleApp)
+    hs.hotkey.bind(args.mods, args.key, toggleApp)
 
     if CONFIG['HIDE_ON_FOCUS_LOST'] then
         hs.window.filter.default:subscribe(hs.window.filter.windowUnfocused, function(window, app)
-            local application = hs.application.get(app_selector)
+            local application = hs.application.get(args.bundle_id)
             if application ~= nil then
                 application:hide()
             end
@@ -86,40 +81,32 @@ function M.setup_hotkey(hotkey_binding, app_name, app_selector)
     end
 end
 
-function generate_hide_focus_applescript(bundle_id)
-    return [[
-        tell application "System Events"
-            set isRunning to (count of (every process whose bundle identifier is "]] .. bundle_id .. [["))
-        end tell
+function M.start_spotify_notifications()
+    hs.spotify = require("hs.spotify")
+    hs.timer = require("hs.timer")
+    hs.notify = require("hs.notify")
 
-        if isRunning = 0 then
-            -- Application is not running, so launch Application and focus it
-            tell application id "]] .. bundle_id .. [["
-                activate
-            end tell
-        else
-            -- Application is running
-            tell application "System Events"
-                set frontmostProcess to bundle identifier of the first process whose frontmost is true
-            end tell
-            if frontmostProcess is "]] .. bundle_id .. [[" then
-                -- Application is in focus, so hide it
-                tell application "System Events" to set visible of (first process whose bundle identifier is "]] ..
-        bundle_id .. [[") to false
-            else
-                -- Application is not in focus or is hidden, so focus it
-                tell application id "]] .. bundle_id .. [["
-                    activate
-                end tell
-            end if
-        end if
-    ]]
-end
+    local checkIntervalSecs = 5
+    local spotifyLogo = hs.image.imageFromPath("~/.hammerspoon/assets/spotify.png")
+    local lastTrackName = nil
 
-function M.setup_hotkey_macos(hotkey_binding, bundle_id)
-    hs.hotkey.bind(hotkey_binding.mods, hotkey_binding.key, function()
-        ok, result = hs.osascript.applescript(generate_hide_focus_applescript(bundle_id))
-    end)
+    function notifyOnNewSong()
+        local currentTrackName = hs.spotify.getCurrentTrack()
+
+        if currentTrackName and currentTrackName ~= lastTrackName then
+            lastTrackName = currentTrackName
+            hs.notify.new({
+                title = hs.spotify.getCurrentArtist(),
+                subTitle = hs.spotify.getCurrentAlbum(),
+                informativeText = currentTrackName,
+                setIdImage = spotifyLogo,
+                contentImage = spotifyLogo,
+            }):send()
+        end
+    end
+
+    trackChecker = hs.timer.new(checkIntervalSecs, notifyOnNewSong)
+    trackChecker:start()
 end
 
 return M
