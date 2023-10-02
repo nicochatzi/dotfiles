@@ -91,14 +91,17 @@ function M.start_spotify_notifications()
     local lastTrackName = nil
 
     function notifyOnNewSong()
-        local currentTrackName = hs.spotify.getCurrentTrack()
+        if not hs.spotify.isRunning() then
+            return
+        end
 
+        local currentTrackName = hs.spotify.getCurrentTrack()
         if currentTrackName and currentTrackName ~= lastTrackName then
             lastTrackName = currentTrackName
             hs.notify.new({
-                title = hs.spotify.getCurrentArtist(),
-                subTitle = hs.spotify.getCurrentAlbum(),
-                informativeText = currentTrackName,
+                title = currentTrackName,
+                subTitle = hs.spotify.getCurrentArtist(),
+                informativeText = hs.spotify.getCurrentAlbum(),
                 setIdImage = spotifyLogo,
                 contentImage = spotifyLogo,
             }):send()
