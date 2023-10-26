@@ -18,18 +18,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 ###########################################################################
 fpath=( ~/.zfunc "${fpath[@]}" )
-export PATH=$PATH:/usr/local/bin
-export PATH=$PATH:$HOME/.zvm/bin
-export PATH=$PATH:$HOME/toolchains/arm-none-eabi/12.2/bin
-# export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
-export PATH=$PATH:$HOME/.zvm/bin:$HOME/.zvm/zvm
-export PATH=$PATH:$HOME/code/me/aud/out
-
-# setup sccache
-# export RUSTC_WRAPPER=/usr/local/bin/sccache
-# ulimit -n 10240
-
-export RUST_BACKTRACE=1
 
 ###########################################################################
 # Plugins
@@ -45,6 +33,8 @@ zinit light unixorn/fzf-zsh-plugin
 zinit light romkatv/powerlevel10k
 
 source $HOME/code/me/aud/out/aud.zsh
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 ###########################################################################
 # Preferred editor for local and remote sessions
@@ -58,7 +48,8 @@ fi
 
 # disable vim-mode if we're already in vim!
 if [[ -z "$VIMRUNTIME" ]]; then
-    bindkey -v # Enable vim keybindings
+    # Enable vim keybindings
+    bindkey -v
 fi
 
 alias tree="tree -C"
@@ -143,13 +134,7 @@ source $HOME/.creds/.faelrc
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# zprof
-
-[ -f "/Users/nico/.ghcup/env" ] && source "/Users/nico/.ghcup/env" # ghcup-env
-
-# bun completions
+[ -f "/Users/nico/.ghcup/env" ] && source "/Users/nico/.ghcup/env"
 [ -s "/Users/nico/.bun/_bun" ] && source "/Users/nico/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export MODULAR_HOME="$HOME/.modular"
+export PATH="$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH"

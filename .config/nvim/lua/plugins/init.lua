@@ -1,6 +1,6 @@
 return {
   -- detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  -- 'tpope/vim-sleuth',
 
   {
     -- 'gcc' => line,  gc' visual, 'gc' + motion

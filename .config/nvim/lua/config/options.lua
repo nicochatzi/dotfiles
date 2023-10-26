@@ -1,13 +1,16 @@
 vim.opt.list = true
-vim.opt.listchars = {
-  eol = ' ',      -- Space for end of line
-  space = ' ',    -- Space for spaces
-  tab = '  ',     -- spaces for tabs
-  trail = '.',    -- Visible dot for trailing spaces
-  extends = ' ',  -- Space for extends
-  precedes = ' ', -- Space for precedes
-}
-
+-- vim.opt.listchars.trail = '.'
+-- vim.opt.listchars = {
+--   eol = ' ',      -- Space for end of line
+--   space = ' ',    -- Space for spaces
+--   tab = '  ',     -- spaces for tabs
+--   trail = '.',    -- Visible dot for trailing spaces
+--   extends = ' ',  -- Space for extends
+--   precedes = ' ', -- Space for precedes
+-- }
+vim.go.tabstop = 4
+vim.go.shiftwidth = 4
+vim.go.expandtab = true
 
 vim.o.cursorline = true
 vim.o.relativenumber = true
@@ -28,9 +31,6 @@ vim.go.shortmess = 'a'
 vim.go.shortmess = vim.go.shortmess .. 'F'
 vim.o.splitright = true
 vim.o.splitbelow = true
-
-vim.go.tabstop = 4
-vim.go.shiftwidth = 4
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -71,5 +71,5 @@ vim.cmd([[
 ]])
 
 vim.cmd([[autocmd BufRead,BufNewFile *.mdx setfiletype markdown]])
-vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype mir]])
+vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype rust]])
 vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
