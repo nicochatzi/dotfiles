@@ -51,6 +51,12 @@ return {
       pickers = {
         find_files = {
           theme = 'ivy',
+          find_command = {
+                'fd', '--type', 'f', '--hidden',
+                '--exclude', '.git',
+                '--exclude', '.cache',
+                '--exclude', '.obsidian',
+            },
         }
       },
       extensions = {

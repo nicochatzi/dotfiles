@@ -31,9 +31,12 @@ vim.keymap.set('n', '<leader>bt', ':BufferCloseAllButVisible<CR>', { noremap = t
 
 -- c/cpp/cmake remaps
 vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
+vim.keymap.set('n', '<leader>co', ':CMakeOpen<CR>')
+vim.keymap.set('n', '<leader>cs', ':CMakeSettings<CR>')
 vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>')
 vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
 vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>')
+vim.keymap.set('n', '<leader>cc', ':CMakeSelectCwd<CR>')
 vim.keymap.set('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
 vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
 
