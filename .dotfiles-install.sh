@@ -23,7 +23,7 @@ postinstall() {
     if [ $OS == "Darwin" ]; then
         brew cleanup
     else
-        apt clean 
+        apt clean
         rm -rf /var/lib/apt/lists/*d
     fi
 }
@@ -115,6 +115,7 @@ install_tui() {
         brew tap homebrew/cask-fonts
         brew install --cask font-jetbrains-mono
         brew install --cask font-jetbrains-mono-nerd-font
+        brew install --cask font-meslo-lg-nerd-font
     else
         pushd "$(pwd)" && \
             mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts && \
@@ -208,7 +209,7 @@ done
 
 ANY_INSTALLS_REQUESTED=0
 if [ $INSTALL_SYS -eq 1 ] || [ $INSTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES -eq 1 ]; then
-    ANY_INSTALLS_REQUESTED=1 
+    ANY_INSTALLS_REQUESTED=1
 fi
 
 if [ $ANY_INSTALLS_REQUESTED -eq 1 ]; then

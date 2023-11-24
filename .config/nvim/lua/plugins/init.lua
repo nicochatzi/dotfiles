@@ -3,6 +3,11 @@ return {
   -- 'tpope/vim-sleuth',
 
   {
+     'troydm/zoomwintab.vim',
+     event = 'VeryLazy',
+  },
+
+  {
     -- 'gcc' => line,  gc' visual, 'gc' + motion
     'numToStr/Comment.nvim',
     event = 'BufReadPre',
