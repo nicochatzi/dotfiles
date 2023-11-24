@@ -28,21 +28,21 @@ scrolling:
 
 font:
   normal:
-    family: MesloLGSDZ Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Regular
   bold:
-    family: MesloLGSDZ Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold
   italic:
-    family: MesloLGSDZ Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Italic
   bold_italic:
-    family: MesloLGSDZ Nerd Font
+    family: JetBrainsMono Nerd Font
     style: Bold Italic
   size: 11
   offset:
     x: 0
-    y: 0
+    y: -2
 
 draw_bold_text_with_bright_colors: true
 use_thin_strokes: true
