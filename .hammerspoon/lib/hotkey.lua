@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup_hotkey(args)
+function M.setup(args)
     hs.application.enableSpotlightForNameSearches(true)
 
     -- Hammerspoon Spaces Management Library
@@ -81,84 +81,5 @@ function M.setup_hotkey(args)
     end
 end
 
-function M.start_spotify_notifications()
-    hs.spotify = require("hs.spotify")
-    hs.timer = require("hs.timer")
-    hs.notify = require("hs.notify")
-
-    local checkIntervalSecs = 5
-    local spotifyLogo = hs.image.imageFromPath("~/.hammerspoon/assets/spotify.png")
-    local lastTrackName = nil
-
-    function notifyOnNewSong()
-        if not hs.spotify.isRunning() then
-            return
-        end
-
-        local currentTrackName = hs.spotify.getCurrentTrack()
-        if currentTrackName and currentTrackName ~= lastTrackName then
-            lastTrackName = currentTrackName
-            hs.notify.new({
-                title = currentTrackName,
-                subTitle = hs.spotify.getCurrentArtist(),
-                informativeText = hs.spotify.getCurrentAlbum(),
-                setIdImage = spotifyLogo,
-                contentImage = spotifyLogo,
-            }):send()
-        end
-    end
-
-    trackChecker = hs.timer.new(checkIntervalSecs, notifyOnNewSong)
-    trackChecker:start()
-end
-
-M.Window = {}
-
-local originalFrames = {}
-
-local function store_original_frame(win)
-    if win then
-        local id = win:id()
-        if not originalFrames[id] then
-            originalFrames[id] = win:frame()
-        end
-    end
-end
-
-function M.Window.to_original_frame()
-    local win = hs.window.focusedWindow()
-    if not win then return end
-    local id = win:id()
-    local originalFrame = originalFrames[id]
-    if originalFrame then
-        win:setFrame(originalFrame)
-        originalFrames[id] = nil -- Optionally, clear the stored frame
-    end
-end
-
-function M.Window.to_left_half()
-    local win = hs.window.focusedWindow()
-    if not win then return end
-    store_original_frame(win)
-    win:moveToUnit(hs.layout.left50)
-end
-
-function M.Window.to_right_half()
-    local win = hs.window.focusedWindow()
-    if not win then return end
-    store_original_frame(win)
-    win:moveToUnit(hs.layout.right50)
-end
-
-function M.Window.to_fullscreen()
-    local win = hs.window.focusedWindow()
-    if not win then return end
-    store_original_frame(win)
-    win:maximize(0)
-end
-
-function M.Window.move(args)
-    hs.hotkey.bind(args.mods, args.key, args.action)
-end
 
 return M

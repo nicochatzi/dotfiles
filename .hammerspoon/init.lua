@@ -1,6 +1,7 @@
-local _ = require('lib')
+local hotkey = require('lib/hotkey')
+local winman = require('lib/winman')
 
-_.setup_hotkey {
+hotkey.setup {
     mods = { "alt" },
     key = '1',
     app_name = 'Alacritty',
@@ -8,35 +9,41 @@ _.setup_hotkey {
     scaled = true,
 }
 
-_.setup_hotkey {
+hotkey.setup {
     mods = { "alt" },
     key = '2',
     app_name = 'Arc',
     bundle_id = 'company.thebrowser.Browser',
 }
 
--- _.start_spotify_notifications()
-
-_.Window.move {
+winman.setup {
     mods = { "ctrl", "alt" },
-    key = "Left",
-    action = _.Window.to_left_half
+    key = 'Left',
+    action = winman.to_left_half
 }
 
-_.Window.move {
+winman.setup {
     mods = { "ctrl", "alt" },
-    key = "Right",
-    action = _.Window.to_right_half
+    key = 'Right',
+    action = winman.to_right_half
 }
 
-_.Window.move {
+winman.setup {
     mods = { "ctrl", "alt" },
-    key = "Up",
-    action = _.Window.to_fullscreen
+    key = 'Up',
+    action = winman.to_fullscreen
 }
 
-_.Window.move {
+winman.setup {
     mods = { "ctrl", "alt" },
-    key = "Down",
-    action = _.Window.to_original_frame
+    key = 'Down',
+    action = winman.to_original_frame
 }
+
+require('lib/clipmem').launch {
+    mods = { "ctrl", "alt" },
+    key = '`',
+    history = 10,
+}
+
+-- require('lib/spotify').launch_notifier()
