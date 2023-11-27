@@ -1,11 +1,14 @@
 local hotkey = require('lib/hotkey')
 local winman = require('lib/winman')
 
+-- app_name = 'Alacritty',
+-- bundle_id = 'org.alacritty',
+
 hotkey.setup {
     mods = { "alt" },
     key = '1',
-    app_name = 'Alacritty',
-    bundle_id = 'org.alacritty',
+    app_name = 'Kitty',
+    bundle_id = 'net.kovidgoyal.kitty',
     scaled = true,
 }
 
@@ -40,9 +43,7 @@ winman.setup {
     action = winman.to_original_frame
 }
 
-require('lib/clipmem').launch {
-    mods = { "ctrl", "alt" },
-    key = '`',
+require('lib/clipmem').setup {
     history = 10,
 }
 
