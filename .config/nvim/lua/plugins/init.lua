@@ -3,17 +3,7 @@ return {
   -- 'tpope/vim-sleuth',
 
   {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-        require 'colorizer'.setup {
-          '*'; -- Highlight all files, but customize some others.
-          css = { rgb_fn = true; }; -- Enable parsing rgb(...) functions in css.
-          html = { names = false; } -- Disable parsing "names" like Blue or Gray
-        }
-    end
-  },
-
-  {
+     -- zoom in/out of current buffer
      'troydm/zoomwintab.vim',
      event = 'VeryLazy',
   },
@@ -30,9 +20,6 @@ return {
     'stevearc/dressing.nvim',
     event = 'VeryLazy'
   },
-
-  -- auto-closing braces
-  -- { 'echasnovski/mini.pairs', event = 'BufReadPre', opts = {} },
 
   {
     -- global search and replace utils
@@ -134,21 +121,6 @@ return {
         return { 'treesitter', 'indent' }
       end
     }
-  },
-
-  {
-    'romgrk/barbar.nvim',
-    dependencies = {
-      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    event = 'VeryLazy',
-    init = function() vim.g.barbar_auto_setup = false end,
-    opts = {
-      animation = false,
-      tabpages = false,
-    },
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
 
   {

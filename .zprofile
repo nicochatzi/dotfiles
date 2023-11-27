@@ -16,3 +16,5 @@ export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/bin/cmake-language-server/bin:$PATH"
 export PATH="/opt/homebrew/opt/qemu/bin:$PATH"
+
+export PATH="/Applications/kitty.app/Contents/MacOS:$PATH"

@@ -15,12 +15,12 @@ return {
         always_divide_middle = false,
       },
       sections = {
-        lualine_a = {},
-        lualine_b = {},
+        lualine_a = { 'hostname' },
+        lualine_b = { 'location' },
         lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
+        lualine_x = { 'selectioncount' },
+        lualine_y = { 'searchcount' },
+        lualine_z = { 'filesize' },
       },
       inactive_sections = {
         lualine_a = {},
@@ -37,7 +37,7 @@ return {
           path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
         } },
         lualine_b = { 'branch', 'diagnostics' },
-        lualine_c = {},
+        lualine_c = { 'filesize', 'selectioncount' },
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
