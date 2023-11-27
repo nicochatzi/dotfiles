@@ -112,4 +112,53 @@ function M.start_spotify_notifications()
     trackChecker:start()
 end
 
+M.Window = {}
+
+local originalFrames = {}
+
+local function store_original_frame(win)
+    if win then
+        local id = win:id()
+        if not originalFrames[id] then
+            originalFrames[id] = win:frame()
+        end
+    end
+end
+
+function M.Window.to_original_frame()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+    local id = win:id()
+    local originalFrame = originalFrames[id]
+    if originalFrame then
+        win:setFrame(originalFrame)
+        originalFrames[id] = nil -- Optionally, clear the stored frame
+    end
+end
+
+function M.Window.to_left_half()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+    store_original_frame(win)
+    win:moveToUnit(hs.layout.left50)
+end
+
+function M.Window.to_right_half()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+    store_original_frame(win)
+    win:moveToUnit(hs.layout.right50)
+end
+
+function M.Window.to_fullscreen()
+    local win = hs.window.focusedWindow()
+    if not win then return end
+    store_original_frame(win)
+    win:maximize(0)
+end
+
+function M.Window.move(args)
+    hs.hotkey.bind(args.mods, args.key, args.action)
+end
+
 return M
