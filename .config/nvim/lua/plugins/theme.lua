@@ -29,18 +29,23 @@ return {
       -- vim.cmd.colorscheme('kanagawa-lotus')
       vim.cmd.colorscheme('kanagawa')
 
-      local deep = '#346152'
-      local teal = '#5faf94'
+      -- local dark = '#323d3d'
+      -- local deep = '#346152'
+      -- local light = '#5faf94'
+
+      local dark = '#2a2a37'
+      local deep = '#54546d'
+      local light = '#947fb8'
 
       -- cursor line highlights
-      vim.api.nvim_set_hl(0, 'CursorLine', { fg = teal, bg = '#323d3d' })
-      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#323d3d', bg = 'none' })
-      vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = teal, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'CursorLine', { fg = light, bg = dark })
+      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = light, bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = deep, fg = 'none' })
-      vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = deep, fg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = dark, fg = 'none' })
+      vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = dark, fg = 'none' })
 
-      vim.api.nvim_set_hl(0, 'Visual', { bg = '#323d3d' })
+      vim.api.nvim_set_hl(0, 'Visual', { bg = dark })
       vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = deep })
       vim.api.nvim_set_hl(0, 'WinSeparator', { fg = deep })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none', fg = deep })
@@ -50,31 +55,11 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { bg = 'none', fg = deep })
       vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { bg = 'none', fg = deep })
       vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { fg = teal, bg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { fg = teal, bg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { fg = teal, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { fg = light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { fg = light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { fg = light, bg = 'none' })
       -- vim.api.nvim_set_hl(0, 'NeoTreeTabActive', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeTabInactive', { bg = 'none' })
     end
   },
-
-  -- Add indentation guides even on blank lines
-  -- {
-  --   'lukas-reineke/indent-blankline.nvim',
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   -- Enable `lukas-reineke/indent-blankline.nvim`
-  --   -- See `:help indent_blankline.txt`
-  --   config = function()
-  --     vim.opt.list = true
-  --     vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
-  --     vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
-  --     require('indent_blankline').setup {
-  --       char = '',
-  --       space_char_blankline = ' ',
-  --       show_trailing_blankline_indent = true,
-  --       show_current_context = true,
-  --       show_current_context_start = false,
-  --     }
-  --   end
-  -- },
 }
