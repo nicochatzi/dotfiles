@@ -18,19 +18,14 @@ vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tx', ':split | terminal<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { noremap = true })
 -- Resizing panes with Alt-H/J/K/L
-vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-l>', ':vertical resize +5<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-k>', ':resize -5<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<M-j>', ':resize +5<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<M-l>', ':vertical resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<M-k>', ':resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<M-j>', ':resize +5<CR>', { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Buffers!
-vim.keymap.set('n', '<Tab>', ':BufferNext<CR>')
-vim.keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>')
-vim.keymap.set('n', '<leader>bt', ':BufferCloseAllButVisible<CR>', { noremap = true })
 
 -- c/cpp/cmake remaps
 vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
@@ -86,13 +81,13 @@ vim.keymap.set("n", "<leader>f", ":Telescope file_browser select_buffer=true<CR>
 -- vim.keymap.set('n', '<leader>y', ':Telescope frecency<CR>', { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>u', ":Telescope undo<CR>")
 vim.keymap.set('n', '<leader>p', ":lua require'telescope'.extensions.project.project{display_type = 'full'}<CR>",
-  { noremap = true, silent = true })
+    { noremap = true, silent = true })
 -- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 --
 vim.keymap.set('n', '<leader><space>', ":lua require'telescope.builtin'.buffers() <CR>",
-  { desc = '[ ] Find existing buffers' })
+    { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', ":lua require'telescope.builtin'.current_buffer_fuzzy_find() <CR>",
-  { desc = '[/] Fuzzily search in current buffer' })
+    { desc = '[/] Fuzzily search in current buffer' })
 
 -- [S]earch
 vim.keymap.set('n', '<leader>sh', ":lua require'telescope.builtin'.help_tags() <CR>", { desc = '[S]earch [H]elp' })
@@ -100,45 +95,66 @@ vim.keymap.set('n', '<leader>sh', ":lua require'telescope.builtin'.help_tags() <
 -- Search [F]iles
 vim.keymap.set('n', '<leader>sf', ":lua require'telescope.builtin'.find_files() <CR>", { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sg', ":lua require'telescope.builtin'.git_files() <CR>",
-  { desc = '[S]earch [G]it Files' })
+    { desc = '[S]earch [G]it Files' })
 vim.keymap.set('n', '<leader>sh', ":lua require'telescope.builtin'.grep_string() <CR>",
-  { desc = '[S]earch Grep String' })
+    { desc = '[S]earch Grep String' })
 vim.keymap.set('n', '<leader>sj', ":lua require'telescope.builtin'.live_grep() <CR>",
-  { desc = '[S]earch by Grep Live' })
+    { desc = '[S]earch by Grep Live' })
 
 -- [S]earch Others
 vim.keymap.set('n', '<leader>sd', ":lua require'telescope.builtin'.diagnostics() <CR>",
-  { desc = '[S]earch [D]iagnostics' })
+    { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>so', ":lua require'telescope.builtin'.lsp_document_symbols() <CR>",
-  { desc = '[S]earch [O]objets/Symbols' })
+    { desc = '[S]earch [O]objets/Symbols' })
 vim.keymap.set('n', '<leader>sr', ":lua require'telescope.builtin'.lsp_references() <CR>",
-  { desc = '[S]earch [R]eferences' })
+    { desc = '[S]earch [R]eferences' })
 vim.keymap.set('n', '<leader>sw', ":lua require'telescope.builtin'.lsp_dynamic_workspace_symbols() <CR>",
-  { desc = '[W]orkspace [S]ymbols' })
+    { desc = '[W]orkspace [S]ymbols' })
 
 vim.keymap.set('n', '<leader>saf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
- { desc = '[S]pectre in File' })
+    { desc = '[S]pectre in File' })
 vim.keymap.set('n', '<leader>sao', ':Spectre<CR>', { desc = '[S]pect[R]e [O]pen' })
 vim.keymap.set('n', '<leader>saw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "[S]earch [A]ll current [W]ord"
+    desc = "[S]earch [A]ll current [W]ord"
 })
 vim.keymap.set('v', '<leader>saw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = "[S]earch [A]ll current [W]ord"
+    desc = "[S]earch [A]ll current [W]ord"
 })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = highlight_group,
+    pattern = '*',
 })
 
 -- Remove trailing whitespace on save
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
+    pattern = { "*" },
+    command = [[%s/\s\+$//e]],
 })
+
+-- Buffers!
+vim.keymap.set('n', '<Tab>', ':bnext<CR>')
+vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>')
+
+local function close_all_but_visible_buffers()
+    local visible_buffers = {}
+    -- Mark all buffers that are visible in any window
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        visible_buffers[buf] = true
+    end
+    -- Close all buffers that are not visible
+    for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
+        if not visible_buffers[buffer] and vim.api.nvim_buf_is_loaded(buffer) then
+            vim.api.nvim_buf_delete(buffer, { force = true })
+        end
+    end
+end
+
+vim.keymap.set('n', '<leader>bt', close_all_but_visible_buffers, { noremap = true })

@@ -73,3 +73,4 @@ vim.cmd([[
 vim.cmd([[autocmd BufRead,BufNewFile *.mdx setfiletype markdown]])
 vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype rust]])
 vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
+vim.cmd([[autocmd BufRead,BufNewFile *.mojo setfiletype python]])

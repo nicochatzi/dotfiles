@@ -5,16 +5,9 @@ local colors = require('config.colors')
 -- local light = teal
 
 
-local dark = '#2a2a37'
+local dark = colors.black
 local deep = '#54546d'
 local light = colors.purple
-
-local highlights = {
-    'RainbowDelimiterTeal',
-    'RainbowDelimiterPurple',
-    'RainbowDelimiterBlue',
-    'RainbowDelimiterPink',
-}
 
 return {
     {
@@ -29,19 +22,24 @@ return {
         end
     },
 
-    {
-        -- bracket colorization
-        'HiPhish/rainbow-delimiters.nvim',
-        config = function()
-            vim.api.nvim_set_hl(0, 'RainbowDelimiterTeal', { fg = teal, bg = 'none' })
-            vim.api.nvim_set_hl(0, 'RainbowDelimiterPurple', { fg = purple, bg = 'none' })
-            vim.api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = blue, bg = 'none' })
-            vim.api.nvim_set_hl(0, 'RainbowDelimiterPink', { fg = pink, bg = 'none' })
-            require('rainbow-delimiters.setup').setup {
-                highlight = highlights,
-            }
-        end
-    },
+    -- {
+    --     -- bracket colorization
+    --     'HiPhish/rainbow-delimiters.nvim',
+    --     config = function()
+    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterA', { fg = colors.teal, bg = 'none' })
+    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterB', { fg = colors.purple, bg = 'none' })
+    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterC', { fg = colors.blue, bg = 'none' })
+    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterD', { fg = colors.pink, bg = 'none' })
+    --         require('rainbow-delimiters.setup').setup {
+    --             highlight = {
+    --                 'RainbowDelimiterA',
+    --                 'RainbowDelimiterB',
+    --                 'RainbowDelimiterC',
+    --                 'RainbowDelimiterD',
+    --             },
+    --         }
+    --     end
+    -- },
 
     {
         'rebelot/kanagawa.nvim',
@@ -76,7 +74,7 @@ return {
             -- cursor line highlights
             vim.api.nvim_set_hl(0, 'CursorLine', { fg = light, bg = dark })
             -- vim.api.nvim_set_hl(0, 'LineNr', { fg = light, bg = 'none' })
-            vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = light, bg = 'none' })
+            vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = colors.yellow, bg = 'none' })
             vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
             vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = dark, fg = 'none' })
             vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = dark, fg = 'none' })

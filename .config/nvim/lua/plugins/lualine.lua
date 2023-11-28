@@ -73,7 +73,7 @@ return {
         vim.api.nvim_set_hl(0, 'lualine_y_inactive', { bg = 'none' })
         local colors = require('config.colors')
         vim.api.nvim_set_hl(0, 'lualine_z_inactive', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_a_normal', { fg = colors.yellow, bg = colors.dark })
+        vim.api.nvim_set_hl(0, 'lualine_a_normal', { fg = colors.yellow, bg = colors.black })
         vim.api.nvim_set_hl(0, 'lualine_a_insert', { fg = '#282a2e', bg = colors.purple })
         vim.api.nvim_set_hl(0, 'lualine_a_visual', { fg = '#282a2e', bg = colors.teal })
         vim.api.nvim_set_hl(0, 'lualine_a_command', { fg = '#282a2e', bg = colors.blue })
