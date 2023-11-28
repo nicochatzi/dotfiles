@@ -111,6 +111,22 @@ bindkey '^Z' autosuggest-accept
 # bindkey '^X' autosuggest-execute
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
+bindkey -v
+bindkey '^[' vi-cmd-mode  # ESC to enter normal mode
+
+# block/beam cursor in normal/insert mode
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'  # Block cursor in normal mode
+  else
+    echo -ne '\e[5 q'  # Beam cursor in insert mode
+  fi
+}
+zle -N zle-keymap-select
+# Set default cursor to beam on shell startup
+echo -ne '\e[5 q'
+
 
 ###########################################################################
 # FZF config
