@@ -14,12 +14,14 @@ vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
 
+-- buffer splits and resizing
 vim.keymap.set('n', '<leader>tx', ':split | terminal<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>th', ':resize +2 <CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>tk', ':vertical resize +2 <CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>tj', ':vertical resize -2 <CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>tk', ':resize +2 <CR>', { noremap = true })
+-- Resizing panes with Alt-H/J/K/L
+vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-l>', ':vertical resize +5<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-k>', ':resize -5<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<M-j>', ':resize +5<CR>', {noremap = true, silent = true})
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
