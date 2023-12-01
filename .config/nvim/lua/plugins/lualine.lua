@@ -5,13 +5,13 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
     config = function()
-        local config = {
+        local conf = {
             options = {
-                theme = 'auto',
+                -- theme = 'auto',
                 icons_enabled = true,
                 disabled_filetypes = { 'neo-tree' },
                 component_separators = { left = '', right = '' },
-                section_separators = { left = '|', right = '|' },
+                section_separators = { left = '', right = '' },
                 always_divide_middle = false,
             },
             sections = {
@@ -33,7 +33,7 @@ return {
             winbar = {
                 lualine_a = { {
                     'filename',
-                    file_status = true, -- displays file status (readonly status, modified status)
+                    file_status = true, -- displays file status ()
                     path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
                 } },
                 lualine_b = { 'branch', 'diagnostics' },
@@ -55,29 +55,40 @@ return {
                 lualine_z = {}
             }
         }
-        require('lualine').setup(config)
+        require('lualine').setup(conf)
         require('lualine').hide({
-            place = { 'statusline', 'tabline' }, -- The segment this change applies to.
-            unhide = false,                      -- whether to re-enable lualine again/
+            place = { 'statusline', 'tabline' },
+            unhide = false,
         })
-        -- hack to remove lualine background
-        vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_c_normal', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_c_insert', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_x_normal', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_x_insert', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_a_inactive', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_b_inactive', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_c_inactive', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_x_inactive', { bg = 'none' })
-        vim.api.nvim_set_hl(0, 'lualine_y_inactive', { bg = 'none' })
+
         local colors = require('config.colors')
-        vim.api.nvim_set_hl(0, 'lualine_z_inactive', { bg = 'none' })
+        local default = { bg = 'none', fg = colors.purple }
+
+        vim.api.nvim_set_hl(0, 'lualine_b_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_b_insert', default)
+        vim.api.nvim_set_hl(0, 'lualine_c_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_c_insert', default)
+        vim.api.nvim_set_hl(0, 'lualine_x_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_x_insert', default)
+        vim.api.nvim_set_hl(0, 'lualine_a_inactive', default)
+        vim.api.nvim_set_hl(0, 'lualine_b_inactive', default)
+        vim.api.nvim_set_hl(0, 'lualine_c_inactive', default)
+        vim.api.nvim_set_hl(0, 'lualine_x_inactive', default)
+        vim.api.nvim_set_hl(0, 'lualine_y_inactive', default)
+        vim.api.nvim_set_hl(0, 'lualine_z_inactive', default)
+
         vim.api.nvim_set_hl(0, 'lualine_a_normal', { fg = colors.yellow, bg = colors.black })
         vim.api.nvim_set_hl(0, 'lualine_a_insert', { fg = '#282a2e', bg = colors.purple })
         vim.api.nvim_set_hl(0, 'lualine_a_visual', { fg = '#282a2e', bg = colors.teal })
         vim.api.nvim_set_hl(0, 'lualine_a_command', { fg = '#282a2e', bg = colors.blue })
         vim.api.nvim_set_hl(0, 'lualine_a_replace', { fg = '#282a2e', bg = colors.pink })
         vim.api.nvim_set_hl(0, 'lualine_a_terminal', { fg = '#282a2e', bg = colors.orange })
+
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_insert_to_lualine_b_insert', default)
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_normal_to_lualine_b_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_visual_to_lualine_b_visual', default)
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_insert_to_lualine_c_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_command_to_lualine_c_normal', default)
+        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_normal_to_lualine_c_normal', default)
     end
 }

@@ -4,7 +4,6 @@ local colors = require('config.colors')
 -- local deep = '#346152'
 -- local light = teal
 
-
 local dark = colors.black
 local deep = '#54546d'
 local light = colors.purple
@@ -22,24 +21,24 @@ return {
         end
     },
 
-    -- {
-    --     -- bracket colorization
-    --     'HiPhish/rainbow-delimiters.nvim',
-    --     config = function()
-    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterA', { fg = colors.teal, bg = 'none' })
-    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterB', { fg = colors.purple, bg = 'none' })
-    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterC', { fg = colors.blue, bg = 'none' })
-    --         vim.api.nvim_set_hl(0, 'RainbowDelimiterD', { fg = colors.pink, bg = 'none' })
-    --         require('rainbow-delimiters.setup').setup {
-    --             highlight = {
-    --                 'RainbowDelimiterA',
-    --                 'RainbowDelimiterB',
-    --                 'RainbowDelimiterC',
-    --                 'RainbowDelimiterD',
-    --             },
-    --         }
-    --     end
-    -- },
+    {
+        -- bracket colorization
+        'HiPhish/rainbow-delimiters.nvim',
+        config = function()
+            vim.api.nvim_set_hl(0, 'RainbowDelimiterA', { fg = colors.teal, bg = 'none' })
+            vim.api.nvim_set_hl(0, 'RainbowDelimiterB', { fg = colors.purple, bg = 'none' })
+            vim.api.nvim_set_hl(0, 'RainbowDelimiterC', { fg = colors.blue, bg = 'none' })
+            vim.api.nvim_set_hl(0, 'RainbowDelimiterD', { fg = colors.pink, bg = 'none' })
+            require('rainbow-delimiters.setup').setup {
+                highlight = {
+                    'RainbowDelimiterA',
+                    'RainbowDelimiterB',
+                    'RainbowDelimiterC',
+                    'RainbowDelimiterD',
+                },
+            }
+        end
+    },
 
     {
         'rebelot/kanagawa.nvim',

@@ -14,9 +14,10 @@ vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
 
--- buffer splits and resizing
-vim.keymap.set('n', '<leader>tx', ':split | terminal<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>tv', ':vsplit | terminal<CR>', { noremap = true })
+-- tabs
+vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tt', ':tabonly<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { noremap = true })
 -- Resizing panes with Alt-H/J/K/L
 vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<M-l>', ':vertical resize +5<CR>', { noremap = true, silent = true })
@@ -139,9 +140,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- Buffers!
-vim.keymap.set('n', '<Tab>', ':bnext<CR>')
-vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>')
-
 local function close_all_but_visible_buffers()
     local visible_buffers = {}
     -- Mark all buffers that are visible in any window

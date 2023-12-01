@@ -2,6 +2,8 @@ return {
     -- detect tabstop and shiftwidth automatically
     -- 'tpope/vim-sleuth',
 
+    'mg979/vim-visual-multi',
+
     {
         -- zoom in/out of current buffer
         'troydm/zoomwintab.vim',
@@ -146,5 +148,5 @@ return {
         config = function()
             require('log-highlight').setup()
         end,
-    }
+    },
 }
