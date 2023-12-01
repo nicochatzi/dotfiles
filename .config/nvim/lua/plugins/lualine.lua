@@ -5,9 +5,9 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
     config = function()
-        local conf = {
+        require('lualine').setup {
             options = {
-                -- theme = 'auto',
+                theme = 'auto',
                 icons_enabled = true,
                 disabled_filetypes = { 'neo-tree' },
                 component_separators = { left = '', right = '' },
@@ -55,40 +55,69 @@ return {
                 lualine_z = {}
             }
         }
-        require('lualine').setup(conf)
-        require('lualine').hide({
+
+        require('lualine').hide {
             place = { 'statusline', 'tabline' },
             unhide = false,
-        })
+        }
+
+        local function set_colors_for_each_hl(hl_setting, groups)
+            for _, group in ipairs(groups) do
+                vim.api.nvim_set_hl(0, group, hl_setting)
+            end
+        end
 
         local colors = require('config.colors')
-        local default = { bg = 'none', fg = colors.purple }
-
-        vim.api.nvim_set_hl(0, 'lualine_b_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_b_insert', default)
-        vim.api.nvim_set_hl(0, 'lualine_c_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_c_insert', default)
-        vim.api.nvim_set_hl(0, 'lualine_x_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_x_insert', default)
-        vim.api.nvim_set_hl(0, 'lualine_a_inactive', default)
-        vim.api.nvim_set_hl(0, 'lualine_b_inactive', default)
-        vim.api.nvim_set_hl(0, 'lualine_c_inactive', default)
-        vim.api.nvim_set_hl(0, 'lualine_x_inactive', default)
-        vim.api.nvim_set_hl(0, 'lualine_y_inactive', default)
-        vim.api.nvim_set_hl(0, 'lualine_z_inactive', default)
 
         vim.api.nvim_set_hl(0, 'lualine_a_normal', { fg = colors.yellow, bg = colors.black })
-        vim.api.nvim_set_hl(0, 'lualine_a_insert', { fg = '#282a2e', bg = colors.purple })
-        vim.api.nvim_set_hl(0, 'lualine_a_visual', { fg = '#282a2e', bg = colors.teal })
-        vim.api.nvim_set_hl(0, 'lualine_a_command', { fg = '#282a2e', bg = colors.blue })
-        vim.api.nvim_set_hl(0, 'lualine_a_replace', { fg = '#282a2e', bg = colors.pink })
-        vim.api.nvim_set_hl(0, 'lualine_a_terminal', { fg = '#282a2e', bg = colors.orange })
+        vim.api.nvim_set_hl(0, 'lualine_a_insert', { fg = colors.black, bg = colors.purple })
+        vim.api.nvim_set_hl(0, 'lualine_a_visual', { fg = colors.black, bg = colors.teal })
+        vim.api.nvim_set_hl(0, 'lualine_a_command', { fg = colors.black, bg = colors.blue })
+        vim.api.nvim_set_hl(0, 'lualine_a_replace', { fg = colors.black, bg = colors.pink })
+        vim.api.nvim_set_hl(0, 'lualine_a_terminal', { fg = colors.black, bg = colors.orange })
 
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_insert_to_lualine_b_insert', default)
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_normal_to_lualine_b_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_a_visual_to_lualine_b_visual', default)
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_insert_to_lualine_c_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_command_to_lualine_c_normal', default)
-        vim.api.nvim_set_hl(0, 'lualine_transitional_lualine_b_normal_to_lualine_c_normal', default)
+        set_colors_for_each_hl({ bg = 'none', fg = colors.teal }, {
+            'lualine_b_diagnostics_hint_insert',
+            'lualine_b_diagnostics_hint_normal',
+            'lualine_b_diagnostics_hint_command',
+            'lualine_b_diagnostics_hint_replace',
+            'lualine_b_diagnostics_hint_inactive',
+        })
+
+        set_colors_for_each_hl({ bg = 'none', fg = colors.blue }, {
+            'lualine_b_diagnostics_info_insert',
+            'lualine_b_diagnostics_info_normal',
+            'lualine_b_diagnostics_info_command',
+            'lualine_b_diagnostics_info_replace',
+            'lualine_b_diagnostics_info_inactive',
+        })
+
+        set_colors_for_each_hl({ bg = 'none', fg = colors.orange }, {
+            'lualine_b_diagnostics_warn_insert',
+            'lualine_b_diagnostics_warn_normal',
+            'lualine_b_diagnostics_warn_command',
+            'lualine_b_diagnostics_warn_replace',
+            'lualine_b_diagnostics_warn_inactive',
+        })
+
+        set_colors_for_each_hl({ bg = 'none', fg = colors.red }, {
+            'lualine_b_diagnostics_error_insert',
+            'lualine_b_diagnostics_error_normal',
+            'lualine_b_diagnostics_error_command',
+            'lualine_b_diagnostics_error_replace',
+            'lualine_b_diagnostics_error_inactive',
+        })
+
+        set_colors_for_each_hl({ bg = 'none', fg = colors.purple }, {
+            'lualine_b_normal',
+            'lualine_b_insert',
+            'lualine_b_replace',
+            'lualine_c_normal',
+            'lualine_c_insert',
+            'lualine_c_replace',
+            'lualine_a_inactive',
+            'lualine_b_inactive',
+            'lualine_c_inactive',
+        })
     end
 }
