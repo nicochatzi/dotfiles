@@ -5,13 +5,14 @@ local colors = require('config.colors')
 -- local light = teal
 
 local dark = colors.black
-local deep = '#54546d'
+local deep = colors.grey
 local light = colors.purple
 
 return {
     {
         -- display colors in code
         'norcalli/nvim-colorizer.lua',
+        event = 'VeryLazy',
         config = function()
             require('colorizer').setup {
                 '*',                      -- Highlight all files, but customize some others.
@@ -24,6 +25,7 @@ return {
     {
         -- bracket colorization
         'HiPhish/rainbow-delimiters.nvim',
+        event = 'VeryLazy',
         config = function()
             vim.api.nvim_set_hl(0, 'RainbowDelimiterA', { fg = colors.teal, bg = 'none' })
             vim.api.nvim_set_hl(0, 'RainbowDelimiterB', { fg = colors.purple, bg = 'none' })
@@ -44,7 +46,7 @@ return {
         'rebelot/kanagawa.nvim',
         priority = 1000,
         config = function()
-            require('kanagawa').setup({
+            require('kanagawa').setup {
                 compile = true,   -- enable compiling the colorscheme
                 undercurl = true, -- enable undercurls
                 commentStyle = { italic = true },
@@ -66,7 +68,7 @@ return {
                     dark = 'wave', -- try 'dragon' | 'wave'
                     light = 'lotus'
                 },
-            })
+            }
             -- vim.cmd.colorscheme('kanagawa-lotus')
             vim.cmd.colorscheme('kanagawa')
 
@@ -77,6 +79,10 @@ return {
             vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
             vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = dark, fg = 'none' })
             vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = dark, fg = 'none' })
+
+            -- vim.api.nvim_set_hl(0, 'Search', { bg = colors.purple, fg = colors.black })
+            -- vim.api.nvim_set_hl(0, 'CurSearch', { bg = colors.purple, fg = colors.black })
+            -- vim.api.nvim_set_hl(0, 'IncSearch', { bg = colors.purple, fg = colors.black })
 
             vim.api.nvim_set_hl(0, 'Visual', { bg = dark })
             vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = deep })

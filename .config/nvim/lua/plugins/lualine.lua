@@ -1,3 +1,47 @@
+local function is_git_repo()
+    local git_check_handle = io.popen('git rev-parse --is-inside-work-tree 2>/dev/null')
+
+    if not git_check_handle then
+        return false
+    end
+
+    local is_in_repo = git_check_handle:read('*all')
+    git_check_handle:close()
+
+    return is_in_repo:find("true") ~= nil
+end
+
+local function get_git_diff_stats()
+    if not is_git_repo() then
+        return 0, 0
+    end
+
+    local handle = io.popen('git diff --numstat', 'r')
+    if not handle then
+        return 0, 0
+    end
+
+    local total_added, total_deleted = 0, 0
+    for line in handle:lines() do
+        local added, deleted = line:match('(%d+)%s+(%d+)')
+        total_added = total_added + tonumber(added or 0)
+        total_deleted = total_deleted + tonumber(deleted or 0)
+    end
+    handle:close()
+
+    return total_added, total_deleted
+end
+
+local function git_diff_stats()
+    local total_added, total_deleted = get_git_diff_stats()
+
+    if total_added == 0 and total_deleted == 0 then
+        return ''
+    end
+
+    return '%#custom_lualine_gitadded#+' .. total_added .. ' %#custom_lualine_gitremoved#-' .. total_deleted
+end
+
 return {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -5,22 +49,81 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
     config = function()
+        local function sections_color(color)
+            return { a = color, b = color, c = color, x = color, y = color, z = color }
+        end
+
+        local function filename(color)
+            return {
+                'filename',
+                color = color,
+                file_status = true,
+                -- 0: Just the filename
+                -- 1: Relative path
+                -- 2: Absolute path
+                -- 3: Absolute path, with tilde as the home directory
+                -- 4: Filename and parent dir, with tilde as the home directory
+                path = 1,
+                symbols = {
+                    modified = '[+]',
+                    readonly = '[ro]',
+                    unnamed = '[noname]',
+                    newfile = '[new]',
+                }
+            }
+        end
+
+        local diff = {
+            'diff',
+            colored = true,
+            diff_color = {
+                added    = 'custom_lualine_gitadded',
+                modified = 'custom_lualine_gitmodified',
+                removed  = 'custom_lualine_gitremoved',
+            },
+        }
+
+        local colors = require('config.colors')
+
         require('lualine').setup {
             options = {
-                theme = 'auto',
+                theme = {
+                    normal = sections_color({ fg = colors.grey, bg = 'none' }),
+                    insert = sections_color({ fg = colors.grey, bg = 'none' }),
+                    visual = sections_color({ fg = colors.grey, bg = 'none' }),
+                    replace = sections_color({ fg = colors.grey, bg = 'none' }),
+                    inactive = sections_color({ fg = colors.grey, bg = 'none' }),
+                },
                 icons_enabled = true,
-                disabled_filetypes = { 'neo-tree' },
-                component_separators = { left = '', right = '' },
-                section_separators = { left = '', right = '' },
+                disabled_filetypes = {
+                    statusline = {},
+                    winbar = { 'neo-tree' },
+                },
+                component_separators = { left = '|', right = '|' },
+                section_separators = { left = '|', right = '|' },
                 always_divide_middle = false,
             },
             sections = {
-                lualine_a = { 'hostname' },
-                lualine_b = { 'location' },
-                lualine_c = {},
-                lualine_x = { 'selectioncount' },
-                lualine_y = { 'searchcount' },
-                lualine_z = { 'filesize' },
+                lualine_a = {},
+                lualine_b = { {
+                    'branch',
+                    color = { fg = colors.bblue, bg = 'none' }
+                } },
+                lualine_c = { git_diff_stats },
+                lualine_x = { {
+                    'selectioncount',
+                    color = { fg = colors.blue, bg = 'none' },
+                } },
+                lualine_y = { {
+                    'searchcount',
+                    color = { fg = colors.teal, bg = 'none' },
+                    maxcount = 9999,
+                    timeout = 1000,
+                } },
+                lualine_z = { {
+                    'progress',
+                    color = { fg = colors.bblue, bg = 'none' },
+                } },
             },
             inactive_sections = {
                 lualine_a = {},
@@ -31,25 +134,33 @@ return {
                 lualine_z = {},
             },
             winbar = {
-                lualine_a = { {
-                    'filename',
-                    file_status = true, -- displays file status ()
-                    path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
+                lualine_a = {
+                    filename({ fg = colors.bblue, bg = 'none', gui = 'bold' }),
+                },
+                lualine_b = { {
+                    'filesize',
+                    color = { fg = colors.purple, bg = 'none' },
                 } },
-                lualine_b = { 'branch', 'diagnostics' },
-                lualine_c = { 'filesize', 'selectioncount' },
+                lualine_c = {
+                    diff,
+                    'diagnostics'
+                },
                 lualine_x = {},
                 lualine_y = {},
                 lualine_z = {},
             },
             inactive_winbar = {
-                lualine_a = {},
+                lualine_a = {
+                    filename({ fg = colors.grey, bg = 'none' }),
+                },
                 lualine_b = { {
-                    'filename',
-                    file_status = true, -- displays file status (readonly status, modified status)
-                    path = 1            -- 0 = just filename, 1 = relative path, 2 = absolute path
-                }, 'diagnostics' },
-                lualine_c = {},
+                    'filesize',
+                    color = { fg = colors.grey, bg = 'none' },
+                } },
+                lualine_c = {
+                    diff,
+                    'diagnostics'
+                },
                 lualine_x = {},
                 lualine_y = {},
                 lualine_z = {}
@@ -57,67 +168,38 @@ return {
         }
 
         require('lualine').hide {
-            place = { 'statusline', 'tabline' },
+            place = { 'tabline' },
             unhide = false,
         }
 
-        local function set_colors_for_each_hl(hl_setting, groups)
-            for _, group in ipairs(groups) do
-                vim.api.nvim_set_hl(0, group, hl_setting)
+        vim.api.nvim_set_hl(0, 'custom_lualine_gitadded', { fg = colors.green, bg = 'none' })
+        vim.api.nvim_set_hl(0, 'custom_lualine_gitmodified', { fg = colors.yellow, bg = 'none' })
+        vim.api.nvim_set_hl(0, 'custom_lualine_gitremoved', { fg = colors.pink, bg = 'none' })
+
+        local function set_colors_for_all_modes(prefix, setting)
+            for _, mode in ipairs({ 'insert', 'normal', 'command', 'replace', 'inactive' }) do
+                vim.api.nvim_set_hl(0, prefix .. '_' .. mode, setting)
             end
         end
 
-        local colors = require('config.colors')
-
-        vim.api.nvim_set_hl(0, 'lualine_a_normal', { fg = colors.yellow, bg = colors.black })
-        vim.api.nvim_set_hl(0, 'lualine_a_insert', { fg = colors.black, bg = colors.purple })
-        vim.api.nvim_set_hl(0, 'lualine_a_visual', { fg = colors.black, bg = colors.teal })
-        vim.api.nvim_set_hl(0, 'lualine_a_command', { fg = colors.black, bg = colors.blue })
-        vim.api.nvim_set_hl(0, 'lualine_a_replace', { fg = colors.black, bg = colors.pink })
-        vim.api.nvim_set_hl(0, 'lualine_a_terminal', { fg = colors.black, bg = colors.orange })
-
-        set_colors_for_each_hl({ bg = 'none', fg = colors.teal }, {
-            'lualine_b_diagnostics_hint_insert',
-            'lualine_b_diagnostics_hint_normal',
-            'lualine_b_diagnostics_hint_command',
-            'lualine_b_diagnostics_hint_replace',
-            'lualine_b_diagnostics_hint_inactive',
+        set_colors_for_all_modes('lualine_b_diagnostics_hint', {
+            bg = 'none',
+            fg = colors.teal,
         })
 
-        set_colors_for_each_hl({ bg = 'none', fg = colors.blue }, {
-            'lualine_b_diagnostics_info_insert',
-            'lualine_b_diagnostics_info_normal',
-            'lualine_b_diagnostics_info_command',
-            'lualine_b_diagnostics_info_replace',
-            'lualine_b_diagnostics_info_inactive',
+        set_colors_for_all_modes('lualine_b_diagnostics_info', {
+            bg = 'none',
+            fg = colors.blue,
         })
 
-        set_colors_for_each_hl({ bg = 'none', fg = colors.orange }, {
-            'lualine_b_diagnostics_warn_insert',
-            'lualine_b_diagnostics_warn_normal',
-            'lualine_b_diagnostics_warn_command',
-            'lualine_b_diagnostics_warn_replace',
-            'lualine_b_diagnostics_warn_inactive',
+        set_colors_for_all_modes('lualine_b_diagnostics_warn', {
+            bg = 'none',
+            fg = colors.orange,
         })
 
-        set_colors_for_each_hl({ bg = 'none', fg = colors.red }, {
-            'lualine_b_diagnostics_error_insert',
-            'lualine_b_diagnostics_error_normal',
-            'lualine_b_diagnostics_error_command',
-            'lualine_b_diagnostics_error_replace',
-            'lualine_b_diagnostics_error_inactive',
-        })
-
-        set_colors_for_each_hl({ bg = 'none', fg = colors.purple }, {
-            'lualine_b_normal',
-            'lualine_b_insert',
-            'lualine_b_replace',
-            'lualine_c_normal',
-            'lualine_c_insert',
-            'lualine_c_replace',
-            'lualine_a_inactive',
-            'lualine_b_inactive',
-            'lualine_c_inactive',
+        set_colors_for_all_modes('lualine_b_diagnostics_error', {
+            bg = 'none',
+            fg = colors.red,
         })
     end
 }

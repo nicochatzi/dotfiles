@@ -1,7 +1,13 @@
 return {
-    { 'tpope/vim-fugitive',     event = 'VeryLazy' },
+    {
+        'tpope/vim-fugitive',
+        event = 'VeryLazy'
+    },
 
-    { 'sindrets/diffview.nvim', event = 'VeryLazy', },
+    {
+        'sindrets/diffview.nvim',
+        event = 'VeryLazy',
+    },
 
     {
         -- Adds git releated signs to the gutter, as well as utilities for managing changes

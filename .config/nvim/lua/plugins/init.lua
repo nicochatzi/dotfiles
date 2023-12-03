@@ -2,7 +2,10 @@ return {
     -- detect tabstop and shiftwidth automatically
     -- 'tpope/vim-sleuth',
 
-    'mg979/vim-visual-multi',
+    {
+        'mg979/vim-visual-multi',
+        event = 'VeryLazy',
+    },
 
     {
         -- zoom in/out of current buffer
@@ -92,7 +95,7 @@ return {
         },
         ft = { 'markdown', 'latex', 'tex' },
         config = function()
-            require("lspconfig").grammar_guard.setup({
+            require("lspconfig").grammar_guard.setup {
                 settings = {
                     ltex = {
                         enabled = { "latex", "tex", "bib", "markdown" },
@@ -109,7 +112,7 @@ return {
                         hiddenFalsePositives = {},
                     },
                 },
-            })
+            }
             require("grammar-guard").init()
         end
     },
@@ -149,4 +152,22 @@ return {
             require('log-highlight').setup()
         end,
     },
+
+    {
+        "kawre/leetcode.nvim",
+        build = ":TSUpdate html",
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim", -- required by telescope
+            "MunifTanjim/nui.nvim",
+
+            -- optional
+            "nvim-treesitter/nvim-treesitter",
+            "rcarriga/nvim-notify",
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            lang = "rust",
+        },
+    }
 }

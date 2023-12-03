@@ -14,6 +14,7 @@ local treesitter_config = {
         'markdown',
         'markdown_inline',
         'yaml',
+        'zig',
     },
     auto_install = true,
     highlight = { enable = true },

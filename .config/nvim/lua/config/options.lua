@@ -26,7 +26,7 @@ vim.go.laststatus = 3
 vim.go.ruler = false
 vim.go.showmode = false
 vim.go.showcmd = false
-vim.opt.fillchars = { eob = " ", stl = "—" }
+vim.opt.fillchars = { eob = " ", stl = "─" }
 vim.go.shortmess = 'a'
 vim.go.shortmess = vim.go.shortmess .. 'F'
 vim.o.splitright = true
