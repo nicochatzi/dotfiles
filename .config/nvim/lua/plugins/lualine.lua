@@ -16,7 +16,7 @@ local function get_git_diff_stats()
         return 0, 0
     end
 
-    local handle = io.popen('git diff --numstat', 'r')
+    local handle = io.popen('git log --numstat --pretty=format:%n', 'r')
     if not handle then
         return 0, 0
     end
@@ -109,7 +109,9 @@ return {
                     'branch',
                     color = { fg = colors.bblue, bg = 'none' }
                 } },
-                lualine_c = { git_diff_stats },
+                lualine_c = {
+                    git_diff_stats
+                },
                 lualine_x = { {
                     'selectioncount',
                     color = { fg = colors.blue, bg = 'none' },
