@@ -1,9 +1,6 @@
 local function is_git_repo()
     local git_check_handle = io.popen('git rev-parse --is-inside-work-tree 2>/dev/null')
-
-    if not git_check_handle then
-        return false
-    end
+    if not git_check_handle then return false end
 
     local is_in_repo = git_check_handle:read('*all')
     git_check_handle:close()
@@ -11,35 +8,41 @@ local function is_git_repo()
     return is_in_repo:find("true") ~= nil
 end
 
-local function get_git_diff_stats()
-    if not is_git_repo() then
-        return 0, 0
-    end
+local function project_git_diff()
+    local total = { added = 0, modified = 0, removed = 0 }
 
-    local handle = io.popen('git log --numstat --pretty=format:%n', 'r')
-    if not handle then
-        return 0, 0
-    end
+    if not is_git_repo() then return total end
 
-    local total_added, total_deleted = 0, 0
+    local handle = io.popen('git diff --numstat', 'r')
+    if not handle then return nil end
+
     for line in handle:lines() do
-        local added, deleted = line:match('(%d+)%s+(%d+)')
-        total_added = total_added + tonumber(added or 0)
-        total_deleted = total_deleted + tonumber(deleted or 0)
+        local added, removed = line:match('(%d+)%s+(%d+)')
+        total.added = total.added + tonumber(added or 0)
+        total.removed = total.removed + tonumber(removed or 0)
     end
     handle:close()
 
-    return total_added, total_deleted
+    return total
 end
 
-local function git_diff_stats()
-    local total_added, total_deleted = get_git_diff_stats()
+local function buffer_based_git_diff()
+    local status = vim.b.gitsigns_status_dict
+    if not status then return '' end
 
-    if total_added == 0 and total_deleted == 0 then
-        return ''
+    local diff_str = ''
+
+    if status.added and status.added > 0 then
+        diff_str = diff_str .. "%#custom_lualine_gitadded#" .. string.format('+%d ', status.added)
+    end
+    if status.changed and status.changed > 0 then
+        diff_str = diff_str .. "%#custom_lualine_gitmodified#" .. string.format('~%d ', status.changed)
+    end
+    if status.removed and status.removed > 0 then
+        diff_str = diff_str .. "%#custom_lualine_gitremoved#" .. string.format('-%d ', status.removed)
     end
 
-    return '%#custom_lualine_gitadded#+' .. total_added .. ' %#custom_lualine_gitremoved#-' .. total_deleted
+    return diff_str
 end
 
 return {
@@ -73,16 +76,6 @@ return {
             }
         end
 
-        local diff = {
-            'diff',
-            colored = true,
-            diff_color = {
-                added    = 'custom_lualine_gitadded',
-                modified = 'custom_lualine_gitmodified',
-                removed  = 'custom_lualine_gitremoved',
-            },
-        }
-
         local colors = require('config.colors')
 
         require('lualine').setup {
@@ -110,7 +103,16 @@ return {
                     color = { fg = colors.bblue, bg = 'none' }
                 } },
                 lualine_c = {
-                    git_diff_stats
+                    {
+                        'diff',
+                        colored = true,
+                        diff_color = {
+                            added    = 'custom_lualine_gitadded',
+                            modified = 'custom_lualine_gitmodified',
+                            removed  = 'custom_lualine_gitremoved',
+                        },
+                        source = project_git_diff,
+                    },
                 },
                 lualine_x = { {
                     'selectioncount',
@@ -144,7 +146,7 @@ return {
                     color = { fg = colors.purple, bg = 'none' },
                 } },
                 lualine_c = {
-                    diff,
+                    buffer_based_git_diff,
                     'diagnostics'
                 },
                 lualine_x = {},
@@ -160,7 +162,7 @@ return {
                     color = { fg = colors.grey, bg = 'none' },
                 } },
                 lualine_c = {
-                    diff,
+                    buffer_based_git_diff,
                     'diagnostics'
                 },
                 lualine_x = {},

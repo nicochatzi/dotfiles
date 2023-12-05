@@ -8,11 +8,19 @@ return {
         { 'williamboman/mason-lspconfig.nvim' },
         { 'p00f/clangd_extensions.nvim' },
         { 'folke/neodev.nvim',                opts = {} },
+        -- good for symbolic search and referencing but it's
+        -- way too busy for my taste, worth some digging
+        -- at some point!
         -- {
         --     'ray-x/navigator.lua',
         --     dependencies = {
         --         { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
         --     },
+        --     config = function()
+        --         require("navigator").setup({
+        --             mason = true,
+        --         })
+        --     end,
         -- },
         {
             'j-hui/fidget.nvim',
