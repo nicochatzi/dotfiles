@@ -47,6 +47,7 @@ vim.o.timeoutlen = 100
 -- Set completeopt to have a better completion experience
 -- this
 vim.o.completeopt = 'menuone,noselect'
+vim.o.wildmenu = true
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
