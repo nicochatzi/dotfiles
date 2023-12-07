@@ -51,11 +51,11 @@ return {
       pickers = {
         find_files = {
           find_command = {
-                'fd', '--type', 'f', '--hidden',
-                '--exclude', '.git',
-                '--exclude', '.cache',
-                '--exclude', '.obsidian',
-            },
+            'fd', '--type', 'f', '--hidden',
+            '--exclude', '.git',
+            '--exclude', '.cache',
+            '--exclude', '.obsidian',
+          },
         }
       },
       extensions = {
