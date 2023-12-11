@@ -26,7 +26,7 @@ vim.go.laststatus = 3
 vim.go.ruler = false
 vim.go.showmode = false
 vim.go.showcmd = false
-vim.opt.fillchars = { eob = " ", stl = "─" }
+vim.opt.fillchars = { eob = ' ', stl = '─' }
 vim.go.shortmess = 'a'
 vim.go.shortmess = vim.go.shortmess .. 'F'
 vim.o.splitright = true
@@ -52,19 +52,19 @@ vim.o.wildmenu = true
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 -- vim.o.foldenable = 0
 
 -- from https://github.com/kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '0' -- '0' is not bad
-vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 vim.g.markdown_folding = 1 -- enable markdown folding
 
 vim.o.spell = true
-vim.o.spelllang = "en_gb"
+vim.o.spelllang = 'en_gb'
 
 vim.cmd([[
     autocmd InsertEnter * :set norelativenumber

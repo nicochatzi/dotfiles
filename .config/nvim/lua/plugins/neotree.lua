@@ -11,13 +11,13 @@ return {
   opts = {
     event_handlers = {
       {
-        event = "neo_tree_buffer_enter",
+        event = 'neo_tree_buffer_enter',
         handler = function()
-          vim.cmd [[
+          vim.cmd([[
           setlocal relativenumber
-        ]]
+        ]])
         end,
-      }
+      },
     },
     popup_border_style = 'rounded',
     close_if_last_window = true,
@@ -37,19 +37,19 @@ return {
         ['a'] = {
           'add',
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+            show_path = 'relative', -- 'none', 'relative', 'absolute'
+          },
         },
         ['c'] = {
           'copy',
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+            show_path = 'relative', -- 'none', 'relative', 'absolute'
+          },
         },
         ['m'] = {
           'move',
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
+            show_path = 'relative', -- 'none', 'relative', 'absolute'
           },
         },
         ['Y'] = function(state)
@@ -58,8 +58,8 @@ return {
           -- relative
           -- local content = node.path:gsub(state.path, ""):sub(2)
           vim.fn.setreg('"', content)
-          vim.fn.setreg("1", content)
-          vim.fn.setreg("+", content)
+          vim.fn.setreg('1', content)
+          vim.fn.setreg('+', content)
         end,
       },
       popup = {
@@ -103,8 +103,8 @@ return {
     diagnostics = {
       auto_preview = {
         -- May also be set to `true`
-        enabled = false,                 -- Whether to automatically enable preview mode
-        preview_config = {},             -- Config table to pass to auto preview (for example `{ use_float = true }`)
+        enabled = false, -- Whether to automatically enable preview mode
+        preview_config = {}, -- Config table to pass to auto preview (for example `{ use_float = true }`)
         event = 'neo_tree_buffer_enter', -- The event to enable auto preview upon (for example `'neo_tree_window_after_open'`)
       },
       bind_to_cwd = true,
@@ -115,16 +115,16 @@ return {
         enabled = true,
         leave_files_open = true,
       },
-      group_dirs_and_files = true,        -- when true, empty folders and files will be grouped together
-      group_empty_dirs = true,            -- when true, empty directories will be grouped together
-      show_unloaded = true,               -- show diagnostics from unloaded buffers
+      group_dirs_and_files = true, -- when true, empty folders and files will be grouped together
+      group_empty_dirs = true, -- when true, empty directories will be grouped together
+      show_unloaded = true, -- show diagnostics from unloaded buffers
       refresh = {
-        delay = 100,                      -- Time (in ms) to wait before updating diagnostics. Might resolve some issues with Neovim hanging.
+        delay = 100, -- Time (in ms) to wait before updating diagnostics. Might resolve some issues with Neovim hanging.
         event = 'vim_diagnostic_changed', -- Event to use for updating diagnostics (for example `'neo_tree_buffer_enter'`)
         -- Set to `false` or `'none'` to disable automatic refreshing
-        max_items = false,                -- The maximum number of diagnostic items to attempt processing
+        max_items = false, -- The maximum number of diagnostic items to attempt processing
         -- Set to `false` for no maximum
       },
     },
-  }
+  },
 }

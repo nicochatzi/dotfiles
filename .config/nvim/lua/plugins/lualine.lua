@@ -1,20 +1,26 @@
 local function is_git_repo()
   local git_check_handle = io.popen('git rev-parse --is-inside-work-tree 2>/dev/null')
-  if not git_check_handle then return false end
+  if not git_check_handle then
+    return false
+  end
 
   local is_in_repo = git_check_handle:read('*all')
   git_check_handle:close()
 
-  return is_in_repo:find("true") ~= nil
+  return is_in_repo:find('true') ~= nil
 end
 
 local function project_git_diff()
   local total = { added = 0, modified = 0, removed = 0 }
 
-  if not is_git_repo() then return total end
+  if not is_git_repo() then
+    return total
+  end
 
   local handle = io.popen('git diff --numstat', 'r')
-  if not handle then return nil end
+  if not handle then
+    return nil
+  end
 
   for line in handle:lines() do
     local added, removed = line:match('(%d+)%s+(%d+)')
@@ -28,18 +34,20 @@ end
 
 local function buffer_based_git_diff()
   local status = vim.b.gitsigns_status_dict
-  if not status then return '' end
+  if not status then
+    return ''
+  end
 
   local diff_str = ''
 
   if status.added and status.added > 0 then
-    diff_str = diff_str .. "%#custom_lualine_gitadded#" .. string.format('+%d ', status.added)
+    diff_str = diff_str .. '%#custom_lualine_gitadded#' .. string.format('+%d ', status.added)
   end
   if status.changed and status.changed > 0 then
-    diff_str = diff_str .. "%#custom_lualine_gitmodified#" .. string.format('~%d ', status.changed)
+    diff_str = diff_str .. '%#custom_lualine_gitmodified#' .. string.format('~%d ', status.changed)
   end
   if status.removed and status.removed > 0 then
-    diff_str = diff_str .. "%#custom_lualine_gitremoved#" .. string.format('-%d ', status.removed)
+    diff_str = diff_str .. '%#custom_lualine_gitremoved#' .. string.format('-%d ', status.removed)
   end
 
   return diff_str
@@ -72,7 +80,7 @@ return {
           readonly = '[ro]',
           unnamed = '[noname]',
           newfile = '[new]',
-        }
+        },
       }
     end
 
@@ -81,11 +89,11 @@ return {
     require('lualine').setup {
       options = {
         theme = {
-          normal = sections_color({ fg = colors.grey, bg = 'none' }),
-          insert = sections_color({ fg = colors.grey, bg = 'none' }),
-          visual = sections_color({ fg = colors.grey, bg = 'none' }),
-          replace = sections_color({ fg = colors.grey, bg = 'none' }),
-          inactive = sections_color({ fg = colors.grey, bg = 'none' }),
+          normal = sections_color { fg = colors.grey, bg = 'none' },
+          insert = sections_color { fg = colors.grey, bg = 'none' },
+          visual = sections_color { fg = colors.grey, bg = 'none' },
+          replace = sections_color { fg = colors.grey, bg = 'none' },
+          inactive = sections_color { fg = colors.grey, bg = 'none' },
         },
         icons_enabled = true,
         disabled_filetypes = {
@@ -100,16 +108,16 @@ return {
         lualine_a = {},
         lualine_b = { {
           'branch',
-          color = { fg = colors.bblue, bg = 'none' }
+          color = { fg = colors.bblue, bg = 'none' },
         } },
         lualine_c = {
           {
             'diff',
             colored = true,
             diff_color = {
-              added    = 'custom_lualine_gitadded',
+              added = 'custom_lualine_gitadded',
               modified = 'custom_lualine_gitmodified',
-              removed  = 'custom_lualine_gitremoved',
+              removed = 'custom_lualine_gitremoved',
             },
             source = project_git_diff,
           },
@@ -118,12 +126,14 @@ return {
           'selectioncount',
           color = { fg = colors.blue, bg = 'none' },
         } },
-        lualine_y = { {
-          'searchcount',
-          color = { fg = colors.teal, bg = 'none' },
-          maxcount = 9999,
-          timeout = 1000,
-        } },
+        lualine_y = {
+          {
+            'searchcount',
+            color = { fg = colors.teal, bg = 'none' },
+            maxcount = 9999,
+            timeout = 1000,
+          },
+        },
         lualine_z = { {
           'progress',
           color = { fg = colors.bblue, bg = 'none' },
@@ -139,7 +149,7 @@ return {
       },
       winbar = {
         lualine_a = {
-          filename({ fg = colors.bblue, bg = 'none', gui = 'bold' }),
+          filename { fg = colors.bblue, bg = 'none', gui = 'bold' },
         },
         lualine_b = { {
           'filesize',
@@ -147,7 +157,7 @@ return {
         } },
         lualine_c = {
           buffer_based_git_diff,
-          'diagnostics'
+          'diagnostics',
         },
         lualine_x = {},
         lualine_y = {},
@@ -155,7 +165,7 @@ return {
       },
       inactive_winbar = {
         lualine_a = {
-          filename({ fg = colors.grey, bg = 'none' }),
+          filename { fg = colors.grey, bg = 'none' },
         },
         lualine_b = { {
           'filesize',
@@ -163,12 +173,12 @@ return {
         } },
         lualine_c = {
           buffer_based_git_diff,
-          'diagnostics'
+          'diagnostics',
         },
         lualine_x = {},
         lualine_y = {},
-        lualine_z = {}
-      }
+        lualine_z = {},
+      },
     }
 
     require('lualine').hide {
@@ -181,7 +191,7 @@ return {
     vim.api.nvim_set_hl(0, 'custom_lualine_gitremoved', { fg = colors.pink, bg = 'none' })
 
     local function set_colors_for_all_modes(prefix, setting)
-      for _, mode in ipairs({ 'insert', 'normal', 'command', 'replace', 'inactive' }) do
+      for _, mode in ipairs { 'insert', 'normal', 'command', 'replace', 'inactive' } do
         vim.api.nvim_set_hl(0, prefix .. '_' .. mode, setting)
       end
     end
@@ -205,5 +215,5 @@ return {
       bg = 'none',
       fg = colors.red,
     })
-  end
+  end,
 }

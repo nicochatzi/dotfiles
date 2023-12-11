@@ -17,13 +17,13 @@ return {
     -- 'gcc' => line,  gc' visual, 'gc' + motion
     'numToStr/Comment.nvim',
     event = 'BufReadPre',
-    opts = {}
+    opts = {},
   },
 
   {
     -- fancier `vim.ui`
     'stevearc/dressing.nvim',
-    event = 'VeryLazy'
+    event = 'VeryLazy',
   },
 
   {
@@ -31,24 +31,24 @@ return {
     'nvim-pack/nvim-spectre',
     cmd = 'Spectre',
     config = function()
-      require("spectre").setup {
+      require('spectre').setup {
         mapping = {
           ['open_in_vsplit'] = {
-            map = "<c-v>",
-            cmd = "<cmd>lua vim.cmd('vsplit ' .. require('spectre.actions').get_current_entry().filename)<CR>",
-            desc = "open in vertical split"
+            map = '<c-v>',
+            cmd = '<cmd>lua vim.cmd(\'vsplit \' .. require(\'spectre.actions\').get_current_entry().filename)<CR>',
+            desc = 'open in vertical split',
           },
           ['open_in_split'] = {
-            map = "<c-x>",
-            cmd = "<cmd>lua vim.cmd('split ' .. require('spectre.actions').get_current_entry().filename)<CR>",
-            desc = "open in horizontal split"
+            map = '<c-x>',
+            cmd = '<cmd>lua vim.cmd(\'split \' .. require(\'spectre.actions\').get_current_entry().filename)<CR>',
+            desc = 'open in horizontal split',
           },
           ['open_in_tab'] = {
-            map = "<c-t>",
-            cmd = "<cmd>lua vim.cmd('tab split ' .. require('spectre.actions').get_current_entry().filename)<CR>",
-            desc = "open in new tab"
+            map = '<c-t>',
+            cmd = '<cmd>lua vim.cmd(\'tab split \' .. require(\'spectre.actions\').get_current_entry().filename)<CR>',
+            desc = 'open in new tab',
           },
-        }
+        },
       }
     end,
   },
@@ -75,8 +75,8 @@ return {
     opts = {
       preview = {
         winblend = 0,
-      }
-    }
+      },
+    },
   },
 
   {
@@ -90,11 +90,11 @@ return {
         -- any_additional_filetype = { compiler = ..., options = ... },
       },
       quickfix = {
-        enable = false,           -- whether to populate the quickfix list in case of errors
-        auto_open = false         -- whether to open the quickfix list in case of errors
+        enable = false, -- whether to populate the quickfix list in case of errors
+        auto_open = false, -- whether to open the quickfix list in case of errors
       },
-      url = 'https://godbolt.org' -- can be changed to a different godbolt instance
-    }
+      url = 'https://godbolt.org', -- can be changed to a different godbolt instance
+    },
   },
 
   {
@@ -135,7 +135,7 @@ return {
         },
       }
       require('grammar-guard').init {}
-    end
+    end,
   },
 
   {
@@ -143,8 +143,10 @@ return {
     dependencies = 'kevinhwang91/promise-async',
     event = 'VeryLazy',
     opts = {
-      provider_selector = function(_, _, _) return { 'treesitter', 'indent' } end
-    }
+      provider_selector = function(_, _, _)
+        return { 'treesitter', 'indent' }
+      end,
+    },
   },
 
   {
@@ -153,7 +155,7 @@ return {
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
       require('package-info').setup {}
-    end
+    end,
   },
 
   {
@@ -161,7 +163,7 @@ return {
     event = 'VeryLazy',
     config = function()
       require('nvim-ts-autotag').setup {}
-    end
+    end,
   },
 
   {
@@ -189,5 +191,5 @@ return {
     opts = {
       lang = 'rust',
     },
-  }
+  },
 }

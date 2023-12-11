@@ -3,22 +3,22 @@ return {
   branch = '0.1.x',
   cmd = 'Telescope',
   dependencies = {
-    { 'nvim-lua/plenary.nvim', },
-    { 'debugloop/telescope-undo.nvim', },
-    { 'nvim-telescope/telescope-ui-select.nvim', },
+    { 'nvim-lua/plenary.nvim' },
+    { 'debugloop/telescope-undo.nvim' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
     {
       'nvim-telescope/telescope-file-browser.nvim',
       dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
       -- branch = 'feat/tree',
     },
-    { 'nvim-telescope/telescope-project.nvim', },
+    { 'nvim-telescope/telescope-project.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       -- NOTE: If you are having trouble with this installation,
       --       refer to the README for telescope-fzf-native for more instructions.
       build = 'make',
       cond = function()
-        return vim.fn.executable 'make' == 1
+        return vim.fn.executable('make') == 1
       end,
       -- config = function()
       --   require('telescope').setup {
@@ -38,7 +38,7 @@ return {
   },
   config = function()
     local telescope = require('telescope')
-    telescope.setup({
+    telescope.setup {
       defaults = {
         border = true,
         sorting_strategy = 'ascending',
@@ -51,12 +51,18 @@ return {
       pickers = {
         find_files = {
           find_command = {
-            'fd', '--type', 'f', '--hidden',
-            '--exclude', '.git',
-            '--exclude', '.cache',
-            '--exclude', '.obsidian',
+            'fd',
+            '--type',
+            'f',
+            '--hidden',
+            '--exclude',
+            '.git',
+            '--exclude',
+            '.cache',
+            '--exclude',
+            '.obsidian',
           },
-        }
+        },
       },
       extensions = {
         undo = {
@@ -89,15 +95,15 @@ return {
               results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },
               preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
             },
-          }
+          },
         },
-      }
-    })
+      },
+    }
 
     telescope.load_extension('file_browser')
     telescope.load_extension('undo')
     telescope.load_extension('ui-select')
     telescope.load_extension('project')
     telescope.load_extension('fzf')
-  end
+  end,
 }

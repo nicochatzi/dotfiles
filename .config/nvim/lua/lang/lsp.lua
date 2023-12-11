@@ -1,12 +1,12 @@
 local function setup_codelens_autorefresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
-    return client.supports_method("textDocument/codeLens")
+    return client.supports_method('textDocument/codeLens')
   end)
   if not status_ok or not codelens_supported then
     return
   end
-  local group = "lsp_code_lens_refresh"
-  local cl_events = { "BufEnter", "InsertLeave" }
+  local group = 'lsp_code_lens_refresh'
+  local cl_events = { 'BufEnter', 'InsertLeave' }
   local ok, cl_autocmds = pcall(vim.api.nvim_get_autocmds, {
     group = group,
     buffer = bufnr,
@@ -116,13 +116,13 @@ local servers = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
       diagnostics = {
-        globals = { "vim" }
-      }
+        globals = { 'vim' },
+      },
     },
   },
   yamlls = {
     schemaStore = { enable = true },
-  }
+  },
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -145,10 +145,10 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
     }
   end,
-  ["clangd"] = function()
+  ['clangd'] = function()
     require('lang.clangd')(capabilities, on_attach)
   end,
-  ["rust_analyzer"] = function()
+  ['rust_analyzer'] = function()
     require('lang.rust')(capabilities, on_attach)
   end,
 }

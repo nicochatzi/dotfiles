@@ -1,26 +1,26 @@
 local obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
 
 return {
-  "epwalsh/obsidian.nvim",
-  event = { "BufReadPre " .. vim.fn.expand "~" .. obsidian_vault_path .. "/**.md" },
+  'epwalsh/obsidian.nvim',
+  event = { 'BufReadPre ' .. vim.fn.expand('~') .. obsidian_vault_path .. '/**.md' },
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "hrsh7th/nvim-cmp",
-    "nvim-telescope/telescope.nvim",
+    'nvim-lua/plenary.nvim',
+    'hrsh7th/nvim-cmp',
+    'nvim-telescope/telescope.nvim',
   },
   opts = {
     mappings = {},
     -- mappings = {
     --   ["fo"] = require("obsidian.mapping").gf_passthrough(),
     -- },
-    dir = vim.fn.expand "~" .. obsidian_vault_path,
-    notes_subdir = "notes",
+    dir = vim.fn.expand('~') .. obsidian_vault_path,
+    notes_subdir = 'notes',
     -- Optional, set the log level for Obsidian. This is an integer corresponding to one of the log
     -- levels defined by "vim.log.levels.*" or nil, which is equivalent to DEBUG (1).
     log_level = vim.log.levels.DEBUG,
     daily_notes = {
-      folder = "dailies",
-      date_format = "%Y-%m-%d"
+      folder = 'dailies',
+      date_format = '%Y-%m-%d',
     },
     completion = {
       nvim_cmp = true,
@@ -28,7 +28,7 @@ return {
       -- Where to put new notes created from completion. Valid options are
       --  * "current_dir" - put new notes in same directory as the current buffer.
       --  * "notes_subdir" - put new notes in the default notes subdirectory.
-      new_notes_location = "current_dir"
+      new_notes_location = 'current_dir',
     },
 
     -- Optional, customize how names/IDs for new notes are created.
@@ -36,17 +36,17 @@ return {
       -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
       -- In this case a note with the title 'My new note' will given an ID that looks
       -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
-      local suffix = ""
+      local suffix = ''
       if title ~= nil then
         -- If title is given, transform it into valid file name.
-        suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+        suffix = title:gsub(' ', '-'):gsub('[^A-Za-z0-9-]', ''):lower()
       else
         -- If title is nil, just add 4 random uppercase letters to the suffix.
         for _ = 1, 4 do
           suffix = suffix .. string.char(math.random(65, 90))
         end
       end
-      return tostring(os.time()) .. "-" .. suffix
+      return tostring(os.time()) .. '-' .. suffix
     end,
 
     -- Optional, set to true if you don't want Obsidian to manage frontmatter.
@@ -58,7 +58,7 @@ return {
       local out = { id = note.id, aliases = note.aliases, tags = note.tags }
       -- `note.metadata` contains any manually added fields in the frontmatter.
       -- So here we just make sure those fields are kept in the frontmatter.
-      if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
+      if note.metadata ~= nil and require('obsidian').util.table_length(note.metadata) > 0 then
         for k, v in pairs(note.metadata) do
           out[k] = v
         end
@@ -77,7 +77,7 @@ return {
     -- URL it will be ignored but you can customize this behavior here.
     follow_url_func = function(url)
       -- Open the URL in the default web browser.
-      vim.fn.jobstart({ "open", url }) -- Mac OS
+      vim.fn.jobstart { 'open', url } -- Mac OS
       -- vim.fn.jobstart({"xdg-open", url})  -- linux
     end,
 
@@ -94,7 +94,7 @@ return {
     -- finder you can attempt it first. Note that if the specified finder
     -- is not installed, or if it the command does not support it, the
     -- remaining finders will be attempted in the original order.
-    finder = "telescope.nvim",
+    finder = 'telescope.nvim',
   },
   -- config = function(_, opts)
   --   require("obsidian").setup(opts)

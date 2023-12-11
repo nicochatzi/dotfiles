@@ -18,7 +18,7 @@ return {
           args = { '--port', '${port}' },
           -- On windows you may have to uncomment this:
           -- detached = false,
-        }
+        },
       }
       dap.configurations.rust = {
         name = 'Launch file',
@@ -30,8 +30,8 @@ return {
         cwd = '${workspaceFolder}',
         stopOnEntry = true,
       }
-      require('dapui').setup({})
-    end
+      require('dapui').setup {}
+    end,
   },
 
   {
@@ -39,35 +39,46 @@ return {
     dependencies = { 'mfussenegger/nvim-dap' },
     event = 'VeryLazy',
     config = function()
-      require('dapui').setup({
-        layouts = { {
-          elements = { {
-            id = 'scopes',
-            size = 0.40
-          }, {
-            id = 'stacks',
-            size = 0.40
-          }, {
-            id = 'breakpoints',
-            size = 0.10
-          }, {
-            id = 'watches',
-            size = 0.10
-          } },
-          position = 'right',
-          size = 100
-        }, {
-          elements = { {
-            id = 'repl',
-            size = 0.5
-          }, {
-            id = 'console',
-            size = 0.5
-          } },
-          position = 'bottom',
-          size = 15
-        } },
-      })
+      require('dapui').setup {
+        layouts = {
+          {
+            elements = {
+              {
+                id = 'scopes',
+                size = 0.40,
+              },
+              {
+                id = 'stacks',
+                size = 0.40,
+              },
+              {
+                id = 'breakpoints',
+                size = 0.10,
+              },
+              {
+                id = 'watches',
+                size = 0.10,
+              },
+            },
+            position = 'right',
+            size = 100,
+          },
+          {
+            elements = {
+              {
+                id = 'repl',
+                size = 0.5,
+              },
+              {
+                id = 'console',
+                size = 0.5,
+              },
+            },
+            position = 'bottom',
+            size = 15,
+          },
+        },
+      }
       local dap, dapui = require('dap'), require('dapui')
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open()
@@ -78,9 +89,9 @@ return {
       dap.listeners.before.event_exited['dapui_config'] = function()
         dapui.close()
       end
-      require("neodev").setup({
-        library = { plugins = { "nvim-dap-ui" }, types = true },
-      })
-    end
+      require('neodev').setup {
+        library = { plugins = { 'nvim-dap-ui' }, types = true },
+      }
+    end,
   },
 }
