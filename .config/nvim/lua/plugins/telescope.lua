@@ -38,6 +38,8 @@ return {
   },
   config = function()
     local telescope = require('telescope')
+    local actions = require("telescope.actions")
+
     telescope.setup {
       defaults = {
         border = true,
@@ -46,6 +48,12 @@ return {
         layout_config = {
           height = 0.5,
           prompt_position = 'top',
+        },
+        mappings = {
+          i = {
+            ["<C-u>"] = false,
+            ["<C-s>"] = actions.select_horizontal,
+          },
         },
       },
       pickers = {

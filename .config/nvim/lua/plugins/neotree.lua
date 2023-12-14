@@ -32,7 +32,7 @@ return {
       position = 'right',
       width = 30,
       mappings = {
-        ['<C-x>'] = 'open_split',
+        ['<C-s>'] = 'open_split',
         ['<C-v>'] = 'open_vsplit',
         ['a'] = {
           'add',
