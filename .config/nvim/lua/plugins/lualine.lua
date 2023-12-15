@@ -1,35 +1,39 @@
-local function is_git_repo()
-  local git_check_handle = io.popen('git rev-parse --is-inside-work-tree 2>/dev/null')
-  if not git_check_handle then
-    return false
-  end
-
-  local is_in_repo = git_check_handle:read('*all')
-  git_check_handle:close()
-
-  return is_in_repo:find('true') ~= nil
-end
+local is_in_repo = false
+local total_git_diff = { added = 0, modified = 0, removed = 0 }
 
 local function project_git_diff()
+  local Job = require 'plenary.job'
+
+  Job:new({
+    command = 'git',
+    args = { 'rev-parse', '--is-inside-work-tree' },
+    on_stdout = function(j, return_val)
+      is_in_repo = return_val == 'true'
+    end,
+  }):start()
+
+  if not is_in_repo then
+    return total_git_diff
+  end
+
   local total = { added = 0, modified = 0, removed = 0 }
 
-  if not is_git_repo() then
-    return total
-  end
+  Job:new({
+    command = 'git',
+    args = { 'diff', '--numstat' },
+    on_stdout = function(j, return_val)
+      local num_lines = 0
+      for line in string.gmatch(return_val, "[^\n]+") do
+        local added, removed = line:match('(%d+)%s+(%d+)')
+        total.added = total.added + tonumber(added or 0)
+        total.removed = total.removed + tonumber(removed or 0)
+        num_lines = num_lines + 1
+      end
+      total_git_diff = total
+    end,
+  }):start()
 
-  local handle = io.popen('git diff --numstat', 'r')
-  if not handle then
-    return nil
-  end
-
-  for line in handle:lines() do
-    local added, removed = line:match('(%d+)%s+(%d+)')
-    total.added = total.added + tonumber(added or 0)
-    total.removed = total.removed + tonumber(removed or 0)
-  end
-  handle:close()
-
-  return total
+  return total_git_diff
 end
 
 local function buffer_based_git_diff()
