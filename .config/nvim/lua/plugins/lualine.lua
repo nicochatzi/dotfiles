@@ -7,7 +7,7 @@ local function project_git_diff()
   Job:new({
     command = 'git',
     args = { 'rev-parse', '--is-inside-work-tree' },
-    on_stdout = function(j, return_val)
+    on_stdout = function(_, return_val)
       is_in_repo = return_val == 'true'
     end,
   }):start()
@@ -16,21 +16,22 @@ local function project_git_diff()
     return total_git_diff
   end
 
+  -- on_stdout is called for every new stdout line here,
+  -- so we need to keep track of the total diff ourselves
+  -- and only update it when the job is done
   local total = { added = 0, modified = 0, removed = 0 }
 
   Job:new({
     command = 'git',
     args = { 'diff', '--numstat' },
-    on_stdout = function(j, return_val)
-      local num_lines = 0
-      for line in string.gmatch(return_val, "[^\n]+") do
-        local added, removed = line:match('(%d+)%s+(%d+)')
-        total.added = total.added + tonumber(added or 0)
-        total.removed = total.removed + tonumber(removed or 0)
-        num_lines = num_lines + 1
-      end
-      total_git_diff = total
+    on_stdout = function(_, diff)
+      local added, removed = diff:match('(%d+)%s+(%d+)')
+      total.added = total.added + tonumber(added or 0)
+      total.removed = total.removed + tonumber(removed or 0)
     end,
+    on_exit = function(_, _)
+      total_git_diff = total
+    end
   }):start()
 
   return total_git_diff
