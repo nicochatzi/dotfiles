@@ -9,6 +9,7 @@ return {
 
   {
     -- zoom in/out of current buffer
+    -- <C-w>o to zoom in/out
     'troydm/zoomwintab.vim',
     event = 'VeryLazy',
   },

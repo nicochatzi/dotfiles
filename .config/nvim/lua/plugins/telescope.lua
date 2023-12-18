@@ -1,7 +1,7 @@
 return {
   'nvim-telescope/telescope.nvim',
   branch = '0.1.x',
-  cmd = 'Telescope',
+  cmd = { 'Telescope', 'VeryLazy' },
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     { 'debugloop/telescope-undo.nvim' },
@@ -12,6 +12,7 @@ return {
       -- branch = 'feat/tree',
     },
     { 'nvim-telescope/telescope-project.nvim' },
+    { 'nvim-telescope/telescope-symbols.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       -- NOTE: If you are having trouble with this installation,

@@ -5,10 +5,9 @@ vim.keymap.set('n', 'zM', ':lua require\'ufo\'.closeAllFolds<CR>')
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<C-Z>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set('n', '<leader>z', ':ZoomWinTabToggle<CR>')
 vim.keymap.set('n', '<leader>E', ':Neotree right toggle<CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>W', ':Neotree float toggle<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
+-- vim.keymap.set('n', '<leader>W', ':Neotree float toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
 -- vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
@@ -78,6 +77,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Telescope remaps
 vim.keymap.set('n', '<leader>rr', ':Telescope registers<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>m', ':Telescope marks<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>se', ':Telescope symbols<CR>', { noremap = true })
 
 -- this places the browser at the current directory
 vim.keymap.set('n', '<leader>F', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', { noremap = true })

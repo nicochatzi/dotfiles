@@ -142,6 +142,11 @@ return {
         lualine_z = { {
           'progress',
           color = { fg = colors.bblue, bg = 'none' },
+        }, {
+          'fileformat',
+          color = { fg = colors.bblue, bg = 'none' },
+          icons_enabled = true,
+          symbols = { unix = 'LF', dos = 'CRLF', mac = 'CR' },
         } },
       },
       inactive_sections = {
