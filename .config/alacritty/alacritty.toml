@@ -1,0 +1,67 @@
+import = ["/Users/nico/.config/alacritty/theme-dark.toml"]
+live_config_reload = true
+use_thin_strokes = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[font]
+size = 15
+
+[font.bold]
+family = "JetBrainsMono NF"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMono NF"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrainsMono NF"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono NF"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = -2
+
+[[keyboard.bindings]]
+action = "ToggleSimpleFullscreen"
+key = "Return"
+mods = "Super"
+
+[[keyboard.bindings]]
+chars = "€"
+key = "Key2"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "#"
+key = "Key3"
+mods = "Alt"
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+
+[shell]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+opacity = 0.9
+option_as_alt = "Both"
+startup_mode = "Maximized"
+
+[window.padding]
+x = 0
+y = 0

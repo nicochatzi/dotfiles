@@ -1,16 +1,21 @@
 # https://alacritty.org/config-alacritty.html
 
+import:
+  - ~/.config/alacritty/theme-dark.yml
+  # - ~/.config/alacritty/theme-light.yml
+
+shell:
+  program: /bin/zsh
+  # program: /usr/local/bin/fish
+
+live_config_reload: true
+
 window:
   padding:
     x: 0
-    y: 5
-  position:
-    x: 500
-    y: 200
-  dimensions:
-    columns: 150
-    lines: 40
-  opacity: 0.92
+    y: 0
+  startup_mode: "Maximized"
+  opacity: 0.9
   option_as_alt: Both
 
   # Window decorations
@@ -41,32 +46,19 @@ font:
   bold_italic:
     family: JetBrainsMono NF
     style: Bold Italic
-  size: 11
+  size: 15
   offset:
     x: 0
     y: -2
 
-colors:
-  primary:
-    foreground: '#dcd7ba'
-    background: '#0c0c0c'
-
 draw_bold_text_with_bright_colors: true
 use_thin_strokes: true
-
-import:
-  # - ~/.config/alacritty/theme-light.yml
-  - ~/.config/alacritty/theme-dark.yml
-
-shell:
-  program: /bin/zsh
-  # program: /usr/local/bin/fish
 
 mouse:
   hide_when_typing: true
 
 selection:
-  save_to_clipboard: false
+  save_to_clipboard: true
 
 key_bindings:
   - {
