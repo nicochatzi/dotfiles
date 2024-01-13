@@ -1,6 +1,5 @@
 import = ["/Users/nico/.config/alacritty/theme-dark.toml"]
 live_config_reload = true
-use_thin_strokes = true
 
 [colors]
 draw_bold_text_with_bright_colors = true

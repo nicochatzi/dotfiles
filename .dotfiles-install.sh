@@ -72,7 +72,7 @@ install_languages() {
     # Rust
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-    # CMake LSP for Coc
+    # CMake LSP
     pip3 install cmake-language-server
 
     # Poerty
@@ -99,7 +99,6 @@ install_tui() {
         ripgrep \
         watchexec \
         sccache \
-        hyperfine \
         tmux \
         alacritty \
         hammerspoon \
@@ -129,6 +128,24 @@ install_tui() {
 
     # python support for neovim
     pip3 install --user pynvim
+}
+
+install_cargo_extensions() {
+	cargo install cargo-watch
+	cargo install cargo-show-asm
+	cargo install cargo-nextest
+	cargo install cargo-audit
+	cargo install cargo-deny
+	cargo install cargo-remark
+	cargo install cargo-limit
+	cargo install cargo-binutils
+	cargo install cargo-bloat
+	cargo install cargo-pgo
+	cargo install cargo-update
+	cargo install nvim-send
+	cargo install tokei
+	cargo install hyperfine
+	cargo install flamegraph
 }
 
 set_zsh() {
@@ -179,6 +196,7 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -a|--all)
             INSTALL_LANUGAGES=1
+            INSTALL_CARGO_EXTENSIONS=1
             INSTALL_TUI=1
             INSTALL_DOTFILES=1
             INSTALL_SYS=1
@@ -225,6 +243,11 @@ fi
 if [ $INSTALL_LANUGAGES -eq 1 ]; then
     echo "~> Installing languages"
     install_languages
+fi
+
+if [ $INSTALL_CARGO_EXTENSIONS -eq 1 ]; then
+    echo "~> Installing cargo extensions"
+    install_cargo_extensions
 fi
 
 if [ $INSTALL_TUI -eq 1 ]; then
