@@ -1,6 +1,6 @@
 export RUST_BACKTRACE=1
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export PATH="$HOME/.pyenv/shims:$PATH"
 export PATH="/usr/local/bin:$PATH"

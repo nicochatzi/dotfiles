@@ -191,6 +191,7 @@ INSTALL_SYS=0
 INSTALL_LANUGAGES=0
 INSTALL_TUI=0
 INSTALL_DOTFILES=0
+INSTALL_CARGO_EXTENSIONS=0
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -204,6 +205,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         -s|--system)
             INSTALL_SYS=1
+            shift
+            ;;
+        -c|--cargo)
+            INSTALL_CARGO_EXTENSIONS=1
             shift
             ;;
         -l|--langs)

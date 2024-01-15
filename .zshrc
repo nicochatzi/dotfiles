@@ -1,6 +1,27 @@
 # zmodload zsh/zprof
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export RUST_BACKTRACE=1
+
+#eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.pyenv/shims:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.zvm/bin:$PATH"
+export PATH="$HOME/toolchains/arm-none-eabi/12.2/bin:$PATH"
+# export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
+export PATH="$HOME/.zvm/bin:$HOME/.zvm/zvm:$PATH"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/code/me/aud/out:$PATH"
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/bin/cmake-language-server/bin:$PATH"
+export PATH="/opt/homebrew/opt/qemu/bin:$PATH"
+
+export PATH="/Applications/kitty.app/Contents/MacOS:$PATH"
+#eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 #
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -31,10 +52,6 @@ zpcompinit; zpcdreplay
 
 zinit light unixorn/fzf-zsh-plugin
 zinit light romkatv/powerlevel10k
-
-source $HOME/code/me/aud/out/aud.zsh
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 ###########################################################################
 # Preferred editor for local and remote sessions
@@ -144,8 +161,6 @@ zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
 
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-source $HOME/.creds/.faelrc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
