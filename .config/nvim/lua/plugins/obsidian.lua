@@ -1,5 +1,17 @@
 local obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
 
+-- only set conceallevel if we're in the obsidian_vault_path
+vim.api.nvim_create_augroup('ObsidianDirectory', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  group = 'ObsidianDirectory',
+  pattern = 'markdown',
+  callback = function()
+    if vim.fn.expand('%:p'):match(obsidian_vault_path) then
+      vim.wo.conceallevel = 2
+    end
+  end
+})
+
 return {
   'epwalsh/obsidian.nvim',
   event = { 'BufReadPre ' .. vim.fn.expand('~') .. obsidian_vault_path .. '/**.md' },
@@ -21,6 +33,9 @@ return {
     daily_notes = {
       folder = 'dailies',
       date_format = '%Y-%m-%d',
+    },
+    ui = {
+      enable = true,
     },
     completion = {
       nvim_cmp = true,

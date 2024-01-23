@@ -20,6 +20,8 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/bin/cmake-language-server/bin:$PATH"
 export PATH="/opt/homebrew/opt/qemu/bin:$PATH"
 
+export GDRIVE_HOME="$HOME/Library/CloudStorage/GoogleDrive-nico@htz.dev/My\ Drive"
+
 export PATH="/Applications/kitty.app/Contents/MacOS:$PATH"
 #eval "$(/opt/homebrew/bin/brew shellenv)"
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)

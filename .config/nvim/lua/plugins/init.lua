@@ -91,8 +91,8 @@ return {
         -- any_additional_filetype = { compiler = ..., options = ... },
       },
       quickfix = {
-        enable = false, -- whether to populate the quickfix list in case of errors
-        auto_open = false, -- whether to open the quickfix list in case of errors
+        enable = false,            -- whether to populate the quickfix list in case of errors
+        auto_open = false,         -- whether to open the quickfix list in case of errors
       },
       url = 'https://godbolt.org', -- can be changed to a different godbolt instance
     },
