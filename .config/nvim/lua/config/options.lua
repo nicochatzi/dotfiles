@@ -58,7 +58,7 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- from https://github.com/kevinhwang91/nvim-ufo
 vim.o.foldcolumn = '0' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 vim.g.markdown_folding = 1 -- enable markdown folding
