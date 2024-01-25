@@ -28,6 +28,20 @@ return {
   },
 
   {
+    'folke/neoconf.nvim',
+    event = 'VeryLazy',
+    opts = {
+      import = {
+        vscode = true, -- local .vscode/settings.json
+        coc = false,   -- global/local coc-settings.json
+        nlsp = false,  -- global/local nlsp-settings.nvim json settings
+      },
+      live_reload = true,
+      filetype_jsonc = true,
+    }
+  },
+
+  {
     -- global search and replace utils
     'nvim-pack/nvim-spectre',
     cmd = 'Spectre',
