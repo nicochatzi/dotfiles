@@ -1,4 +1,7 @@
--- debugging
+local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+
 return {
   {
     'mfussenegger/nvim-dap',
@@ -14,8 +17,11 @@ return {
         port = '${port}',
         executable = {
           -- CHANGE THIS to your path!
-          command = '~/.codelldb/extension/adapter/codelldb',
-          args = { '--port', '${port}' },
+          command = codelldb_path,
+          args = {
+            '--liblldb', liblldb_path,
+            '--port', '${port}',
+          },
           -- On windows you may have to uncomment this:
           -- detached = false,
         },

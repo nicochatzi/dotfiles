@@ -27,6 +27,14 @@ vim.api.nvim_set_keymap('n', '<M-j>', ':resize +5<CR>', { noremap = true, silent
 vim.keymap.set('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, silent = true })
 vim.keymap.set('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, silent = true })
 
+-- test
+vim.keymap.set('n', '<leader>tst', ':lua require("neotest").run.run()<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tss', ':lua require("neotest").run.stop()<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tsf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tsa', ':lua require("neotest").run.attach()<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tsd', ':lua require("neotest").run.run({strategy = "dap"})<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tsp', ':Neotest output-panel<CR>', { noremap = true })
+
 -- c/cpp/cmake remaps
 vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
 vim.keymap.set('n', '<leader>co', ':CMakeOpen<CR>')

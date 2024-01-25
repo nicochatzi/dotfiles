@@ -33,11 +33,23 @@ winman.setup {
 winman.setup {
   mods = { "ctrl", "alt" },
   key = 'Up',
-  action = winman.to_fullscreen
+  action = winman.to_top_half
 }
 
 winman.setup {
   mods = { "ctrl", "alt" },
+  key = 'Down',
+  action = winman.to_bottom_half
+}
+
+winman.setup {
+  mods = { "ctrl", "alt", "cmd" },
+  key = 'Up',
+  action = winman.to_fullscreen
+}
+
+winman.setup {
+  mods = { "ctrl", "alt", "cmd" },
   key = 'Down',
   action = winman.to_original_frame
 }

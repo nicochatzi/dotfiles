@@ -4,10 +4,15 @@ return {
   -- event = 'VeryLazy',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    { 'williamboman/mason.nvim', config = true },
+    { 'williamboman/mason.nvim',          config = true },
     { 'williamboman/mason-lspconfig.nvim' },
     { 'p00f/clangd_extensions.nvim' },
-    { 'folke/neodev.nvim', opts = {} },
+    {
+      'folke/neodev.nvim',
+      opts = {
+        library = { plugins = { "neotest" }, types = true },
+      }
+    },
     -- good for symbolic search and referencing but it's
     -- way too busy for my taste, worth some digging
     -- at some point!
