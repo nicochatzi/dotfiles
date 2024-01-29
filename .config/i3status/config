@@ -17,8 +17,6 @@ order += "disk /"
 order += "memory"
 order += "cpu_temperature 0"
 order += "battery 0"
-order += "tztime localdate"
-order += "tztime localtime"
 order += "load"
 order += "cpu_usage"
 # order += "disk /home"
@@ -26,9 +24,10 @@ order += "cpu_usage"
 # order += "run_watch VPN"
 # order += "ethernet eno16777736"
 # order += "run_watch DHCP"
+order += "tztime datetime"
 
 volume master {
-        format = "<span color='#00BFA5' size='large'> </span> <span bgcolor='#00BFA5' foreground='black'> %volume </span>"
+        format = " <span color='#00BFA5' size='large'> </span> <span bgcolor='#00BFA5' foreground='black'> %volume </span>"
         format_muted = "<span color='#D32F2F'> %volume</span>"
         device = "default"
         mixer = "Master"
@@ -36,29 +35,29 @@ volume master {
 }
 
 wireless _first_ {
-        format_up = "<span color='#3498DB' size='large'> </span> %quality : %essid "
+        format_up = " <span color='#3498DB' size='medium'> %quality</span> %essid "
         format_down = "<span color='#D32F2F'> </span> offline"
 }
 
 
 disk "/" {
-        format = "<span color='#27AE60' size='large'> </span> %avail "
+        format = " <span color='#27AE60' size='large'> </span> %avail "
         prefix_type = custom
 }
 
 memory {
-        format = "<span color='#8E44AD' size='large'> </span> %used "
+        format = " <span color='#8E44AD' size='large'> </span> %used "
         threshold_degraded = "10%"
         format_degraded = "MEMORY: %free"
 }
 
 cpu_temperature 0 {
-        format = "<span color='#D35400' size='large'>󱠇 </span> %degrees °C "
+        format = " <span color='#D35400' size='large'>󱠇 </span> %degrees °C "
         max_threshold = 50
 }
 
 battery 0 {
-        format = "<span color='#34e0bf' size='large'>%status</span> %percentage "
+        format = " <span color='#34e0bf' size='large'>%status</span> %percentage "
         format_down = "No battery"
         status_chr = "⚡"
         status_bat = " "
@@ -67,15 +66,6 @@ battery 0 {
         path = "/sys/class/power_supply/BAT%d/uevent"
         low_threshold = 10
         last_full_capacity = true
-}
-
-tztime localdate {
-        format = "  %a %d-%m-%Y "
-}
-
-tztime localtime {
-        #format = "<span color='#00dddd' size='large'>  </span><span bgcolor='#00dddd' foreground='black'> %I:%M %p </span> "
-        format = " %I:%M %p "
 }
 
 disk "/home" {
@@ -93,16 +83,20 @@ run_watch VPN {
 
 ethernet eno16777736 {
         # if you use %speed, i3status requires root privileges
-        format_up = " %ip "
+        format_up = "  %ip "
         format_down = "  "
 }
 
 cpu_usage {
-        format = "   %usage "
+        format = " <span color='#f09040' size='medium'> </span> %usage "
 }
 
 load {
-        format = "   %1min "
+        format = " <span color='#808fff' size='medium'> </span> %1min "
         max_threshold = 5
+}
+
+tztime datetime {
+        format = " %a %d-%m-%Y %H:%M "
 }
 
