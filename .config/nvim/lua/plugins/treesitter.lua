@@ -11,6 +11,7 @@ local treesitter_config = {
     'rust',
     'toml',
     'tsx',
+    'terraform',
     'typescript',
     'vimdoc',
     'vim',
