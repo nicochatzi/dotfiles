@@ -5,7 +5,7 @@ live_config_reload = true
 draw_bold_text_with_bright_colors = true
 
 [font]
-size = 15
+size = 7
 
 [font.bold]
 family = "JetBrainsMono NF"
@@ -26,11 +26,6 @@ style = "Regular"
 [font.offset]
 x = 0
 y = -2
-
-[[keyboard.bindings]]
-action = "ToggleSimpleFullscreen"
-key = "Return"
-mods = "Super"
 
 [[keyboard.bindings]]
 chars = "€"
@@ -58,7 +53,6 @@ program = "/bin/zsh"
 [window]
 decorations = "none"
 opacity = 0.8
-option_as_alt = "Both"
 startup_mode = "Maximized"
 
 [window.padding]

@@ -10,7 +10,7 @@
     fix = !git reset --soft HEAD~0 && git commit --amend
 [user]
     name = Nico Chatzi
-    email = nico.chatzigianis@focusrite.com
+    email = nico@htz.dev
 [init]
     defaultBranch = main
 [core]

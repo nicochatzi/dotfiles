@@ -3,7 +3,7 @@
 
 general {
         output_format = "i3bar"
-        colors = false
+        colors = true
         interval = 3
         color_good = "#aaff00"
         color_degraded = "#00dddd"
@@ -52,7 +52,7 @@ memory {
 }
 
 cpu_temperature 0 {
-        format = " <span color='#D35400' size='large'>󱠇 </span> %degrees °C "
+        format = " <span color='#D35400' size='large'>󱠇 </span> %degrees°C "
         max_threshold = 50
 }
 
