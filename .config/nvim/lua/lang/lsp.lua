@@ -63,6 +63,11 @@ end
 
 -- Enable the following language servers
 local servers = {
+  sqlls = {},
+  mdx_analyzer = {},
+  asm_lsp = {},
+  tflint = {},
+  gopls = {},
   clangd = {},
   cmake = {},
   zls = {

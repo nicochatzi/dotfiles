@@ -1,4 +1,11 @@
-local obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
+local home = vim.fn.expand('~')
+local obsidian_vault_path
+-- on macOS
+if string.match(home, "^/Users") then
+  obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
+else
+  obsidian_vault_path = '/drive'
+end
 
 -- only set conceallevel if we're in the obsidian_vault_path
 vim.api.nvim_create_augroup('ObsidianDirectory', { clear = true })
@@ -14,7 +21,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 return {
   'epwalsh/obsidian.nvim',
-  event = { 'BufReadPre ' .. vim.fn.expand('~') .. obsidian_vault_path .. '/**.md' },
+  event = { 'BufReadPre ' .. home .. obsidian_vault_path .. '/**.md' },
   dependencies = {
     'nvim-lua/plenary.nvim',
     'hrsh7th/nvim-cmp',
