@@ -166,5 +166,5 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86KbdBrightnessUp exec kbdbacklight up
 bindsym XF86KbdBrightnessDown exec kbdbacklight down
 
-bindsym XF86MonBrightnessUp exec sudo brightnessctl s 5%+
-bindsym XF86MonBrightnessDown exec sudo brightnessctl s 5%-
+bindsym XF86MonBrightnessUp exec sudo brightnessctl s 1%+
+bindsym XF86MonBrightnessDown exec sudo brightnessctl s 1%-

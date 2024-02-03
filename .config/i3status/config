@@ -27,37 +27,38 @@ order += "cpu_usage"
 order += "tztime datetime"
 
 volume master {
-        format = " <span color='#00BFA5' size='large'> </span> <span bgcolor='#00BFA5' foreground='black'> %volume </span>"
-        format_muted = "<span color='#D32F2F'> %volume</span>"
+        format = " <span color='#00BFA5' size='large'> </span> <span bgcolor='#00bFa5' foreground='black'> %volume </span>"
+        format_muted = "<span color='#D32F2F' size='medium'> %volume</span>"
         device = "default"
         mixer = "Master"
         mixer_idx = 0
 }
 
 wireless _first_ {
-        format_up = " <span color='#3498DB' size='medium'> %quality</span> %essid "
+        format_up = " <span color='#3498DB' size='medium'> %quality</span> <span foreground='#73cFc5'>%essid</span> "
         format_down = "<span color='#D32F2F'> </span> offline"
 }
 
 
 disk "/" {
-        format = " <span color='#27AE60' size='large'> </span> %avail "
+        format = " <span color='#27AE60' size='large'> </span> <span foreground='#73cFc5'>%avail</span> "
         prefix_type = custom
 }
 
 memory {
-        format = " <span color='#8E44AD' size='large'> </span> %used "
+        format = " <span color='#8E44AD' size='large'> </span> <span foreground='#73cFc5'>%used</span> "
         threshold_degraded = "10%"
-        format_degraded = "MEMORY: %free"
+        threshold_critical = "5%"
+        format_degraded = " <span color='#D32F2F' size='large'> </span> <span foreground='#D32F2F'>%usage</span> "
 }
 
 cpu_temperature 0 {
-        format = " <span color='#D35400' size='large'>󱠇 </span> %degrees°C "
+        format = " <span color='#D35400' size='large'>󱠇 </span> <span foreground='#73cFc5'>%degrees°C</span> "
         max_threshold = 50
 }
 
 battery 0 {
-        format = " <span color='#34e0bf' size='large'>%status</span> %percentage "
+        format = " <span color='#34e0bf' size='large'>%status</span> <span foreground='#73cFc5'>%percentage</span> "
         format_down = "No battery"
         status_chr = "⚡"
         status_bat = " "
@@ -88,15 +89,19 @@ ethernet eno16777736 {
 }
 
 cpu_usage {
-        format = " <span color='#f09040' size='medium'> </span> %usage "
+        format = " <span color='#f09040' size='medium'> </span> <span foreground='#73cFc5'>%usage</span> "
+        max_threshold = 75
+        format_above_threshold = " <span color='#D32F2F' size='medium'> </span> <span foreground='#D32F2F'>%usage</span> "
 }
 
 load {
-        format = " <span color='#808fff' size='medium'> </span> %1min "
+        format = " <span color='#808fff' size='medium'> </span> <span foreground='#73cFc5'>%1min</span> "
         max_threshold = 5
+        format_above_threshold = " <span color='#D32F2F' size='medium'> </span> <span foreground='#D32F2F'>%1min</span> "
 }
 
 tztime datetime {
-        format = " %a %d-%m-%Y %H:%M "
+        format = "<span foreground='#73cFc5'> %time </span>"
+        format_time = "%a %Y-%m-%d %H:%M:%S"
 }
 
