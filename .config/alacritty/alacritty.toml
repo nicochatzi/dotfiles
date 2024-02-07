@@ -52,9 +52,9 @@ program = "/bin/zsh"
 
 [window]
 decorations = "none"
-opacity = 0.9
+opacity = 0.8
 startup_mode = "Maximized"
 
 [window.padding]
 x = 0
-y = 0
+y = 2

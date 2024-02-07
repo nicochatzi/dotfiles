@@ -3,11 +3,11 @@
 
 general {
         output_format = "i3bar"
-        colors = false
+        colors = true
         interval = 3
-        # color_good = "#aaff00"
-        # color_degraded = "#00dddd"
-        # color_bad = "#ff8800"
+        color_good = "#98bb6c"
+        color_degraded = "#e6c384"
+        color_bad = "#ff5d62"
         markup = "pango"
 }
 
@@ -28,7 +28,7 @@ order += "tztime datetime"
 
 volume master {
         format = " <span color='#947fb8' size='large'> </span> %volume "
-        format_muted = " <span color='#ff5d62'><span size='large'> </span> %volume</span> "
+        format_muted = " <span size='large'> </span> %volume "
         device = "default"
         mixer = "Master"
         mixer_idx = 0
@@ -86,19 +86,19 @@ run_watch VPN {
 ethernet eno16777736 {
         # if you use %speed, i3status requires root privileges
         format_up = " <span color='#947fb8' size='medium'> </span>%ip "
-        format_down = " <span color='#ff5d62' size='medium'> </span> "
+        format_down = "   "
 }
 
 cpu_usage {
         format = " <span color='#947fb8' size='medium'> </span> %usage "
         max_threshold = 75
-        format_above_threshold = " <span color='#ff5d62' size='medium'>  %usage</span> "
+        format_above_threshold = "   %usage "
 }
 
 load {
         format = " <span color='#947fb8' size='medium'> </span> %1min "
         max_threshold = 5
-        format_above_threshold = " <span color='#ff5d62' size='medium'>  %1min</span> "
+        format_above_threshold = "   %1min "
 }
 
 tztime datetime {
