@@ -164,7 +164,7 @@ bindsym XF86MonBrightnessDown exec sudo brightnessctl s 1%-
 # from my nvim theme
 set $bg #2a2a37
 set $red #ff5d62
-set $green #98971a
+set $green #98bb6c
 set $yellow #e6c384
 set $orange #de935f
 set $blue #728dc3
@@ -172,6 +172,7 @@ set $aqua #7eb4c9
 set $teal #5faf94
 set $purple #947fb8
 set $white #dcd7ba
+set $grey #54546d
 set $darkgray #0b0f0c
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -183,10 +184,9 @@ bar {
     font pango:JetBrainsMono NF 11
     separator_symbol "<|"
       colors {
-        # # bar background color
         background $darkgray
-        # text color used for blocks that do not have a color specified.
         statusline $aqua
+        separator $grey
 
         # workspaces section
         #                    border  backgr. text
