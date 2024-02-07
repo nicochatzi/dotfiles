@@ -4,7 +4,7 @@ local obsidian_vault_path
 if string.match(home, "^/Users") then
   obsidian_vault_path = '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
 else
-  obsidian_vault_path = '/drive'
+  obsidian_vault_path = '/gdrive'
 end
 
 -- only set conceallevel if we're in the obsidian_vault_path

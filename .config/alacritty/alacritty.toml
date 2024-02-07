@@ -1,4 +1,4 @@
-import = ["/Users/nico/.config/alacritty/theme-dark.toml"]
+import = ["~/.config/alacritty/theme-dark.toml"]
 live_config_reload = true
 
 [colors]
@@ -25,7 +25,7 @@ style = "Regular"
 
 [font.offset]
 x = 0
-y = -2
+y = -4
 
 [[keyboard.bindings]]
 chars = "€"
@@ -52,7 +52,7 @@ program = "/bin/zsh"
 
 [window]
 decorations = "none"
-opacity = 0.8
+opacity = 0.9
 startup_mode = "Maximized"
 
 [window.padding]
