@@ -9,7 +9,7 @@ return {
     cmd = { 'MarkdownPreviewToggle' },
     ft = { 'markdown', 'md' },
     build = function()
-      vim.fn['mkdp#util#install']()
+      vim.fn['cd app && npx --yes yarn install']()
     end,
   },
 }

@@ -66,7 +66,7 @@ alias l="exa -la"
 alias ll="exa -lamhuU --git"
 alias t="exa -a -T -L 2"
 alias py="python3"
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
 alias j='just'
 alias jl='just --list --unsorted'
