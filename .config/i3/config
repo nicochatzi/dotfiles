@@ -168,7 +168,7 @@ bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 
 # from my nvim theme
-set $bg #2a2a37
+set $bg #1a1a27
 set $red #ff5d62
 set $green #98bb6c
 set $yellow #e6c384
