@@ -2,13 +2,13 @@
 # see "man i3status" for documentation.
 
 general {
-        output_format = "i3bar"
-        colors = true
-        interval = 3
-        color_good = "#98bb6c"
-        color_degraded = "#e6c384"
-        color_bad = "#ff5d62"
-        markup = "pango"
+  output_format = "i3bar"
+  colors = true
+  interval = 3
+  color_good = "#98bb6c"
+  color_degraded = "#e6c384"
+  color_bad = "#ff5d62"
+  markup = "pango"
 }
 
 order += "wireless _first_"
@@ -21,88 +21,93 @@ order += "disk /home"
 order += "disk /"
 order += "volume master"
 order += "battery 0"
-order += "tztime datetime"
+order += "tztime date"
+order += "tztime time"
 # order += "ipv6"
 # order += "run_watch VPN"
 # order += "run_watch DHCP"
 
 volume master {
-        format = " <span color='#947fb8' size='large'> </span> %volume "
-        format_muted = " <span size='large'> </span> %volume "
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+  format = " <span color='#947fb8' size='large'> </span> %volume "
+  format_muted = " <span size='large'> </span> %volume "
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
 }
 
 wireless _first_ {
-        format_up = " <span color='#947fb8'><span size='large'> </span> %essid</span> %quality <span color='#7eb4c9'>%ip</span> %bitrate %frequency "
-        format_down = "<span color='#ff5d62'> </span> offline"
+  format_up = " <span color='#947fb8'><span size='large'> </span> %essid</span> %quality <span color='#7eb4c9'>%ip</span> %bitrate %frequency "
+  format_down = "<span color='#ff5d62'> </span> offline"
 }
 
 disk "/" {
-        format = " <span color='#947fb8' size='large'> </span> %avail "
-        prefix_type = custom
+  format = " <span color='#947fb8' size='large'> </span> %avail "
+  prefix_type = custom
 }
 
-
 disk "/home" {
-        format = "   %avail "
-        prefix_type = custom
+  format = "   %avail "
+  prefix_type = custom
 }
 
 memory {
-        format = " <span color='#947fb8' size='medium'> </span> %used "
-        threshold_degraded = "10%"
-        threshold_critical = "5%"
-        format_degraded = " <span color='#ff5d62' size='large'> </span> <span foreground='#D32F2F'>%usage</span> "
+  format = " <span color='#947fb8' size='medium'> </span> %used "
+  threshold_degraded = "10%"
+  threshold_critical = "5%"
+  format_degraded = " <span color='#ff5d62' size='large'> </span> <span foreground='#D32F2F'>%usage</span> "
 }
 
 
 cpu_temperature 0 {
-        format = " <span color='#947fb8' size='medium'>󱠇 </span> %degrees°C "
-        max_threshold = 50
+  format = " <span color='#947fb8' size='medium'>󱠇 </span> %degrees°C "
+  max_threshold = 50
 }
 
 battery 0 {
-        format = " <span color='#947fb8' size='medium'>%status</span> %percentage "
-        format_down = "No battery"
-        status_chr = ""
-        status_bat = "󰂀"
-        status_unk = "?"
-        status_full = "󰂄"
-        path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 20
-        last_full_capacity = true
+  format = " <span color='#947fb8' size='medium'>%status</span> %percentage "
+  format_down = "No battery"
+  status_chr = ""
+  status_bat = "󰂀"
+  status_unk = "?"
+  status_full = "󰂄"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+  low_threshold = 20
+  last_full_capacity = true
 }
 
 run_watch DHCP {
-        pidfile = "/var/run/dhclient*.pid"
+  pidfile = "/var/run/dhclient*.pid"
 }
 
 run_watch VPN {
-        pidfile = "/var/run/vpnc/pid"
+  pidfile = "/var/run/vpnc/pid"
 }
 
 ethernet eno16777736 {
-        # if you use %speed, i3status requires root privileges
-        format_up = " <span color='#947fb8' size='medium'> </span>%ip "
-        format_down = "   "
+  # if you use %speed, i3status requires root privileges
+  format_up = " <span color='#947fb8' size='medium'> </span>%ip "
+  format_down = "   "
 }
 
 cpu_usage {
-        format = " <span color='#947fb8' size='medium'> </span> %usage "
-        max_threshold = 75
-        format_above_threshold = "   %usage "
+  format = " <span color='#947fb8' size='medium'> </span> %usage "
+  max_threshold = 75
+  format_above_threshold = "   %usage "
 }
 
 load {
-        format = " <span color='#947fb8' size='medium'> </span> %1min "
-        max_threshold = 5
-        format_above_threshold = "   %1min "
+  format = " <span color='#947fb8' size='medium'> </span> %1min "
+  max_threshold = 5
+  format_above_threshold = "   %1min "
 }
 
-tztime datetime {
-        format = " %time "
-        format_time = "%a %Y-%m-%d %H:%M:%S"
+tztime date {
+  format = " <span color='#947fb8' size='medium'> </span> %a. %d.%m.%Y "
+  locale = "en_IN.UTF-8"
+}
+
+tztime time {
+  format = " <span color='#947fb8' size='medium'> </span> %H:%M:%S "
+  locale = "en_IN.UTF-8"
 }
 
