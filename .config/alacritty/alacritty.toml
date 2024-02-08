@@ -48,7 +48,7 @@ multiplier = 3
 save_to_clipboard = true
 
 [shell]
-program = "/bin/zsh"
+program = "zsh"
 
 [window]
 decorations = "none"
