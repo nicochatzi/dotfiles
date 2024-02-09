@@ -1,16 +1,11 @@
+FEED_SERVICE:="xsys-feeds.service"
+
 help:
   just --list --unsorted
 
 build:
   cargo build --release
 alias b := build
-
-install:
-  mkdir -p ~/.config/systemd/user
-  cp res/xsys.feeds.service ~/.config/systemd/user/xsys.feeds.service
-  systemctl --user daemon-reload
-  systemctl --user enable xsys.feeds.service
-alias i := install
 
 dev:
   cargo watch -cx lbuild
@@ -19,3 +14,16 @@ alias d := dev
 run CMD:
   cargo run -- {{CMD}}
 alias r := run
+
+feeds-install:
+  mkdir -p ~/.config/systemd/user
+  cp res/{{FEED_SERVICE}} ~/.config/systemd/user/{{FEED_SERVICE}}
+  systemctl --user daemon-reload
+  systemctl --user enable {{FEED_SERVICE}}
+
+_feed-sysd CMD:
+  systemctl --user {{CMD}} {{FEED_SERVICE}}
+
+feeds-start: (_feed-sysd "start")
+feeds-stop: (_feed-sysd "stop")
+feeds-status: (_feed-sysd "status")

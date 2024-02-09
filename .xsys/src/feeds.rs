@@ -1,9 +1,10 @@
+use chrono::Utc;
 use notify_rust::{Notification, NotificationHandle};
 use rss::Channel;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::thread;
-use std::time::{Duration, UNIX_EPOCH};
+use std::time::Duration;
 
 const CONFIG_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/res/feeds.config.json");
 const VISITED_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/out/feeds.seen.json");
@@ -24,13 +25,17 @@ enum Cmd {
 
 #[derive(Debug, clap::Args)]
 struct CheckOptions {
-    /// Only show unseen items
+    /// Show all feed items, not just unseen
     #[clap(long, short)]
-    only_unseen: bool,
+    all: bool,
 
     /// Mark all items as seen
     #[clap(long, short)]
     mark_as_seen: bool,
+
+    /// Trigger notification
+    #[clap(long, short)]
+    notify: bool,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -43,6 +48,14 @@ struct FeedItem {
 struct FeedConfig {
     pause_seconds: u64,
     feeds: Vec<FeedItem>,
+}
+
+impl FeedConfig {
+    fn load() -> anyhow::Result<Self> {
+        std::fs::create_dir_all(OUTPUT_DIR)?;
+        let file = std::fs::read_to_string(CONFIG_PATH)?;
+        Ok(serde_json::from_str(&file)?)
+    }
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -60,7 +73,7 @@ impl FeedItemsSeen {
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 struct FeedsSeen {
-    last_fetch: u64,
+    last_fetch: i64,
     seen_entries: HashMap<String, FeedItemsSeen>,
 }
 
@@ -82,7 +95,7 @@ impl FeedsSeen {
     }
 
     fn save(&mut self) -> anyhow::Result<()> {
-        self.last_fetch = UNIX_EPOCH.elapsed()?.as_secs();
+        self.last_fetch = Utc::now().timestamp();
         let file = serde_json::to_string_pretty(self)?;
         std::fs::write(VISITED_PATH, file)?;
         Ok(())
@@ -104,7 +117,7 @@ pub fn run(cmd: FeedsCmd) -> anyhow::Result<()> {
     }
 }
 
-fn prepare_logging() -> fern::Dispatch {
+fn prepare_logger() -> fern::Dispatch {
     fern::Dispatch::new()
         .format(|out, message, record| {
             out.finish(format_args!(
@@ -116,27 +129,37 @@ fn prepare_logging() -> fern::Dispatch {
             ))
         })
         .level_for("reqwest", log::LevelFilter::Warn)
+        .level_for("async_io", log::LevelFilter::Warn)
+        .level_for("polling", log::LevelFilter::Warn)
 }
 
 fn check(opts: CheckOptions) -> anyhow::Result<()> {
-    prepare_logging().chain(std::io::stdout()).apply()?;
+    prepare_logger()
+        .chain(std::io::stdout())
+        .level(log::LevelFilter::Trace)
+        .apply()?;
 
-    let config = setup()?;
+    let config = FeedConfig::load()?;
     let mut seen = FeedsSeen::load()?;
     let mut num_fetched = 0;
 
-    let on_found = |feed_url: &str, item: &FeedItem| {
-        num_fetched += 1;
+    visit_feeds(&config.feeds, 0, |feed_url: &str, item: &FeedItem| {
         let feed = seen.get_mut(feed_url);
-        if !opts.only_unseen || !feed.contains(&item.link) {
-            println!("{item:?}");
+
+        if !opts.all || !feed.contains(&item.link) {
+            log::info!("From: {feed_url} -> {} @ {}", item.name, item.link);
+
+            if opts.notify {
+                trigger_notification(item).unwrap();
+            }
         }
+
         if opts.mark_as_seen {
             feed.insert(item.link.to_owned());
         }
-    };
 
-    visit_feeds(&config.feeds, on_found)?;
+        num_fetched += 1;
+    });
 
     if opts.mark_as_seen {
         seen.save().unwrap();
@@ -147,9 +170,12 @@ fn check(opts: CheckOptions) -> anyhow::Result<()> {
 }
 
 fn launch() -> anyhow::Result<()> {
-    prepare_logging().chain(fern::log_file(LOGFILE)?).apply()?;
+    prepare_logger()
+        .chain(fern::log_file(LOGFILE)?)
+        .level(log::LevelFilter::Info)
+        .apply()?;
 
-    let config = match setup() {
+    let config = match FeedConfig::load() {
         Ok(config) => config,
         Err(e) => {
             log::error!("{e}");
@@ -166,6 +192,9 @@ fn launch() -> anyhow::Result<()> {
     };
 
     loop {
+        log::info!("fetching feeds");
+        let last_fetch = seen.last_fetch;
+
         let on_found = |feed_url: &str, item: &FeedItem| {
             let feed = seen.get_mut(feed_url);
             if !feed.contains(&item.link) {
@@ -176,52 +205,72 @@ fn launch() -> anyhow::Result<()> {
             }
         };
 
-        if let Err(e) = visit_feeds(&config.feeds, on_found) {
-            log::error!("{e}");
-        }
+        visit_feeds(&config.feeds, last_fetch, on_found);
 
-        if let Err(e) = seen.save() {
-            log::error!("{e}");
+        match seen.save() {
+            Ok(_) => log::info!("saved seen feeds"),
+            Err(e) => log::error!("{e}"),
         }
 
         thread::sleep(Duration::from_secs(config.pause_seconds));
     }
 }
 
-fn setup() -> anyhow::Result<FeedConfig> {
-    std::fs::create_dir_all(OUTPUT_DIR)?;
-    let file = std::fs::read_to_string(CONFIG_PATH)?;
-    Ok(serde_json::from_str(&file)?)
-}
-
 fn visit_feeds(
     feeds: &[FeedItem],
+    since_timestamp: i64,
     mut on_found: impl FnMut(&str, &FeedItem),
-) -> anyhow::Result<()> {
+) {
     for feed in feeds {
-        let channel = match read_rss_channel(&feed.link) {
-            Ok(channel) => channel,
-            Err(e) => {
-                let link = &feed.link;
-                log::error!("while fetching {link}: {e}");
-                continue;
-            }
-        };
+        visit_feed(feed, since_timestamp, &mut on_found);
+    }
+}
 
-        for item in channel.items() {
-            let title = item.title().unwrap_or("No title");
-            let link = item.link().unwrap_or("No link");
-            on_found(
-                &feed.link,
-                &FeedItem {
-                    name: title.to_string(),
-                    link: link.to_string(),
-                },
-            );
+fn visit_feed(feed: &FeedItem, since_timestamp: i64, on_found: impl FnMut(&str, &FeedItem)) {
+    let channel = match read_rss_channel(&feed.link) {
+        Ok(channel) => channel,
+        Err(e) => {
+            let link = &feed.link;
+            log::error!("while fetching {link}: {e}");
+            return;
+        }
+    };
+
+    if does_channel_have_new_items(&channel, since_timestamp) {
+        visit_channel_items(&channel, on_found);
+    }
+}
+
+fn does_channel_have_new_items(channel: &Channel, since_timestamp: i64) -> bool {
+    channel.items().iter().any(|item| {
+        item.pub_date()
+            .map(rfc822_to_unix_timestamp)
+            .is_some_and(|pub_date| pub_date > since_timestamp)
+    })
+}
+
+fn rfc822_to_unix_timestamp(rfc822_date: &str) -> i64 {
+    match chrono::DateTime::parse_from_rfc2822(rfc822_date) {
+        Ok(date) => date.timestamp(),
+        Err(e) => {
+            log::warn!("failed to parse RSS feed build date : {e}");
+            0
         }
     }
+}
 
-    Ok(())
+fn visit_channel_items(channel: &Channel, mut on_found: impl FnMut(&str, &FeedItem)) {
+    for item in channel.items() {
+        let title = item.title().unwrap_or("No title");
+        let link = item.link().unwrap_or("No link");
+        on_found(
+            &channel.link,
+            &FeedItem {
+                name: title.to_string(),
+                link: link.to_string(),
+            },
+        );
+    }
 }
 
 fn read_rss_channel(link: &str) -> anyhow::Result<Channel> {
