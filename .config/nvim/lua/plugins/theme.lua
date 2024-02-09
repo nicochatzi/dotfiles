@@ -15,8 +15,8 @@ return {
     event = 'VeryLazy',
     config = function()
       require('colorizer').setup {
-        '*', -- Highlight all files, but customize some others.
-        css = { rgb_fn = true }, -- Enable parsing rgb(...) functions in css.
+        '*',                      -- Highlight all files, but customize some others.
+        css = { rgb_fn = true },  -- Enable parsing rgb(...) functions in css.
         html = { names = false }, -- Disable parsing "names" like Blue or Gray
       }
     end,
@@ -47,15 +47,15 @@ return {
     priority = 1000,
     config = function()
       require('kanagawa').setup {
-        compile = true, -- enable compiling the colorscheme
+        compile = true,   -- enable compiling the colorscheme
         undercurl = true, -- enable undercurls
         commentStyle = { italic = true },
         functionStyle = {},
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
         typeStyle = {},
-        transparent = true, -- do not set background color
-        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        transparent = true,    -- do not set background color
+        dimInactive = false,   -- dim inactive window `:h hl-NormalNC`
         terminalColors = true, -- define vim.g.terminal_color_{0,17}
         colors = {
           -- add/modify theme and palette colors
@@ -69,8 +69,8 @@ return {
           light = 'lotus',
         },
       }
-      -- vim.cmd.colorscheme('kanagawa-lotus')
-      vim.cmd.colorscheme('kanagawa')
+
+      require('config.theme')
 
       -- cursor line highlights
       vim.api.nvim_set_hl(0, 'CursorLine', { fg = light, bg = dark })

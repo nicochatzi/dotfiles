@@ -1,0 +1,1 @@
+/home/nico/.config/nvim/lua/config/theme/light.lua
