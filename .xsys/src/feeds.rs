@@ -16,7 +16,7 @@ pub struct FeedSources {
     feeds: Vec<FeedSourceItem>,
 }
 
-fn run() -> anyhow::Result<()> {
+pub fn run() -> anyhow::Result<()> {
     let mut seen_entries = HashSet::new();
     let feeds: FeedSources = serde_json::from_str(&std::fs::read_to_string("feeds.json")?)?;
 
