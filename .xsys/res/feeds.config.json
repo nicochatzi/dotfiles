@@ -1,5 +1,4 @@
 {
-  "pause_seconds": 600,
   "feeds": [
     {
       "name": "Rust on Espressif",
@@ -36,7 +35,12 @@
     {
       "name": "Synth Anatomy",
       "link": "https://www.synthanatomy.com/feed"
+    },
+    {
+      "name": "Hacker News",
+      "link": "https://news.ycombinator.com/rss"
     }
+
   ]
 }
 

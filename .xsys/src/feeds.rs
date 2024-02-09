@@ -3,8 +3,6 @@ use notify_rust::{Notification, NotificationHandle};
 use rss::Channel;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
-use std::thread;
-use std::time::Duration;
 
 const CONFIG_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/res/feeds.config.json");
 const VISITED_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/out/feeds.seen.json");
@@ -20,7 +18,7 @@ pub struct FeedsCmd {
 #[derive(Debug, clap::Subcommand)]
 enum Cmd {
     Check(CheckOptions),
-    Launch,
+    Fetch,
 }
 
 #[derive(Debug, clap::Args)]
@@ -46,7 +44,6 @@ struct FeedItem {
 
 #[derive(Debug, Deserialize)]
 struct FeedConfig {
-    pause_seconds: u64,
     feeds: Vec<FeedItem>,
 }
 
@@ -73,7 +70,7 @@ impl FeedItemsSeen {
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 struct FeedsSeen {
-    last_fetch: i64,
+    last_fetch: String,
     seen_entries: HashMap<String, FeedItemsSeen>,
 }
 
@@ -95,7 +92,7 @@ impl FeedsSeen {
     }
 
     fn save(&mut self) -> anyhow::Result<()> {
-        self.last_fetch = Utc::now().timestamp();
+        self.last_fetch = Utc::now().to_rfc3339();
         let file = serde_json::to_string_pretty(self)?;
         std::fs::write(VISITED_PATH, file)?;
         Ok(())
@@ -108,12 +105,22 @@ impl FeedsSeen {
         }
         self.seen_entries.get_mut(feed_url).unwrap()
     }
+
+    fn timestamp(&self) -> i64 {
+        match chrono::DateTime::parse_from_rfc3339(&self.last_fetch) {
+            Ok(dt) => dt.timestamp(),
+            Err(e) => {
+                log::warn!("failed to parse last fetch timestamp: {e}");
+                0
+            }
+        }
+    }
 }
 
 pub fn run(cmd: FeedsCmd) -> anyhow::Result<()> {
     match cmd.command {
         Cmd::Check(opts) => check(opts),
-        Cmd::Launch => launch(),
+        Cmd::Fetch => fetch(),
     }
 }
 
@@ -169,7 +176,7 @@ fn check(opts: CheckOptions) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn launch() -> anyhow::Result<()> {
+fn fetch() -> anyhow::Result<()> {
     prepare_logger()
         .chain(fern::log_file(LOGFILE)?)
         .level(log::LevelFilter::Info)
@@ -191,29 +198,26 @@ fn launch() -> anyhow::Result<()> {
         }
     };
 
-    loop {
-        log::info!("fetching feeds");
-        let last_fetch = seen.last_fetch;
+    let last_fetch = seen.timestamp();
 
-        let on_found = |feed_url: &str, item: &FeedItem| {
-            let feed = seen.get_mut(feed_url);
-            if !feed.contains(&item.link) {
-                if let Err(e) = trigger_notification(item) {
-                    log::error!("while triggering notification for {}: {e}", &item.link);
-                }
-                feed.insert(item.link.to_owned());
+    let on_found = |feed_url: &str, item: &FeedItem| {
+        let feed = seen.get_mut(feed_url);
+        if !feed.contains(&item.link) {
+            if let Err(e) = trigger_notification(item) {
+                log::error!("while triggering notification for {}: {e}", &item.link);
             }
-        };
-
-        visit_feeds(&config.feeds, last_fetch, on_found);
-
-        match seen.save() {
-            Ok(_) => log::info!("saved seen feeds"),
-            Err(e) => log::error!("{e}"),
+            feed.insert(item.link.to_owned());
         }
+    };
 
-        thread::sleep(Duration::from_secs(config.pause_seconds));
+    visit_feeds(&config.feeds, last_fetch, on_found);
+
+    match seen.save() {
+        Ok(_) => log::info!("saved seen feeds"),
+        Err(e) => log::error!("{e}"),
     }
+
+    Ok(())
 }
 
 fn visit_feeds(

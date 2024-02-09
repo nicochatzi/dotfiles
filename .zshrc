@@ -72,7 +72,7 @@ alias nv='nvim'
 alias j='just'
 alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
-alias xsys='~/.xsys/target/release/xsys'
+alias xsys='~/.xsys/bin/xsys'
 
 we() {
     local filter_flag=""

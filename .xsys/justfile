@@ -15,15 +15,9 @@ run CMD:
   cargo run -- {{CMD}}
 alias r := run
 
-feeds-install:
-  mkdir -p ~/.config/systemd/user
-  cp res/{{FEED_SERVICE}} ~/.config/systemd/user/{{FEED_SERVICE}}
-  systemctl --user daemon-reload
-  systemctl --user enable {{FEED_SERVICE}}
+install: build
+  @mkdir -p bin
+  cp target/release/xsys bin/xsys
+  crontab res/feeds.cron
 
-_feed-sysd CMD:
-  systemctl --user {{CMD}} {{FEED_SERVICE}}
 
-feeds-start: (_feed-sysd "start")
-feeds-stop: (_feed-sysd "stop")
-feeds-status: (_feed-sysd "status")
