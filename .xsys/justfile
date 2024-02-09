@@ -13,3 +13,7 @@ alias i := install
 dev:
   cargo watch -cx lbuild
 alias d := dev
+
+run CMD:
+  cargo run -- {{CMD}}
+alias r := run

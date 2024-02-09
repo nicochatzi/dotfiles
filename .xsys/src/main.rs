@@ -13,12 +13,12 @@ pub struct Cli {
 #[derive(Debug, Subcommand)]
 pub enum Cmd {
     Theme(theme::ThemeCmd),
-    Feeds,
+    Feeds(feeds::FeedsCmd),
 }
 
 pub fn main() {
     match Cli::parse().command {
         Cmd::Theme(cmd) => theme::run(cmd).unwrap(),
-        Cmd::Feeds => feeds::run().unwrap(),
+        Cmd::Feeds(cmd) => feeds::run(cmd).unwrap(),
     }
 }

@@ -1,4 +1,5 @@
 {
+  "pause_seconds": 600,
   "feeds": [
     {
       "name": "Rust on Espressif",
