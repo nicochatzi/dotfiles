@@ -1,0 +1,15 @@
+help:
+  just --list --unsorted
+
+build:
+  cargo build --release
+alias b := build
+
+install:
+  mkdir bin
+  cp target/release/xsys bin/
+alias i := install
+
+dev:
+  cargo watch -cx lbuild
+alias d := dev
