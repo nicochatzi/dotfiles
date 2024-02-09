@@ -6,8 +6,10 @@ build:
 alias b := build
 
 install:
-  mkdir bin
-  cp target/release/xsys bin/
+  mkdir -p ~/.config/systemd/user
+  cp res/xsys.feeds.service ~/.config/systemd/user/xsys.feeds.service
+  systemctl --user daemon-reload
+  systemctl --user enable xsys.feeds.service
 alias i := install
 
 dev:

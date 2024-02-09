@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=~/.xsys/bin/xsys feeds
+ExecStart=~/.xsys/target/release/xsys feeds launch
 Restart=on-failure
 
 [Install]
