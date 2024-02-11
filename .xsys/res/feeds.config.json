@@ -25,22 +25,13 @@
       "link": "https://www.synthtopia.com/feed/"
     },
     {
-      "name": "Matrix Synth",
-      "link": "https://www.matrixsynth.com/rss.xml"
-    },
-    {
       "name": "matklad",
       "link": "https://matklad.github.io/feed.xml"
     },
     {
       "name": "Synth Anatomy",
       "link": "https://www.synthanatomy.com/feed"
-    },
-    {
-      "name": "Hacker News",
-      "link": "https://news.ycombinator.com/rss"
     }
-
   ]
 }
 
