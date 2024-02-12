@@ -10,7 +10,6 @@ struct ThemeSelector {
     dark: &'static str,
 }
 
-const ALACRITTY_CONF: &str = "~/.config/alacritty/alacritty.toml";
 const THEME_FILES: &[ThemeSelector] = &[
     ThemeSelector {
         link: "~/.config/alacritty/theme.toml",
@@ -69,6 +68,7 @@ pub fn set_theme(to_light: bool) -> anyhow::Result<()> {
         create_symlink(src, dest)?;
     }
     touch_alacritty_config()?;
+    set_wallpaper(to_light)?;
     Ok(())
 }
 
@@ -104,9 +104,25 @@ pub fn expand_home(path: impl AsRef<Path>) -> anyhow::Result<PathBuf> {
 }
 
 pub fn touch_alacritty_config() -> anyhow::Result<()> {
+    const ALACRITTY_CONF: &str = "~/.config/alacritty/alacritty.toml";
+
     let current_time = SystemTime::now();
     let conf = expand_home(ALACRITTY_CONF)?;
     let _file = std::fs::OpenOptions::new().write(true).open(&conf)?;
     filetime::set_file_mtime(conf, filetime::FileTime::from_system_time(current_time))?;
+    Ok(())
+}
+
+pub fn set_wallpaper(to_light: bool) -> anyhow::Result<()> {
+    let image = if to_light {
+        "~/.nixfiles/assets/nixwall-light.png"
+    } else {
+        "~/.nixfiles/assets/purple-turquoise.jpg"
+    };
+    std::process::Command::new("nitrogen")
+        .arg("--save")
+        .arg("--set-zoom-fill")
+        .arg(expand_home(image)?)
+        .output()?;
     Ok(())
 }

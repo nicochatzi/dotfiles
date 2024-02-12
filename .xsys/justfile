@@ -1,5 +1,3 @@
-FEED_SERVICE:="xsys-feeds.service"
-
 help:
   just --list --unsorted
 
@@ -18,6 +16,9 @@ alias r := run
 install: build
   @mkdir -p bin
   cp target/release/xsys bin/xsys
+alias i := install
+
+cron:
   crontab res/feeds.cron
 
 
