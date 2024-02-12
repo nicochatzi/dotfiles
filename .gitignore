@@ -1,0 +1,7 @@
+.dotfiles
+
+# theme switcher generated files
+.config/alacritty/theme.toml
+.config/gtk-3.0/settings.ini
+.config/nvim/lua/config/theme/init.lua
+
