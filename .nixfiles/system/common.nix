@@ -19,7 +19,9 @@
   };
 
   boot = {
-    # kernelPackages = pkgs.linuxPackages-rt_latest;
+    kernelParams = [
+      "resume=/swapfile"
+    ];
     tmp.cleanOnBoot = true;
     loader = {
       systemd-boot.enable = true;
