@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     ../../system/desktop.nix
     ../../services/rclone.nix
-    ../../services/lock.nix
+    ../../services/hibernate.nix
   ];
 
   networking.hostName = "lati";

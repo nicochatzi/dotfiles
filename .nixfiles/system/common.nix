@@ -19,6 +19,7 @@
   };
 
   boot = {
+    # kernelPackages = pkgs.linuxPackages-rt_latest;
     tmp.cleanOnBoot = true;
     loader = {
       systemd-boot.enable = true;
@@ -27,6 +28,10 @@
       timeout = 0;
     };
   };
+
+  swapDevices = [
+    { device = "/swapfile"; size = 16384; }
+  ];
 
   hardware = {
     ledger.enable = true;

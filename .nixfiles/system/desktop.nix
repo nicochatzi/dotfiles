@@ -48,7 +48,7 @@
   };
 
   services.logind = {
-    extraConfig = "HandlePowerKey=suspend";
+    extraConfig = "HandlePowerKey=hibernate";
     lidSwitch = "suspend";
   };
 
