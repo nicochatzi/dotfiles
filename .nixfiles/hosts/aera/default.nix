@@ -1,7 +1,11 @@
 { inputs, pkgs, config, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../system/desktop.nix
+    ../../modules/rclone.nix
+  ];
 
   networking.hostName = "aera";
 

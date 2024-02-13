@@ -9,11 +9,11 @@
     nixosConfigurations = {
       lati = nixpkgs.lib.nixosSystem {
         system = "x86-64-linux";
-        modules = [ ./hosts/lati ./system/desktop.nix ];
+        modules = [ ./hosts/lati ];
       };
       aera = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = [ ./hosts/aera ./system/desktop.nix ];
+        modules = [ ./hosts/aera ];
       };
     };
   };

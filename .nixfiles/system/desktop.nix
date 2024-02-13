@@ -71,7 +71,6 @@
       dunst # notifications
       pulseaudio
       brightnessctl
-      rclone
 
       # term
       neovim
@@ -85,7 +84,6 @@
       obs-studio
       reaper
       ledger-live-desktop
-
     ];
   };
 
