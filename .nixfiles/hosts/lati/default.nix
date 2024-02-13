@@ -1,9 +1,10 @@
-{ inputs, pkgs, config, ... }:
+{ ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ../../system/desktop.nix
+    ../../system/firewall.nix
     ../../services/rclone.nix
     ../../services/hibernate.nix
   ];
