@@ -70,6 +70,7 @@
       rofi # dmenu
       dunst # notifications
       pulseaudio
+      alsa-lib
       brightnessctl
 
       # term

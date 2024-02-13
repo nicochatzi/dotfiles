@@ -78,18 +78,7 @@
     };
   };
 
-  sound = {
-    enable = true;
-  };
-
   services.cron.enable = true;
-
-  services.pipewire = {
-    enable = false;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   services.xserver = {
     enable = true;
@@ -162,6 +151,7 @@
     bottom
     tokei
     just
+    direnv
 
     # languages
     (python3.withPackages (py: [
@@ -192,17 +182,5 @@
     kcachegrind
     zig
     zls
-
-    # cargo
-    cargo-nextest
-    cargo-bloat
-    cargo-cross
-    cargo-show-asm
-    cargo-binutils
-    cargo-watch
-    cargo-limit
-    cargo-deny
-    cargo-lambda
-    cargo-update
   ];
 }
