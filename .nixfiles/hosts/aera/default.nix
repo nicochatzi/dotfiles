@@ -4,7 +4,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../system/desktop.nix
-    ../../modules/rclone.nix
+    ../../services/rclone.nix
+    ../../services/lock.nix
   ];
 
   networking.hostName = "aera";

@@ -54,6 +54,9 @@ bindsym $mod+Shift+Tab move scratchpad
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# lock without terminating i3 sesh
+bindsym $mod+z exec dm-tool lock
+
 # start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show drun -show-icons
 bindsym $mod+Shift+d exec rofi -show combi -show-icons
@@ -186,6 +189,8 @@ bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t ima
 
 # from my nvim theme
 set $bg #1a1a27
+set $grey #54546d
+set $white #dcd7ba
 set $red #ff5d62
 set $green #98bb6c
 set $yellow #e6c384
@@ -194,8 +199,6 @@ set $blue #728dc3
 set $aqua #7eb4c9
 set $teal #5faf94
 set $purple #947fb8
-set $white #dcd7ba
-set $grey #54546d
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

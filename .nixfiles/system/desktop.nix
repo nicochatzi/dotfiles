@@ -47,6 +47,11 @@
     };
   };
 
+  services.logind = {
+    extraConfig = "HandlePowerKey=suspend";
+    lidSwitch = "suspend";
+  };
+
   console.useXkbConfig = true;
 
   users.users.nico = {
