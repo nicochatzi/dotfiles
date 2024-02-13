@@ -1,4 +1,6 @@
-{ pkgs, ... }: let
+{ pkgs, ... }:
+
+let
   hibernateEnvironment = {
     HIBERNATE_SECONDS = "3600";
     HIBERNATE_LOCK = "/var/run/autohibernate.lock";
@@ -8,7 +10,8 @@
     DISPLAY = ":0";
     XDG_SEAT_PATH = "/org/freedesktop/DisplayManager/Seat0";
   };
-in {
+in
+{
   systemd.services."lock-on-resume" = {
     description = "Lock screen after resuming from sleep/hibernate";
     before = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
@@ -17,6 +20,7 @@ in {
     serviceConfig.Type = "oneshot";
     script = "/run/current-system/sw/bin/dm-tool switch-to-greeter";
   };
+
   systemd.services."awake-after-suspend-for-a-time" = {
     description = "Sets up the suspend so that it'll wake for hibernation";
     wantedBy = [ "suspend.target" ];
@@ -30,6 +34,7 @@ in {
       ${pkgs.utillinux}/bin/rtcwake -m no -s $HIBERNATE_SECONDS
     '';
   };
+
   systemd.services."hibernate-after-recovery" = {
     description = "Hibernates after a suspend recovery due to timeout";
     wantedBy = [ "suspend.target" ];

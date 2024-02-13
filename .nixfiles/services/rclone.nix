@@ -4,13 +4,14 @@ let
   mountdir = "/home/nico/cloud/gdrive";
 in
 {
-  environment.systemPackages = [ pkgs.rclone ];
-
   networking.networkmanager.enable = true;
 
-  environment.etc."fuse.conf".text = ''
-    user_allow_other
-  '';
+  environment = {
+    systemPackages = [ pkgs.rclone ];
+    etc."fuse.conf".text = ''
+      user_allow_other
+    '';
+  };
 
   systemd.user.services.rclone-mount = {
     description = "Mount Google Drive using rclone";
