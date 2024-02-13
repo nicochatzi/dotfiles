@@ -164,3 +164,4 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 setopt INC_APPEND_HISTORY
 
+eval "$(direnv hook zsh)"
