@@ -3,277 +3,144 @@
 set -u
 
 OS=$(uname -s)
-
 SUDO=sudo
-
-if ! command -v $SUDO &> /dev/null
-then
-    SUDO=
+if ! command -v $SUDO &> /dev/null; then
+  SUDO=
 fi
 
-preinstall() {
-    if [ $OS == "Darwin" ]; then
-        brew update
-    else
-        $SUDO apt update
-    fi
-}
-
-postinstall() {
-    if [ $OS == "Darwin" ]; then
-        brew cleanup
-    else
-        apt clean
-        rm -rf /var/lib/apt/lists/*d
-    fi
-}
-
 install_system_packages() {
-    packages_to_install=("$@")
-
-    for package in "${packages_to_install[@]}"
-    do
-        if [ $OS == "Darwin" ]; then
-            brew install "$package"
-        else
-            $SUDO apt install "$package" -y
-        fi
-    done
+  packages_to_install=("$@")
+  for package in "${packages_to_install[@]}"; do
+    if [ $OS == "Darwin" ]; then
+      brew install "$package"
+    else
+      $SUDO apt install "$package" -y
+    fi
+  done
 }
 
 install_base_packages() {
-    base_packages=(\
-        curl \
-        git \
-        python3 \
-    )
+  local packages=(\
+    curl \
+    git \
+    python3 \
+  )
 
-    install_system_packages "${base_packages[@]}"
+  install_system_packages "${packages[@]}"
 
-    if ! [ $OS == "Darwin" ]; then
-        $SUDO apt install -y python3-pip
-    fi
+  if ! [ $OS == "Darwin" ]; then
+    $SUDO apt install -y python3-pip
+  fi
 }
 
 install_languages() {
-    lang_packages=(\
-        nodejs \
-    )
+  local packages=(\
+    nodejs \
+    clang-format \
+    hadolint \
+    shellcheck \
+   )
 
-    linters_packages=(\
-        clang-format \
-        hadolint \
-        shellcheck \
-    )
+  install_system_packages "${packages[@]}"
 
-    install_system_packages "${lang_packages[@]}"
-    install_system_packages "${linters_packages[@]}"
-
-    # Rust
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-    # CMake LSP
-    pip3 install cmake-language-server
-
-    # Poerty
-    curl -sSL https://install.python-poetry.org | python3 -
-
-    # node version manager
-    npm i -g n
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  pip3 install cmake-language-server
+  curl -sSL https://install.python-poetry.org | python3 -
+  npm i -g n
 }
 
 install_tui() {
-    tool_packages=(\
-        zsh \
-        just \
-        exa \
-        tig \
-        nvim \
-        bat \
-        fd \
-        procs \
-        dust \
-        bottom \
-        zplug \
-        git-delta \
-        ripgrep \
-        watchexec \
-        sccache \
-        tmux \
-        alacritty \
-        hammerspoon \
-    )
+  local packages=(\
+    zsh \
+    just \
+    exa \
+    tig \
+    nvim \
+    bat \
+    fd \
+    procs \
+    dust \
+    bottom \
+    zplug \
+    git-delta \
+    ripgrep \
+    watchexec \
+    sccache \
+    tmux \
+    alacritty \
+    hammerspoon \
+  )
 
-    install_system_packages "${tool_packages[@]}"
+  install_system_packages "${packages[@]}"
 
-    # Prezto
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
-    # Nerd Fonts
-    if [[ $OS == "Darwin" ]]; then
-        brew tap homebrew/cask-fonts
-        brew install --cask font-jetbrains-mono
-        brew install --cask font-jetbrains-mono-nerd-font
-        brew install --cask font-meslo-lg-nerd-font
-    else
-        pushd "$(pwd)" && \
-            mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts && \
-            git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts && \
-            ./install.sh && \
-            popd
-    fi
+  if [[ $OS == "Darwin" ]]; then
+    brew tap homebrew/cask-fonts
+    brew install --cask font-jetbrains-mono
+    brew install --cask font-jetbrains-mono-nerd-font
+    brew install --cask font-meslo-lg-nerd-font
+  else
+    pushd "$(pwd)" && \
+      mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts && \
+      git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts && \
+      ./install.sh && \
+      popd
+  fi
 
-    # tmux-plugins
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-    # python support for neovim
-    pip3 install --user pynvim
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  pip3 install --user pynvim
 }
 
 install_cargo_extensions() {
-	cargo install cargo-watch
-	cargo install cargo-show-asm
-	cargo install cargo-nextest
-	cargo install cargo-audit
-	cargo install cargo-deny
-	cargo install cargo-remark
-	cargo install cargo-limit
-	cargo install cargo-binutils
-	cargo install cargo-bloat
-	cargo install cargo-pgo
-	cargo install cargo-update
-	cargo install nvim-send
-	cargo install tokei
-	cargo install hyperfine
-	cargo install flamegraph
+  cargo install \
+    cargo-watch \
+    cargo-show-asm \
+    cargo-nextest \
+    cargo-audit \
+    cargo-deny \
+    cargo-remark \
+    cargo-limit \
+    cargo-binutils \
+    cargo-bloat \
+    cargo-pgo \
+    cargo-update \
+    nvim-send \
+    tokei \
+    hyperfine \
+    flamegraph
 }
 
-set_zsh() {
-    chsh -s $(which zsh)
-    zsh
-}
-
-install_dotfiles() {
-    # dotfile git setup from: https://www.atlassian.com/git/tutorials/dotfiles
-
-    DOTFILE_ALIAS="alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'"
-
-    dotfiles() {
-        /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
-    }
-
-    if [ -f $HOME/.zshrc ]; then
-        echo $DOTFILE_ALIAS > $HOME/.zshrc
-    fi
-
-    if [ -f $HOME/.bashrc ]; then
-        echo $DOTFILE_ALIAS > $HOME/.bashrc
-    fi
-
-    echo ".dotfiles" >> $HOME/.gitignore
-
-    git clone --bare https://github.com/nicochatzi/dotfiles $HOME/.dotfiles
-
-    dotfiles checkout
-
-    if [ $? = 0 ]; then
-        echo "Checked out config.";
-    else
-        echo "Backing up pre-existing dot files.";
-        mkdir -p .config-backup && \
-            config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
-    fi;
-
-    dotfiles config status.showUntrackedFiles no
-}
-
-INSTALL_SYS=0
-INSTALL_LANUGAGES=0
-INSTALL_TUI=0
-INSTALL_DOTFILES=0
-INSTALL_CARGO_EXTENSIONS=0
-
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        -a|--all)
-            INSTALL_LANUGAGES=1
-            INSTALL_CARGO_EXTENSIONS=1
-            INSTALL_TUI=1
-            INSTALL_DOTFILES=1
-            INSTALL_SYS=1
-            shift
-            ;;
-        -s|--system)
-            INSTALL_SYS=1
-            shift
-            ;;
-        -c|--cargo)
-            INSTALL_CARGO_EXTENSIONS=1
-            shift
-            ;;
-        -l|--langs)
-            INSTALL_LANUGAGES=1
-            shift
-            ;;
-        -t|--terminal)
-            INSTALL_TUI=1
-            shift
-            ;;
-        -d|--dotfiles)
-            INSTALL_DOTFILES=1
-            shift
-            ;;
-        *)
-            echo "Unknown option $1"
-            exit 1
-            ;;
-    esac
-done
-
-ANY_INSTALLS_REQUESTED=0
-if [ $INSTALL_SYS -eq 1 ] || [ $INSTALL_TUI -eq 1 ] || [ $INSTALL_DOTFILES -eq 1 ] || [ $INSTALL_LANUGAGES -eq 1 ]; then
-    ANY_INSTALLS_REQUESTED=1
+if [ $OS == "Darwin" ]; then
+  brew update
+else
+  $SUDO apt update
 fi
 
-if [ $ANY_INSTALLS_REQUESTED -eq 1 ]; then
-    echo "~> Running pre-install update"
-    preinstall
-fi
+echo "~> Installing system packages"
+install_base_packages
 
-if [ $INSTALL_SYS -eq 1 ]; then
-    echo "~> Installing system packages"
-    install_base_packages
-fi
+echo "~> Installing languages"
+install_languages
 
-if [ $INSTALL_LANUGAGES -eq 1 ]; then
-    echo "~> Installing languages"
-    install_languages
-fi
+echo "~> Installing cargo extensions"
+install_cargo_extensions
 
-if [ $INSTALL_CARGO_EXTENSIONS -eq 1 ]; then
-    echo "~> Installing cargo extensions"
-    install_cargo_extensions
-fi
+echo "~> Installing terminal UI tools"
+install_tui
 
-if [ $INSTALL_TUI -eq 1 ]; then
-    echo "~> Installing terminal UI tools"
-    install_tui
-fi
+echo "~> Installing dotfiles"
+curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.nixfiles/scripts/install.sh \
+  | bash
 
-if [ $INSTALL_DOTFILES -eq 1 ]; then
-    echo "~> Installing dotfiles"
-    install_dotfiles
+echo "~> Post-install"
+if [ $OS == "Darwin" ]; then
+  brew cleanup
+else
+  apt clean
+  rm -rf /var/lib/apt/lists/*d
 fi
-
-if [ $ANY_INSTALLS_REQUESTED -eq 1 ]; then
-    echo "~> Running post-install cleanup"
-    postinstall
-fi
-
-if [ $INSTALL_TUI -eq 1 ]; then
-    echo "~> Setting default shell to zsh"
-    set_zsh
-fi
+chsh -s $(which zsh)
+zsh
 
 echo "~~> Done setting up"
-
