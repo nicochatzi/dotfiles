@@ -22,7 +22,7 @@
     alternate-urgent-background: @background;
     active-foreground:           @active;
     selected-active-foreground:  @selected;
-    alternate-active-background: rgba ( 255, 255, 255, 7 % );
+    alternate-active-background: @active;
     alternate-normal-foreground: @foreground;
     normal-background:           @background;
     selected-normal-background:  @foreground;
@@ -31,9 +31,9 @@
     urgent-background:           @background;
     selected-urgent-background:  @urgent;
     alternate-urgent-foreground: @urgent-foreground;
-    background-color:            rgba ( 0, 0, 0, 0 % );
+    background-color:            @background;
     alternate-active-foreground: @active-foreground;
-    active-background:           rgba ( 0, 0, 0, 0 % );
+    active-background:           @background;
     selected-active-background:  @active;
     spacing:                     12;
 }
