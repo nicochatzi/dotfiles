@@ -2,20 +2,10 @@
 
 set -u
 
-OS=$(uname -s)
-SUDO=sudo
-if ! command -v $SUDO &> /dev/null; then
-  SUDO=
-fi
-
 install_system_packages() {
   packages_to_install=("$@")
   for package in "${packages_to_install[@]}"; do
-    if [ $OS == "Darwin" ]; then
-      brew install "$package"
-    else
-      $SUDO apt install "$package" -y
-    fi
+    brew install "$package"
   done
 }
 
@@ -27,10 +17,6 @@ install_base_packages() {
   )
 
   install_system_packages "${packages[@]}"
-
-  if ! [ $OS == "Darwin" ]; then
-    $SUDO apt install -y python3-pip
-  fi
 }
 
 install_languages() {
@@ -75,18 +61,10 @@ install_tui() {
 
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
-  if [[ $OS == "Darwin" ]]; then
-    brew tap homebrew/cask-fonts
-    brew install --cask font-jetbrains-mono
-    brew install --cask font-jetbrains-mono-nerd-font
-    brew install --cask font-meslo-lg-nerd-font
-  else
-    pushd "$(pwd)" && \
-      mkdir -p ~/.local/share/fonts && cd ~/.local/share/fonts && \
-      git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts && \
-      ./install.sh && \
-      popd
-  fi
+  brew tap homebrew/cask-fonts
+  brew install --cask font-jetbrains-mono
+  brew install --cask font-jetbrains-mono-nerd-font
+  brew install --cask font-meslo-lg-nerd-font
 
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   pip3 install --user pynvim
@@ -111,11 +89,7 @@ install_cargo_extensions() {
     flamegraph
 }
 
-if [ $OS == "Darwin" ]; then
-  brew update
-else
-  $SUDO apt update
-fi
+brew update
 
 echo "~> Installing system packages"
 install_base_packages
@@ -130,16 +104,11 @@ echo "~> Installing terminal UI tools"
 install_tui
 
 echo "~> Installing dotfiles"
-curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.nixfiles/scripts/install.sh \
+curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install-dotfiles.sh \
   | bash
 
 echo "~> Post-install"
-if [ $OS == "Darwin" ]; then
-  brew cleanup
-else
-  apt clean
-  rm -rf /var/lib/apt/lists/*d
-fi
+brew cleanup
 chsh -s $(which zsh)
 zsh
 

@@ -13,6 +13,8 @@ assert_is_installed git
 assert_is_installed rustup
 assert_is_installed nitrogen
 
+echo "~> Installing dotfiles"
+
 if [ -d "$HOME/.dotfiles" ]; then
   if [ -d "$HOME/.dotfiles/.git" ]; then
     echo "Dotfiles repository already exists in $HOME/.dotfiles"
@@ -23,9 +25,10 @@ if [ -d "$HOME/.dotfiles" ]; then
   fi
 fi
 
-echo "~> Running Post Install Step"
+curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install-dotfiles.sh \
+  | bash
 
-dotfiles remote set-url origin git@github.com:nicochatzi/dotfiles.git
+echo "~> Running Post Install Step"
 
 nitrogen --save --set-zoom-fill ~/.nixfiles/assets/purple-turquoise.jpg
 

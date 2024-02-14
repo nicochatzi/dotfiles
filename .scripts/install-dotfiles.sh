@@ -31,3 +31,5 @@ else
 fi;
 
 dotfiles config status.showUntrackedFiles no
+
+dotfiles remote set-url origin git@github.com:nicochatzi/dotfiles.git
