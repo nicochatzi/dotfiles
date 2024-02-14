@@ -20,9 +20,6 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_rt_6_1;
-    kernelParams = [
-      "resume=/swapfile"
-    ];
     tmp.cleanOnBoot = true;
     loader = {
       systemd-boot.enable = true;
@@ -31,10 +28,6 @@
       timeout = 0;
     };
   };
-
-  swapDevices = [
-    { device = "/swapfile"; size = 16384; }
-  ];
 
   hardware = {
     ledger.enable = true;
