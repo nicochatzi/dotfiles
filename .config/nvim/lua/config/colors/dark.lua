@@ -11,4 +11,8 @@ return {
   orange = '#de935f',
   pink = '#d27e9a',
   red = '#ff5d62',
+
+  dark = '#2a2a37',
+  deep = '#54546d',
+  light = '#947fb8',
 }

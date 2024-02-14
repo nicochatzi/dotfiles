@@ -1,12 +1,8 @@
 local colors = require('config.colors')
 
--- local dark = '#323d3d'
--- local deep = '#346152'
--- local light = teal
-
-local dark = colors.black
-local deep = colors.grey
-local light = colors.purple
+-- local dark = colors.white
+-- local deep = colors.grey
+-- local light = colors.purple
 
 return {
   {
@@ -73,30 +69,30 @@ return {
       require('config.theme')
 
       -- cursor line highlights
-      vim.api.nvim_set_hl(0, 'CursorLine', { fg = light, bg = dark })
-      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'CursorLine', { fg = colors.light, bg = colors.dark })
+      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = colors.light, bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = colors.yellow, bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = dark, fg = 'none' })
-      vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = dark, fg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = colors.dark, fg = 'none' })
+      vim.api.nvim_set_hl(0, 'NeoTreeCursorLine', { bg = colors.dark, fg = 'none' })
 
       -- vim.api.nvim_set_hl(0, 'Search', { bg = colors.purple, fg = colors.black })
       -- vim.api.nvim_set_hl(0, 'CurSearch', { bg = colors.purple, fg = colors.black })
       -- vim.api.nvim_set_hl(0, 'IncSearch', { bg = colors.purple, fg = colors.black })
 
-      vim.api.nvim_set_hl(0, 'Visual', { bg = dark })
-      vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = deep })
-      vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'StatusLineNc', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'none', fg = deep })
-      -- vim.api.nvim_set_hl(0, 'TreesitterContext', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { bg = 'none', fg = deep })
-      vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { fg = light, bg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { fg = light, bg = 'none' })
-      vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { fg = light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'Visual', { bg = colors.dark })
+      vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'StatusLineNc', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'none', fg = colors.deep })
+      -- vim.api.nvim_set_hl(0, 'TreesitterContext', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { bg = 'none', fg = colors.deep })
+      vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { fg = colors.light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { fg = colors.light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { fg = colors.light, bg = 'none' })
       -- vim.api.nvim_set_hl(0, 'NeoTreeTabActive', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeTabInactive', { bg = 'none' })
     end,

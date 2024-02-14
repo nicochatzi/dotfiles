@@ -1,5 +1,4 @@
-pub mod feeds;
-pub mod theme;
+mod feeds;
 
 use clap::{Parser, Subcommand};
 
@@ -12,13 +11,11 @@ pub struct Cli {
 
 #[derive(Debug, Subcommand)]
 pub enum Cmd {
-    Theme(theme::ThemeCmd),
     Feeds(feeds::FeedsCmd),
 }
 
 pub fn main() {
     match Cli::parse().command {
-        Cmd::Theme(cmd) => theme::run(cmd).unwrap(),
         Cmd::Feeds(cmd) => feeds::run(cmd).unwrap(),
     }
 }

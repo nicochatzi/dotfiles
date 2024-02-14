@@ -13,10 +13,10 @@ run CMD:
   cargo run -- {{CMD}}
 alias r := run
 
+cron:
+  crontab res/jobs.crontab
+
 install: build cron
   @mkdir -p bin
   cp target/release/xsys bin/xsys
 alias i := install
-
-cron:
-  crontab res/jobs.crontab
