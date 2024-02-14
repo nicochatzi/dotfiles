@@ -72,6 +72,7 @@ alias j='just'
 alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias xsys='~/.xsys/bin/xsys'
+alias bat='bat --theme=ansi'
 
 we() {
     local filter_flag=""
@@ -164,4 +165,11 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 setopt INC_APPEND_HISTORY
 
-eval "$(direnv hook zsh)"
+# Automatically call this function before every prompt.
+lazy_direnv() {
+    if [[ -f .envrc ]]; then
+        eval "$(direnv export zsh)"
+    fi
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd lazy_direnv
