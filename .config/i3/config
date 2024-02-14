@@ -34,13 +34,15 @@ bindsym $mod+Shift+Return floating enable, resize set 1920 1050, move position 0
 
 # app launchers
 bindsym $mod+Return exec alacritty
-bindsym $mod+m exec --no-startup-id "alacritty --title 'alsamixer' -e alsamixer"
+bindsym $mod+m exec --no-startup-id "alacritty --title 'mixer_pad' -e alsamixer"
 bindsym $mod+c exec --no-startup-id "alacritty --title 'py_pad' -e python"
 bindsym $mod+n exec --no-startup-id "alacritty --title 'notes_pad' --working-directory=$HOME/cloud/gdrive/notes -e nvim"
 bindsym $mod+t exec --no-startup-id "alacritty --title 'term_pad'"
 
 # window mods
 for_window [class=".*"] border pixel 1
+for_window [title="^mixer_pad$"] \
+  floating enable, move scratchpad, scratchpad show
 for_window [title="^py_pad$"] \
   floating enable, move scratchpad, scratchpad show
 for_window [title="^notes_pad$"] \
