@@ -22,7 +22,7 @@ export PATH="$HOME/code/me/aud/out:$PATH"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-#
+
 ###########################################################################
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -62,9 +62,9 @@ if [[ -z "$VIMRUNTIME" ]]; then
 fi
 
 alias tree="tree -C"
-alias l="exa -la"
-alias ll="exa -lamhuU --git"
-alias t="exa -a -T -L 2"
+alias l="eza -la"
+alias ll="eza -lamhuU --git"
+alias t="eza -a -T -L 2"
 alias py="python3"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
@@ -141,12 +141,12 @@ export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
-zstyle ':fzf-tab:complete:(cd|exa|ls):*' fzf-preview \
-    'exa -T -L 1 --color=always $realpath'
+zstyle ':fzf-tab:complete:(cd|eza|ls):*' fzf-preview \
+    'eza -T -L 1 --color=always $realpath'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
     'git diff $word | delta'
 zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
-    'if test -f $realpath; then; bat --color=always $realpath; else; exa -a -T -L 1 --color=always $realpath; fi'
+    'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --color=always $realpath; fi'
 
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -161,9 +161,10 @@ export PATH="$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
 
 ###########################################################################
 export HISTFILE=~/.zsh_history
-export HISTSIZE=1000000
-export SAVEHIST=1000000
+export HISTSIZE=100000
+export SAVEHIST=100000
 setopt INC_APPEND_HISTORY
+# ZSH_AUTOSUGGEST_HISTORY_IGNORE="(^l$|^l .*$|^t$|^t .*$|^cd .*$|^ll .*$|^git s .*$)"
 
 # Automatically call this function before every prompt.
 lazy_direnv() {
