@@ -38,7 +38,7 @@ set_theme() {
 
     # Reload and restart services
     i3-msg reload
-    pkill dunst && dunst &
+    pkill dunst && dunst > /tmp/dunst.log 2>&1 &
     touch "$ALACRITTY_CONFIG/alacritty.toml"
     nitrogen --save --set-zoom-fill "$HOME/.nixfiles/assets/${mode_wallpaper[$mode]}"
 }
