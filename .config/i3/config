@@ -31,6 +31,7 @@ font pango:JetBrainsMono NF 10
 floating_modifier $mod
 # Resize floating window to full screen (excluding i3status bar)
 bindsym $mod+Shift+Return floating enable, resize set 1920 1050, move position 0 30
+bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/toggle-theme
 
 # Keybindings
 set $exec_alacritty exec --no-startup-id alacritty
