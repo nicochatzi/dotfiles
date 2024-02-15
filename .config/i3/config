@@ -32,23 +32,20 @@ floating_modifier $mod
 # Resize floating window to full screen (excluding i3status bar)
 bindsym $mod+Shift+Return floating enable, resize set 1920 1050, move position 0 30
 
-# app launchers
-bindsym $mod+Return exec alacritty
-bindsym $mod+m exec --no-startup-id "alacritty --title 'mixer_pad' -e alsamixer"
-bindsym $mod+c exec --no-startup-id "alacritty --title 'py_pad' -e python"
-bindsym $mod+n exec --no-startup-id "alacritty --title 'notes_pad' --working-directory=$HOME/cloud/gdrive/notes -e nvim"
-bindsym $mod+t exec --no-startup-id "alacritty --title 'term_pad'"
+# Keybindings
+set $exec_alacritty exec --no-startup-id alacritty
+bindsym $mod+Return $exec_alacritty
+bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e alsamixer
+bindsym $mod+c $exec_alacritty --title 'py_pad' -e python
+bindsym $mod+m $exec_alacritty --title 'top_pad' -e btm --basic --mem_as_value --color=gruvbox
+bindsym $mod+n $exec_alacritty --title 'notes_pad_full' --working-directory=$HOME/cloud/gdrive/notes -e nvim
+bindsym $mod+t $exec_alacritty --title 'term_pad_full'
 
-# window mods
+# Window Modifications
 for_window [class=".*"] border pixel 1
-for_window [title="^mixer_pad$"] \
-  floating enable, move scratchpad, scratchpad show
-for_window [title="^py_pad$"] \
-  floating enable, move scratchpad, scratchpad show
-for_window [title="^notes_pad$"] \
-  floating enable, move scratchpad, scratchpad show, resize set 1920 1050, move position 0 30
-for_window [title="^term_pad$"] \
-  floating enable, move scratchpad, scratchpad show, resize set 1920 1050, move position 0 30
+set $scratchpad_action floating enable, move scratchpad, scratchpad show
+for_window [title="^.*pad$"] $scratchpad_action
+for_window [title="^.*pad_full$"] $scratchpad_action, resize set 1920 1050, move position 0 30
 
 # toggle between scratchpad view
 bindsym $mod+Tab scratchpad show
