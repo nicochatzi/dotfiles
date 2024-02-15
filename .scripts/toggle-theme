@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# Paths and theme configurations
 I3_CONFIG="$HOME/.config/i3/config"
 DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
 ALACRITTY_CONFIG="$HOME/.config/alacritty"
@@ -17,34 +16,39 @@ declare -A mode_bg=( ["light"]="#ffffff" ["dark"]="#1a1a27" )
 declare -A mode_aqua=( ["light"]="#000000" ["dark"]="#7eb4c9" )
 declare -A mode_background=( ["light"]="#ffffffcc" ["dark"]="#000000cc" )
 declare -A mode_wallpaper=( ["light"]="nixwall-light.png" ["dark"]="purple-turquoise.jpg" )
+declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
 
 is_light_mode() {
-    [[ "$(readlink $ALACRITTY_CONFIG/theme.toml)" == *"$LIGHT_THEME"* ]]
+  [[ "$(readlink $ALACRITTY_CONFIG/theme.toml)" == *"$LIGHT_THEME"* ]]
 }
 
 set_theme() {
-    local mode=$1
+  local mode=$1
 
-    ln -sf "$ALACRITTY_CONFIG/$mode.toml" "$ALACRITTY_CONFIG/theme.toml"
-    ln -sf "$GTK_CONFIG/$mode.ini" "$GTK_CONFIG/settings.ini"
-    ln -sf "$NVIM_CONFIG/colors/$mode.lua" "$NVIM_CONFIG/colors/init.lua"
-    ln -sf "$NVIM_CONFIG/theme/$mode.lua" "$NVIM_CONFIG/theme/init.lua"
-    ln -sf "$ROFI_CONFIG/$mode.rasi" "$ROFI_CONFIG/theme.rasi"
+  ln -sf "$ALACRITTY_CONFIG/$mode.toml" "$ALACRITTY_CONFIG/theme.toml"
+  ln -sf "$GTK_CONFIG/$mode.ini" "$GTK_CONFIG/settings.ini"
+  ln -sf "$NVIM_CONFIG/colors/$mode.lua" "$NVIM_CONFIG/colors/init.lua"
+  ln -sf "$NVIM_CONFIG/theme/$mode.lua" "$NVIM_CONFIG/theme/init.lua"
+  ln -sf "$ROFI_CONFIG/$mode.rasi" "$ROFI_CONFIG/theme.rasi"
 
-    # Replace content in config files
-    sed -i "s/set \$bg .*/set \$bg ${mode_bg[$mode]}/" "$I3_CONFIG"
-    sed -i "s/set \$aqua .*/set \$aqua ${mode_aqua[$mode]}/" "$I3_CONFIG"
-    sed -i "s/background = .*/background = \"${mode_background[$mode]}\"/" "$DUNST_CONFIG"
+  sed -i "s/set \$bg .*/set \$bg ${mode_bg[$mode]}/" "$I3_CONFIG"
+  sed -i "s/set \$aqua .*/set \$aqua ${mode_aqua[$mode]}/" "$I3_CONFIG"
+  sed -i "s/background = .*/background = \"${mode_background[$mode]}\"/" "$DUNST_CONFIG"
 
-    # Reload and restart services
-    i3-msg reload
-    pkill dunst && dunst > /tmp/dunst.log 2>&1 &
-    touch "$ALACRITTY_CONFIG/alacritty.toml"
-    nitrogen --save --set-zoom-fill "$HOME/.nixfiles/assets/${mode_wallpaper[$mode]}"
+  touch "$ALACRITTY_CONFIG/alacritty.toml"
+  pkill dunst && dunst > /tmp/dunst.log 2>&1 &
+  nitrogen --save --set-zoom-fill "$HOME/.nixfiles/assets/${mode_wallpaper[$mode]}"
+  i3-msg reload
+
+  for SERVER in $(nvr --serverlist); do
+    nvr --nostart --servername $SERVER \
+      -cc "lua vim.api.nvim_set_option('background', '$mode')" \
+      -cc "colorscheme ${mode_nvim[$mode]}"
+  done
 }
 
 if is_light_mode; then
-    set_theme "$DARK_THEME"
+  set_theme "$DARK_THEME"
 else
-    set_theme "$LIGHT_THEME"
+  set_theme "$LIGHT_THEME"
 fi

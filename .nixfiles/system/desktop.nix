@@ -80,6 +80,7 @@
 
       # term
       neovim
+      neovim-remote
       tmux
       zsh
 
