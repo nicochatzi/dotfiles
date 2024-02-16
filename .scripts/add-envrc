@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "use_nix ~/.nixfiles/shells/dev.nix" > .envrc
+direnv allow
+cd - && cd -
