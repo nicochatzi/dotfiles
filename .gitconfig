@@ -1,24 +1,25 @@
 [alias]
-    co = checkout
-    s = status -s
-    ss = status
-    a = add -p
-    cm = commit -m
-    ca = commit --amend
-    cl = clone --recursive
-    f = fetch --all
-    l = log --decorate --graph --all --oneline
-    ll = log --decorate --graph --all
-    fix = !git reset --soft HEAD~0 && git commit --amend
+  co = checkout
+  s = status -s
+  ss = status
+  a = add -p
+  cm = commit -m
+  ca = commit --amend
+  cl = clone --recursive
+  f = fetch --all
+  l = log --decorate --graph --all --oneline
+  ll = log --decorate --graph --all
+  fix = !git reset --soft HEAD~0 && git commit --amend
 [user]
-    name = nicochatzi
-    email = nico@htz.dev
+  name = nicochatzi
+  email = nico@htz.dev
 [init]
-    defaultBranch = main
+  defaultBranch = main
 [core]
-    editor = vim
-    pager = delta --line-numbers --dark
+  editor = vim
+  pager = delta --line-numbers --dark
+  excludesfile = ~/.gitignore_global
 [interactive]
-    diffFilter = delta --color-only --line-numbers --dark
+  diffFilter = delta --color-only --line-numbers --dark
 [fetch]
-    prune = true
+  prune = true
