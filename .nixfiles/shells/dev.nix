@@ -10,5 +10,9 @@ stdenv.mkDerivation {
     lua5_4_compat
     clang
     llvmPackages.libclang
+    lldb_17
+    glibc
+    glibc.static
+    gcc
   ];
 }
