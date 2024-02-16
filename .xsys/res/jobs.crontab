@@ -1,2 +1,0 @@
-*/5 * * * * /home/nico/.xsys/bin/xsys feeds fetch > /tmp/xsys.feeds.log 2>&1
-
