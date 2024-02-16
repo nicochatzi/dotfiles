@@ -1,6 +1,10 @@
 {
   "feeds": [
     {
+      "name": "NixOS Weekly",
+      "link": "https://weekly.nixos.org/feeds/all.rss.xml"
+    },
+    {
       "name": "Rust on Espressif",
       "link": "https://mabez.dev/rss.xml"
     },
