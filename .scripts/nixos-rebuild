@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-sudo nix garbage-collect -d
-sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname) -v
