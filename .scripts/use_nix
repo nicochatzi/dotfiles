@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 1 ]; then
+  echo "use_nix $1" > .envrc
+else
+  echo "use_nix" > .envrc
+  echo "with import <nixpkgs> {}; mkShell {
+    packages = [
+      pkg-config
+    ];
+  }
+  " > shell.nix
+fi
+
+direnv allow
+
