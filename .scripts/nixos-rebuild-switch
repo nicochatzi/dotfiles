@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
 gc_enabled=0
-dry_run=0
+check=0
 update=0
 
 usage() {
-    echo "Usage: $0 [-g|--no-gc] [-t|--test] [-u|--update]"
-    echo "  -g, --no-gc      Disable garbage collection"
-    echo "  -d, --dry-run    Test rebuild without applying changes"
+    echo "Usage: $0 [-g|--gc] [-c|--check] [-u|--update]"
+    echo "  -g, --gc         Enable garbage collection"
+    echo "  -c, --check      Test rebuild without applying changes"
     echo "  -u, --update     Update flake before rebuild"
     exit 1
 }
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -g|--no-gc) gc_enabled=0 ;;
-        -d|--dry-run) dry_run=1 ;;
+        -g|--gc) gc_enabled=0 ;;
+        -c|--check) check=1 ;;
         -u|--update) update=1 ;;
         *) usage ;;
     esac
@@ -27,12 +27,17 @@ if [[ $gc_enabled -eq 1 ]]; then
     nix-collect-garbage -d
 fi
 
+if [[ $check -eq 1 ]]; then
+    echo "Checking flake..."
+    nix flake check ~/.nixfiles
+fi
+
 if [[ $update -eq 1 ]]; then
     echo "Updating flake..."
     nix flake update ~/.nixfiles
 fi
 
-nixos_rebuild_command=" $( [[ $dry_run -eq 1 ]] && echo "test" || echo "switch" )"
+nixos_rebuild_command=" $( [[ $check -eq 1 ]] && echo "test" || echo "switch" )"
 cmd="sudo nixos-rebuild $nixos_rebuild_command --flake ~/.nixfiles#$(hostname) -v"
 
 echo "Executing: $cmd"
