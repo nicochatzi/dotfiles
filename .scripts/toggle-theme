@@ -8,6 +8,7 @@ ALACRITTY_CONFIG="$HOME/.config/alacritty"
 GTK_CONFIG="$HOME/.config/gtk-3.0"
 NVIM_CONFIG="$HOME/.config/nvim/lua/config"
 ROFI_CONFIG="$HOME/.config/rofi"
+BRAVE_CONFIG="$HOME/.config/chrome-theme"
 
 LIGHT_THEME="light"
 DARK_THEME="dark"
@@ -28,6 +29,8 @@ set_theme() {
   ln -sf "$NVIM_CONFIG/colors/$mode.lua" "$NVIM_CONFIG/colors/init.lua"
   ln -sf "$NVIM_CONFIG/theme/$mode.lua" "$NVIM_CONFIG/theme/init.lua"
   ln -sf "$ROFI_CONFIG/$mode.rasi" "$ROFI_CONFIG/theme.rasi"
+  ln -sf "$BRAVE_CONFIG/$mode.json" "$BRAVE_CONFIG/manifest.json"
+  rm -f $BRAVE_CONFIG/Cached\ Theme.pak
 
   sed -i "s/set \$bg .*/set \$bg ${mode_bg[$mode]}/" "$I3_CONFIG"
   sed -i "s/set \$text .*/set \$text ${mode_text[$mode]}/" "$I3_CONFIG"
