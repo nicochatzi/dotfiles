@@ -91,6 +91,7 @@
       obs-studio
       reaper
       ledger-live-desktop
+      gpick
     ];
   };
 

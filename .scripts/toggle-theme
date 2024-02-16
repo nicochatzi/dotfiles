@@ -12,10 +12,10 @@ ROFI_CONFIG="$HOME/.config/rofi"
 LIGHT_THEME="light"
 DARK_THEME="dark"
 
-declare -A mode_bg=( ["light"]="#ffffff" ["dark"]="#1a1a27" )
+declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
 declare -A mode_aqua=( ["light"]="#000000" ["dark"]="#7eb4c9" )
-declare -A mode_background=( ["light"]="#ffffffcc" ["dark"]="#000000cc" )
-declare -A mode_wallpaper=( ["light"]="nixwall-light.png" ["dark"]="purple-turquoise.jpg" )
+declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
+declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
 declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
 
 is_light_mode() {
