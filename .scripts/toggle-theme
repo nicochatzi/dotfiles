@@ -13,7 +13,7 @@ LIGHT_THEME="light"
 DARK_THEME="dark"
 
 declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
-declare -A mode_text=( ["light"]="#076678" ["dark"]="#FBF1C7" )
+declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
 declare -A mode_border=( ["light"]="#458588" ["dark"]="#458588" )
 
 declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
