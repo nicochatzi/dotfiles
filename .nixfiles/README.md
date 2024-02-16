@@ -12,6 +12,10 @@ $ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/setup
     | bash
 ```
 
-<h3 align="center">demo</h3>
+<h3 align="center">dark</h3>
 
-![lati](./assets/lati.png)
+![lati](./assets/lati-dark.png)
+
+<h3 align="center">light</h3>
+
+![lati](./assets/lati-light.png)
