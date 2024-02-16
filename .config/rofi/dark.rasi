@@ -7,7 +7,7 @@
 
 * {
     selected:                    rgba ( 51, 51, 51, 100 % );
-    background:                  rgba ( 1, 15, 13, 93 % );
+    background:                  rgba ( 40, 40, 40, 93 % );
     bordercolor:                 rgba ( 17, 170, 170, 100 % );
     foreground:                  rgba ( 148, 123, 184, 100 % );
     urgent:                      rgba ( 255, 153, 153, 100 % );
