@@ -15,6 +15,7 @@ export PATH="$HOME/.zvm/bin:$HOME/.zvm/zvm:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/code/me/aud/out:$PATH"
+export PATH="$HOME/.scripts:$PATH"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -73,6 +74,7 @@ alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias xsys='~/.xsys/bin/xsys'
 alias bat='bat --theme=ansi'
+alias btm='~/.scripts/btm-colorized'
 
 we() {
     local filter_flag=""

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+color_scheme="--color gruvbox"
+
+if ~/.scripts/is-light-mode; then
+  color_scheme="--color gruvbox-light"
+fi
+
+command btm $color_scheme "$@"
