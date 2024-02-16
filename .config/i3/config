@@ -27,27 +27,37 @@ font pango:JetBrainsMono NF 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+set $fullscreen resize set 1920 1050, move position 0 0
+set $halfscreen resize set 990 900, move position 495 100
+set $exec_alacritty exec --no-startup-id alacritty
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 # Resize floating window to full screen (excluding i3status bar)
-bindsym $mod+Shift+Return floating enable, resize set 1920 1050, move position 0 30
+bindsym $mod+Shift+Return floating enable, $fullscreen
 bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/toggle-theme
 
 # Keybindings
-set $exec_alacritty exec --no-startup-id alacritty
 bindsym $mod+Return $exec_alacritty
-bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e alsamixer
-bindsym $mod+c $exec_alacritty --title 'py_pad' -e python
-bindsym $mod+m $exec_alacritty --title 'top_pad' -e ~/.scripts/btm-colorized --basic --mem_as_value
-bindsym $mod+n $exec_alacritty --title 'notes_pad_full' --working-directory=$HOME/cloud/gdrive/notes -e nvim
 bindsym $mod+t $exec_alacritty --title 'term_pad_full'
+
+bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e \
+  alsamixer
+
+bindsym $mod+p $exec_alacritty --title 'py_pad' -e \
+  nix-shell ~/.nixfiles/shells/pymath.nix --run python
+
+bindsym $mod+m $exec_alacritty --title 'top_pad' -e \
+  ~/.scripts/btm-colorized --basic --mem_as_value
+
+bindsym $mod+n $exec_alacritty --title 'notes_pad_full' \
+  --working-directory=$HOME/cloud/gdrive/notes -e nvim
 
 # Window Modifications
 for_window [class=".*"] border pixel 1
 set $scratchpad_action floating enable, move scratchpad, scratchpad show
-for_window [title="^.*pad$"] $scratchpad_action
-for_window [title="^.*pad_full$"] $scratchpad_action, resize set 1920 1050, move position 0 30
-
+for_window [title="^.*pad$"] $scratchpad_action $halfscreen
+for_window [title="^.*pad_full$"] $scratchpad_action, $fullscreen
 # toggle between scratchpad view
 bindsym $mod+Tab scratchpad show
 
@@ -206,8 +216,8 @@ bar {
   status_command i3status
   # workspace_buttons yes
   position bottom
-  font pango:JetBrainsMono NF 11
-  separator_symbol "<|"
+  font pango:JetBrainsMono NF 12
+  separator_symbol "|"
     colors {
       background $bg
       statusline $text

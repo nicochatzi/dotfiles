@@ -36,7 +36,7 @@ volume master {
 }
 
 wireless _first_ {
-  format_up = " <span color='#458588'><span size='large'> </span> %essid</span> %quality <span color='#7eb4c9'>%ip</span> %bitrate %frequency "
+  format_up = " <span color='#458588'><span size='large'> </span> %essid</span> %quality %bitrate %frequency "
   format_down = "<span color='#ff5d62'> </span> offline"
 }
 
@@ -64,12 +64,12 @@ cpu_temperature 0 {
 }
 
 battery 0 {
-  format = " <span color='#458588' size='medium'>%status</span> %percentage "
+  format = " <span color='#458588' size='medium'>%status</span> %percentage <span></span>"
   format_down = "No battery"
-  status_chr = ""
-  status_bat = "󰂀"
-  status_unk = "?"
-  status_full = "󰂄"
+  status_chr = " "
+  status_bat = " 󰂀"
+  status_unk = " ?"
+  status_full = " 󰂄"
   path = "/sys/class/power_supply/BAT%d/uevent"
   low_threshold = 20
   last_full_capacity = true
