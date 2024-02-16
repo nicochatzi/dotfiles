@@ -28,7 +28,7 @@ order += "tztime time"
 # order += "run_watch DHCP"
 
 volume master {
-  format = " <span color='#947fb8' size='large'> </span> %volume "
+  format = " <span color='#458588' size='large'> </span> %volume "
   format_muted = " <span size='large'> </span> %volume "
   device = "default"
   mixer = "Master"
@@ -36,12 +36,12 @@ volume master {
 }
 
 wireless _first_ {
-  format_up = " <span color='#947fb8'><span size='large'> </span> %essid</span> %quality <span color='#7eb4c9'>%ip</span> %bitrate %frequency "
+  format_up = " <span color='#458588'><span size='large'> </span> %essid</span> %quality <span color='#7eb4c9'>%ip</span> %bitrate %frequency "
   format_down = "<span color='#ff5d62'> </span> offline"
 }
 
 disk "/" {
-  format = " <span color='#947fb8' size='large'> </span> %avail "
+  format = " <span color='#458588' size='large'> </span> %avail "
   prefix_type = custom
 }
 
@@ -51,7 +51,7 @@ disk "/home" {
 }
 
 memory {
-  format = " <span color='#947fb8' size='medium'> </span> %used "
+  format = " <span color='#458588' size='medium'> </span> %used "
   threshold_degraded = "10%"
   threshold_critical = "5%"
   format_degraded = " <span color='#ff5d62' size='large'> </span> <span foreground='#D32F2F'>%usage</span> "
@@ -59,12 +59,12 @@ memory {
 
 
 cpu_temperature 0 {
-  format = " <span color='#947fb8' size='medium'>󱠇 </span> %degrees°C "
+  format = " <span color='#458588' size='medium'>󱠇 </span> %degrees°C "
   max_threshold = 50
 }
 
 battery 0 {
-  format = " <span color='#947fb8' size='medium'>%status</span> %percentage "
+  format = " <span color='#458588' size='medium'>%status</span> %percentage "
   format_down = "No battery"
   status_chr = ""
   status_bat = "󰂀"
@@ -85,29 +85,29 @@ run_watch VPN {
 
 ethernet eno16777736 {
   # if you use %speed, i3status requires root privileges
-  format_up = " <span color='#947fb8' size='medium'> </span>%ip "
+  format_up = " <span color='#458588' size='medium'> </span>%ip "
   format_down = "   "
 }
 
 cpu_usage {
-  format = " <span color='#947fb8' size='medium'> </span> %usage "
+  format = " <span color='#458588' size='medium'> </span> %usage "
   max_threshold = 75
   format_above_threshold = "   %usage "
 }
 
 load {
-  format = " <span color='#947fb8' size='medium'> </span> %1min "
+  format = " <span color='#458588' size='medium'> </span> %1min "
   max_threshold = 5
   format_above_threshold = "   %1min "
 }
 
 tztime date {
-  format = " <span color='#947fb8' size='medium'> </span> %a. %d.%m.%Y "
+  format = " <span color='#458588' size='medium'> </span> %a. %d.%m.%Y "
   locale = "en_IN.UTF-8"
 }
 
 tztime time {
-  format = " <span color='#947fb8' size='medium'> </span> %H:%M:%S "
+  format = " <span color='#458588' size='medium'> </span> %H:%M:%S "
   locale = "en_IN.UTF-8"
 }
 

@@ -13,7 +13,9 @@ LIGHT_THEME="light"
 DARK_THEME="dark"
 
 declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
-declare -A mode_aqua=( ["light"]="#000000" ["dark"]="#7eb4c9" )
+declare -A mode_text=( ["light"]="#076678" ["dark"]="#FBF1C7" )
+declare -A mode_border=( ["light"]="#458588" ["dark"]="#458588" )
+
 declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
 declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
 declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
@@ -32,7 +34,8 @@ set_theme() {
   ln -sf "$ROFI_CONFIG/$mode.rasi" "$ROFI_CONFIG/theme.rasi"
 
   sed -i "s/set \$bg .*/set \$bg ${mode_bg[$mode]}/" "$I3_CONFIG"
-  sed -i "s/set \$aqua .*/set \$aqua ${mode_aqua[$mode]}/" "$I3_CONFIG"
+  sed -i "s/set \$text .*/set \$text ${mode_text[$mode]}/" "$I3_CONFIG"
+  sed -i "s/set \$border .*/set \$border ${mode_border[$mode]}/" "$I3_CONFIG"
   sed -i "s/background = .*/background = \"${mode_background[$mode]}\"/" "$DUNST_CONFIG"
 
   touch "$ALACRITTY_CONFIG/alacritty.toml"
