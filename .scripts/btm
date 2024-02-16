@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if ~/.scripts/is-light-mode; then
+  btm --color gruvbox-light "$@"
+else
+  btm --color gruvbox "$@"
+fi

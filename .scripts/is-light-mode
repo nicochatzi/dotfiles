@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ALACRITTY_CONFIG="$HOME/.config/alacritty"
+[[ "$(readlink $ALACRITTY_CONFIG/theme.toml)" == *light* ]]

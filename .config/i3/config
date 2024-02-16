@@ -38,7 +38,7 @@ set $exec_alacritty exec --no-startup-id alacritty
 bindsym $mod+Return $exec_alacritty
 bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e alsamixer
 bindsym $mod+c $exec_alacritty --title 'py_pad' -e python
-bindsym $mod+m $exec_alacritty --title 'top_pad' -e btm --basic --mem_as_value --color=gruvbox
+bindsym $mod+m $exec_alacritty --title 'top_pad' -e ~/.scripts/btm --basic --mem_as_value
 bindsym $mod+n $exec_alacritty --title 'notes_pad_full' --working-directory=$HOME/cloud/gdrive/notes -e nvim
 bindsym $mod+t $exec_alacritty --title 'term_pad_full'
 

@@ -20,10 +20,6 @@ declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
 declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
 declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
 
-is_light_mode() {
-  [[ "$(readlink $ALACRITTY_CONFIG/theme.toml)" == *"$LIGHT_THEME"* ]]
-}
-
 set_theme() {
   local mode=$1
 
@@ -50,7 +46,7 @@ set_theme() {
   done
 }
 
-if is_light_mode; then
+if ~/.scripts/is-light-mode; then
   set_theme "$DARK_THEME"
 else
   set_theme "$LIGHT_THEME"
