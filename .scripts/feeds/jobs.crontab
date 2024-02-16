@@ -1,1 +1,0 @@
-*/5 * * * * make -f /home/nico/.scripts/feeds/makefile > ~/.local/share/feeds/cron.log 2>&1
