@@ -67,6 +67,8 @@
     virtualenv                # python virtual environment
     context                   # user@host
     time                      # current time
+    nix_shell               # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
+    rust_version
     # =========================[ Line #2 ]=========================
     newline                   # \n
   )
@@ -100,6 +102,19 @@
   # Don't show Python version.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+
+  # Rust version color.
+  typeset -g POWERLEVEL9K_RUST_VERSION_FOREGROUND=$red
+  # Show rust version only when in a rust project subdirectory.
+  typeset -g POWERLEVEL9K_RUST_VERSION_PROJECT_ONLY=true
+  # Custom icon.
+  typeset -g POWERLEVEL9K_RUST_VERSION_VISUAL_IDENTIFIER_EXPANSION=''
+
+  #[ nix_shell: nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html) ]##
+  # Nix shell color.
+  typeset -g POWERLEVEL9K_NIX_SHELL_FOREGROUND=$magenta
+  # Custom icon.
+  typeset -g POWERLEVEL9K_NIX_SHELL_VISUAL_IDENTIFIER_EXPANSION='󱄅'
 
   # Blue current directory.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$blue
