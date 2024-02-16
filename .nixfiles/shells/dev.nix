@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
+
 stdenv.mkDerivation {
-  LIBCLANG_PATH="${llvmPackages.libclang.lib}/lib";
   name = "dev-environment";
   buildInputs = [
     pkg-config
@@ -11,8 +11,10 @@ stdenv.mkDerivation {
     clang
     llvmPackages.libclang
     lldb_17
-    glibc
     glibc.static
-    gcc
+    glib
   ];
+  LIBCLANG_PATH="${llvmPackages.libclang.lib}/lib";
+  LLDB_PATH="${lldb_17}/bin/lldb";
+  LLDB_SERVER_PATH="${lldb_17}/bin/lldb-server";
 }

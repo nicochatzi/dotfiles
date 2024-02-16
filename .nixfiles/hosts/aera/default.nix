@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    # ./hardware-configuration.nix
     ../../system/desktop.nix
     ../../system/firewall.nix
     ../../services/rclone.nix
