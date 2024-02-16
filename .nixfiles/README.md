@@ -3,10 +3,10 @@
 <h3 align="center">setup</h3>
 
 ```bash
-# build nixos for <HOST> (or add your host)
+# build nixos for current host, assuming it's setup in hosts/
 $ sudo nixos-rebuild switch \
     --experimental-features 'nix-command flakes' \
-    --flake ~/.nixfiles#<HOST>
+    --flake ~/.nixfiles#$(hostname)
 # dotfile installation and more
 $ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/setup-nixos.sh \
     | bash

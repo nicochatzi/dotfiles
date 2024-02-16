@@ -190,8 +190,8 @@ bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 
-set $bg #FBF1C7
-set $text #076678
+set $bg #282828
+set $text #83A598
 set $border #458588
 
 set $grey #54546d
