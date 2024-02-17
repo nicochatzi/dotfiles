@@ -44,14 +44,14 @@ bindsym $mod+t $exec_alacritty --title 'term_pad_full'
 bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e \
   alsamixer
 
-bindsym $mod+p $exec_alacritty --title 'py_pad' -e \
-  nix-shell ~/.nixfiles/shells/pymath.nix --run python
-
 bindsym $mod+m $exec_alacritty --title 'top_pad' -e \
   ~/.scripts/btm-colorized --basic --mem_as_value
 
+bindsym $mod+p $exec_alacritty --title 'py_pad' -e \
+  ~/.scripts/tmux-sesh python_repl
+
 bindsym $mod+n $exec_alacritty --title 'notes_pad_full' \
-  --working-directory=$HOME/cloud/gdrive/notes -e nvim
+  --working-directory=$HOME/cloud/gdrive/notes -e ~/.scripts/tmux-sesh obsidian_nvim
 
 # Window Modifications
 for_window [class=".*"] border pixel 1

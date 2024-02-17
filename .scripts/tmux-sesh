@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+setup_session() {
+  local SESH=$1
+  local KEYS=$2
+
+  tmux has-session -t $SESH 2>/dev/null
+
+  if [ $? != 0 ]; then
+     tmux new-session -s $SESH -d
+     tmux send-keys -t $SESH "$KEYS" C-m
+  fi
+
+  tmux attach-session -t $SESH
+}
+
+SESSION_NAME=$1
+
+case $SESSION_NAME in
+  "python_repl")
+    setup_session "python_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run python"
+    ;;
+  "obsidian_nvim")
+    setup_session "obsidian_nvim" "nvim ~/cloud/gdrive/notes/"
+    ;;
+  *)
+    echo "Unknown session name: $SESSION_NAME"
+    exit 1
+    ;;
+esac
+
