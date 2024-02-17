@@ -1,7 +1,6 @@
 """"""""""""""""""""""""""""""""""""
 " Pure VIM! keep it fast and standard
 """""""""""""""""""""""""""""""""""""
-" theme is from: leviosa42/kanagawa-mini.vim
 
 """""""""""""""""""""""""""""""""""""
 " Configurations
@@ -45,20 +44,6 @@ set spell spelllang=en_us
 """""""""""""""""""""""""""""""""""""
 " Theme / Highlights
 """""""""""""""""""""""""""""""""""""
-let g:kanagawa_mini = {
-    \ 'undercurl': v:true,
-    \ 'commentStyle': 'italic',
-    \ 'functionStyle': 'NONE',
-    \ 'keywordStyle': 'italic',
-    \ 'statementStyle': 'bold',
-    \ 'typeStyle': 'NONE',
-    \ 'specialReturn': v:true,
-    \ 'specialExeption': v:true,
-    \ 'transparent': v:true,
-    \ 'terminalColors': v:true,
-    \ 'theme': 'default'
-    \ }
-colorscheme kanagawa-mini
 highlight CursorLine NONE
 highlight CursorLineNr NONE
 highlight CursorLineNr guifg=#FFA066
@@ -70,6 +55,12 @@ highlight SpellRare NONE
 highlight SpellRare cterm=underline guisp=#DCA561
 highlight SpellLocal NONE
 highlight SpellLocal cterm=underline guisp=#DCA561
+
+if str2nr(system('~/.scripts/is-light-mode; echo $?')) == 0
+  set background=light
+else
+  set background=dark
+endif
 
 """""""""""""""""""""""""""""""""""""
 " Mappings
