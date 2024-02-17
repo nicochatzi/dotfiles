@@ -11,6 +11,7 @@ setup_session() {
      tmux send-keys -t $SESH "$KEYS" C-m
   fi
 
+  tmux send-keys -t $SESH C-l
   tmux attach-session -t $SESH
 }
 
@@ -18,7 +19,7 @@ SESSION_NAME=$1
 
 case $SESSION_NAME in
   "python_repl")
-    setup_session "python_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run python"
+    setup_session "python_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run 'ipython --no-banner'"
     ;;
   "obsidian_nvim")
     setup_session "obsidian_nvim" "nvim ~/cloud/gdrive/notes/"

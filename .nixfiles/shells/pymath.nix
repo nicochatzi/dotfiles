@@ -6,6 +6,7 @@ let
     matplotlib
     scipy
     pandas
+    ipython
   ]);
 
 in
