@@ -29,13 +29,12 @@
   # Left prompt segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    # context                 # user@host
+    context                   # user@host
     dir                       # current directory
     vcs                       # git status
-    command_execution_time  # previous command duration
+    command_execution_time    # previous command duration
     # =========================[ Line #2 ]=========================
     newline                   # \n
-    # virtualenv              # python virtual environment
     prompt_char               # prompt symbol
   )
 
@@ -44,9 +43,8 @@
     # =========================[ Line #1 ]=========================
     command_execution_time    # previous command duration
     virtualenv                # python virtual environment
-    context                   # user@host
     time                      # current time
-    nix_shell               # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
+    nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
     # =========================[ Line #2 ]=========================
     newline                   # \n
@@ -83,8 +81,8 @@
 
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$blue
 
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$white}%n%f%F{$grey}@%m%f"
-  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE="%F{$grey}%n@%m%f"
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE="%F{$magenta}%n%f%F{$magenta}@%m%f"
+  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE="%F{$magenta}%n@%m%f"
   typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_CONTENT_EXPANSION=
 
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
@@ -97,10 +95,10 @@
   typeset -g POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0
   typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$cyan
   typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind)
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=''
-  typeset -g POWERLEVEL9K_VCS_COMMIT_ICON=''
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=':'
+  typeset -g POWERLEVEL9K_VCS_COMMIT_ICON=':'
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED}_ICON=
-  typeset -g POWERLEVEL9K_VCS_DIRTY_ICON='*'
+  typeset -g POWERLEVEL9K_VCS_DIRTY_ICON=':*'
   typeset -g POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON=':⇣'
   typeset -g POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON=':⇡'
   typeset -g POWERLEVEL9K_VCS_{COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=1
