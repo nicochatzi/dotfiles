@@ -2,18 +2,9 @@
 
 export RUST_BACKTRACE=1
 
-export PYENV_ROOT="$HOME/.pyenv/"
-export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.pyenv/shims:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.zvm/bin:$PATH"
-export PATH="$HOME/toolchains/arm-none-eabi/12.2/bin:$PATH"
-# export PATH=$PATH:$HOME/toolchains/ra-multiplex/target/release
-export PATH="$HOME/.zvm/bin:$HOME/.zvm/zvm:$PATH"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 
@@ -156,17 +147,11 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f "/Users/nico/.ghcup/env" ] && source "/Users/nico/.ghcup/env"
-[ -s "/Users/nico/.bun/_bun" ] && source "/Users/nico/.bun/_bun"
-export MODULAR_HOME="$HOME/.modular"
-export PATH="$HOME/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
-
 ###########################################################################
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt INC_APPEND_HISTORY
-# ZSH_AUTOSUGGEST_HISTORY_IGNORE="(^l$|^l .*$|^t$|^t .*$|^cd .*$|^ll .*$|^git s .*$)"
 
 # Automatically call this function before every prompt.
 lazy_direnv() {
