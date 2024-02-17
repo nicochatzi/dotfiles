@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+color="--dark"
+
+if ~/.scripts/is-light-mode; then
+  color="--light"
+fi
+
+command delta $color "$@"
+

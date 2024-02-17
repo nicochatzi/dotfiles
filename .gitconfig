@@ -17,9 +17,9 @@
   defaultBranch = main
 [core]
   editor = vim
-  pager = delta --line-numbers --dark
+  pager = ~/.scripts/delta-colorized --line-numbers
   excludesfile = ~/.gitignore_global
 [interactive]
-  diffFilter = delta --color-only --line-numbers --dark
+  diffFilter = ~/.scripts/delta-colorized --color-only --line-numbers
 [fetch]
   prune = true
