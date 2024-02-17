@@ -1,7 +1,18 @@
 { lib, pkgs, ... }:
 
+let
+  vimPacked = import ../modules/vim.nix {
+    inherit pkgs;
+    full = true;
+  };
+
+in
 {
   imports = [ ./common.nix ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    inherit vimPacked;
+  };
 
   hardware = {
     ledger.enable = true;
@@ -81,7 +92,7 @@
       # term
       neovim
       neovim-remote
-      vimHugeX
+      vimPacked
       tmux
       zsh
 

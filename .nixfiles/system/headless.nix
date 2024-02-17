@@ -1,5 +1,12 @@
 { pkgs, ... }:
 
+let
+  vimPacked = import ../modules/vim.nix {
+    inherit pkgs;
+    full = false;
+  };
+
+in
 {
   imports = [ ./common.nix ];
 
@@ -14,7 +21,7 @@
     ];
     packages = with pkgs; [
       zsh
-      vim
+      vimPacked
     ];
   };
 
