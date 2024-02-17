@@ -8,9 +8,9 @@ vim.opt.list = true
 --   extends = ' ',  -- Space for extends
 --   precedes = ' ', -- Space for precedes
 -- }
-vim.go.tabstop = 2
-vim.go.shiftwidth = 2
-vim.go.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 
 vim.o.cursorline = true
 vim.o.relativenumber = true
