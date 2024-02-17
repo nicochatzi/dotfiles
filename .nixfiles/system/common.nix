@@ -122,7 +122,6 @@
 
   environment.systemPackages = with pkgs; [
     # tools
-    vim
     curl
     git
     nix-ld

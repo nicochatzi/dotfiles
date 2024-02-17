@@ -81,6 +81,7 @@
       # term
       neovim
       neovim-remote
+      vimHugeX
       tmux
       zsh
 
