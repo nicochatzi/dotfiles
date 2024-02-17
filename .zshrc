@@ -1,12 +1,12 @@
 # zmodload zsh/zprof
 
-export RUST_BACKTRACE=1
-
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
+export RUST_BACKTRACE=1
+export HISTFILE=~/.zsh_history
+export HISTSIZE=100000
+export SAVEHIST=100000
+setopt INC_APPEND_HISTORY
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -15,26 +15,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-###########################################################################
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-###########################################################################
 fpath=( ~/.zfunc "${fpath[@]}" )
 
-###########################################################################
 # Plugins
 zinit ice depth"1"; zinit light zsh-users/zsh-completions
-
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light unixorn/fzf-zsh-plugin
 zinit light romkatv/powerlevel10k
 
-###########################################################################
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -44,9 +39,8 @@ else
   export VISUAL='nvim'
 fi
 
-# disable vim-mode if we're already in vim!
+# only go into vim-mode if we're already in vim!
 if [[ -z "$VIMRUNTIME" ]]; then
-    # Enable vim keybindings
     bindkey -v
 fi
 
@@ -96,9 +90,7 @@ nvim() {
     fi
 }
 
-###########################################################################
 # Bindings and Widgets
-
 function clear-screen-and-scrollback() { clear && printf '\e[3J' && zle reset-prompt }
 zle -N clear-screen-and-scrollback
 
@@ -124,7 +116,6 @@ zle -N zle-keymap-select
 # Set default cursor to beam on shell startup
 echo -ne '\e[5 q'
 
-###########################################################################
 # FZF config
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
@@ -143,12 +134,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-###########################################################################
-export HISTFILE=~/.zsh_history
-export HISTSIZE=100000
-export SAVEHIST=100000
-setopt INC_APPEND_HISTORY
 
 # Automatically call this function before every prompt.
 lazy_direnv() {
