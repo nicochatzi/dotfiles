@@ -49,6 +49,10 @@ in
         user = "nico";
       };
     };
+    desktopManager = {
+      default = "none";
+      xterm.enable = false;
+    };
     xkb = {
       layout = "gb";
       variant = "";
