@@ -13,6 +13,8 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id picom
 exec --no-startup-id ~/.config/i3/check-battery.sh
 
+smart_borders on
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -201,8 +203,8 @@ bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 
-set $bg #282828
-set $text #83A598
+set $bg #FBF1C7
+set $text #076678
 set $border #458588
 
 set $grey #54546d
