@@ -128,6 +128,8 @@ zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
     'git diff $word | delta'
 zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --color=always $realpath; fi'
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
+  'SYSTEMD_COLORS=1 systemctl status $word'
 
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
