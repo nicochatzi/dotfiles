@@ -116,6 +116,7 @@ local servers = {
   tsserver = {},
   taplo = {},
   dockerls = {},
+  nil_ls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
