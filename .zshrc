@@ -23,10 +23,11 @@ source "${ZINIT_HOME}/zinit.zsh"
 fpath=( ~/.zfunc "${fpath[@]}" )
 
 # Plugins
-zinit ice depth"1"; zinit light zsh-users/zsh-completions
+zinit light Aloxaf/fzf-tab
+zinit ice depth"1";
+zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
 zinit light unixorn/fzf-zsh-plugin
 zinit light romkatv/powerlevel10k
 
@@ -121,6 +122,11 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
 
+zstyle ':completion:complete:*:options' sort false
+
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
 zstyle ':fzf-tab:complete:(cd|eza|ls):*' fzf-preview \
     'eza -T -L 1 --color=always $realpath'
@@ -131,17 +137,6 @@ zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
   'SYSTEMD_COLORS=1 systemctl status $word'
 
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Automatically call this function before every prompt.
-lazy_direnv() {
-    if [[ -f .envrc ]]; then
-        eval "$(direnv export zsh)"
-    fi
-}
-autoload -U add-zsh-hook
-add-zsh-hook chpwd lazy_direnv
+eval "$(direnv export zsh)"

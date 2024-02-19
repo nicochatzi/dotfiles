@@ -1,5 +1,5 @@
 STATE_DIR:=${HOME}/.local/share/feeds
-JOB=*/5 * * * * make -f ${PWD}/makefile run
+JOB=*/5 * * * * cd ${PWD} && make
 
 run:
 	nix-shell --run 'python3 check.py ${STATE_DIR}'
