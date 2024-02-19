@@ -43,15 +43,15 @@ in
       lightdm = {
         enable = true;
         greeter.enable = true;
+        greeters.slick = {
+          enable = true;
+          draw-user-backgrounds = true;
+        };
       };
       autoLogin = {
         enable = false;
         user = "nico";
       };
-    };
-    desktopManager = {
-      default = "none";
-      xterm.enable = false;
     };
     xkb = {
       layout = "gb";
