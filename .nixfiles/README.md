@@ -3,11 +3,11 @@
 <h3 align="center">setup</h3>
 
 ```bash
-# build nixos for current host, assuming it's setup in hosts/
-$ sudo nixos-rebuild switch \
-    --experimental-features 'nix-command flakes' \
-    --flake ~/.nixfiles#$(hostname)
-# dotfile installation and more
+# enter boot strapping shell - only on first build
+$ nix develop
+# build system for current host
+$ sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname)
+# dotfile installation and more - until I move to home-manager
 $ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/setup-nixos.sh \
     | bash
 ```
