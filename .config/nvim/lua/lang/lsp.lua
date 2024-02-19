@@ -136,27 +136,18 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
--- Ensure the servers above are installed
-local mason_lspconfig = require('mason-lspconfig')
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
+for server_name, server_config in pairs(servers) do
+  if server_name == 'rust-analyzer' then
+    require('lang.rust')(capabilities, on_attach)
+  elseif server_name == 'clangd' then
+    require('lang.clangd')(capabilities, on_attach)
+  else
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = servers[server_name],
+      settings = server_config,
     }
-  end,
-  ['clangd'] = function()
-    require('lang.clangd')(capabilities, on_attach)
-  end,
-  ['rust_analyzer'] = function()
-    require('lang.rust')(capabilities, on_attach)
-  end,
-}
+  end
+end
 
 require('ufo').setup()

@@ -78,6 +78,10 @@ in
     };
   };
 
+  services.thermald = {
+    enable = true;
+  };
+
   console.useXkbConfig = true;
 
   users.users.nico = {
@@ -120,6 +124,24 @@ in
       bitwig-studio
       ledger-live-desktop
       gpick
+
+      # language servers
+      asm-lsp
+      # clangd
+      cmake-language-server
+      gopls
+      lua-language-server
+      # mdx-analyzer
+      nil
+      python311Packages.python-lsp-server
+      rust-analyzer
+      sqls
+      taplo
+      tflint
+      nodePackages.typescript-language-server
+      yaml-language-server
+      zls
+      vscode-extensions.vadimcn.vscode-lldb # provides code-lldb for DAP support
     ];
   };
 
@@ -133,6 +155,12 @@ in
     packageOverrides = pkgs: {
       inherit vimPacked;
     };
+  };
+
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "nico" ];
   };
 
   environment.variables = with pkgs; {

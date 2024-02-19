@@ -100,6 +100,15 @@
 
   console.useXkbConfig = true;
 
+  programs.nix-ld.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    initExtra = ''
+      export NIX_LD=$(nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+    '';
+  };
+
   environment.variables = with pkgs; {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -160,8 +169,8 @@
     llvmPackages_17.lldb
     llvmPackages_17.llvm
     llvmPackages_17.stdenv
+    llvmPackages_17.libcxx
     lua5_4
-    nil
     nodejs
     yarn
     protobuf
@@ -169,7 +178,6 @@
     valgrind
     kcachegrind
     zig
-    zls
 
     cargo-generate
   ];

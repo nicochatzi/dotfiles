@@ -4,8 +4,6 @@ return {
   -- event = 'VeryLazy',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    { 'williamboman/mason.nvim',          config = true },
-    { 'williamboman/mason-lspconfig.nvim' },
     { 'p00f/clangd_extensions.nvim' },
     {
       'folke/neodev.nvim',
@@ -22,9 +20,7 @@ return {
     --         { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
     --     },
     --     config = function()
-    --         require("navigator").setup({
-    --             mason = true,
-    --         })
+    --         require("navigator").setup{}
     --     end,
     -- },
     {
