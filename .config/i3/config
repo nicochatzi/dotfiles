@@ -55,7 +55,7 @@ bindsym $mod+n $exec_alacritty --title 'notes_pad_full' \
   --working-directory=$HOME/cloud/gdrive/notes -e ~/.scripts/tmux-sesh notes
 
 # Window Modifications
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 1
 set $scratchpad_action floating enable, move scratchpad, scratchpad show
 for_window [title="^.*pad$"] $scratchpad_action $halfscreen
 for_window [title="^.*pad_full$"] $scratchpad_action, $fullscreen
