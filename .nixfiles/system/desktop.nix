@@ -40,7 +40,9 @@ in
         tapping = true;
       };
     };
-    windowManager.i3.enable = true;
+    windowManager = {
+      i3.enable = true;
+    };
     displayManager = {
       lightdm = {
         enable = true;

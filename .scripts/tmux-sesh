@@ -18,11 +18,14 @@ setup_session() {
 SESSION_NAME=$1
 
 case $SESSION_NAME in
-  "python_repl")
-    setup_session "python_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run 'ipython --no-banner'"
+  "py_repl")
+    setup_session "py_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run 'ipython --no-banner'"
     ;;
-  "obsidian_nvim")
-    setup_session "obsidian_nvim" "nvim ~/cloud/gdrive/notes/"
+  "notes")
+    setup_session "notes" "nvim ~/cloud/gdrive/notes/"
+    ;;
+  "dev")
+    setup_session "dev" "."
     ;;
   *)
     echo "Unknown session name: $SESSION_NAME"

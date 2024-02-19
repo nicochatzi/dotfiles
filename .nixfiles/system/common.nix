@@ -91,18 +91,6 @@
         tapping = true;
       };
     };
-    windowManager.i3.enable = true;
-    displayManager = {
-      lightdm = {
-        enable = true;
-        greeter.enable = true;
-        greeters.slick.enable = true;
-      };
-      autoLogin = {
-        enable = false;
-        user = "nico";
-      };
-    };
     xkb = {
       layout = "gb";
       variant = "";

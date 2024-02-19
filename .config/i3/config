@@ -39,7 +39,8 @@ bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/toggle-theme
 
 # Keybindings
 bindsym $mod+Return $exec_alacritty
-bindsym $mod+t $exec_alacritty --title 'term_pad_full'
+bindsym $mod+t $exec_alacritty --title 'term_pad_full' -e \
+  ~/.scripts/tmux-sesh dev
 
 bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e \
   alsamixer
@@ -48,13 +49,13 @@ bindsym $mod+m $exec_alacritty --title 'top_pad' -e \
   ~/.scripts/btm-colorized --basic --mem_as_value
 
 bindsym $mod+p $exec_alacritty --title 'py_pad' -e \
-  ~/.scripts/tmux-sesh python_repl
+  ~/.scripts/tmux-sesh py_repl
 
 bindsym $mod+n $exec_alacritty --title 'notes_pad_full' \
-  --working-directory=$HOME/cloud/gdrive/notes -e ~/.scripts/tmux-sesh obsidian_nvim
+  --working-directory=$HOME/cloud/gdrive/notes -e ~/.scripts/tmux-sesh notes
 
 # Window Modifications
-for_window [class=".*"] border pixel 1
+for_window [class=".*"] border pixel 2
 set $scratchpad_action floating enable, move scratchpad, scratchpad show
 for_window [title="^.*pad$"] $scratchpad_action $halfscreen
 for_window [title="^.*pad_full$"] $scratchpad_action, $fullscreen
