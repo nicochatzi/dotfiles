@@ -10,10 +10,6 @@ in
 {
   imports = [ ./common.nix ];
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    inherit vimPacked;
-  };
-
   hardware = {
     ledger.enable = true;
     pulseaudio.enable = true;
@@ -110,12 +106,17 @@ in
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "1password-gui"
-    "1password"
-    "obsidian"
-  ];
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "1password-gui"
+      "1password"
+      "obsidian"
+    ];
+    packageOverrides = pkgs: {
+      inherit vimPacked;
+    };
+  };
 
   environment.variables = with pkgs; {
     EDITOR = "nvim";

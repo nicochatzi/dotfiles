@@ -171,16 +171,6 @@
     zig
     zls
 
-    # cargo
-    cargo-nextest
-    cargo-bloat
-    cargo-cross
-    cargo-show-asm
-    cargo-binutils
-    cargo-watch
-    cargo-limit
-    cargo-deny
-    cargo-lambda
-    cargo-update
+    cargo-generate
   ];
 }
