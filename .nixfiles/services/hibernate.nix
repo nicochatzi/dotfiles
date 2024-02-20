@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   hibernateEnvironment = {
     HIBERNATE_SECONDS = "3600";
     HIBERNATE_LOCK = "/var/run/autohibernate.lock";
@@ -10,12 +8,11 @@ let
     DISPLAY = ":0";
     XDG_SEAT_PATH = "/org/freedesktop/DisplayManager/Seat0";
   };
-in
-{
+in {
   systemd.services."lock-on-resume" = {
     description = "Lock screen after resuming from sleep/hibernate";
-    before = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
-    wantedBy = [ "sleep.target" "hibernate.target" "hybrid-sleep.target" ];
+    before = ["sleep.target" "hibernate.target" "hybrid-sleep.target"];
+    wantedBy = ["sleep.target" "hibernate.target" "hybrid-sleep.target"];
     environment = resumeEnvironment;
     serviceConfig.Type = "oneshot";
     script = "/run/current-system/sw/bin/dm-tool switch-to-greeter";
@@ -23,8 +20,8 @@ in
 
   systemd.services."awake-after-suspend-for-a-time" = {
     description = "Sets up the suspend so that it'll wake for hibernation";
-    wantedBy = [ "suspend.target" ];
-    before = [ "systemd-suspend.service" ];
+    wantedBy = ["suspend.target"];
+    before = ["systemd-suspend.service"];
     environment = hibernateEnvironment;
     serviceConfig.Type = "simple";
     script = ''
@@ -37,8 +34,8 @@ in
 
   systemd.services."hibernate-after-recovery" = {
     description = "Hibernates after a suspend recovery due to timeout";
-    wantedBy = [ "suspend.target" ];
-    after = [ "systemd-suspend.service" ];
+    wantedBy = ["suspend.target"];
+    after = ["systemd-suspend.service"];
     environment = hibernateEnvironment;
     serviceConfig.Type = "simple";
     script = ''

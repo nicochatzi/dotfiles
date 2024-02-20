@@ -25,8 +25,14 @@ self: super: {
     meta = with super.lib; {
       description = "Build support for embedded Rust: Cargo integration with other embedded build ecosystems & tools, like PlatformIO, CMake and kconfig";
       homepage = "https://github.com/esp-rs/embuild";
-      license = with licenses; [ mit /* or */ asl20 ];
-      maintainers = with maintainers; [ matthiasbeyer ];
+      license = with licenses; [
+        mit
+        /*
+        or
+        */
+        asl20
+      ];
+      maintainers = with maintainers; [matthiasbeyer];
     };
   };
 }

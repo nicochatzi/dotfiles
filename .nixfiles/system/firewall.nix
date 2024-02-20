@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   networking.firewall = {
     enable = true;
     allowPing = true;
@@ -13,7 +11,6 @@
       # 3389 # RDP
       # 5900 # VNC
     ];
-    allowedUDPPorts = [ ];
+    allowedUDPPorts = [];
   };
 }
-

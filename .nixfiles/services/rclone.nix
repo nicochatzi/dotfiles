@@ -1,13 +1,10 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   mountdir = "/home/nico/cloud/gdrive";
-in
-{
+in {
   networking.networkmanager.enable = true;
 
   environment = {
-    systemPackages = [ pkgs.rclone ];
+    systemPackages = [pkgs.rclone];
     etc."fuse.conf".text = ''
       user_allow_other
     '';
@@ -15,8 +12,8 @@ in
 
   systemd.user.services.rclone-mount = {
     description = "Mount Google Drive using rclone";
-    after = [ "network-online.target" ];
-    wantedBy = [ "default.target" ];
+    after = ["network-online.target"];
+    wantedBy = ["default.target"];
     serviceConfig = {
       Type = "simple";
       ExecStartPre = "/run/current-system/sw/bin/mkdir -p ${mountdir}";
@@ -31,8 +28,7 @@ in
       # ExecStop = "/run/wrappers/bin/fusermount -u ${mountdir}";
       Restart = "always";
       RestartSec = "10s";
-      Environment = [ "PATH=${pkgs.fuse}/bin:/run/wrappers/bin/:$PATH" ];
+      Environment = ["PATH=${pkgs.fuse}/bin:/run/wrappers/bin/:$PATH"];
     };
   };
 }
-

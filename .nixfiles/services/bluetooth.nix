@@ -1,8 +1,5 @@
 # https://nixos.wiki/wiki/Bluetooth
-
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -17,15 +14,15 @@
   ";
 
   environment = {
-    systemPackages = [ pkgs.bluez ];
+    systemPackages = [pkgs.bluez];
   };
 
   services.blueman.enable = true;
 
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
-    after = [ "network.target" "sound.target" ];
-    wantedBy = [ "default.target" ];
+    after = ["network.target" "sound.target"];
+    wantedBy = ["default.target"];
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 }

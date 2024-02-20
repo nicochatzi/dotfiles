@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   system.stateVersion = "23.11";
 
   nix = {
     settings.auto-optimise-store = true;
-    settings.allowed-users = [ "nico" ];
+    settings.allowed-users = ["nico"];
     gc = {
       automatic = true;
       dates = "weekly";
@@ -43,15 +41,17 @@
       ubuntu_font_family
       openmoji-color
       jetbrains-mono
-      (nerdfonts.override { fonts = [
-        "JetBrainsMono"
-      ]; })
+      (nerdfonts.override {
+        fonts = [
+          "JetBrainsMono"
+        ];
+      })
     ];
 
     fontconfig = {
       hinting.autohint = true;
       defaultFonts = {
-        emoji = [ "OpenMoji Color" ];
+        emoji = ["OpenMoji Color"];
       };
     };
   };

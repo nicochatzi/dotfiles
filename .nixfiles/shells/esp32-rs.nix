@@ -1,7 +1,6 @@
 let
   ldproxy-overlay = import ../overlays/ldproxy.nix;
-  pkgs = import <nixpkgs> { overlays = [ ldproxy-overlay ]; };
-
+  pkgs = import <nixpkgs> {overlays = [ldproxy-overlay];};
 in
   pkgs.mkShell {
     name = "esp32-rs";
@@ -13,10 +12,11 @@ in
       flex
       bison
       gperf
-      (python311.withPackages (ps: with ps; [
-        pip
-        venvShellHook
-      ]))
+      (python311.withPackages (ps:
+        with ps; [
+          pip
+          venvShellHook
+        ]))
       ninja
       cmake
       ccache

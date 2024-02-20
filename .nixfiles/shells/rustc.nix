@@ -1,51 +1,49 @@
-with import <nixpkgs> {};
-
-let
+with import <nixpkgs> {}; let
   config = writeText "rust-config" ''
-# Includes one of the default files in src/bootstrap/defaults
-profile = "library"
-change-id = 102579
+    # Includes one of the default files in src/bootstrap/defaults
+    profile = "library"
+    change-id = 102579
 
-[llvm]
-# optimize = false
-ccache = true
-ninja = true
-enable-warnings = true
+    [llvm]
+    # optimize = false
+    ccache = true
+    ninja = true
+    enable-warnings = true
 
-[build]
-check-stage = 0
-doc-stage = 0
-build-stage = 1
-test-stage = 1
-dist-stage = 2
-install-stage = 2
-bench-stage = 2
-gdb = "${pkgs.gdb}/bin/gdb"
-nodejs = "${pkgs.nodejs}/bin/node"
-python = "${pkgs.python3Full}/bin/python"
+    [build]
+    check-stage = 0
+    doc-stage = 0
+    build-stage = 1
+    test-stage = 1
+    dist-stage = 2
+    install-stage = 2
+    bench-stage = 2
+    gdb = "${pkgs.gdb}/bin/gdb"
+    nodejs = "${pkgs.nodejs}/bin/node"
+    python = "${pkgs.python3Full}/bin/python"
 
-[rust]
-optimize = true
-#debug = false
-#rpath = true
-lld = true
-use-lld = false
-backtrace-on-ice = true
-verify-llvm-ir = false
+    [rust]
+    optimize = true
+    #debug = false
+    #rpath = true
+    lld = true
+    use-lld = false
+    backtrace-on-ice = true
+    verify-llvm-ir = false
 
-[target.x86_64-unknown-linux-gnu]
-#cc = "cc" (path)
-#cxx = "c++" (path)
-#ar = "ar" (path)
-#ranlib = "ranlib" (path)
-#linker = "cc" (path)
-#sanitizers = build.sanitizers (bool)
-#profiler = build.profiler (bool)
-#rpath = rust.rpath (bool)
-#musl-root = build.musl-root (path)
-#wasi-root = <none> (path)
-#qemu-rootfs = <none> (path)
-#no-std = <platform-specific> (bool)
+    [target.x86_64-unknown-linux-gnu]
+    #cc = "cc" (path)
+    #cxx = "c++" (path)
+    #ar = "ar" (path)
+    #ranlib = "ranlib" (path)
+    #linker = "cc" (path)
+    #sanitizers = build.sanitizers (bool)
+    #profiler = build.profiler (bool)
+    #rpath = rust.rpath (bool)
+    #musl-root = build.musl-root (path)
+    #wasi-root = <none> (path)
+    #qemu-rootfs = <none> (path)
+    #no-std = <platform-specific> (bool)
   '';
 
   rgignore = pkgs.writeText "rust-rgignore" ''

@@ -1,14 +1,14 @@
-{ lib, pkgs, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   vimPacked = import ../modules/vim.nix {
     inherit pkgs;
     full = true;
   };
-
-in
-{
-  imports = [ ./common.nix ];
+in {
+  imports = [./common.nix];
 
   hardware = {
     ledger.enable = true;
@@ -101,7 +101,7 @@ in
       nitrogen # wallpaper
       xdg-utils
       xclip # clipboard
-      maim  # screenshots
+      maim # screenshots
       rofi # dmenu
       dunst # notifications
       pulseaudio
@@ -126,32 +126,33 @@ in
       gpick
 
       # language servers
+      alejandra # nix formatter
       asm-lsp
-      # clangd
       cmake-language-server
       gopls
+      ltex-ls
       lua-language-server
-      # mdx-analyzer
       nil
+      nodePackages.typescript-language-server
       python311Packages.python-lsp-server
       rust-analyzer
       sqls
       taplo
       tflint
-      nodePackages.typescript-language-server
+      vscode-extensions.vadimcn.vscode-lldb # provides code-lldb for DAP support
       yaml-language-server
       zls
-      vscode-extensions.vadimcn.vscode-lldb # provides code-lldb for DAP support
     ];
   };
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-      "1password-gui"
-      "1password"
-      "obsidian"
-    ];
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "1password-gui"
+        "1password"
+        "obsidian"
+      ];
     packageOverrides = pkgs: {
       inherit vimPacked;
     };
@@ -160,7 +161,7 @@ in
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "nico" ];
+    polkitPolicyOwners = ["nico"];
   };
 
   environment.variables = with pkgs; {
@@ -170,4 +171,3 @@ in
     PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
   };
 }
-

@@ -1,34 +1,11 @@
-local function setup_codelens_autorefresh(client, bufnr)
-  local status_ok, codelens_supported = pcall(function()
-    return client.supports_method('textDocument/codeLens')
-  end)
-  if not status_ok or not codelens_supported then
-    return
-  end
-  local group = 'lsp_code_lens_refresh'
-  local cl_events = { 'BufEnter', 'InsertLeave' }
-  local ok, cl_autocmds = pcall(vim.api.nvim_get_autocmds, {
-    group = group,
-    buffer = bufnr,
-    event = cl_events,
-  })
-
-  if ok and #cl_autocmds > 0 then
-    return
-  end
-  vim.api.nvim_create_augroup(group, { clear = false })
-  vim.api.nvim_create_autocmd(cl_events, {
-    group = group,
-    buffer = bufnr,
-    callback = vim.lsp.codelens.refresh,
-  })
-end
-
 local function on_attach(client, bufnr)
-  -- print(vim.inspect(debug.traceback()))
-
-  print(vim.inspect(bufnr))
-  -- setup_codelens_autorefresh(client, bufnr)
+  if vim.bo[bufnr].filetype == 'nix' then
+    -- Set an autocmd to format with alejandra on buffer write
+    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
+      vim.cmd('silent !alejandra %')
+      vim.cmd('edit!')
+    end, { nargs = 0 })
+  end
 
   -- setup all the keymaps to use when LSP is attached
   local nmap = function(keys, func, desc)

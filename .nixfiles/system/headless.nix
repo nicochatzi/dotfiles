@@ -1,14 +1,10 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   vimPacked = import ../modules/vim.nix {
     inherit pkgs;
     full = false;
   };
-
-in
-{
-  imports = [ ./common.nix ];
+in {
+  imports = [./common.nix];
 
   users.users.nico = {
     isNormalUser = true;
@@ -31,4 +27,3 @@ in
     PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
   };
 }
-
