@@ -139,4 +139,6 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval "$(direnv export zsh)"
+if [[ $(command -v direnv) ]]; then
+  eval "$(direnv export zsh)"
+fi
