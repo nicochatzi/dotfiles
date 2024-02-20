@@ -42,9 +42,9 @@
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     command_execution_time    # previous command duration
+    time                      # current time
     virtualenv
     pyenv
-    time                      # current time
     nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
     # =========================[ Line #2 ]=========================
