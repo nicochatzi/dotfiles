@@ -23,3 +23,5 @@
   diffFilter = ~/.scripts/delta-colorized --color-only --line-numbers
 [fetch]
   prune = true
+[pull]
+	rebase = true
