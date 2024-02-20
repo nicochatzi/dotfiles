@@ -1,13 +1,13 @@
 STATE_DIR:=${HOME}/.local/share/feeds
-JOB=*/5 * * * * cd ${PWD} && make
 
 run:
 	nix-shell --run 'python3 check.py ${STATE_DIR}'
 .PHONY: run
 
-install:
-	@mkdir -p ${STATE_DIR}
-	@(crontab -l 2>/dev/null; echo '${JOB}')  | grep -vF '# ' | sort | uniq | crontab -
-	@echo "crontab content:"
-	@crontab -l | grep -vF '# '
-.PHONY: install
+find:
+	@$(eval store=$(shell ls $(STATE_DIR) | fzf))
+	@$(eval selected=$(shell jq -r '.[] | "\(.title) - \(.link)"' $(STATE_DIR)/$(store) | fzf))
+	@if [ -n "$(selected)" ]; then \
+		xdg-open `echo "$(selected)" | sed 's/.* - //'`; \
+	fi
+.PHONY: find

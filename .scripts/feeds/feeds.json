@@ -35,7 +35,18 @@
     {
       "name": "Synth Anatomy",
       "link": "https://www.synthanatomy.com/feed"
+    },
+    {
+      "name": "Rust Embedded",
+      "link": "https://blog.rust-embedded.org/rss.xml"
+    },
+    {
+      "name": "Rust Embedded Working Group",
+      "link": "https://rust-embedded.github.io/blog/feed.xml"
+    },
+    {
+      "name": "Mic92 Blog",
+      "link": "https://blog.thalheim.io/index.xml"
     }
   ]
 }
-
