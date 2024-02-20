@@ -70,7 +70,7 @@ return {
           },
           require('neotest-rust') {
             args = { '--no-capture' },
-            -- dap_adapter = 'codelldb',
+            dap_adapter = 'codelldb',
           },
           require('neotest-zig'),
           require('neotest-gtest'),
@@ -166,35 +166,6 @@ return {
   {
     'CraneStation/cranelift.vim',
     ft = 'clif',
-  },
-
-  {
-    'brymer-meneses/grammar-guard.nvim',
-    dependencies = {
-      'neovim/nvim-lspconfig',
-    },
-    ft = { 'markdown', 'latex', 'tex' },
-    config = function()
-      require('lspconfig').grammar_guard.setup {
-        settings = {
-          ltex = {
-            enabled = { 'latex', 'tex', 'bib', 'markdown' },
-            language = 'en-GB',
-            diagnosticSeverity = 'information',
-            setenceCacheSize = 2000,
-            additionalRules = {
-              enablePickyRules = true,
-              motherTongue = 'en-GB',
-            },
-            trace = { server = 'verbose' },
-            dictionary = {},
-            disabledRules = {},
-            hiddenFalsePositives = {},
-          },
-        },
-      }
-      require('grammar-guard').init {}
-    end,
   },
 
   {

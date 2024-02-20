@@ -1,6 +1,6 @@
-local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
-local codelldb_path = extension_path .. 'adapter/codelldb'
-local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+local codelldb = require('lang.codelldb')
+local codelldb_path = codelldb.codelldb_path
+local liblldb_path = codelldb.liblldb_path
 
 return {
   {

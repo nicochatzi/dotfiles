@@ -1,10 +1,9 @@
 local function on_attach(client, bufnr)
   if vim.bo[bufnr].filetype == 'nix' then
-    -- Set an autocmd to format with alejandra on buffer write
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
-      vim.cmd('silent !alejandra %')
+    vim.lsp.buf.format = function(opts)
+      vim.cmd('silent !nixfmt %')
       vim.cmd('edit!')
-    end, { nargs = 0 })
+    end
   end
 
   -- setup all the keymaps to use when LSP is attached
@@ -38,8 +37,33 @@ local function on_attach(client, bufnr)
   end, '[W]orkspace [L]ist Folders')
 end
 
--- Enable the following language servers
+local lsp = require 'lspconfig'
+local configs = require 'lspconfig.configs'
+
+configs.ltex_ls = {
+  default_config = {
+    cmd = { 'ltex-ls' },
+    filetypes = { 'ltex', 'markdown' },
+    name = 'ltex_ls',
+  }
+}
+
 local servers = {
+  ltex_ls = {
+    enabled = { 'latex', 'tex', 'bib', 'markdown' },
+    language = 'en-GB',
+    diagnosticSeverity = 'information',
+    setenceCacheSize = 2000,
+    additionalRules = {
+      enablePickyRules = true,
+      motherTongue = 'en-GB',
+    },
+    trace = { server = 'verbose' },
+    dictionary = {},
+    disabledRules = {},
+    hiddenFalsePositives = {},
+  },
+  bashls = {},
   sqlls = {},
   mdx_analyzer = {},
   asm_lsp = {},
@@ -119,7 +143,7 @@ for server_name, server_config in pairs(servers) do
   elseif server_name == 'clangd' then
     require('lang.clangd')(capabilities, on_attach)
   else
-    require('lspconfig')[server_name].setup {
+    lsp[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = server_config,
