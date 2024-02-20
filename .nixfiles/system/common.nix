@@ -2,8 +2,14 @@
   system.stateVersion = "23.11";
 
   nix = {
-    settings.auto-optimise-store = true;
-    settings.allowed-users = [ "nico" ];
+    # https://nixos.org/manual/nix/stable/command-ref/conf-file
+    settings = {
+      allowed-users = [ "nico" ];
+      auto-optimise-store = true;
+      warn-dirty = true;
+      show-trace = true;
+    };
+    # https://nixos.wiki/wiki/Storage_optimization
     gc = {
       automatic = true;
       dates = "weekly";
@@ -36,7 +42,6 @@
 
   fonts = {
     packages = with pkgs; [
-      ubuntu_font_family
       openmoji-color
       jetbrains-mono
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -102,14 +107,6 @@
     };
   };
 
-  environment.variables = with pkgs; {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    BROWSER = "brave";
-    OPENSSL_DEV = openssl.dev;
-    PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
-  };
-
   environment.systemPackages = with pkgs; [
     # tools
     curl
@@ -118,9 +115,7 @@
     patchelf
     binutils
     libiconv
-    pkg-config
     zlib
-    openssl
     wget
     ffmpeg
     file
@@ -144,7 +139,6 @@
 
     # languages
     (python3.withPackages (py: [ py.requests ]))
-    python311Packages.pynvim
     poetry
     docker
     maven

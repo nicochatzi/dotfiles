@@ -94,6 +94,8 @@ in {
       pulseaudio
       alsa-lib
       brightnessctl
+      openssl
+      pkg-config
 
       # term
       neovim
@@ -112,7 +114,7 @@ in {
       ledger-live-desktop
       gpick
 
-      # language servers
+      # language servers / tools
       asm-lsp
       cmake-language-server
       dockerfile-language-server-nodejs
@@ -123,6 +125,7 @@ in {
       nixfmt
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
+      python311Packages.pynvim
       python311Packages.python-lsp-server
       rust-analyzer
       sqls

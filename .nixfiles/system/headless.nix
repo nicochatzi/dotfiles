@@ -12,7 +12,7 @@ in {
     description = "nico";
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [ zsh vimPacked ];
+    packages = with pkgs; [ zsh vimPacked openssl pkg-config ];
   };
 
   environment.variables = with pkgs; {
