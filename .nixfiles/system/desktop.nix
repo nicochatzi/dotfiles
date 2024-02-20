@@ -62,7 +62,7 @@ in {
   services.redshift = {
     enable = true;
     brightness = {
-      day = "1";
+      day = "0";
       night = "1";
     };
     temperature = {
