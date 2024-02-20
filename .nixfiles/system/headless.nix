@@ -1,24 +1,18 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   vimPacked = import ../modules/vim.nix {
     inherit pkgs;
     full = false;
   };
 in {
-  imports = [./common.nix];
+  imports = [ ./common.nix ];
 
   users.users.nico = {
     isNormalUser = true;
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
-    packages = with pkgs; [
-      zsh
-      vimPacked
-    ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    packages = with pkgs; [ zsh vimPacked ];
   };
 
   environment.variables = with pkgs; {

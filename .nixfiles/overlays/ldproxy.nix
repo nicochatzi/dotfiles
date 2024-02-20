@@ -12,27 +12,22 @@ self: super: {
 
     buildAndTestSubdir = "ldproxy";
 
-    nativeBuildInputs = [
-      super.pkg-config
-    ];
+    nativeBuildInputs = [ super.pkg-config ];
 
-    buildInputs = [
-      super.udev
-    ];
+    buildInputs = [ super.udev ];
 
     cargoSha256 = "sha256-u4G5LV/G6Iu3FUeY2xdeXgVdiXLpGIC2UUYbUr0w3n0=";
 
     meta = with super.lib; {
-      description = "Build support for embedded Rust: Cargo integration with other embedded build ecosystems & tools, like PlatformIO, CMake and kconfig";
+      description =
+        "Build support for embedded Rust: Cargo integration with other embedded build ecosystems & tools, like PlatformIO, CMake and kconfig";
       homepage = "https://github.com/esp-rs/embuild";
       license = with licenses; [
         mit
-        /*
-        or
-        */
+        # or
         asl20
       ];
-      maintainers = with maintainers; [matthiasbeyer];
+      maintainers = with maintainers; [ matthiasbeyer ];
     };
   };
 }

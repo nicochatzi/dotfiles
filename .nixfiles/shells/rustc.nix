@@ -1,4 +1,5 @@
-with import <nixpkgs> {}; let
+with import <nixpkgs> { };
+let
   config = writeText "rust-config" ''
     # Includes one of the default files in src/bootstrap/defaults
     profile = "library"
@@ -69,36 +70,35 @@ with import <nixpkgs> {}; let
     src/stdsimd/
     src/tools/rls/rls-analysis/test_data/
   '';
-in
-  pkgs.mkShell {
-    name = "rust";
-    buildInputs = with pkgs; [
-      git
-      gnumake
-      cmake
-      curl
-      clang
+in pkgs.mkShell {
+  name = "rust";
+  buildInputs = with pkgs; [
+    git
+    gnumake
+    cmake
+    curl
+    clang
 
-      libxml2
-      ncurses
-      swig
+    libxml2
+    ncurses
+    swig
 
-      # If `llvm.ninja` is `true` in `config.toml`.
-      ninja
-      # If `llvm.ccache` is `true` in `config.toml`.
-      ccache
-      # Used by debuginfo tests.
-      gdb
-      # Used with emscripten target.
-      nodejs
-    ];
+    # If `llvm.ninja` is `true` in `config.toml`.
+    ninja
+    # If `llvm.ccache` is `true` in `config.toml`.
+    ccache
+    # Used by debuginfo tests.
+    gdb
+    # Used with emscripten target.
+    nodejs
+  ];
 
-    RUST_BACKTRACE = 1;
-    RUSTC_CONFIG = config;
-    RGIGNORE = rgignore;
+  RUST_BACKTRACE = 1;
+  RUSTC_CONFIG = config;
+  RGIGNORE = rgignore;
 
-    shellHook = ''
-      ln -sf ${config} ./config.toml
-      ln -sf ${rgignore} ./.rgignore
-    '';
-  }
+  shellHook = ''
+    ln -sf ${config} ./config.toml
+    ln -sf ${rgignore} ./.rgignore
+  '';
+}

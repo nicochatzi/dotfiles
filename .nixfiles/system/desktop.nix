@@ -1,23 +1,18 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{ lib, pkgs, ... }:
+let
   vimPacked = import ../modules/vim.nix {
     inherit pkgs;
     full = true;
   };
 in {
-  imports = [./common.nix];
+  imports = [ ./common.nix ];
 
   hardware = {
     ledger.enable = true;
     pulseaudio.enable = true;
   };
 
-  sound = {
-    enable = true;
-  };
+  sound = { enable = true; };
 
   services.pipewire = {
     enable = false;
@@ -36,9 +31,7 @@ in {
         tapping = true;
       };
     };
-    windowManager = {
-      i3.enable = true;
-    };
+    windowManager = { i3.enable = true; };
     displayManager = {
       lightdm = {
         enable = true;
@@ -78,9 +71,7 @@ in {
     };
   };
 
-  services.thermald = {
-    enable = true;
-  };
+  services.thermald = { enable = true; };
 
   console.useXkbConfig = true;
 
@@ -88,11 +79,7 @@ in {
     isNormalUser = true;
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       # system
       i3
@@ -126,13 +113,15 @@ in {
       gpick
 
       # language servers
-      alejandra # nix formatter
       asm-lsp
       cmake-language-server
+      dockerfile-language-server-nodejs
       gopls
       ltex-ls
       lua-language-server
       nil
+      nixfmt
+      nodePackages.bash-language-server
       nodePackages.typescript-language-server
       python311Packages.python-lsp-server
       rust-analyzer
@@ -153,15 +142,13 @@ in {
         "1password"
         "obsidian"
       ];
-    packageOverrides = pkgs: {
-      inherit vimPacked;
-    };
+    packageOverrides = pkgs: { inherit vimPacked; };
   };
 
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = ["nico"];
+    polkitPolicyOwners = [ "nico" ];
   };
 
   environment.variables = with pkgs; {

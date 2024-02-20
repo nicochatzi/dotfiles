@@ -1,9 +1,9 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   system.stateVersion = "23.11";
 
   nix = {
     settings.auto-optimise-store = true;
-    settings.allowed-users = ["nico"];
+    settings.allowed-users = [ "nico" ];
     gc = {
       automatic = true;
       dates = "weekly";
@@ -32,27 +32,19 @@
     pulseaudio.enable = true;
   };
 
-  virtualisation = {
-    docker.enable = true;
-  };
+  virtualisation = { docker.enable = true; };
 
   fonts = {
     packages = with pkgs; [
       ubuntu_font_family
       openmoji-color
       jetbrains-mono
-      (nerdfonts.override {
-        fonts = [
-          "JetBrainsMono"
-        ];
-      })
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
     fontconfig = {
       hinting.autohint = true;
-      defaultFonts = {
-        emoji = ["OpenMoji Color"];
-      };
+      defaultFonts = { emoji = [ "OpenMoji Color" ]; };
     };
   };
 
@@ -151,9 +143,7 @@
     just
 
     # languages
-    (python3.withPackages (py: [
-      py.requests
-    ]))
+    (python3.withPackages (py: [ py.requests ]))
     python311Packages.pynvim
     poetry
     docker

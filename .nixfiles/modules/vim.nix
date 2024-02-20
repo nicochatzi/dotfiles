@@ -1,8 +1,5 @@
-{
-  pkgs,
-  full ? false,
-  ...
-}: let
+{ pkgs, full ? false, ... }:
+let
   config = ''
     set nocompatible
     syntax on
@@ -72,18 +69,11 @@
     vimrcConfig = {
       customRC = config;
       packages.myVimPackage = with pkgs.vimPlugins; {
-        start = [gruvbox];
-        opt = [];
+        start = [ gruvbox ];
+        opt = [ ];
       };
     };
   };
 
-  vimRegular = pkgs.vim.override {
-    vimrcConfig = {
-      customRC = config;
-    };
-  };
-in
-  if full
-  then vimFull
-  else vimRegular
+  vimRegular = pkgs.vim.override { vimrcConfig = { customRC = config; }; };
+in if full then vimFull else vimRegular
