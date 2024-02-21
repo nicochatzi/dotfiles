@@ -7,7 +7,7 @@
       allowed-users = [ "nico" ];
       auto-optimise-store = true;
       warn-dirty = true;
-      show-trace = true;
+      show-trace = false;
     };
     # https://nixos.wiki/wiki/Storage_optimization
     gc = {
@@ -77,25 +77,6 @@
   };
 
   services.cron.enable = true;
-
-  services.xserver = {
-    enable = true;
-    libinput = {
-      enable = true;
-      touchpad = {
-        naturalScrolling = true;
-        disableWhileTyping = true;
-        tapping = true;
-      };
-    };
-    xkb = {
-      layout = "gb";
-      variant = "";
-      options = "caps:escape";
-    };
-  };
-
-  console.useXkbConfig = true;
 
   programs = {
     nix-ld.enable = true;

@@ -23,12 +23,14 @@ in {
 
   services.xserver = {
     enable = true;
+    exportConfiguration = true;
     libinput = {
       enable = true;
       touchpad = {
         naturalScrolling = true;
         disableWhileTyping = true;
-        tapping = true;
+        tapping = false;
+        tappingDragLock = false;
       };
     };
     windowManager = { i3.enable = true; };
@@ -39,6 +41,7 @@ in {
         greeters.slick = {
           enable = true;
           draw-user-backgrounds = true;
+          font.name = "JetBrains Mono";
         };
       };
       autoLogin = {
@@ -52,6 +55,8 @@ in {
       options = "caps:escape";
     };
   };
+
+  console.useXkbConfig = true;
 
   services.logind = {
     extraConfig = "HandlePowerKey=suspend";
@@ -72,8 +77,6 @@ in {
   };
 
   services.thermald = { enable = true; };
-
-  console.useXkbConfig = true;
 
   users.users.nico = {
     isNormalUser = true;
