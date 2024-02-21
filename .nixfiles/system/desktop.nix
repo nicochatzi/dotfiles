@@ -1,4 +1,5 @@
 { lib, pkgs, ... }:
+
 let
   vimPacked = import ../modules/vim.nix {
     inherit pkgs;
@@ -128,6 +129,8 @@ in {
       nixfmt
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
+      python311Packages.autopep8
+      python311Packages.pyflakes
       python311Packages.pynvim
       python311Packages.python-lsp-server
       rust-analyzer

@@ -1,10 +1,21 @@
 local function on_attach(client, bufnr)
-  if vim.bo[bufnr].filetype == 'nix' then
-    vim.lsp.buf.format = function(opts)
-      vim.cmd('silent !nixfmt %')
+  if vim.bo[bufnr].filetype == 'python' then
+    vim.lsp.buf.format = function()
+      vim.cmd('silent !autopep8 %')
       vim.cmd('edit!')
     end
   end
+
+  vim.fn.sign_define("DiagnosticSignError", { texthl = "DiagnosticSignError", text = "󰅚" })
+  vim.fn.sign_define("DiagnosticSignWarn", { texthl = "DiagnosticSignWarn", text = "󰀪" })
+  vim.fn.sign_define("DiagnosticSignInfo", { texthl = "DiagnosticSignInfo", text = "󰋽" })
+  vim.fn.sign_define("DiagnosticSignHint", { texthl = "DiagnosticSignHint", text = "󰌶" })
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = {
+      prefix = "󰄮",
+    },
+  })
 
   -- setup all the keymaps to use when LSP is attached
   local nmap = function(keys, func, desc)
@@ -90,24 +101,14 @@ local servers = {
   pylsp = {
     pylsp = {
       plugins = {
-        flake8 = {
-          enabled = true,
-          -- Black's line length
-          maxLineLength = 88,
-        },
-        -- Disable plugins overlapping with flake8
-        pycodestyle = {
-          enabled = false,
-        },
-        mccabe = {
-          enabled = false,
-        },
+        flake8 = { enabled = false },
+        pycodestyle = { enabled = false },
+        mccabe = { enabled = false },
         pyflakes = {
-          enabled = false,
+          enabled = true,
         },
-        -- Use Black as the formatter
         autopep8 = {
-          enabled = false,
+          enabled = true,
         },
       },
     },
@@ -117,7 +118,19 @@ local servers = {
   tsserver = {},
   taplo = {},
   dockerls = {},
-  nil_ls = {},
+  nil_ls = {
+    ['nil'] = {
+      testSetting = 42,
+      formatting = {
+        command = { 'nixfmt' },
+      },
+      nix = {
+        flake = {
+          autoArchive = true,
+        },
+      },
+    },
+  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -137,18 +150,43 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-for server_name, server_config in pairs(servers) do
-  if server_name == 'rust-analyzer' then
+local server_setups = {
+  ['rust-analyzer'] = function()
     require('lang.rust')(capabilities, on_attach)
-  elseif server_name == 'clangd' then
-    require('lang.clangd')(capabilities, on_attach)
+  end,
+  ['nil_ls'] = function()
+    lsp.nil_ls.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      cmd = { 'nil' },
+      filetypes = { 'nix' },
+      settings = servers['nil_ls'],
+      autostart = true,
+      single_file_support = true,
+      flags = {
+        debounce_text_changes = 150,
+      }
+    }
+  end,
+}
+
+for server_name, server_config in pairs(servers) do
+  if server_setups[server_name] then
+    server_setups[server_name]()
   else
     lsp[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = server_config,
+      autostart = true,
+      single_file_support = true,
+      flags = {
+        debounce_text_changes = 150,
+      }
     }
   end
 end
+
+require('lang.clangd')
 
 require('ufo').setup()

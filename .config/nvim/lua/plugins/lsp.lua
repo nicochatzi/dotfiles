@@ -20,7 +20,7 @@ return {
     --         { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
     --     },
     --     config = function()
-    --         require("navigator").setup{}
+    --         require("navigator").setup {}
     --     end,
     -- },
     {
