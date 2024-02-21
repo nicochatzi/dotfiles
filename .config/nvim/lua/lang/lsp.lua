@@ -1,7 +1,8 @@
 local function on_attach(client, bufnr)
+  -- patch because i didn't the clean way to do this
   if vim.bo[bufnr].filetype == 'python' then
     vim.lsp.buf.format = function()
-      vim.cmd('silent !autopep8 %')
+      vim.cmd('silent !black %')
       vim.cmd('edit!')
     end
   end
@@ -104,11 +105,18 @@ local servers = {
         flake8 = { enabled = false },
         pycodestyle = { enabled = false },
         mccabe = { enabled = false },
-        pyflakes = {
+        autopep8 = { enabled = false },
+        black = {
           enabled = true,
+          executable = 'black',
         },
-        autopep8 = {
+        pylint = {
           enabled = true,
+          executable = 'pylint',
+          args = {
+            '--disable=missing-module-docstring',
+            '--disable=missing-function-docstring',
+          },
         },
       },
     },
