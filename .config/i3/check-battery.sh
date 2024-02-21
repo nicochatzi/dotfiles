@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 while true; do
   battery_level=$(cat /sys/class/power_supply/BAT0/capacity)
   is_on_ac=$(cat /sys/class/power_supply/AC/online)

@@ -1,7 +1,7 @@
 STATE_DIR:=${HOME}/.local/share/feeds
 
 run:
-	nix-shell --run 'python3 check.py ${STATE_DIR}'
+	python3 check.py ${STATE_DIR} >> ${STATE_DIR}/log
 .PHONY: run
 
 find:

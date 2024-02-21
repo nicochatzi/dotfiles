@@ -34,7 +34,7 @@ font pango:JetBrainsMono NF 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-set $fullscreen resize set 1920 1050, move position 0 0
+set $fullscreen resize set 1920 1055, move position 0 0
 set $halfscreen resize set 990 900, move position 495 100
 set $exec_alacritty exec --no-startup-id alacritty
 
