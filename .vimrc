@@ -1,10 +1,4 @@
-" download theme if not present
-let theme_path = expand('~/.vim/colors/gruvbox.vim')
-let theme_url = 'https://raw.githubusercontent.com/morhetz/gruvbox/040138616bec342d5ea94d4db296f8ddca17007a/colors/gruvbox.vim'
-if !filereadable(theme_path)
-    execute '!curl -fLo ' . theme_path . ' --create-dirs ' . theme_url
-endif
-
+" configuration
 """"""""""""""""""""""""""""""""
 set nocompatible
 syntax on
@@ -18,17 +12,17 @@ set termguicolors
 set undofile
 set ruler
 set number
+set tabstop=2
+set shiftwidth=2
 set smarttab
 set expandtab
-set tabstop=4
-set shiftwidth=4
+set autoindent              " automatically set indent of new line
+set smartindent
 set nofoldenable
 set ignorecase              " case insensitive searching
 set smartcase               " case-sensitive if expresson contains a capital letter
 set hlsearch                " highlight search results
 set incsearch               " set incremental search, like modern browsers
-set autoindent              " automatically set indent of new line
-set smartindent
 set laststatus=0
 set showtabline=0
 set guioptions-=e
@@ -41,6 +35,15 @@ set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set spell spelllang=en_us
+
+" theming
+""""""""""""""""""""""""""""""""
+" download theme if not present
+let theme_path = expand('~/.vim/colors/gruvbox.vim')
+let theme_url = 'https://raw.githubusercontent.com/morhetz/gruvbox/040138616bec342d5ea94d4db296f8ddca17007a/colors/gruvbox.vim'
+if !filereadable(theme_path)
+    execute '!curl -fLo ' . theme_path . ' --create-dirs ' . theme_url
+endif
 
 colorscheme gruvbox
 
