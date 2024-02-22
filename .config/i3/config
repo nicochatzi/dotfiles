@@ -34,7 +34,6 @@ font pango:JetBrainsMono NF 10
 
 set $fullscreen resize set 1920 1055, move position 0 0
 set $halfscreen resize set 990 900, move position 495 100
-set $exec_alacritty exec --no-startup-id alacritty
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -43,21 +42,13 @@ bindsym $mod+Shift+Return floating enable, $fullscreen
 bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/toggle-theme
 
 # Keybindings
-bindsym $mod+Return $exec_alacritty
-bindsym $mod+t $exec_alacritty --title 'term_pad_full' -e \
-  ~/.scripts/tmux-sesh dev
-
-bindsym $mod+Shift+m $exec_alacritty --title 'mixer_pad' -e \
-  alsamixer
-
-bindsym $mod+m $exec_alacritty --title 'top_pad' -e \
-  ~/.scripts/btm-colorized --basic --mem_as_value
-
-bindsym $mod+p $exec_alacritty --title 'py_pad' -e \
-  ~/.scripts/tmux-sesh py_repl
-
-bindsym $mod+n $exec_alacritty --title 'notes_pad_full' \
-  --working-directory=$HOME/cloud/gdrive/notes -e ~/.scripts/tmux-sesh notes
+bindsym $mod+Return exec --no-startup-id alacritty
+set $open_term exec --no-startup-id ~/.scripts/focus-or-launch.sh
+bindsym $mod+t $open_term term_pad_full "~/.scripts/tmux-sesh dev"
+bindsym $mod+Shift+m $open_term mixer_pad alsamixer
+bindsym $mod+m $open_term top_pad "~/.scripts/btm-colorized --basic --mem_as_value"
+bindsym $mod+p $open_term py_pad "~/.scripts/tmux-sesh py_repl"
+bindsym $mod+n $open_term notes_pad_full "~/.scripts/tmux-sesh notes" $HOME/cloud/gdrive/notes
 
 # Window Modifications
 for_window [class=".*"] border pixel 1
