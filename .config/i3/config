@@ -213,7 +213,7 @@ bar {
   status_command i3status
   # workspace_buttons yes
   position bottom
-  font pango:JetBrainsMono NF 12
+  font pango:JetBrainsMono NF 11
   separator_symbol "|"
     colors {
       background $bg
