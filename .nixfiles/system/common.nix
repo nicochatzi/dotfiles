@@ -29,7 +29,7 @@
       systemd-boot.enable = true;
       systemd-boot.editor = false;
       efi.canTouchEfiVariables = true;
-      timeout = 10;
+      timeout = 3;
     };
   };
 
@@ -37,11 +37,17 @@
     ledger.enable = true;
     pulseaudio.enable = true;
   };
-
-  virtualisation = { docker.enable = true; };
+  virtualisation = {
+    docker.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu.swtpm.enable = true;
+    };
+  };
 
   fonts = {
     packages = with pkgs; [
+      dejavu_fonts
       openmoji-color
       jetbrains-mono
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -49,7 +55,12 @@
 
     fontconfig = {
       hinting.autohint = true;
-      defaultFonts = { emoji = [ "OpenMoji Color" ]; };
+      defaultFonts = {
+        serif = [ "DejaVu" ];
+        sansSerif = [ "DejaVu" ];
+        monospace = [ "JetBrainsMono" ];
+        emoji = [ "OpenMoji Color" ];
+      };
     };
   };
 
