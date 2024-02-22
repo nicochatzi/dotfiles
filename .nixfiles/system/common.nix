@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  # https://github.com/NixOS/nixpkgs/pull/50112
   system.stateVersion = "23.11";
 
   nix = {

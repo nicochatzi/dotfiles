@@ -1,4 +1,5 @@
 with import <nixpkgs> { };
+
 let
   config = writeText "rust-config" ''
     # Includes one of the default files in src/bootstrap/defaults
@@ -70,6 +71,7 @@ let
     src/stdsimd/
     src/tools/rls/rls-analysis/test_data/
   '';
+
 in pkgs.mkShell {
   name = "rust";
   buildInputs = with pkgs; [
