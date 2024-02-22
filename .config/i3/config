@@ -11,8 +11,6 @@
 
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id picom
-exec --no-startup-id ~/.config/i3/check-battery.sh
-exec --no-startup-id ~/.config/i3/check-feeds.sh
 
 # server.xserver.libinput.touchpad.tapping = false;
 # should do this... but it doesn't - big sad
