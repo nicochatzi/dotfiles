@@ -47,8 +47,8 @@ set $open_term exec --no-startup-id ~/.scripts/focus-or-launch.sh
 bindsym $mod+t $open_term term_pad_full "~/.scripts/tmux-sesh dev"
 bindsym $mod+Shift+m $open_term mixer_pad alsamixer
 bindsym $mod+m $open_term top_pad "~/.scripts/btm-colorized --basic --mem_as_value"
-bindsym $mod+p $open_term py_pad "~/.scripts/tmux-sesh py_repl"
-bindsym $mod+n $open_term notes_pad_full "~/.scripts/tmux-sesh notes" $HOME/cloud/gdrive/notes
+bindsym $mod+p $open_term py_pad "~/.scripts/tmux-sesh py_repl clear"
+bindsym $mod+n $open_term notes_pad_full "~/.scripts/tmux-sesh notes clear" $HOME/cloud/gdrive/notes
 
 # Window Modifications
 for_window [class=".*"] border pixel 1

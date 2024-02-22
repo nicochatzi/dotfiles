@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 
+SESSION_NAME=$1
+SHOULD_CLEAR=$2
+
 setup_session() {
   local SESH=$1
   local KEYS=$2
 
-  tmux has-session -t $SESH 2>/dev/null
+  if ! tmux has-session -t "$SESH" 2>/dev/null; then
+     tmux new-session -s "$SESH" -d
 
-  if [ $? != 0 ]; then
-     tmux new-session -s $SESH -d
-     tmux send-keys -t $SESH "$KEYS" C-m
+    if [ "$SHOULD_CLEAR" = "clear" ]; then
+      tmux send-keys -t "$SESH" "$KEYS" C-m
+    fi
   fi
 
-  tmux send-keys -t $SESH C-l
-  tmux attach-session -t $SESH
+  tmux send-keys -t "$SESH" C-l
+  tmux attach-session -t "$SESH"
 }
-
-SESSION_NAME=$1
 
 case $SESSION_NAME in
   "py_repl")
