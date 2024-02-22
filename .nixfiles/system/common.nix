@@ -102,6 +102,10 @@
 
   environment.systemPackages = with pkgs; [
     # tools
+    zsh
+    openssl
+    pkg-config
+    vim
     curl
     git
     nix-ld

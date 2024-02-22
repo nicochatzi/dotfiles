@@ -1,10 +1,11 @@
-""""""""""""""""""""""""""""""""""""
-" Pure VIM! keep it fast and standard
-"""""""""""""""""""""""""""""""""""""
+" download theme if not present
+let theme_path = expand('~/.vim/colors/gruvbox.vim')
+let theme_url = 'https://raw.githubusercontent.com/morhetz/gruvbox/040138616bec342d5ea94d4db296f8ddca17007a/colors/gruvbox.vim'
+if !filereadable(theme_path)
+    execute '!curl -fLo ' . theme_path . ' --create-dirs ' . theme_url
+endif
 
-"""""""""""""""""""""""""""""""""""""
-" Configurations
-"""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""
 set nocompatible
 syntax on
 set nowrap
@@ -41,20 +42,7 @@ autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set spell spelllang=en_us
 
-"""""""""""""""""""""""""""""""""""""
-" Theme / Highlights
-"""""""""""""""""""""""""""""""""""""
-highlight CursorLine NONE
-highlight CursorLineNr NONE
-highlight CursorLineNr guifg=#FFA066
-highlight SpellBad NONE
-highlight SpellBad cterm=underline guisp=#C34043
-highlight SpellCap NONE
-highlight SpellCap cterm=underline guisp=#DCA561
-highlight SpellRare NONE
-highlight SpellRare cterm=underline guisp=#DCA561
-highlight SpellLocal NONE
-highlight SpellLocal cterm=underline guisp=#DCA561
+colorscheme gruvbox
 
 if str2nr(system('~/.scripts/is-light-mode; echo $?')) == 0
   set background=light
@@ -62,15 +50,8 @@ else
   set background=dark
 endif
 
-"""""""""""""""""""""""""""""""""""""
-" Mappings
-"""""""""""""""""""""""""""""""""""""
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+hi Normal guibg=NONE ctermbg=NONE
 
-"""""""""""""""""""""""""""""""""""""
-" Other
-"""""""""""""""""""""""""""""""""""""
 " Use a line cursor within insert mode and a block cursor everywhere else.
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"

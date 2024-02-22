@@ -1,11 +1,4 @@
-{ lib, pkgs, ... }:
-
-let
-  vimPacked = import ../modules/vim.nix {
-    inherit pkgs;
-    full = true;
-  };
-in {
+{ lib, pkgs, ... }: {
   imports = [ ./common.nix ];
 
   hardware = {
@@ -104,7 +97,6 @@ in {
       # term
       neovim
       neovim-remote
-      vimPacked
       tmux
       zsh
 
@@ -153,7 +145,6 @@ in {
         "1password"
         "obsidian"
       ];
-    packageOverrides = pkgs: { inherit vimPacked; };
   };
 
   programs._1password.enable = true;
