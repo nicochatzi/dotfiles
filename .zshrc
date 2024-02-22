@@ -46,9 +46,9 @@ if [[ -z "$VIMRUNTIME" ]]; then
 fi
 
 alias tree="tree -C"
-alias l="eza -a --icons"
-alias ll="eza -lamh --icons"
-alias t="eza -a -T -L 2 --icons"
+alias l="eza -a --icons=auto"
+alias ll="eza -lam --icons=auto"
+alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
 alias j='just'
@@ -127,9 +127,9 @@ zstyle ':completion:complete:*:options' sort false
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
-zstyle ':fzf-tab:complete:(cd|eza|ls):*' fzf-preview \
+zstyle ':fzf-tab:complete:(cd|eza|l|ll|ls|dotfiles):*' fzf-preview \
     'eza -T -L 1 --icons --color=always $realpath'
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
+zstyle ':fzf-tab:complete:(git|dotfiles)-(a|add|diff|restore):*' fzf-preview \
     'git diff $word | delta'
 zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --color=always $realpath; fi'
