@@ -15,7 +15,7 @@ DARK_THEME="dark"
 
 declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
 declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
-declare -A mode_border=( ["light"]="#458588" ["dark"]="#458588" )
+declare -A mode_border=( ["light"]="#458588" ["dark"]="#54546d" )
 
 declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
 declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )

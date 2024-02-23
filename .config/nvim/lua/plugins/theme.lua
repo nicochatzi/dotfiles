@@ -1,9 +1,5 @@
 local colors = require('config.colors')
 
--- local dark = colors.white
--- local deep = colors.grey
--- local light = colors.purple
-
 return {
   {
     -- display colors in code
