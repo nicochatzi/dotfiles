@@ -21,7 +21,7 @@ setup_session() {
 
 case $SESSION_NAME in
   "py_repl")
-    setup_session "py_repl" "nix-shell ~/.nixfiles/shells/pymath.nix --run 'ipython --no-banner'"
+    setup_session "py_repl" "nix-shell ~/.nixfiles/shells/py.nix --run 'ipython --no-banner'"
     ;;
   "notes")
     setup_session "notes" "nvim ~/cloud/gdrive/notes/"
