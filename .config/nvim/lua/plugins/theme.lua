@@ -80,7 +80,7 @@ return {
       -- vim.api.nvim_set_hl(0, 'CurSearch', { bg = colors.purple, fg = colors.black })
       -- vim.api.nvim_set_hl(0, 'IncSearch', { bg = colors.purple, fg = colors.black })
 
-      vim.api.nvim_set_hl(0, 'Visual', { bg = colors.dark })
+      vim.api.nvim_set_hl(0, 'Visual', { bg = colors.deep })
       vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none', fg = colors.deep })
       vim.api.nvim_set_hl(0, 'WinSeparator', { fg = colors.deep })
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none', fg = colors.deep })

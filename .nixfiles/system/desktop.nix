@@ -91,8 +91,6 @@
       pulseaudio
       alsa-lib
       brightnessctl
-      openssl
-      pkg-config
 
       # term
       neovim
@@ -133,6 +131,7 @@
     taplo
     tflint
     vscode-extensions.vadimcn.vscode-lldb # provides code-lldb for DAP support
+    vscode-langservers-extracted # provides html, css, json, eslint
     yaml-language-server
     zls
   ];

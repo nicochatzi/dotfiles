@@ -11,9 +11,6 @@ stdenv.mkDerivation {
     clang
     llvmPackages.libclang
     lldb_17
-    glibc.static
-    glib
-    gcc
   ];
 
   LIBCLANG_PATH = lib.makeLibraryPath [ llvmPackages.libclang.lib ];
