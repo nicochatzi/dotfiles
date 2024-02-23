@@ -139,8 +139,6 @@
     maven
     cmake
     ninja
-    gcc
-    gdb
     gnumake
     go
     llvmPackages_17.bintools

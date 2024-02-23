@@ -142,7 +142,6 @@
       builtins.elem (lib.getName pkg) [
         "1password-gui"
         "1password"
-        "obsidian"
       ];
   };
 
