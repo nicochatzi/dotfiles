@@ -15,6 +15,9 @@ return function(capabilities, on_attach)
             autoReload = true,
             allFeatures = true,
           },
+          rust = {
+            analyzerTargetDir = '/tmp/rust-analyzer-check',
+          },
           inlayHints = {
             bindingModeHints = true,
             chainingHints = true,
