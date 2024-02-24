@@ -22,7 +22,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_rt_6_1;
+    # kernelPackages = pkgs.linuxPackages_rt_6_1;
     tmp.cleanOnBoot = true;
     loader = {
       systemd-boot.enable = true;
@@ -32,15 +32,14 @@
     };
   };
 
-  hardware = {
-    ledger.enable = true;
-    pulseaudio.enable = true;
-  };
   virtualisation = {
-    docker.enable = true;
     libvirtd = {
       enable = true;
       qemu.swtpm.enable = true;
+    };
+    podman = {
+      enable = true;
+      dockerCompat = true;
     };
   };
 
@@ -152,6 +151,7 @@
     yarn
     protobuf
     rustup
+    espup
     valgrind
     kcachegrind
     zig

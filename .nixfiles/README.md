@@ -3,9 +3,9 @@
 <h3 align="center">install</h3>
 
 ```bash
-# enter bootstrapping environment
-$ NIX_CONFIG="experimental-features=flakes" \
-    nix-env -iA nixos.git nixos.curl nixos.vim
+$ echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+# enter bootstrapping shell
+$ nix shell nixpkgs#git nixpkgs#curl nixpkgs#vim
 # install dotfiles on new system
 $ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install-dotfiles.sh \
   | bash
