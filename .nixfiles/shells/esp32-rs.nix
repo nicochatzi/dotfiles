@@ -1,6 +1,7 @@
-with import <nixpkgs> { };
+with import <nixpkgs> { overlays = [ (import ../overlays/ldproxy.nix) ]; };
 
 stdenv.mkDerivation {
-  name = "esp32-rs";
-  buildInputs = [ cargo-espflash cargo-espmonitor ];
+  name = "esp32-dev";
+  buildInputs = [ ldproxy cargo-espflash cargo-espmonitor ];
 }
+
