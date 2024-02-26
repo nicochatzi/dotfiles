@@ -17,6 +17,7 @@ exec --no-startup-id picom
 exec --no-startup-id "xinput set-prop 11 'libinput Tapping Enabled' 0"
 
 smart_borders on
+focus_follows_mouse no
 
 set $mod Mod4
 
@@ -39,7 +40,8 @@ set $halfscreen resize set 960 900, move position 480 100
 floating_modifier $mod
 # Resize floating window to full screen (excluding i3status bar)
 bindsym $mod+Shift+Return floating enable, $fullscreen
-bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/toggle-theme
+bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/xctl theme_toggle
+
 
 # Keybindings
 bindsym $mod+Return exec --no-startup-id alacritty

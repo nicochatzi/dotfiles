@@ -1,0 +1,141 @@
+#!/usr/bin/env -S just --justfile
+# vim: ft=just
+
+set quiet
+
+help:
+  just --list --unsorted --justfile {{justfile()}}
+
+# focus a terminal window or launch a new one
+focus_or_launch TITLE CMD DIR="$HOME":
+  #!/usr/bin/env bash
+  if ! i3-msg "[title=\"{{TITLE}}\"] focus"; then
+    eval alacritty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
+  fi
+
+# create a tmux session if it doesn't exist and attach to it
+tmux_sesh NAME CMD CLEAR:
+  #!/usr/bin/env bash
+  if ! tmux has-session -t "{{NAME}}" 2>/dev/null; then
+     tmux new-session -s "{{NAME}}" -d
+
+    if [ "{{CLEAR}}" = "clear" ]; then
+      tmux send-keys -t "{{NAME}}" "{{CMD}}" C-m
+    fi
+  fi
+
+  tmux send-keys -t "{{NAME}}" C-l
+  tmux attach-session -t "{{NAME}}"
+
+# direnv setup: template or at least one shell paths
+use_nix +SHELLS:
+  #!/usr/bin/env bash
+  cd {{invocation_directory()}};
+  if [ $# -gt 0 ]; then
+      touch $(pwd)/.envrc
+      for file in "$@"; do
+          echo "use_nix $file;" >> $(pwd)/.envrc
+          echo "using nix shell @ $file"
+      done
+  else
+      echo "use_nix" > $(pwd)/.envrc
+      echo "with import <nixpkgs> {}; mkShell { packages = [ pkg-config ]; }" > $(pwd)/shell.nix
+      echo "using local nix shell"
+  fi
+
+  direnv allow
+
+# direnv setup: template or copied flake
+use_flake FLAKE="":
+  #!/usr/bin/env bash
+  cd {{invocation_directory()}};
+  direnv allow
+
+
+# pipe to copy to system clipboard
+cp:
+  #!/usr/bin/env bash
+  if [[ {{os()}} == "macos" ]]; then
+    pbcopy
+  else
+    xclip -selection clipboard
+  fi
+
+# install completions for zsh
+completions:
+   just -f {{justfile()}} --completions zsh > ~/.zfunc/_xctl
+
+# "light" or "dark"?
+theme:
+  #!/usr/bin/env bash
+  if [[ "$(readlink "$HOME/.config/alacritty/theme.toml")" == *light* ]]; then
+    echo "light"
+  else
+    echo "dark"
+  fi
+
+# toggle between light and dark themes
+theme_toggle:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  I3_CONFIG="$HOME/.config/i3/config"
+  DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
+  ALACRITTY_CONFIG="$HOME/.config/alacritty"
+  GTK_CONFIG="$HOME/.config/gtk-3.0"
+  NVIM_CONFIG="$HOME/.config/nvim/lua/config"
+  ROFI_CONFIG="$HOME/.config/rofi"
+  BRAVE_CONFIG="$HOME/.config/chrome-theme"
+  declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
+  declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
+  declare -A mode_border=( ["light"]="#458588" ["dark"]="#54546d" )
+  declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
+  declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
+  declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
+  declare -A mode_urgency_normal_fg=( ["light"]="#282828" ["dark"]="#efd8a5" )
+  declare -A mode_urgency_critical_fg=( ["light"]="#880808" ["dark"]="#BF616A" )
+  set_theme() {
+    local mode=$1
+    nitrogen --save --set-zoom-fill \
+      "$HOME/.nixfiles/assets/${mode_wallpaper[$mode]}"
+    ln -sf "$ALACRITTY_CONFIG/$mode.toml" "$ALACRITTY_CONFIG/theme.toml"
+    touch "$ALACRITTY_CONFIG/alacritty.toml"
+    # misc / immediate
+    ln -sf "$GTK_CONFIG/$mode.ini" "$GTK_CONFIG/settings.ini"
+    ln -sf "$ROFI_CONFIG/$mode.rasi" "$ROFI_CONFIG/theme.rasi"
+    ln -sf "$BRAVE_CONFIG/$mode.json" "$BRAVE_CONFIG/manifest.json"
+    rm -f "$BRAVE_CONFIG"/Cached\ Theme.pak
+    # dunst
+    sed -i "s/background = .*/background = \"${mode_background[$mode]}\"/" "$DUNST_CONFIG"
+    # Update dunstrc for foreground and frame_color
+    awk -v mode="$mode" \
+        -v fg_norm="${mode_urgency_normal_fg[$mode]}" \
+        -v fg_crit="${mode_urgency_critical_fg[$mode]}" \
+        -v frame_norm="${mode_urgency_normal_fg[$mode]}" \
+        -v frame_crit="${mode_urgency_critical_fg[$mode]}" \
+        'BEGIN{OFS=FS="="}
+         /^(\[urgency_normal\]|\[urgency_critical\])/ {section=$1}
+         section=="[urgency_normal]" && /foreground/ {$2=" \""fg_norm"\""}
+         section=="[urgency_normal]" && /frame_color/ {$2=" \""frame_norm"\""}
+         section=="[urgency_critical]" && /foreground/ {$2=" \""fg_crit"\""}
+         section=="[urgency_critical]" && /frame_color/ {$2=" \""frame_crit"\""}
+         {print}' "$DUNST_CONFIG" > tmp && mv tmp "$DUNST_CONFIG"
+    pkill dunst && dunst > /tmp/dunst.log 2>&1 &
+    # i3
+    sed -i "s/set \$bg .*/set \$bg ${mode_bg[$mode]}/" "$I3_CONFIG"
+    sed -i "s/set \$text .*/set \$text ${mode_text[$mode]}/" "$I3_CONFIG"
+    sed -i "s/set \$border .*/set \$border ${mode_border[$mode]}/" "$I3_CONFIG"
+    i3-msg reload
+    # neovim
+    ln -sf "$NVIM_CONFIG/colors/$mode.lua" "$NVIM_CONFIG/colors/init.lua"
+    ln -sf "$NVIM_CONFIG/theme/$mode.lua" "$NVIM_CONFIG/theme/init.lua"
+    for SERVER in $(nvr --serverlist); do
+      nvr --nostart --servername "$SERVER" \
+        -cc "lua vim.api.nvim_set_option('background', '$mode')" \
+        -cc "colorscheme ${mode_nvim[$mode]}"
+    done
+  }
+  if [[ $(~/.scripts/xctl theme) == "light" ]]; then
+    set_theme "dark"
+  else
+    set_theme "light"
+  fi

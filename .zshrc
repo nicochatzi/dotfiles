@@ -56,7 +56,6 @@ alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias xsys='~/.xsys/bin/xsys'
 alias bat='bat --theme=ansi'
-alias btm='~/.scripts/btm-colorized'
 
 we() {
     local filter_flag=""

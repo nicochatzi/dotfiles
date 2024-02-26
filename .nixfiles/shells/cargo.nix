@@ -4,6 +4,7 @@ stdenv.mkDerivation {
   name = "cargo";
   buildInputs = [
     cargo-nextest
+    cargo-generate
     cargo-watch
     cargo-limit
     cargo-bloat

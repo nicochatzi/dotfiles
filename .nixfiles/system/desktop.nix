@@ -109,6 +109,20 @@
       bitwig-studio
       ledger-live-desktop
       gpick
+
+      # wrapped commands
+      (pkgs.writeScriptBin "delta" ''
+        #! ${pkgs.bash}/bin/bash
+        color="--dark"
+        if [[ $(xctl theme) == "light" ]]; then color="--light"; fi
+        command ${pkgs.delta}/bin/delta $color "$@"
+      '')
+      (pkgs.writeScriptBin "btm" ''
+        #! ${pkgs.bash}/bin/bash
+        color="gruvbox"
+        if [[ $(xctl theme) == "light" ]]; then color="gruvbox-light"; fi
+        command ${pkgs.bottom}/bin/btm --color $color "$@"
+      '')
     ];
   };
 
@@ -141,10 +155,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        "1password-gui"
-        "1password"
-      ];
+      builtins.elem (lib.getName pkg) [ "1password-gui" "1password" ];
   };
 
   programs._1password.enable = true;

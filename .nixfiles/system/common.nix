@@ -101,7 +101,6 @@
     # tools
     zsh
     openssl
-    pkg-config
     vim
     curl
     git
@@ -114,11 +113,7 @@
     ffmpeg
     file
     unzip
-    cron
     parallel
-    awscli2
-    asciinema
-    delta
     jq
     bat
     du-dust
@@ -127,19 +122,16 @@
     hyperfine
     ripgrep
     watchexec
-    bottom
+    awscli2
     tokei
     just
 
     # languages
-    (python3.withPackages (py: [ py.requests ]))
-    poetry
+    (python311.withPackages (py: [ py.requests ]))
     docker
-    maven
     cmake
     ninja
     gnumake
-    go
     llvmPackages_17.bintools
     llvmPackages_17.clang
     llvmPackages_17.lldb
@@ -156,6 +148,5 @@
     kcachegrind
     zig
 
-    cargo-generate
   ];
 }
