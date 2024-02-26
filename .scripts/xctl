@@ -13,8 +13,12 @@ focus_or_launch TITLE CMD DIR="$HOME":
     eval alacritty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
   fi
 
+# open a ipython terminal
+pyterm:
+  nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
+
 # create a tmux session if it doesn't exist and attach to it
-tmux_sesh NAME CMD CLEAR:
+tmux_sesh NAME CMD CLEAR="":
   #!/usr/bin/env bash
   if ! tmux has-session -t "{{NAME}}" 2>/dev/null; then
      tmux new-session -s "{{NAME}}" -d
