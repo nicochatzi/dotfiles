@@ -226,12 +226,34 @@ _dock_enter CONTAINER:
     -w /project -v {{invocation_directory()}}:/project:Z \
     {{CONTAINER}} bash
 
+# run cargo clean in all cargo projects in a dir
+clean_cargo DIR="~/code":
+  find {{DIR}} -name Cargo.toml -execdir sh -c \
+    'echo "cleaning: $(pwd)" && cargo clean' \;
+
+# rm -rf node_modules in all npm projects in a dir
+clean_npm DIR="~/code":
+  find {{DIR}} -name package.json -execdir sh -c \
+    'echo "cleaning: $(pwd)" && rm -rf node_modules' \;
+
+# clean up docker containers
+clean_docker:
+  docker kill $(docker ps -q)
+  docker rm $(docker ps -a -q)
+  docker system prune -a
+
+# clean up podman containers
+clean_podman:
+  podman stop $(podman ps -q)
+  podman rm $(podman ps -a -q)
+  podman image prune
+
 # https://nixos.org/guides/nix-pills/garbage-collector
 # collect all the nixos/nix garbage
 nix_gc:
   nix-store --gc
   nix-store --optimise
-  sudo nix-collect-garbage -d
+  sudo nix-collect-garbage
 
 # nixos-rebuild switch
 nix_rebuild:
@@ -240,7 +262,7 @@ nix_rebuild:
   nixfmt ~/.nixfiles
   dotfiles a ~/.nixfiles
   sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname) -v
-  echo "commit message:"
+  echo -e "\033[0;34mcommit message:\033[0m"
   read COMMIT_MESSAGE
   dotfiles commit -m "nixos: $COMMIT_MESSAGE" \
     -m "$(nixos-rebuild list-generations | grep current)"
