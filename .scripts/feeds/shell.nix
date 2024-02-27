@@ -1,10 +1,8 @@
-with import <nixpkgs> {}; mkShell {
+with import <nixpkgs> { };
+mkShell {
   buildInputs = [
-    python3
-    python3Packages.requests
-    python3Packages.feedparser
-    python3Packages.plyer
-    python3Packages.dbus-python
+    (python311.withPackages
+      (p: with p; [ feedparser requests plyer dbus-python ]))
   ];
 }
 

@@ -5,8 +5,8 @@
       wantedBy = [ "default.target" ];
       path = [ pkgs.nix pkgs.bash ];
       serviceConfig = {
-        ExecStart = "${pkgs.gnumake}/bin/make";
-        WorkingDirectory = "/home/nico/.scripts/feeds";
+        ExecStart = "${pkgs.just}/bin/just -f xctl feeds_check";
+        WorkingDirectory = "/home/nico/.scripts/";
       };
       environment = {
         User = "nico";

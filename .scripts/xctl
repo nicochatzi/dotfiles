@@ -13,7 +13,7 @@ focus_or_launch TITLE CMD DIR="$HOME":
     eval alacritty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
   fi
 
-# open a ipython terminal
+# run python REPL with useful python packages
 pyterm:
   nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
 
@@ -31,28 +31,33 @@ tmux_sesh NAME CMD CLEAR="":
   tmux send-keys -t "{{NAME}}" C-l
   tmux attach-session -t "{{NAME}}"
 
-# direnv setup: template or at least one shell paths
+# direnv setup: from shell template or shells to use
 use_nix +SHELLS:
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
   if [ $# -gt 0 ]; then
-      touch $(pwd)/.envrc
-      for file in "$@"; do
-          echo "use_nix $file;" >> $(pwd)/.envrc
-          echo "using nix shell @ $file"
-      done
+    touch $(pwd)/.envrc
+    for file in "$@"; do
+      echo "use nix $file;" >> $(pwd)/.envrc
+      echo "using nix shell @ $file"
+    done
   else
-      echo "use_nix" > $(pwd)/.envrc
-      echo "with import <nixpkgs> {}; mkShell { packages = [ pkg-config ]; }" > $(pwd)/shell.nix
-      echo "using local nix shell"
+    echo "use nix" > $(pwd)/.envrc
+    echo "with import <nixpkgs> {}; mkShell { packages = [ pkg-config ]; }" > $(pwd)/shell.nix
+    echo "using local nix shell"
   fi
-
   direnv allow
 
-# direnv setup: template or copied flake
+# direnv setup: from flake template or copied flake
 use_flake FLAKE="":
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
+    touch `pwd`/.envrc
+  if [ {{FLAKE}} -eq "" ]; then
+    cp $file `pwd`/flake.nix
+  else
+    nix flake init
+  fi
   direnv allow
 
 
@@ -64,10 +69,6 @@ cp:
   else
     xclip -selection clipboard
   fi
-
-# install completions for zsh
-completions:
-   just -f {{justfile()}} --completions zsh > ~/.zfunc/_xctl
 
 # "light" or "dark"?
 theme:
@@ -145,3 +146,101 @@ theme_toggle:
   else
     just -f {{justfile()}} theme_set "light"
   fi
+
+FEEDS_STATE_DIR:="${HOME}/.local/share/feeds"
+
+# follow the feeds log
+feeds_log:
+  tail -fn10 {{FEEDS_STATE_DIR}}/log
+
+# check for new items in feeds and notify
+feeds_check:
+  nix-shell feeds/shell.nix \
+    --run 'python3 feeds/check.py {{FEEDS_STATE_DIR}}' \
+    >> {{FEEDS_STATE_DIR}}/log
+
+# parse through unread items and open the selected one
+feeds_find:
+  #!/usr/bin/env bash
+  store=`ls {{FEEDS_STATE_DIR}} | fzf`
+  selected=`jq -r '.[] | "\(.title) - \(.link)"' {{FEEDS_STATE_DIR}}/$store | fzf`
+  if [ -n "$selected" ]; then \
+    xdg-open `echo "$selected" | sed 's/.* - //'`; \
+  fi
+
+# extract a semver from a string
+semver:
+  grep -oP '(\d+\.\d+\.\d+)' | head -1
+
+# patch the interpreter of a binary to use the nix link-loader
+patchelf BIN:
+  #!/usr/bin/env bash
+  nix_shell_ld_path=$(nix-shell --run 'echo $LD_LIBRARY_PATH')
+  nix_linker=$(echo $nix_shell_ld_path | tr ':' '\n' | grep ld-linux | head -n 1)
+  patchelf --set-interpreter "$nix_linker" "$binary"
+
+# https://xkcd.com/1168/
+comp FILE:
+  tar -xzvf {{FILE}}
+
+# convert a string to UPPER CASE
+to_upper:
+  tr '[:lower:]' '[:upper:]'
+
+# convert a string to lower case
+to_lower:
+  tr '[:upper:]' '[:lower:]'
+
+# convert a string to kebab-case
+to_kebab:
+  sed 's/[ _]/-/g'
+
+# convert a string to snake_case
+to_snake:
+  sed 's/[- ]/_/g'
+
+# launch an HTTP server from current dir
+serve PORT="8080":
+  python -m http.server \
+    -d {{invocation_directory()}} \
+    {{PORT}}
+
+DOCK_DEV:="dock/dev"
+DOCK_BASE:="dock/base"
+
+# enter a container with dev tools installed, pwd mounted
+dock: (_dock_enter DOCK_DEV)
+
+# enter a minimal container, pwd mounted
+dock_base: (_dock_enter DOCK_BASE)
+
+# build the "dock" containers
+dock_build: (_dock_build "base" DOCK_BASE) (_dock_build "dev" DOCK_DEV)
+
+_dock_build TARGET NAME:
+  podman build -f docker/dev.dockerfile --target {{TARGET}} -t {{NAME}} .
+
+_dock_enter CONTAINER:
+  podman run -it --rm \
+    --user=root:$(id -g) \
+    -w /project -v {{invocation_directory()}}:/project:Z \
+    {{CONTAINER}} bash
+
+# https://nixos.org/guides/nix-pills/garbage-collector
+# collect all the nixos/nix garbage
+nixos-gc:
+  nix-store --gc
+  nix-store --optimise
+  sudo nix-collect-garbage -d
+
+# nixos-rebuild switch
+nixos-rebuild:
+  #!/usr/bin/env zsh
+  source ~/.zshrc
+  nixfmt ~/.nixfiles
+  dotfiles a ~/.nixfiles
+  sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname) -v
+  echo "commit message:"
+  read COMMIT_MESSAGE
+  dotfiles commit -m "nixos: $COMMIT_MESSAGE" \
+    -m "$(nixos-rebuild list-generations | grep current)"
