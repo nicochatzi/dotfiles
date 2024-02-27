@@ -47,7 +47,7 @@
     };
     xkb = {
       layout = "gb";
-      variant = "";
+      variant = "intl";
       options = "caps:escape";
     };
   };
@@ -112,13 +112,12 @@
 
       # wrapped commands
       (pkgs.writeScriptBin "delta" ''
-        #! ${pkgs.bash}/bin/bash
-        color="--dark"
-        if [[ $(xctl theme) == "light" ]]; then color="--light"; fi
-        command ${pkgs.delta}/bin/delta $color "$@"
+        command ${pkgs.delta}/bin/delta --$(xctl theme) "$@"
+      '')
+      (pkgs.writeScriptBin "bat" ''
+        command ${pkgs.bat}/bin/bat --theme=gruvbox-$(xctl theme) "$@"
       '')
       (pkgs.writeScriptBin "btm" ''
-        #! ${pkgs.bash}/bin/bash
         color="gruvbox"
         if [[ $(xctl theme) == "light" ]]; then color="gruvbox-light"; fi
         command ${pkgs.bottom}/bin/btm --color $color "$@"
