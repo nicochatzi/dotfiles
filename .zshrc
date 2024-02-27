@@ -46,16 +46,14 @@ if [[ -z "$VIMRUNTIME" ]]; then
 fi
 
 alias tree="tree -C"
-alias l="eza -a --icons=auto"
-alias ll="eza -lam --icons=auto"
+alias l="eza -lam --icons=auto"
+alias ll="eza -lamhUuH --icons=auto --git"
 alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias nv='nvim'
 alias j='just'
 alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
-alias xsys='~/.xsys/bin/xsys'
-alias bat='bat --theme=ansi'
 
 we() {
     local filter_flag=""
@@ -116,7 +114,7 @@ zle -N zle-keymap-select
 echo -ne '\e[5 q'
 
 # FZF config
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse'
+export FZF_DEFAULT_OPTS='--height 100% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 setopt globdots
 
@@ -126,14 +124,14 @@ zstyle ':completion:complete:*:options' sort false
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # fzf-preview for windowed view with fzf-tab : https://github.com/Aloxaf/fzf-tab/wiki/Preview
-zstyle ':fzf-tab:complete:(cd|eza|l|ll|ls|dotfiles):*' fzf-preview \
-    'eza -T -L 1 --icons --color=always $realpath'
-zstyle ':fzf-tab:complete:(git|dotfiles)-(a|add|diff|restore):*' fzf-preview \
+# zstyle ':fzf-tab:complete:*:*' fzf-preview \
+#     'eza -T -L 1 --icons --color=always $realpath'
+zstyle ':fzf-tab:complete:git-(a|add|diff|restore):*' fzf-preview \
     'git diff $word | delta'
-zstyle ':fzf-tab:complete:(nvim|vim|bat):*' fzf-preview \
-    'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --color=always $realpath; fi'
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
   'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:*:*' fzf-preview \
+    'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

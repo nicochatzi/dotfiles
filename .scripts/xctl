@@ -228,13 +228,13 @@ _dock_enter CONTAINER:
 
 # https://nixos.org/guides/nix-pills/garbage-collector
 # collect all the nixos/nix garbage
-nixos-gc:
+nix_gc:
   nix-store --gc
   nix-store --optimise
   sudo nix-collect-garbage -d
 
 # nixos-rebuild switch
-nixos-rebuild:
+nix_rebuild:
   #!/usr/bin/env zsh
   source ~/.zshrc
   nixfmt ~/.nixfiles
