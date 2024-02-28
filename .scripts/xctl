@@ -6,33 +6,53 @@ set quiet
 help:
   just --list --unsorted --justfile {{justfile()}}
 
+# system monitor
+top:
+  #!/usr/bin/env zsh
+  . ~/.zshrc
+  btm --basic --mem_as_value
+
+# connect HDMI-1 monitor to laptop
+connect-monitor POSITION="above":
+  xrandr --output HDMI-1 --auto --{{POSITION}} eDP-1
+
 # focus a terminal window or launch a new one
-focus_or_launch TITLE CMD DIR="$HOME":
+term-open TITLE CMD DIR="$HOME":
   #!/usr/bin/env bash
   if ! i3-msg "[title=\"{{TITLE}}\"] focus"; then
     eval alacritty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
   fi
 
 # run python REPL with useful python packages
-pyterm:
+term-py:
   nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
 
+# fuzzy find and switch tmux session
+tmux-switch:
+  tmux list-sessions \
+    | sed "s/:.*//" \
+    | fzf --height 20%  --reverse \
+    | xargs -I {} tmux switch-client -t {}
+
 # create a tmux session if it doesn't exist and attach to it
-tmux_sesh NAME CMD CLEAR="":
+tmux-sesh NAME CMD="" CLEAR="":
   #!/usr/bin/env bash
   if ! tmux has-session -t "{{NAME}}" 2>/dev/null; then
      tmux new-session -s "{{NAME}}" -d
 
-    if [ "{{CLEAR}}" = "clear" ]; then
+    if [ "{{CMD}}" != "" ]; then
       tmux send-keys -t "{{NAME}}" "{{CMD}}" C-m
+    fi
+
+    if [ "{{CLEAR}}" = "clear" ]; then
+      tmux send-keys -t "{{NAME}}" C-l
     fi
   fi
 
-  tmux send-keys -t "{{NAME}}" C-l
   tmux attach-session -t "{{NAME}}"
 
 # direnv setup: from shell template or shells to use
-use_nix +SHELLS:
+use-nix +SHELLS:
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
   if [ $# -gt 0 ]; then
@@ -49,7 +69,7 @@ use_nix +SHELLS:
   direnv allow
 
 # direnv setup: from flake template or copied flake
-use_flake FLAKE="":
+use-flake FLAKE="":
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
     touch `pwd`/.envrc
@@ -80,7 +100,7 @@ theme:
   fi
 
 # set theme to "light" or "dark"
-theme_set MODE:
+theme-set MODE:
   #!/usr/bin/env bash
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
@@ -139,28 +159,28 @@ theme_set MODE:
   done
 
 # toggle between light and dark themes
-theme_toggle:
+theme-toggle:
   #!/usr/bin/env bash
   if [[ $(just -f {{justfile()}} theme) == "light" ]]; then
-    just -f {{justfile()}} theme_set "dark"
+    just -f {{justfile()}} theme-set "dark"
   else
-    just -f {{justfile()}} theme_set "light"
+    just -f {{justfile()}} theme-set "light"
   fi
 
 FEEDS_STATE_DIR:="${HOME}/.local/share/feeds"
 
 # follow the feeds log
-feeds_log:
+feeds-log:
   tail -fn10 {{FEEDS_STATE_DIR}}/log
 
 # check for new items in feeds and notify
-feeds_check:
+feeds-check:
   nix-shell feeds/shell.nix \
     --run 'python3 feeds/check.py {{FEEDS_STATE_DIR}}' \
     >> {{FEEDS_STATE_DIR}}/log
 
 # parse through unread items and open the selected one
-feeds_find:
+feeds-find:
   #!/usr/bin/env bash
   store=`ls {{FEEDS_STATE_DIR}} | fzf`
   selected=`jq -r '.[] | "\(.title) - \(.link)"' {{FEEDS_STATE_DIR}}/$store | fzf`
@@ -184,19 +204,19 @@ comp FILE:
   tar -xzvf {{FILE}}
 
 # convert a string to UPPER CASE
-to_upper:
+to-upper:
   tr '[:lower:]' '[:upper:]'
 
 # convert a string to lower case
-to_lower:
+to-lower:
   tr '[:upper:]' '[:lower:]'
 
 # convert a string to kebab-case
-to_kebab:
+to-kebab:
   sed 's/[ _]/-/g'
 
 # convert a string to snake_case
-to_snake:
+to-snake:
   sed 's/[- ]/_/g'
 
 # launch an HTTP server from current dir
@@ -209,56 +229,56 @@ DOCK_DEV:="dock/dev"
 DOCK_BASE:="dock/base"
 
 # enter a container with dev tools installed, pwd mounted
-dock: (_dock_enter DOCK_DEV)
+dock: (_dock-enter DOCK_DEV)
 
 # enter a minimal container, pwd mounted
-dock_base: (_dock_enter DOCK_BASE)
+dock-base: (_dock-enter DOCK_BASE)
 
 # build the "dock" containers
-dock_build: (_dock_build "base" DOCK_BASE) (_dock_build "dev" DOCK_DEV)
+dock-build: (_dock-build "base" DOCK_BASE) (_dock-build "dev" DOCK_DEV)
 
-_dock_build TARGET NAME:
+_dock-build TARGET NAME:
   podman build -f docker/dev.dockerfile --target {{TARGET}} -t {{NAME}} .
 
-_dock_enter CONTAINER:
+_dock-enter CONTAINER:
   podman run -it --rm \
     --user=root:$(id -g) \
     -w /project -v {{invocation_directory()}}:/project:Z \
     {{CONTAINER}} bash
 
 # run cargo clean in all cargo projects in a dir
-clean_cargo DIR="~/code":
+clean-cargo DIR="~/code":
   find {{DIR}} -name Cargo.toml -execdir sh -c \
     'echo "cleaning: $(pwd)" && cargo clean' \;
 
 # rm -rf node_modules in all npm projects in a dir
-clean_npm DIR="~/code":
+clean-npm DIR="~/code":
   find {{DIR}} -name package.json -execdir sh -c \
     'echo "cleaning: $(pwd)" && rm -rf node_modules' \;
 
 # clean up docker containers
-clean_docker:
+clean-docker:
   docker kill $(docker ps -q)
   docker rm $(docker ps -a -q)
   docker system prune -a
 
 # clean up podman containers
-clean_podman:
+clean-podman:
   podman stop $(podman ps -q)
   podman rm $(podman ps -a -q)
   podman image prune
 
 # https://nixos.org/guides/nix-pills/garbage-collector
 # collect all the nixos/nix garbage
-nix_gc:
+nix-gc:
   nix-store --gc
   nix-store --optimise
   sudo nix-collect-garbage
 
 # nixos-rebuild switch
-nix_rebuild:
+nix-rebuild:
   #!/usr/bin/env zsh
-  source ~/.zshrc
+  . ~/.zshrc
   nixfmt ~/.nixfiles
   dotfiles a ~/.nixfiles
   sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname) -v

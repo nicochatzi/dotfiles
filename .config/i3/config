@@ -40,17 +40,29 @@ set $halfscreen resize set 960 900, move position 480 100
 floating_modifier $mod
 # Resize floating window to full screen (excluding i3status bar)
 bindsym $mod+Shift+Return floating enable, $fullscreen
-bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/xctl theme_toggle
+bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/xctl theme-toggle
 
 
-# Keybindings
-bindsym $mod+Return exec --no-startup-id alacritty
-set $open_term exec --no-startup-id ~/.scripts/xctl focus_or_launch
-bindsym $mod+t $open_term term_pad_full "~/.scripts/xctl tmux_sesh dev ."
-bindsym $mod+Shift+m $open_term mixer_pad alsamixer
-bindsym $mod+m $open_term top_pad "btm --basic --mem_as_value"
-bindsym $mod+p $open_term py_pad "~/.scripts/xctl tmux_sesh py_repl '~/.scripts/xctl pyterm' clear"
-bindsym $mod+n $open_term notes_pad_full "~/.scripts/xctl tmux_sesh notes 'nvim ~/cloud/gdrive/notes/' clear" $HOME/cloud/gdrive/notes
+# Key bindings for Window open/focus
+set $open_term exec --no-startup-id ~/.scripts/xctl term-open
+
+bindsym $mod+Return exec --no-startup-id \
+  alacritty
+
+bindsym $mod+t $open_term term_pad_full \
+  "~/.scripts/xctl tmux-sesh dev"
+
+bindsym $mod+Shift+m $open_term mixer_pad \
+  alsamixer
+
+bindsym $mod+m $open_term top_pad \
+  "~/.scripts/xctl top"
+
+bindsym $mod+p $open_term py_pad \
+  "~/.scripts/xctl tmux-sesh py_repl '~/.scripts/xctl term-py' clear"
+
+bindsym $mod+n $open_term notes_pad_full \
+  "~/.scripts/xctl tmux-sesh notes 'nvim ~/cloud/gdrive/notes/' clear" $HOME/cloud/gdrive/notes
 
 # Window Modifications
 for_window [class=".*"] border pixel 1
