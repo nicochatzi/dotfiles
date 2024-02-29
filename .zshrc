@@ -1,5 +1,13 @@
 # zmodload zsh/zprof
 
+if type brew &>/dev/null; then
+  # this may be required before running the next commands
+  # sudo chmod -R 755 $(brew --prefix)
+  #
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit; compinit
+fi
+
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 export RUST_BACKTRACE=1
