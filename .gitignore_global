@@ -3,3 +3,4 @@
 .direnv/
 .rgignore
 shell.nix
+.DS_Store
