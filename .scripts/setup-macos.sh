@@ -90,6 +90,7 @@ install_cargo_extensions() {
 }
 
 install_language_servers() {
+  rustup component add rust-analyzer
   cargo install asm-lsp
   npm install -g dockerfile-language-server-nodejs
   cargo install --git https://github.com/oxalica/nil nil
