@@ -14,6 +14,7 @@ install_base_packages() {
     curl \
     git \
     python3 \
+    pkg-config \
   )
 
   install_system_packages "${packages[@]}"
@@ -25,6 +26,7 @@ install_languages() {
     clang-format \
     hadolint \
     shellcheck \
+    cmake \
    )
 
   install_system_packages "${packages[@]}"
@@ -39,7 +41,7 @@ install_tui() {
   local packages=(\
     zsh \
     just \
-    exa \
+    eza \
     tig \
     nvim \
     bat \
