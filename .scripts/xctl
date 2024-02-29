@@ -99,15 +99,18 @@ theme:
     echo "dark"
   fi
 
-theme-common-set MODE:
+_theme-set-alacritty MODE:
   #!/usr/bin/env bash
   set -euo pipefail
-
   ALACRITTY_CONFIG="$HOME/.config/alacritty"
   ln -sf "$ALACRITTY_CONFIG/{{MODE}}.toml" "$ALACRITTY_CONFIG/theme.toml"
   touch "$ALACRITTY_CONFIG/alacritty.toml"
 
+_theme-set-nvim MODE:
+  #!/usr/bin/env bash
+  set -euo pipefail
   NVIM_CONFIG="$HOME/.config/nvim/lua/config"
+  declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
   ln -sf "$NVIM_CONFIG/colors/{{MODE}}.lua" "$NVIM_CONFIG/colors/init.lua"
   ln -sf "$NVIM_CONFIG/theme/{{MODE}}.lua" "$NVIM_CONFIG/theme/init.lua"
   for SERVER in $(nvr --serverlist); do
@@ -115,6 +118,8 @@ theme-common-set MODE:
       -cc "lua vim.api.nvim_set_option('background', '{{MODE}}')" \
       -cc "colorscheme ${mode_nvim[{{MODE}}]}"
   done
+
+theme-common-set MODE: (_theme-set-alacritty MODE) (_theme-set-nvim MODE)
 
 # set theme to "light" or "dark"
 theme-set MODE: (theme-common-set MODE)
@@ -129,7 +134,6 @@ theme-set MODE: (theme-common-set MODE)
   declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
   declare -A mode_border=( ["light"]="#458588" ["dark"]="#54546d" )
   declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
-  declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
   declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
   declare -A mode_urgency_normal_fg=( ["light"]="#282828" ["dark"]="#efd8a5" )
   declare -A mode_urgency_critical_fg=( ["light"]="#880808" ["dark"]="#BF616A" )
