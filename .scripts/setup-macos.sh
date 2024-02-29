@@ -32,7 +32,6 @@ install_languages() {
   install_system_packages "${packages[@]}"
 
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  pip3 install cmake-language-server
   curl -sSL https://install.python-poetry.org | python3 -
   npm i -g n
 }
@@ -44,6 +43,7 @@ install_tui() {
     eza \
     tig \
     nvim \
+    nvr \
     bat \
     fd \
     procs \
@@ -60,8 +60,6 @@ install_tui() {
   )
 
   install_system_packages "${packages[@]}"
-
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
   brew tap homebrew/cask-fonts
   brew install --cask font-jetbrains-mono
@@ -91,6 +89,16 @@ install_cargo_extensions() {
     flamegraph
 }
 
+install_language_servers() {
+  cargo install asm-lsp
+  npm install -g dockerfile-language-server-nodejs
+  cargo install --git https://github.com/oxalica/nil nil
+  cargo install taplo-cli --locked
+  pip3 install cmake-language-server
+  brew install tflint
+  npm i -g bash-language-server
+}
+
 brew update
 
 echo "~> Installing system packages"
@@ -98,6 +106,9 @@ install_base_packages
 
 echo "~> Installing languages"
 install_languages
+
+echo "~> Installing languages servers"
+install_language_servers
 
 echo "~> Installing cargo extensions"
 install_cargo_extensions
@@ -111,7 +122,7 @@ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install
 
 echo "~> Post-install"
 brew cleanup
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 zsh
 
 echo "~~> Done setting up"

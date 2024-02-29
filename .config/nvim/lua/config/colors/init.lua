@@ -1,1 +1,1 @@
-/home/nico/.config/nvim/lua/config/colors/dark.lua
+/Users/nico/.config/nvim/lua/config/colors/dark.lua

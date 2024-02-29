@@ -99,15 +99,26 @@ theme:
     echo "dark"
   fi
 
+theme-nvim-set MODE:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  NVIM_CONFIG="$HOME/.config/nvim/lua/config"
+  ln -sf "$NVIM_CONFIG/colors/{{MODE}}.lua" "$NVIM_CONFIG/colors/init.lua"
+  ln -sf "$NVIM_CONFIG/theme/{{MODE}}.lua" "$NVIM_CONFIG/theme/init.lua"
+  for SERVER in $(nvr --serverlist); do
+    nvr --nostart --servername "$SERVER" \
+      -cc "lua vim.api.nvim_set_option('background', '{{MODE}}')" \
+      -cc "colorscheme ${mode_nvim[{{MODE}}]}"
+  done
+
 # set theme to "light" or "dark"
-theme-set MODE:
+theme-set MODE: (theme-nvim-set MODE)
   #!/usr/bin/env bash
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
   DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
   ALACRITTY_CONFIG="$HOME/.config/alacritty"
   GTK_CONFIG="$HOME/.config/gtk-3.0"
-  NVIM_CONFIG="$HOME/.config/nvim/lua/config"
   ROFI_CONFIG="$HOME/.config/rofi"
   BRAVE_CONFIG="$HOME/.config/chrome-theme"
   declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
@@ -149,14 +160,6 @@ theme-set MODE:
   sed -i "s/set \$text .*/set \$text ${mode_text[{{MODE}}]}/" "$I3_CONFIG"
   sed -i "s/set \$border .*/set \$border ${mode_border[{{MODE}}]}/" "$I3_CONFIG"
   i3-msg reload
-  # neovim
-  ln -sf "$NVIM_CONFIG/colors/{{MODE}}.lua" "$NVIM_CONFIG/colors/init.lua"
-  ln -sf "$NVIM_CONFIG/theme/{{MODE}}.lua" "$NVIM_CONFIG/theme/init.lua"
-  for SERVER in $(nvr --serverlist); do
-    nvr --nostart --servername "$SERVER" \
-      -cc "lua vim.api.nvim_set_option('background', '{{MODE}}')" \
-      -cc "colorscheme ${mode_nvim[{{MODE}}]}"
-  done
 
 # toggle between light and dark themes
 theme-toggle:
