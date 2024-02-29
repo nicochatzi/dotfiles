@@ -27,7 +27,8 @@ install_languages() {
     hadolint \
     shellcheck \
     cmake \
-    lua
+    lua \
+    zig \
    )
 
   install_system_packages "${packages[@]}"
@@ -91,13 +92,18 @@ install_cargo_extensions() {
 }
 
 install_language_servers() {
+  brew install \
+    tflint \
+    zls
+
   rustup component add rust-analyzer
   cargo install asm-lsp
-  npm install -g dockerfile-language-server-nodejs
   cargo install --git https://github.com/oxalica/nil nil
   cargo install taplo-cli --locked
+
   pip3 install cmake-language-server
-  brew install tflint
+
+  npm install -g dockerfile-language-server-nodejs
   npm i -g bash-language-server
 }
 
