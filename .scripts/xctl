@@ -99,9 +99,14 @@ theme:
     echo "dark"
   fi
 
-theme-nvim-set MODE:
+theme-common-set MODE:
   #!/usr/bin/env bash
   set -euo pipefail
+
+  ALACRITTY_CONFIG="$HOME/.config/alacritty"
+  ln -sf "$ALACRITTY_CONFIG/{{MODE}}.toml" "$ALACRITTY_CONFIG/theme.toml"
+  touch "$ALACRITTY_CONFIG/alacritty.toml"
+
   NVIM_CONFIG="$HOME/.config/nvim/lua/config"
   ln -sf "$NVIM_CONFIG/colors/{{MODE}}.lua" "$NVIM_CONFIG/colors/init.lua"
   ln -sf "$NVIM_CONFIG/theme/{{MODE}}.lua" "$NVIM_CONFIG/theme/init.lua"
@@ -112,12 +117,11 @@ theme-nvim-set MODE:
   done
 
 # set theme to "light" or "dark"
-theme-set MODE: (theme-nvim-set MODE)
+theme-set MODE: (theme-common-set MODE)
   #!/usr/bin/env bash
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
   DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
-  ALACRITTY_CONFIG="$HOME/.config/alacritty"
   GTK_CONFIG="$HOME/.config/gtk-3.0"
   ROFI_CONFIG="$HOME/.config/rofi"
   BRAVE_CONFIG="$HOME/.config/chrome-theme"
@@ -132,8 +136,6 @@ theme-set MODE: (theme-nvim-set MODE)
 
   nitrogen --save --set-zoom-fill \
     "$HOME/.nixfiles/assets/${mode_wallpaper[{{MODE}}]}"
-  ln -sf "$ALACRITTY_CONFIG/{{MODE}}.toml" "$ALACRITTY_CONFIG/theme.toml"
-  touch "$ALACRITTY_CONFIG/alacritty.toml"
   # misc / immediate
   ln -sf "$GTK_CONFIG/{{MODE}}.ini" "$GTK_CONFIG/settings.ini"
   ln -sf "$ROFI_CONFIG/{{MODE}}.rasi" "$ROFI_CONFIG/theme.rasi"
