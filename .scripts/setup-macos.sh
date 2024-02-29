@@ -27,6 +27,7 @@ install_languages() {
     hadolint \
     shellcheck \
     cmake \
+    lua
    )
 
   install_system_packages "${packages[@]}"
