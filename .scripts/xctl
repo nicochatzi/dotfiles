@@ -6,6 +6,12 @@ set quiet
 help:
   just --list --unsorted --justfile {{justfile()}}
 
+_info MSG:
+  echo -e "\033[0;34minfo: {{MSG}}\033[0m"
+
+_warn MSG:
+  echo -e "\033[0;33mwarn: {{MSG}}\033[0m"
+
 # system monitor
 top:
   #!/usr/bin/env zsh
@@ -52,7 +58,7 @@ tmux-sesh NAME CMD="" CLEAR="":
   tmux attach-session -t "{{NAME}}"
 
 # direnv setup: from shell template or shells to use
-use-nix +SHELLS:
+use-nix *SHELLS:
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
   if [ $# -gt 0 ]; then
@@ -255,15 +261,20 @@ _dock-enter CONTAINER:
     -w /project -v {{invocation_directory()}}:/project:Z \
     {{CONTAINER}} bash
 
+# fetch all git repos in a dir
+fetch-all DIR="~/code":
+  find {{DIR}} -name .git -execdir sh -c \
+    'xctl _info "fetching: $(pwd)" && git fetch --all' \;
+
 # run cargo clean in all cargo projects in a dir
 clean-cargo DIR="~/code":
   find {{DIR}} -name Cargo.toml -execdir sh -c \
-    'echo "cleaning: $(pwd)" && cargo clean' \;
+    'xctl _info "cleaning: $(pwd)" && cargo clean' \;
 
 # rm -rf node_modules in all npm projects in a dir
 clean-npm DIR="~/code":
   find {{DIR}} -name package.json -execdir sh -c \
-    'echo "cleaning: $(pwd)" && rm -rf node_modules' \;
+    'xctl _info "cleaning: $(pwd)" && rm -rf node_modules' \;
 
 # clean up docker containers
 clean-docker:

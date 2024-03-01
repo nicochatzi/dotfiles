@@ -47,7 +47,7 @@
     };
     xkb = {
       layout = "gb";
-      variant = "intl";
+      variant = "";
       options = "caps:escape";
     };
   };
@@ -103,6 +103,7 @@
       # apps
       alacritty
       brave
+      firefox
       gimp
       obs-studio
       reaper
