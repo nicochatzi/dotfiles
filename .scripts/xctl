@@ -19,8 +19,15 @@ top:
   btm --basic --mem_as_value
 
 # connect HDMI-1 monitor to laptop
-connect-monitor POSITION="above":
+hdmi-screen POSITION="above":
   xrandr --output HDMI-1 --auto --{{POSITION}} eDP-1
+
+# connect and default to HDMI-1 audio
+hdmi-audio POSITION="above": (hdmi-screen POSITION)
+  pulseaudio --kill && pulseaudio --start
+  pactl load-module module-alsa-sink device=hw:0,3
+  pactl set-default-sink alsa_output.hw_0_3
+  amixer -c 0 set IEC958 unmute
 
 # focus a terminal window or launch a new one
 term-open TITLE CMD DIR="$HOME":
