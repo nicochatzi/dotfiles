@@ -95,6 +95,13 @@ nvim() {
     fi
 }
 
+cod() {
+  selected=$(find "$HOME/code" -type d -name .git -prune \
+    | xargs dirname {} \
+    | fzf --height=10 --prompt="projects: ")
+  cd $selected
+}
+
 # Bindings and Widgets
 function clear-screen-and-scrollback() { clear && printf '\e[3J' && zle reset-prompt }
 zle -N clear-screen-and-scrollback
