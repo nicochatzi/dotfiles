@@ -12,5 +12,20 @@
 
   networking.hostName = "lati";
 
+  services.thermald = { enable = true; };
+
   powerManagement.enable = true;
+
+  hardware = {
+    pulseaudio.enable = true;
+  };
+
+  sound = { enable = true; };
+  services.pipewire = {
+    enable = false;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 }

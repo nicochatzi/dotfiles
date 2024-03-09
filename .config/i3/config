@@ -25,7 +25,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:JetBrainsMono NF 10
+font pango:JetBrainsMono NF 9
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -207,6 +207,7 @@ bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
 
 # Screenshots
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
+bindsym $mod+Shift+p exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
 bindsym Shift+Print exec --no-startup-id maim -s "/home/$USER/Pictures/$(date)"
 bindsym Ctrl+Shift+Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
@@ -227,7 +228,7 @@ bar {
   status_command i3status
   # workspace_buttons yes
   position bottom
-  font pango:JetBrainsMono NF 11
+  font pango:JetBrainsMono NF 9
   separator_symbol "|"
     colors {
       background $bg

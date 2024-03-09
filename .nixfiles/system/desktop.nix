@@ -3,19 +3,9 @@
 
   hardware = {
     ledger.enable = true;
-    pulseaudio.enable = true;
   };
-
-  sound = { enable = true; };
 
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = false;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
 
   services.xserver = {
     enable = true;
@@ -41,7 +31,7 @@
         };
       };
       autoLogin = {
-        enable = false;
+        enable = true;
         user = "nico";
       };
     };
@@ -72,13 +62,12 @@
     };
   };
 
-  services.thermald = { enable = true; };
-
   users.users.nico = {
     isNormalUser = true;
+    initialHashedPassword = "$6$BnzWijwCFBvZb8Gu$p54z1dS.sXG2mZ1w10TgPjap5pa/gJpvtFIWaOCDZyWtYFKJSf8WNZ0P3ltJmD10CtNyD45Cq0h45.RyA0A0w0";
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" ];
     packages = with pkgs; [
       # system
       i3
@@ -102,13 +91,13 @@
 
       # apps
       alacritty
-      brave
+      # brave
       firefox
       gimp
       obs-studio
       reaper
-      bitwig-studio
-      ledger-live-desktop
+      # bitwig-studio
+      # ledger-live-desktop
       gpick
 
       # wrapped commands

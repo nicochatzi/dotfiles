@@ -70,7 +70,8 @@ battery 0 {
   status_bat = " 󰂀"
   status_unk = " ?"
   status_full = " 󰂄"
-  path = "/sys/class/power_supply/BAT%d/uevent"
+  # path = "/sys/class/power_supply/BAT%d/uevent"
+  path = "/sys/class/power_supply/macsmc-battery/uevent"
   low_threshold = 20
   last_full_capacity = true
 }

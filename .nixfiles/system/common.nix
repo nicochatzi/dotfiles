@@ -63,7 +63,11 @@
   };
 
   networking = {
-    networkmanager.enable = true;
+    wireless.iwd = {
+      enable = true;  # Enables wireless support via wpa_supplicant.
+      settings.General.EnableNetworkConfiguration = true;
+    };
+    # networkmanager.enable = true;
     # wireless.enable = true;
     # proxy.default = "http://user:password@proxy:port/";
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
