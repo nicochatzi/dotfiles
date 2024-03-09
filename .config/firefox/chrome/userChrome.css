@@ -1,0 +1,57 @@
+#TabsToolbar {
+  visibility: collapse !important;
+}
+
+.titlebar-spacer {
+  display: none !important;
+}
+
+/* Dark theme styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --chrome-bg-color: #282828;
+    --chrome-text-color: #eee;
+  }
+
+  #browser vbox#appcontent tabbrowser,
+  #content,
+  #tabbrowser-tabpanels,
+  browser[type="content-primary"],
+  browser[type="content"]>html {
+    background: var(--chrome-bg-color) !important;
+  }
+
+  .PinnedTabsBar .Tab .SearchBar {
+    background-color: var(--chrome-bg-color) !important;
+  }
+
+  #nav-bar {
+    background-color: var(--chrome-bg-color) !important;
+    color: var(--chrome-text-color) !important;
+  }
+}
+
+/* Light theme styles */
+@media (prefers-color-scheme: light) {
+  :root {
+    --chrome-bg-color: #FBF1C7;
+    --chrome-text-color: #000;
+  }
+
+  #browser vbox#appcontent tabbrowser,
+  #content,
+  #tabbrowser-tabpanels,
+  browser[type="content-primary"],
+  browser[type="content"]>html {
+    background: var(--chrome-bg-color) !important;
+  }
+
+  .PinnedTabsBar .Tab .SearchBar {
+    background-color: var(--chrome-bg-color) !important;
+  }
+
+  #nav-bar {
+    background-color: var(--chrome-bg-color) !important;
+    color: var(--chrome-text-color) !important;
+  }
+}
