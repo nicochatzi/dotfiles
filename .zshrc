@@ -58,7 +58,6 @@ alias l="eza -lam --icons=auto"
 alias ll="eza -lamhUuH --icons=auto --git"
 alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias nv='nvim'
 alias j='just'
 alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
@@ -86,7 +85,7 @@ we() {
     watchexec -c -r -w . $filter_flag -- $cmd
 }
 
-nvim() {
+nv() {
     if [[ -d $1 ]]; then
         cd "$1"
         command nvim
