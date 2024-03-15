@@ -1,8 +1,6 @@
 { pkgs, ... }:
 let mountdir = "/home/nico/cloud/gdrive";
 in {
-  networking.networkmanager.enable = true;
-
   environment = {
     systemPackages = [ pkgs.rclone ];
     etc."fuse.conf".text = ''

@@ -63,10 +63,10 @@
   };
 
   networking = {
-    networkmanager.enable = true;
-    # wireless.enable = true;
-    # proxy.default = "http://user:password@proxy:port/";
-    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    wireless.iwd = {
+      enable = true;
+      settings.General.EnableNetworkConfiguration = true;
+    };
   };
 
   time.timeZone = "Europe/Paris";
@@ -132,6 +132,7 @@
     cmake
     ninja
     gnumake
+    gcc
     llvmPackages_17.bintools
     llvmPackages_17.clang
     llvmPackages_17.lldb
@@ -147,6 +148,7 @@
     valgrind
     kcachegrind
     zig
+    cargo-generate
 
   ];
 }
