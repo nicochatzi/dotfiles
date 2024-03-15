@@ -94,22 +94,13 @@
       alsa-lib
       brightnessctl
 
-      # term
+      # basic apps
       neovim
       neovim-remote
       tmux
       zsh
-
-      # apps
       alacritty
-      brave
       firefox
-      gimp
-      obs-studio
-      reaper
-      bitwig-studio
-      ledger-live-desktop
-      gpick
 
       # wrapped commands
       (pkgs.writeScriptBin "delta" ''
@@ -125,32 +116,6 @@
       '')
     ];
   };
-
-  environment.systemPackages = with pkgs; [
-    # language servers / tools
-    asm-lsp
-    cmake-language-server
-    dockerfile-language-server-nodejs
-    gopls
-    ltex-ls
-    lua-language-server
-    nil
-    nixfmt
-    nodePackages.bash-language-server
-    nodePackages.typescript-language-server
-    python311Packages.pylint
-    python311Packages.pynvim
-    python311Packages.black
-    python311Packages.python-lsp-server
-    rust-analyzer
-    sqls
-    taplo
-    tflint
-    vscode-extensions.vadimcn.vscode-lldb # provides code-lldb for DAP support
-    vscode-langservers-extracted # provides html, css, json, eslint
-    yaml-language-server
-    zls
-  ];
 
   nixpkgs.config = {
     allowUnfree = true;
