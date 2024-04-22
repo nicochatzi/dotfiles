@@ -5,6 +5,7 @@
     reaper
     bitwig-studio
     ledger-live-desktop
+    audacity
     gpick
   ];
 }
