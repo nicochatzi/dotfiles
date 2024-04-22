@@ -45,6 +45,8 @@
         user = "nico";
       };
     };
+    autoRepeatDelay = 250;
+    autoRepeatInterval = 25;
     xkb = {
       layout = "gb";
       variant = "";
