@@ -133,7 +133,7 @@
 
   environment.variables = with pkgs; {
     EDITOR = "nvim";
-    BROWSER = "brave";
+    BROWSER = "firefox";
     OPENSSL_DEV = openssl.dev;
     PKG_CONFIG_PATH = "${openssl.dev}/lib/pkgconfig";
   };
