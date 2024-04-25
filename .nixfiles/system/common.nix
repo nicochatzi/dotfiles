@@ -65,7 +65,10 @@
   networking = {
     wireless.iwd = {
       enable = true;
-      settings.General.EnableNetworkConfiguration = true;
+      settings = {
+        Settings = { AutoConnect = true; };
+        General.EnableNetworkConfiguration = true;
+      };
     };
   };
 
