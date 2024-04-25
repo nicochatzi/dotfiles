@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let mountdir = "/home/nico/cloud/gdrive";
+let mountdir = "/home/nico/cloud/proton";
 in {
   environment = {
     systemPackages = [ pkgs.rclone ];
@@ -9,14 +9,14 @@ in {
   };
 
   systemd.user.services.rclone-mount = {
-    description = "Mount Google Drive using rclone";
+    description = "Mount Proton Drive using rclone";
     after = [ "network-online.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig = {
       Type = "simple";
       ExecStartPre = "/run/current-system/sw/bin/mkdir -p ${mountdir}";
       ExecStart = ''
-        ${pkgs.rclone}/bin/rclone mount gdrive: ${mountdir} \
+        ${pkgs.rclone}/bin/rclone mount proton: ${mountdir} \
           --log-level NOTICE \
           --vfs-cache-mode full \
           --vfs-cache-max-size 500G \
