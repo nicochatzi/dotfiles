@@ -1,0 +1,42 @@
+CODE_DIR:="~/demo/code"
+CLOUD_DIR:="~/demo/cloud"
+LOGS_DIR:="~/demo/logs"
+
+build:
+  cargo build --release
+
+github-check:
+  cargo run --release -- github \
+    --dest {{CODE_DIR}} \
+    --log-dir {{LOGS_DIR}}/github/ \
+    --dry-run
+
+github-sync:
+  cargo run --release -- github \
+    --dest {{CODE_DIR}} \
+    --log-dir {{LOGS_DIR}}/github/
+
+rclone-check REMOTE:
+  cargo run --release -- rclone \
+    --remote {{REMOTE}} \
+    --local {{CLOUD_DIR}}/{{REMOTE}}/ \
+    --backup {{CLOUD_DIR}}/archive/ \
+    --log-dir {{LOGS_DIR}}/cloud/ \
+    --check
+
+rclone-sync REMOTE:
+  cargo run --release -- rclone \
+    --remote {{REMOTE}} \
+    --local {{CLOUD_DIR}}/{{REMOTE}}/ \
+    --backup {{CLOUD_DIR}}/archive/ \
+    --log-dir {{LOGS_DIR}}/cloud/
+
+rclone-check-all:
+  just rclone-check proton
+  just rclone-check gdrive
+  just rclone-check s3
+
+rclone-sync-all:
+  just rclone-sync proton
+  just rclone-sync gdrive
+  just rclone-sync s3
