@@ -1,9 +1,18 @@
 CODE_DIR:="~/demo/code"
 CLOUD_DIR:="~/demo/cloud"
 LOGS_DIR:="~/demo/logs"
+CONTAINER:="htz/cloud-sync"
 
 build:
   cargo build --release
+
+build-docker:
+  podman build -t {{CONTAINER}} .
+
+enter-docker:
+  podman run -it --rm \
+    -v `pwd`:/home/nico/cli/ \
+    {{CONTAINER}}
 
 github-check:
   cargo run --release -- github \

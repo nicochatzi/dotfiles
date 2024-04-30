@@ -1,5 +1,5 @@
 {
-  description = "rust dev env";
+  description = "rust-pinned dev env";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -7,25 +7,27 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, rust-overlay, flake-utils, ... }:
+  outputs = { nixpkgs, rust-overlay, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays.default = [ rust-overlay.overlay ];
+          overlays = [ rust-overlay.overlays.default ];
         };
 
       in {
         devShell = pkgs.stdenv.mkDerivation {
-          name = "rust-cmake-env";
+          name = "rust-pinned";
           buildInputs = [
-            (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml-pinned)
-            pkgs.cargo-watch
-            pkgs.cargo-limit
+            (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml)
             pkgs.git
+            pkgs.rclone
             pkgs.gh
             pkgs.jq
             pkgs.just
+            # dev
+            pkgs.cargo-watch
+            pkgs.cargo-limit
           ];
         };
       });
