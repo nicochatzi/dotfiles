@@ -63,7 +63,7 @@ impl Repo {
         let user: GhRepoView =
             serde_json::from_str(&response).map_err(|e| GitHubError::Deserialize(e))?;
 
-        let response = shell::run("gh repo list --json name")?;
+        let response = shell::run("gh repo list --json name --limit 2000")?;
         let repo_list: Vec<GhRepoView> =
             serde_json::from_str(&response).map_err(|e| GitHubError::Deserialize(e))?;
 
