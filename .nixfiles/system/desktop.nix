@@ -116,19 +116,17 @@
         if [[ $(xctl theme) == "light" ]]; then color="gruvbox-light"; fi
         command ${pkgs.bottom}/bin/btm --color $color "$@"
       '')
+
+      # streaming
+      zoom-us
+      obs-studio
     ];
   };
 
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [ "1password-gui" "1password" ];
-  };
-
-  programs._1password.enable = true;
-  programs._1password-gui = {
-    enable = true;
-    polkitPolicyOwners = [ "nico" ];
+      builtins.elem (lib.getName pkg) [ "zoom-us" ];
   };
 
   environment.variables = with pkgs; {
