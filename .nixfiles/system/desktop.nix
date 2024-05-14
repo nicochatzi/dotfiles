@@ -91,7 +91,6 @@
 
       # apps
       alacritty
-      # brave
       firefox
       gimp
       obs-studio
