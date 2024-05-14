@@ -136,6 +136,7 @@
     cmake
     ninja
     gnumake
+    gcc
     llvmPackages_17.bintools
     llvmPackages_17.clang
     llvmPackages_17.lldb
