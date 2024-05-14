@@ -313,3 +313,15 @@ nix-rebuild:
   read COMMIT_MESSAGE
   dotfiles commit -m "nixos: $COMMIT_MESSAGE" \
     -m "$(nixos-rebuild list-generations | grep current)"
+
+esp_dir := "{{env_var('HOME')}}/esp"
+
+# setup esp-idf global dev setup
+esp-setup: (_esp-idf-clone "v5.1") (_esp-idf-clone "v4.4")
+  espup install
+
+_esp-idf-clone VERSION:
+  mkdir {{esp_dir}}
+  cd {{esp_dir}} && \
+    git clone --recursive https://github.com/espressif/esp-idf.git \
+      -b {{VERSION}} {{VERSION}}
