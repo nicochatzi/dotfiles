@@ -31,7 +31,7 @@ in {
   };
 
   systemd.user.services = {
-    rclone-mount-proton = createMountService "proton";
+    # rclone-mount-proton = createMountService "proton";
     rclone-mount-gdrive = createMountService "gdrive";
     "rclone-notify-failure@" = {
       description = "Notify rclone failure";
