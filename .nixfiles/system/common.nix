@@ -152,6 +152,5 @@
     kcachegrind
     zig
     cargo-generate
-
   ];
 }

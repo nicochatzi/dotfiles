@@ -96,13 +96,25 @@
       alsa-lib
       brightnessctl
 
-      # basic apps
+      # basics
       neovim
       neovim-remote
       tmux
       zsh
       alacritty
       firefox
+      # privacy
+      ledger-live-desktop
+      # streaming
+      zoom-us
+      obs-studio
+      # audio
+      reaper
+      audacity
+      bitwig-studio
+      # image
+      gimp
+      gpick
 
       # wrapped commands
       (pkgs.writeScriptBin "delta" ''
@@ -116,17 +128,12 @@
         if [[ $(xctl theme) == "light" ]]; then color="gruvbox-light"; fi
         command ${pkgs.bottom}/bin/btm --color $color "$@"
       '')
-
-      # streaming
-      zoom-us
-      obs-studio
     ];
   };
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [ "zoom-us" ];
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "zoom-us" ];
   };
 
   environment.variables = with pkgs; {
