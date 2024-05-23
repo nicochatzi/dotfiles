@@ -28,15 +28,6 @@
   };
 
   services.displayManager = {
-    lightdm = {
-      enable = true;
-      greeter.enable = true;
-      greeters.slick = {
-        enable = true;
-        draw-user-backgrounds = true;
-        font.name = "JetBrains Mono";
-      };
-    };
     autoLogin = {
       enable = false;
       user = "nico";
@@ -59,6 +50,17 @@
       layout = "gb";
       variant = "";
       options = "caps:escape";
+    };
+    displayManager = {
+      lightdm = {
+        enable = true;
+        greeter.enable = true;
+        greeters.slick = {
+          enable = true;
+          draw-user-backgrounds = true;
+          font.name = "JetBrains Mono";
+        };
+      };
     };
   };
 

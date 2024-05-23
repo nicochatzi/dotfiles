@@ -62,7 +62,7 @@ bindsym $mod+p $open_term py_pad \
   "~/.scripts/xctl tmux-sesh py_repl '~/.scripts/xctl term-py' clear"
 
 bindsym $mod+n $open_term notes_pad_full \
-  "~/.scripts/xctl tmux-sesh notes 'nvim ~/cloud/gdrive/notes/' clear" $HOME/cloud/gdrive/notes
+  "~/.scripts/xctl tmux-sesh notes 'nv ~/obsidian/dev/' clear" $HOME/obsidian/dev
 
 # Window Modifications
 for_window [class=".*"] border pixel 1

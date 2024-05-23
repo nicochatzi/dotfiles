@@ -4,7 +4,7 @@ local obsidian_vault_path
 if string.match(home, "^/Users") then
   obsidian_vault_path = home .. '/Library/Mobile Documents/iCloud~md~obsidian/Documents/htz'
 else
-  obsidian_vault_path = home .. '/cloud/gdrive'
+  obsidian_vault_path = home .. '/obsidian'
 end
 
 -- only set conceallevel if we're in the obsidian_vault_path
@@ -21,7 +21,10 @@ vim.api.nvim_create_autocmd('FileType', {
 
 return {
   'epwalsh/obsidian.nvim',
-  event = { 'BufReadPre ' .. obsidian_vault_path .. '/**.md' },
+  event = {
+    'BufReadPre ' .. obsidian_vault_path .. '/**.md',
+    'VeryLazy',
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
     'hrsh7th/nvim-cmp',
@@ -32,6 +35,12 @@ return {
     -- mappings = {
     --   ["fo"] = require("obsidian.mapping").gf_passthrough(),
     -- },
+    workspaces = {
+      {
+        name = 'dev',
+        path = obsidian_vault_path,
+      },
+    },
     dir = obsidian_vault_path,
     notes_subdir = 'notes',
     -- Optional, set the log level for Obsidian. This is an integer corresponding to one of the log
