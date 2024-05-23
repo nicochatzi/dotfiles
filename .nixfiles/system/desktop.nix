@@ -17,34 +17,42 @@
     jack.enable = true;
   };
 
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+      disableWhileTyping = true;
+      tapping = false;
+      tappingDragLock = false;
+    };
+  };
+
+  services.displayManager = {
+    lightdm = {
+      enable = true;
+      greeter.enable = true;
+      greeters.slick = {
+        enable = true;
+        draw-user-backgrounds = true;
+        font.name = "JetBrains Mono";
+      };
+    };
+    autoLogin = {
+      enable = false;
+      user = "nico";
+    };
+  };
+
+  services.logind = {
+    extraConfig = "HandlePowerKey=suspend";
+    lidSwitch = "suspend";
+  };
+
+  console.useXkbConfig = true;
   services.xserver = {
     enable = true;
     exportConfiguration = true;
-    libinput = {
-      enable = true;
-      touchpad = {
-        naturalScrolling = true;
-        disableWhileTyping = true;
-        tapping = false;
-        tappingDragLock = false;
-      };
-    };
     windowManager = { i3.enable = true; };
-    displayManager = {
-      lightdm = {
-        enable = true;
-        greeter.enable = true;
-        greeters.slick = {
-          enable = true;
-          draw-user-backgrounds = true;
-          font.name = "JetBrains Mono";
-        };
-      };
-      autoLogin = {
-        enable = false;
-        user = "nico";
-      };
-    };
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
     xkb = {
@@ -52,13 +60,6 @@
       variant = "";
       options = "caps:escape";
     };
-  };
-
-  console.useXkbConfig = true;
-
-  services.logind = {
-    extraConfig = "HandlePowerKey=suspend";
-    lidSwitch = "suspend";
   };
 
   location.provider = "geoclue2";
@@ -103,6 +104,7 @@
       zsh
       alacritty
       firefox
+      obsidian
       # privacy
       ledger-live-desktop
       # streaming
@@ -133,7 +135,8 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "zoom-us" ];
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [ "zoom-us" "obsidian" ];
   };
 
   environment.variables = with pkgs; {
