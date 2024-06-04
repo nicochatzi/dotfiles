@@ -313,3 +313,15 @@ nix-rebuild:
   read COMMIT_MESSAGE
   dotfiles commit -m "nixos: $COMMIT_MESSAGE" \
     -m "$(nixos-rebuild list-generations | grep current)"
+
+wind LOCATION='40418f4a30ea47eeb5d4393f7b440215':
+  #!/usr/bin/env bash
+  curl -s https://www.weatherlink.com/embeddablePage/summaryData/{{LOCATION}} \
+    | jq '{
+            "lastReceived": (.lastReceived / 1000 | todate),
+            "data": [
+              .currConditionValues[]
+                | select(.sensorDataName == "2 Min Avg Wind Speed" or .sensorDataName == "10 Min Avg Wind Speed" or .sensorDataName == "10 Min High Wind Speed")
+                | {sensorDataName, reportedValue}
+            ]
+          }'
