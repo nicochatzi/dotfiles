@@ -64,7 +64,7 @@ vim.o.foldenable = true
 vim.g.markdown_folding = 1 -- enable markdown folding
 
 vim.o.spell = true
-vim.o.spelllang = 'en_gb'
+vim.o.spelllang = 'en_us'
 
 vim.cmd([[
     autocmd InsertEnter * :set norelativenumber
@@ -76,3 +76,4 @@ vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype rust]])
 vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
 vim.cmd([[autocmd BufRead,BufNewFile *.mojo setfiletype python]])
 vim.cmd([[autocmd BufRead,BufNewFile flake.lock setfiletype json]])
+vim.cmd([[autocmd BufRead,BufNewFile *.service* set ft=systemd]])

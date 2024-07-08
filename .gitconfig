@@ -10,9 +10,6 @@
   l = log --decorate --graph --all --oneline
   ll = log --decorate --graph --all
   fix = !git reset --soft HEAD~0 && git commit --amend
-[user]
-  name = nicochatzi
-  email = nico@htz.dev
 [init]
   defaultBranch = main
 [core]
@@ -25,3 +22,9 @@
   prune = true
 [pull]
   rebase = true
+[user]
+  name = nicochatzi
+  email = nico@htz.dev
+[includeIf "gitdir:~/code/snc/"]
+  path = .gitconfig_snc
+

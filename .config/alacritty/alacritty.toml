@@ -5,7 +5,7 @@ live_config_reload = true
 draw_bold_text_with_bright_colors = true
 
 [font]
-size = 7
+size = 11
 
 [font.bold]
 family = "JetBrainsMono NF"
@@ -37,6 +37,10 @@ chars = "#"
 key = "Key3"
 mods = "Alt"
 
+[[keyboard.bindings]]
+key = "F11"
+action = "ToggleFullscreen"
+
 [mouse]
 hide_when_typing = true
 
@@ -57,4 +61,4 @@ startup_mode = "Maximized"
 
 [window.padding]
 x = 0
-y = 2
+y = 4

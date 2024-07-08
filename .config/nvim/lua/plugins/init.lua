@@ -157,10 +157,15 @@ return {
   },
 
   {
-    -- show all symbols in a source file
-    'simrat39/symbols-outline.nvim',
-    cmd = 'SymbolsOutline',
-    opts = {},
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen" },
+    keys = { -- Example mapping to toggle outline
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    opts = {
+      -- Your setup opts here
+    },
   },
 
   {

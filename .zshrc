@@ -1,15 +1,9 @@
 # zmodload zsh/zprof
 
-if type brew &>/dev/null; then
-  # this may be required before running the next commands
-  # sudo chmod -R 755 $(brew --prefix)
-  #
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  autoload -Uz compinit; compinit
-fi
-
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
 export RUST_BACKTRACE=1
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
@@ -29,6 +23,19 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 fpath=( ~/.zfunc "${fpath[@]}" )
+
+if type brew &>/dev/null; then
+  # this may be required before running the next commands
+  # sudo chmod -R 755 $(brew --prefix)
+  #
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+else
+  fpath=(~/.zsh/completions $fpath)
+fi
+
+autoload -Uz compinit
+compinit
+
 
 # Plugins
 zinit light Aloxaf/fzf-tab
@@ -147,8 +154,23 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
+source ~/.snc-env
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if [[ $(command -v direnv) ]]; then
   eval "$(direnv export zsh)"
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+. "$HOME/.cargo/env"
+
+alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"

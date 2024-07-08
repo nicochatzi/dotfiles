@@ -47,7 +47,7 @@ return {
     -- levels defined by "vim.log.levels.*" or nil, which is equivalent to DEBUG (1).
     log_level = vim.log.levels.DEBUG,
     daily_notes = {
-      folder = 'dailies',
+      folder = 'dev/dailies',
       date_format = '%Y-%m-%d',
     },
     ui = {

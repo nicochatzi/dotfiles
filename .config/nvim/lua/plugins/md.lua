@@ -6,10 +6,8 @@ return {
 
   {
     'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle' },
+    cmd = { 'MarkdownPreview', 'MarkdownPreviewToggle' },
     ft = { 'markdown', 'md' },
-    build = function()
-      vim.fn['cd app && npx --yes yarn install']()
-    end,
+    build = function() vim.fn["mkdp#util#install"]() end,
   },
 }

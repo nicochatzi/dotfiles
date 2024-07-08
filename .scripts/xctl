@@ -325,3 +325,9 @@ wind LOCATION='40418f4a30ea47eeb5d4393f7b440215':
                 | {sensorDataName, reportedValue}
             ]
           }'
+
+touchpad-toggle:
+  gsettings get org.gnome.desktop.peripherals.touchpad send-events \
+    | grep -q disabled \
+    && gsettings set org.gnome.desktop.peripherals.touchpad send-events 'enabled' \
+    || gsettings set org.gnome.desktop.peripherals.touchpad send-events 'disabled'

@@ -63,12 +63,12 @@ configs.ltex_ls = {
 local servers = {
   ltex_ls = {
     enabled = { 'latex', 'tex', 'bib', 'markdown' },
-    language = 'en-GB',
+    language = 'en-US',
     diagnosticSeverity = 'information',
     setenceCacheSize = 2000,
     additionalRules = {
       enablePickyRules = true,
-      motherTongue = 'en-GB',
+      motherTongue = 'en-US',
     },
     trace = { server = 'verbose' },
     dictionary = {},
