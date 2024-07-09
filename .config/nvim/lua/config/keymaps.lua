@@ -13,6 +13,15 @@ vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = t
 vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
 
+function PickWindowAndSwitch()
+  local window_picker = require'window-picker'
+  local picked_window_id = window_picker.pick_window({include_current_win = true})
+  if picked_window_id then
+    vim.api.nvim_set_current_win(picked_window_id)
+  end
+end
+vim.keymap.set('n', '<leader>W', ":lua PickWindowAndSwitch()<CR>", { noremap = true })
+
 -- tabs
 vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tt', ':tabonly<CR>', { noremap = true })

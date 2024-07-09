@@ -215,4 +215,26 @@ return {
       lang = 'rust',
     },
   },
+
+  {
+    's1n7ax/nvim-window-picker',
+    name = 'window-picker',
+    event = 'VeryLazy',
+    version = '2.*',
+    config = function()
+      require 'window-picker'.setup({
+        autoselect_one = true,
+        include_current = true,
+        hint = 'floating-big-letter',
+        selection_chars = 'ASDF;HJLK',
+        filter_func = function(window_ids)
+          -- Filter out floating windows
+          return vim.tbl_filter(function(winid)
+            local win_config = vim.api.nvim_win_get_config(winid)
+            return win_config.relative == ''
+          end, window_ids)
+        end,
+      })
+    end,
+  },
 }
