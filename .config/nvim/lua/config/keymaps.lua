@@ -5,27 +5,66 @@ vim.keymap.set('n', 'zM', ':lua require\'ufo\'.closeAllFolds<CR>')
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<C-Z>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.keymap.set('n', '<leader>E', ':Neotree right toggle<CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>W', ':Neotree float toggle<CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>B', ':Neotree buffers toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>G', ':Neotree git_status toggle<CR>', { noremap = true })
--- vim.keymap.set('n', '<leader>S', ':SymbolsOutline<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>S', ':Neotree document_symbols toggle<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>D', ':Neotree diagnostics toggle<CR>', { noremap = true })
+
+local function toggle_or_focus_neotree(source)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local is_neo_tree = vim.bo[bufnr].filetype == "neo-tree"
+
+    -- Function to get the current Neotree source
+    local function get_neo_tree_source()
+        local neo_tree_source = vim.b[bufnr].neo_tree_source
+        return neo_tree_source
+    end
+
+    -- Find the Neotree window if it exists
+    local neo_tree_win
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local win_buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[win_buf].filetype == "neo-tree" then
+            neo_tree_win = win
+            break
+        end
+    end
+
+    if is_neo_tree then
+        local current_source = get_neo_tree_source()
+        if current_source == source then
+            -- If we're in Neotree and on the same source, close it
+            vim.cmd.Neotree("close")
+        else
+            -- If we're in Neotree but on a different source, switch to the new source
+            vim.cmd.Neotree(source)
+        end
+    elseif neo_tree_win then
+        -- If Neotree is open but not focused, focus it and switch to the specific source
+        vim.api.nvim_set_current_win(neo_tree_win)
+        vim.cmd.Neotree(source)
+    else
+        -- If Neotree is not open, open it with the specific source
+        vim.cmd.Neotree(source)
+    end
+end
+
+vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end, { noremap = true, desc = "Toggle or focus filesystem tree" })
+vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end, { noremap = true, desc = "Toggle or focus git status" })
+vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end, { noremap = true, desc = "Toggle or focus document symbols" })
+vim.keymap.set('n', '<leader>D', function() toggle_or_focus_neotree("diagnostics") end, { noremap = true, desc = "Toggle or focus diagnostics" })
 
 function PickWindowAndSwitch()
-  local window_picker = require'window-picker'
-  local picked_window_id = window_picker.pick_window({include_current_win = true})
+  local window_picker = require 'window-picker'
+  local picked_window_id = window_picker.pick_window({ include_current_win = true })
   if picked_window_id then
     vim.api.nvim_set_current_win(picked_window_id)
   end
 end
+
 vim.keymap.set('n', '<leader>W', ":lua PickWindowAndSwitch()<CR>", { noremap = true })
 
 -- tabs
 vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tt', ':tabonly<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { noremap = true })
+
 -- Resizing panes with Alt-H/J/K/L
 vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<M-l>', ':vertical resize +5<CR>', { noremap = true, silent = true })
