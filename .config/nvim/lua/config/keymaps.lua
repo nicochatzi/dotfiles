@@ -124,6 +124,8 @@ vim.keymap.set(
   { desc = '[/] Fuzzily search in current buffer' }
 )
 
+vim.keymap.set('n', '<leader>ss', ':SearchSession<CR>', { desc = '[S]earch [S]ession' })
+
 -- [S]earch
 vim.keymap.set('n', '<leader>sh', ':lua require\'telescope.builtin\'.help_tags() <CR>', { desc = '[S]earch [H]elp' })
 --

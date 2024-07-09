@@ -225,6 +225,7 @@ return {
       require 'window-picker'.setup({
         autoselect_one = true,
         include_current = true,
+        show_prompt = false,
         hint = 'floating-big-letter',
         selection_chars = 'ASDF;HJLK',
         filter_func = function(window_ids)
