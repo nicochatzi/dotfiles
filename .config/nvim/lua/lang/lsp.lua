@@ -82,6 +82,7 @@ local servers = {
   bashls = {},
   sqlls = {},
   mdx_analyzer = {},
+  marksman = {},
   asm_lsp = {},
   tflint = {},
   gopls = {},
@@ -103,28 +104,7 @@ local servers = {
     highlight_global_var_declarations = true,
     record_session = false,
   },
-  pylsp = {
-    pylsp = {
-      plugins = {
-        flake8 = { enabled = false },
-        pycodestyle = { enabled = false },
-        mccabe = { enabled = false },
-        autopep8 = { enabled = false },
-        black = {
-          enabled = true,
-          executable = 'black',
-        },
-        pylint = {
-          enabled = true,
-          executable = 'pylint',
-          args = {
-            '--disable=missing-module-docstring',
-            '--disable=missing-function-docstring',
-          },
-        },
-      },
-    },
-  },
+  pyright = {},
   rust_analyzer = {},
   -- luau_lsp = {},
   tsserver = {},

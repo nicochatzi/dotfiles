@@ -157,18 +157,6 @@ return {
   },
 
   {
-    "hedyhli/outline.nvim",
-    lazy = true,
-    cmd = { "Outline", "OutlineOpen" },
-    keys = { -- Example mapping to toggle outline
-      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-    },
-    opts = {
-      -- Your setup opts here
-    },
-  },
-
-  {
     'CraneStation/cranelift.vim',
     ft = 'clif',
   },
@@ -226,5 +214,15 @@ return {
     opts = {
       lang = 'rust',
     },
+  },
+
+  {
+    's1n7ax/nvim-window-picker',
+    name = 'window-picker',
+    event = 'VeryLazy',
+    version = '2.*',
+    config = function()
+      require 'window-picker'.setup()
+    end,
   },
 }
