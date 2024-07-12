@@ -45,12 +45,7 @@ local function toggle_or_focus_neotree(source)
     end
 end
 
-vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end, { noremap = true, desc = "Toggle or focus filesystem tree" })
-vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end, { noremap = true, desc = "Toggle or focus git status" })
-vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end, { noremap = true, desc = "Toggle or focus document symbols" })
-vim.keymap.set('n', '<leader>D', function() toggle_or_focus_neotree("diagnostics") end, { noremap = true, desc = "Toggle or focus diagnostics" })
-
-function PickWindowAndSwitch()
+local function pick_window_and_switch()
   local window_picker = require 'window-picker'
   local picked_window_id = window_picker.pick_window({ include_current_win = true })
   if picked_window_id then
@@ -58,7 +53,14 @@ function PickWindowAndSwitch()
   end
 end
 
-vim.keymap.set('n', '<leader>W', ":lua PickWindowAndSwitch()<CR>", { noremap = true })
+-- panels
+vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end, { noremap = true, desc = "Toggle or focus filesystem tree" })
+vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end, { noremap = true, desc = "Toggle or focus git status" })
+vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end, { noremap = true, desc = "Toggle or focus document symbols" })
+vim.keymap.set('n', '<leader>D', function()  toggle_or_focus_neotree("diagnostics") end, { noremap = true, desc = "Toggle or focus diagnostics" })
+vim.keymap.set('n', '<leader>T', ':Neotest summary<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>W', pick_window_and_switch, { noremap = true })
+
 
 -- tabs
 vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
@@ -81,7 +83,6 @@ vim.keymap.set('n', '<leader>tss', ':lua require("neotest").run.stop()<CR>', { n
 vim.keymap.set('n', '<leader>tsf', ':lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tsa', ':lua require("neotest").run.attach()<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tsd', ':lua require("neotest").run.run({strategy = "dap"})<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>tsp', ':Neotest output-panel<CR>', { noremap = true })
 
 -- c/cpp/cmake remaps
 vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')

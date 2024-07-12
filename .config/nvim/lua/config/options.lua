@@ -18,6 +18,8 @@ vim.o.hlsearch = true
 vim.o.incsearch = true
 vim.wo.number = true
 vim.o.mouse = 'a'
+-- https://neovim.io/doc/user/options.html#'equalalways'
+vim.o.equalalways = false
 -- Enable break indent
 vim.o.breakindent = true
 vim.o.undofile = true

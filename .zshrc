@@ -156,17 +156,14 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 
 source ~/.snc-env
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-if [[ $(command -v direnv) ]]; then
-  eval "$(direnv export zsh)"
-fi
+eval "$(direnv export zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PATH"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -174,3 +171,14 @@ eval "$(pyenv virtualenv-init -)"
 . "$HOME/.cargo/env"
 
 alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
+
+# cd hooks
+cd() {
+    builtin cd "$@"
+    if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
+        echo "pre-commit config found. Installing hooks..."
+        pre-commit install
+    fi
+}
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

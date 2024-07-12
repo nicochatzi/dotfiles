@@ -1,54 +1,4 @@
-local function on_attach(client, bufnr)
-  -- patch because i didn't the clean way to do this
-  if vim.bo[bufnr].filetype == 'python' then
-    vim.lsp.buf.format = function()
-      vim.cmd('silent !black %')
-      vim.cmd('edit!')
-    end
-  end
-
-  vim.fn.sign_define("DiagnosticSignError", { texthl = "DiagnosticSignError", text = "󰅚" })
-  vim.fn.sign_define("DiagnosticSignWarn", { texthl = "DiagnosticSignWarn", text = "󰀪" })
-  vim.fn.sign_define("DiagnosticSignInfo", { texthl = "DiagnosticSignInfo", text = "󰋽" })
-  vim.fn.sign_define("DiagnosticSignHint", { texthl = "DiagnosticSignHint", text = "󰌶" })
-
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = {
-      prefix = "󰄮",
-    },
-  })
-
-  -- setup all the keymaps to use when LSP is attached
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- LSP functionality
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>clr', vim.lsp.codelens.refresh, '[C]ode-lens [R]refresh')
-  nmap('<leader>cln', vim.lsp.codelens.run, '[C]ode-lens ru[N]')
-  nmap('<leader>af', vim.lsp.buf.format, '[A]uto [F]ormat')
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('gR', vim.lsp.buf.references, '[G]oto [R]eferences')
-  nmap('gC', vim.lsp.buf.incoming_calls, '[G]oto [C]alls')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-end
-
+local on_attach = require 'lang.on_attach'
 local lsp = require 'lspconfig'
 local configs = require 'lspconfig.configs'
 
@@ -75,6 +25,7 @@ local servers = {
     disabledRules = {},
     hiddenFalsePositives = {},
   },
+  robotframework_ls = {},
   eslint = {},
   jsonls = {},
   html = {},
@@ -105,7 +56,7 @@ local servers = {
     record_session = false,
   },
   pyright = {},
-  rust_analyzer = {},
+  -- rust_analyzer = {},
   -- luau_lsp = {},
   tsserver = {},
   taplo = {},
@@ -143,9 +94,9 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 local server_setups = {
-  ['rust-analyzer'] = function()
-    require('lang.rust')(capabilities, on_attach)
-  end,
+  -- ['rust-analyzer'] = function()
+  --   require('lang.rust')(capabilities, on_attach)
+  -- end,
   ['nil_ls'] = function()
     lsp.nil_ls.setup {
       capabilities = capabilities,
