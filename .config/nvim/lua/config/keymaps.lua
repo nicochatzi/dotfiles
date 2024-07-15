@@ -125,6 +125,15 @@ vim.keymap.set('n', '<leader>do', ':DapStepOut <CR>', { noremap = true })
 vim.keymap.set('n', '<leader>dk', ':DapTerminate <CR>', { noremap = true })
 vim.keymap.set('n', '<leader>db', ':DapToggleBreakpoint <CR>', { noremap = true })
 
+-- TODOs
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -168,6 +177,7 @@ vim.keymap.set('n', '<leader>ss', ':SearchSession<CR>', { desc = '[S]earch [S]es
 
 -- [S]earch
 vim.keymap.set('n', '<leader>sh', ':lua require\'telescope.builtin\'.help_tags() <CR>', { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>st', ':TodoTelescope<CR>', { desc = '[S]earch [T]odos' })
 --
 -- Search [F]iles
 vim.keymap.set('n', '<leader>sf', ':lua require\'telescope.builtin\'.find_files() <CR>', { desc = '[S]earch [F]iles' })
