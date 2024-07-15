@@ -6,9 +6,9 @@ return function(client, bufnr)
   end
 
   -- inlay hints on by default
-  if client.server_capabilities.inlayHintProvider then
-    vim.lsp.inlay_hint.enable()
-  end
+  -- if client.server_capabilities.inlayHintProvider then
+  --   vim.lsp.inlay_hint.enable()
+  -- end
 
   -- refresh codelens on buffer enter
   -- if client.server_capabilities.codeLensProvider then
