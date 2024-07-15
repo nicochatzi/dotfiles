@@ -1,19 +1,8 @@
 return function(client, bufnr)
-  if client.name == "pyright" then
-    client.server_capabilities.documentFormattingProvider = true
-    vim.lsp.buf.format = function()
-      bufnr = bufnr or vim.api.nvim_get_current_buf()
-      local file_path = vim.api.nvim_buf_get_name(bufnr)
-
-      vim.fn.system(string.format("isort %s", file_path))
-      local cmd = string.format("autopep8 --in-place --aggressive --aggressive %s", file_path)
-      local output = vim.fn.system(cmd)
-      if vim.v.shell_error ~= 0 then
-        print("Error running autopep8:", output)
-        return
-      end
-      vim.cmd("checktime")
-    end
+  -- https://github.com/astral-sh/ruff/blob/main/crates/ruff_server/docs/setup/NEOVIM.md
+  if client.name == 'ruff' then
+    -- Disable hover in favor of Pyright
+    client.server_capabilities.hoverProvider = false
   end
 
   -- inlay hints on by default

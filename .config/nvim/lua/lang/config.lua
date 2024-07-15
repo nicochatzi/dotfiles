@@ -26,6 +26,29 @@ local servers = {
     hiddenFalsePositives = {},
   },
   robotframework_ls = {},
+  ruff = {
+    cmd_env = { RUFF_TRACE = "messages" },
+    init_options = {
+      settings = {
+        logLevel = "debug",
+        logFile = "~/.local/state/nvim/ruff.log"
+      }
+    }
+  },
+  pyright = {
+    settings = {
+      pyright = {
+        -- Using Ruff's import organizer
+        disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          -- Ignore all files for analysis to exclusively use Ruff for linting
+          ignore = { '*' },
+        },
+      },
+    },
+  },
   eslint = {},
   jsonls = {},
   html = {},
@@ -55,7 +78,6 @@ local servers = {
     highlight_global_var_declarations = true,
     record_session = false,
   },
-  pyright = {},
   -- rust_analyzer = {},
   -- luau_lsp = {},
   tsserver = {},

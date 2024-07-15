@@ -136,13 +136,17 @@ install_language_servers() {
   cargo install --git https://github.com/oxalica/nil nil
   cargo install taplo-cli --locked
 
-  sudo npm i -g dockerfile-language-server-nodejs
-  sudo npm i -g bash-language-server
+  sudo npm i -g \
+    dockerfile-language-server-nodejs \
+    bash-language-server
 
   sudo apt install -y \
     luarocks \
     python3-pylsp \
     pylint
+
+  pipx install \
+    ruff
 }
 
 sudo apt-get update
