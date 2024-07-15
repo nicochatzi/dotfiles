@@ -250,17 +250,30 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- Buffers!
 local function close_all_but_visible_buffers()
   local visible_buffers = {}
+  local special_buftypes = { "terminal", "quickfix", "help" }
+
   -- Mark all buffers that are visible in any window
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
     visible_buffers[buf] = true
   end
+
   -- Close all buffers that are not visible
   for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
-    if not visible_buffers[buffer] and vim.api.nvim_buf_is_loaded(buffer) then
-      vim.api.nvim_buf_delete(buffer, { force = true })
+    if not visible_buffers[buffer] and vim.api.nvim_buf_is_valid(buffer) then
+      local buftype = vim.bo[buffer].buftype
+      local modified = vim.bo[buffer].modified
+
+      -- Skip special buffer types and modified buffers
+      if not vim.tbl_contains(special_buftypes, buftype) and not modified then
+        local success, err = pcall(vim.api.nvim_buf_delete, buffer, { force = true })
+        if not success then
+          print("Failed to close buffer " .. buffer .. ": " .. err)
+        end
+      end
     end
   end
 end
 
 vim.keymap.set('n', '<leader>bt', close_all_but_visible_buffers, { noremap = true })
+
