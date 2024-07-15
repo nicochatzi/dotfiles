@@ -11,12 +11,12 @@ return function(client, bufnr)
   end
 
   -- refresh codelens on buffer enter
-  if client.server_capabilities.codeLensProvider then
-    vim.api.nvim_create_autocmd({ "BufEnter" }, {
-      buffer = bufnr,
-      callback = vim.lsp.codelens.refresh,
-    })
-  end
+  -- if client.server_capabilities.codeLensProvider then
+  --   vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  --     buffer = bufnr,
+  --     callback = vim.lsp.codelens.refresh,
+  --   })
+  -- end
 
   vim.fn.sign_define("DiagnosticSignError", { texthl = "DiagnosticSignError", text = "󰅚" })
   vim.fn.sign_define("DiagnosticSignWarn", { texthl = "DiagnosticSignWarn", text = "󰀪" })
