@@ -65,13 +65,12 @@ return {
         -- },
         log_level = vim.log.levels.DEBUG,
         adapters = {
-          require('rustaceanvim.neotest'),
-          require('neotest-python') {
-            dap = { justMyCode = false },
-          },
-          require('neotest-rust') {
+          require('rustaceanvim.neotest'){
             args = { '--no-capture' },
             dap_adapter = 'codelldb',
+          },
+          require('neotest-python') {
+            dap = { justMyCode = false },
           },
           require('neotest-zig'),
           require('neotest-gtest'),

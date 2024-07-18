@@ -35,13 +35,18 @@ return {
           },
         },
         server = {
-          capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
           on_attach = require 'lang.on_attach',
           default_settings = {
             ['rust-analyzer'] = {
               cargo = {
-                autoReload = true,
                 allFeatures = true,
+                autoReload = true,
+                loadOutDirsFromCheck = true,
+                runBuildScripts = true,
+              },
+              procMacro = {
+                enable = true,
               },
               rust = {
                 analyzerTargetDir = 'target/rust-analyzer',
@@ -55,9 +60,9 @@ return {
               },
               checkOnSave = {
                 enable = true,
-                allTargets = false,
+                allTargets = true,
                 command = 'clippy',
-                extraArgs = { '--all-features', '--all-targets', '--', '-W', 'clippy::all' },
+                extraArgs = { '--', '-D', 'clippy::all' },
               },
               lens = {
                 enable = true,

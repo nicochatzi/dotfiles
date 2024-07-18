@@ -96,7 +96,8 @@ vim.keymap.set('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
 vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
 
 -- git remaps
-vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen origin/HEAD..HEAD<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>gD', ':DiffviewOpen origin/HEAD..HEAD<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>gL', ':Git ll<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>gl', ':Git l<CR>', { noremap = true })
 
