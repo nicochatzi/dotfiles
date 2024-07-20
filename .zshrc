@@ -1,4 +1,9 @@
 # zmodload zsh/zprof
+#
+
+if [[ $TERM == xterm-256color && -n $TMUX ]]; then
+    export TERM=tmux-256color
+fi
 
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
