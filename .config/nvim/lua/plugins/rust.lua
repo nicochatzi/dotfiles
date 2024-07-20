@@ -57,6 +57,7 @@ return {
                 closingBraceHints = true,
                 closureReturnTypeHints = { enable = 'with_block' },
                 lifetimeElisionHints = { enable = 'skip_trivial' },
+                expressionAdjustmentHints = { enable = 'always' },
               },
               checkOnSave = {
                 enable = true,
@@ -66,6 +67,8 @@ return {
               },
               lens = {
                 enable = true,
+                run = { enable = true },
+                debug = { enable = true },
                 references = {
                   implementatios = { enable = true },
                   enumVariant = { enable = true },
@@ -73,7 +76,23 @@ return {
                   method = { enable = true },
                   trait = { enable = true },
                 }
-              }
+              },
+              diagnostics = {
+                enable = true,
+                experimental = {
+                  enable = true,
+                },
+                styleLints = {
+                  enable = true,
+                },
+              },
+              hover = {
+                actions = {
+                  references = {
+                    enable = true,
+                  }
+                }
+              },
             }
           }
         },
