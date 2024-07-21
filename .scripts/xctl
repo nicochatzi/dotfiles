@@ -193,10 +193,12 @@ FEEDS_STATE_DIR:="${HOME}/.local/share/feeds"
 
 # follow the feeds log
 feeds-log:
+  mkdir -p {{FEEDS_STATE_DIR}}
   tail -fn10 {{FEEDS_STATE_DIR}}/log
 
 # check for new items in feeds and notify
 feeds-check:
+  mkdir -p {{FEEDS_STATE_DIR}} && touch {{FEEDS_STATE_DIR}}/log
   nix-shell feeds/shell.nix \
     --run 'python3 feeds/check.py {{FEEDS_STATE_DIR}}' \
     >> {{FEEDS_STATE_DIR}}/log

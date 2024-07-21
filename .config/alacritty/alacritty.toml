@@ -5,7 +5,7 @@ live_config_reload = true
 draw_bold_text_with_bright_colors = true
 
 [font]
-size = 11
+size = 7
 
 [font.bold]
 family = "JetBrainsMono NF"
@@ -25,7 +25,7 @@ style = "Regular"
 
 [font.offset]
 x = 0
-y = -4
+y = -2
 
 [[keyboard.bindings]]
 chars = "€"

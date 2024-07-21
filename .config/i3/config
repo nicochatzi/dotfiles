@@ -14,7 +14,7 @@ exec --no-startup-id picom
 
 # server.xserver.libinput.touchpad.tapping = false;
 # should do this... but it doesn't - big sad
-exec --no-startup-id "xinput set-prop 11 'libinput Tapping Enabled' 0"
+# exec --no-startup-id "xinput set-prop 11 'libinput Tapping Enabled' 0"
 
 smart_borders on
 focus_follows_mouse no
@@ -33,8 +33,8 @@ font pango:JetBrainsMono NF 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-set $fullscreen resize set 1920 1080, move position 0 0
-set $halfscreen resize set 960 900, move position 480 100
+set $fullscreen resize set 1980 1170, move position 0 0
+set $halfscreen resize set 1080 900, move position 480 100
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
