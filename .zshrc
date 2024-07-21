@@ -1,5 +1,4 @@
 # zmodload zsh/zprof
-#
 
 if [[ $TERM == xterm-256color && -n $TMUX ]]; then
     export TERM=tmux-256color
@@ -39,17 +38,16 @@ else
 fi
 
 autoload -Uz compinit
-compinit
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache/zcompdump}"
 
 
-# Plugins
+zinit light romkatv/powerlevel10k
 zinit light Aloxaf/fzf-tab
 zinit ice depth"1";
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light unixorn/fzf-zsh-plugin
-zinit light romkatv/powerlevel10k
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -159,8 +157,6 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
-source ~/.snc-env
-
 eval "$(direnv export zsh)"
 
 export NVM_DIR="$HOME/.nvm"
@@ -171,9 +167,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PATH"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
-. "$HOME/.cargo/env"
+if test -f "$HOME/.cargo/env"; then source "$HOME/.cargo/env"; fi
+if test -f ~/.snc-env; then source ~/.snc-env; fi
 
 alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
