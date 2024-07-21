@@ -3,13 +3,16 @@
 <h3 align="center">install</h3>
 
 ```bash
-$ echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+$ mkdir -p ~/.config/nix
+$ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 # enter bootstrapping shell
 $ nix shell nixpkgs#git nixpkgs#curl nixpkgs#vim
 # install dotfiles on new system
 $ curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install-dotfiles.sh \
   | bash
 # setup new host machine in .nixfiles/hosts/$(hostname)
+# generate the hardware config
+# nixos-genertae-config --root .
 $ ...
 # build system for current host
 $ sudo nixos-rebuild switch --flake ~/.nixfiles#$(hostname)

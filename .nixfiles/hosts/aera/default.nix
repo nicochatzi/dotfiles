@@ -8,4 +8,5 @@
   ];
 
   networking.hostName = "aera";
+  services.xserver.xkb.layout = "gb";
 }

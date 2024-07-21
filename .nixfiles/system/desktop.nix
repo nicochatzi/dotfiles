@@ -47,7 +47,6 @@
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
     xkb = {
-      layout = "gb";
       variant = "";
       options = "caps:escape";
     };
@@ -55,9 +54,10 @@
       lightdm = {
         enable = true;
         greeter.enable = true;
+        # greeters.gtk.enable = true;
         greeters.slick = {
           enable = true;
-          draw-user-backgrounds = true;
+          # draw-user-backgrounds = true;
           font.name = "JetBrains Mono";
         };
       };
@@ -106,7 +106,6 @@
       zsh
       alacritty
       firefox
-      obsidian
       # privacy
       ledger-live-desktop
       # streaming
@@ -119,6 +118,10 @@
       # image
       gimp
       gpick
+      # work
+      slack
+      obsidian
+      pre-commit
 
       # wrapped commands
       (pkgs.writeScriptBin "delta" ''
@@ -140,6 +143,12 @@
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [ "zoom-us" "obsidian" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    xorg.xorgserver
+    xorg.xinit
+    xorg.xauth
+  ];
 
   environment.variables = with pkgs; {
     EDITOR = "nvim";

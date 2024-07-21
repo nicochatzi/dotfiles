@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   # https://github.com/NixOS/nixpkgs/pull/50112
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.04";
 
   nix = {
     # https://nixos.org/manual/nix/stable/command-ref/conf-file
@@ -131,6 +131,7 @@
 
     # languages
     (python311.withPackages (py: [ py.requests ]))
+    pyenv
     docker
     cmake
     ninja

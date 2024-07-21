@@ -11,8 +11,7 @@
     ../../services/feeds.nix
   ];
 
-  networking.hostName = "lati";
-  services.xserver.xkb.layout = "gb";
+  networking.hostName = "tpad";
 
-  powerManagement.enable = true;
+  services.xserver.xkb.layout = "us";
 }
