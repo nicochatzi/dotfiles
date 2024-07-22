@@ -33,7 +33,7 @@ font pango:JetBrainsMono NF 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-set $fullscreen resize set 1980 1170, move position 0 0
+set $fullscreen resize set 100 ppt 100 ppt
 set $halfscreen resize set 1080 900, move position 480 100
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -122,6 +122,8 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
+# make the window take the entire screen without going into fullscreen mode
+bindsym $mod+Shift+f resize set 100 ppt 100 ppt, move position 0 ppt 0 ppt
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
