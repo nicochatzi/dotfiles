@@ -43,7 +43,7 @@ return function(client, bufnr)
 
   -- LSP functionality
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('<leader>ca', ':Lspsaga code_action<CR>', '[C]ode [A]ction')
   nmap('<leader>clr', vim.lsp.codelens.refresh, '[C]ode-lens [R]refresh')
   nmap('<leader>cln', vim.lsp.codelens.run, '[C]ode-lens ru[N]')
   nmap('<leader>af', vim.lsp.buf.format, '[A]uto [F]ormat')

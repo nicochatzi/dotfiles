@@ -10,6 +10,7 @@ configs.ltex_ls = {
   }
 }
 
+-- server settings
 local servers = {
   ltex_ls = {
     enabled = { 'latex', 'tex', 'bib', 'markdown' },
@@ -27,7 +28,6 @@ local servers = {
   },
   robotframework_ls = {},
   ruff = {
-    cmd_env = { RUFF_TRACE = "messages" },
     init_options = {
       settings = {
         logLevel = "debug",
@@ -115,11 +115,12 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
+-- manual overrides for lspconfig settings on certain servers
 local server_setups = {
   -- ['rust-analyzer'] = function()
   --   require('lang.rust')(capabilities, on_attach)
   -- end,
-  ['nil_ls'] = function()
+  nil_ls = function()
     lsp.nil_ls.setup {
       capabilities = capabilities,
       on_attach = on_attach,
@@ -133,6 +134,19 @@ local server_setups = {
       }
     }
   end,
+  ruff = function()
+    lsp.ruff.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      cmd = { 'ruff', 'server', '--preview' },
+      settings = servers['ruff'],
+      autostart = true,
+      single_file_support = true,
+      flags = {
+        debounce_text_changes = 150,
+      }
+    }
+  end
 }
 
 for server_name, server_config in pairs(servers) do

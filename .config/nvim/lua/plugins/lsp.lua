@@ -39,4 +39,20 @@ return {
       require('lang.config')
     end,
   },
+  {
+    'nvimdev/lspsaga.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('lspsaga').setup {
+        symbol_in_winbar = { enable = false },
+        callhiearachy = { layout = 'float' },
+        code_action = {
+          show_server_name = true,
+        },
+      }
+    end,
+  }
 }
