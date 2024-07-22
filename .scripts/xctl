@@ -19,8 +19,8 @@ top:
   btm --basic --mem_as_value
 
 # connect HDMI-1 monitor to laptop
-hdmi-screen POSITION="above":
-  xrandr --output HDMI-1 --auto --{{POSITION}} eDP-1
+hdmi-screen POSITION="above" SCALE="1":
+  xrandr --output HDMI-1 --auto --{{POSITION}} --scale {{SCALE}} eDP-1
 
 # connect and default to HDMI-1 audio
 hdmi-audio POSITION="above": (hdmi-screen POSITION)

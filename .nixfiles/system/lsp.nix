@@ -11,10 +11,13 @@
     nixfmt
     nodePackages.bash-language-server
     nodePackages.typescript-language-server
+    marksman
+    pyright
+    python311Packages.black
     python311Packages.pylint
     python311Packages.pynvim
-    python311Packages.black
     python311Packages.python-lsp-server
+    ruff
     rust-analyzer
     sqls
     taplo

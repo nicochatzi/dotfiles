@@ -37,8 +37,11 @@
       enable = true;
       qemu.swtpm.enable = true;
     };
+    # https://nixos.wiki/wiki/Docker
+    docker = { enable = true; };
+    # https://nixos.wiki/wiki/Podman
     podman = {
-      enable = true;
+      enable = false;
       dockerCompat = true;
     };
   };
@@ -130,8 +133,7 @@
     just
 
     # languages
-    (python311.withPackages (py: [ py.requests ]))
-    pyenv
+    (python312.withPackages (py: [ py.requests ]))
     docker
     cmake
     ninja

@@ -4,7 +4,7 @@
     ../../system/desktop.nix
     ../../system/firewall.nix
     ../../system/lsp.nix
-    ../../services/rclone.nix
+    # ../../services/rclone.nix
     ../../services/hibernate.nix
     ../../services/bluetooth.nix
     ../../services/battery.nix
