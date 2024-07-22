@@ -71,6 +71,7 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias j='just'
 alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
+alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
 we() {
     local filter_flag=""
@@ -109,6 +110,15 @@ cod() {
     | xargs dirname {} \
     | fzf --height=10 --prompt="projects: ")
   cd $selected
+}
+
+# cd hooks
+cd() {
+    builtin cd "$@"
+    if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
+        echo "pre-commit config found. Installing hooks..."
+        pre-commit install
+    fi
 }
 
 # Bindings and Widgets
@@ -157,29 +167,27 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
-eval "$(direnv export zsh)"
+eval "$(direnv hook zsh)"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+[ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/shims:$PATH"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/shims:$PATH"
 
-if test -f "$HOME/.cargo/env"; then source "$HOME/.cargo/env"; fi
-if test -f ~/.snc-env; then source ~/.snc-env; fi
+  if ! [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+  fi
 
-alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
-# cd hooks
-cd() {
-    builtin cd "$@"
-    if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
-        echo "pre-commit config found. Installing hooks..."
-        pre-commit install
-    fi
-}
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
