@@ -134,19 +134,6 @@ local server_setups = {
       }
     }
   end,
-  ruff = function()
-    lsp.ruff.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'ruff', 'server', '--preview' },
-      settings = servers['ruff'],
-      autostart = true,
-      single_file_support = true,
-      flags = {
-        debounce_text_changes = 150,
-      }
-    }
-  end
 }
 
 for server_name, server_config in pairs(servers) do
