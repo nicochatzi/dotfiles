@@ -3,7 +3,7 @@ with import <nixpkgs> { };
 stdenv.mkDerivation {
   name = "default-py-pkgs";
   buildInputs = [
-    (python311.withPackages (ps:
+    (python312.withPackages (ps:
       with ps; [
         numpy
         matplotlib
