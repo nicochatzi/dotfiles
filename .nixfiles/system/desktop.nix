@@ -108,9 +108,6 @@
       firefox
       # privacy
       ledger-live-desktop
-      # streaming
-      zoom-us
-      obs-studio
       # audio
       reaper
       audacity
@@ -120,8 +117,11 @@
       gpick
       # work
       slack
+      zoom-us
+      obs-studio
       obsidian
       pre-commit
+      kicad
 
       # wrapped commands
       (pkgs.writeScriptBin "delta" ''

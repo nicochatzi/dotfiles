@@ -8,7 +8,7 @@
     ltex-ls
     lua-language-server
     nil
-    nixfmt
+    nixfmt-classic
     nodePackages.bash-language-server
     nodePackages.typescript-language-server
     marksman
