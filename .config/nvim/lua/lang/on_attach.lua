@@ -46,6 +46,8 @@ return function(client, bufnr)
   nmap('<leader>ca', ':Lspsaga code_action<CR>', '[C]ode [A]ction')
   nmap('<leader>clr', vim.lsp.codelens.refresh, '[C]ode-lens [R]refresh')
   nmap('<leader>cln', vim.lsp.codelens.run, '[C]ode-lens ru[N]')
+  nmap('<leader>cli', ':Lspsaga incoming_calls<CR>', '[C]al[l]l [I]ncoming')
+  nmap('<leader>clo', ':Lspsaga outgoing_calls<CR>', '[C]al[l]l [O]utgoing')
   nmap('<leader>af', vim.lsp.buf.format, '[A]uto [F]ormat')
   nmap('<leader>ih', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
     'Toggle [I]nlay [H]ints')

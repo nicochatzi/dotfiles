@@ -48,10 +48,29 @@ return {
     config = function()
       require('lspsaga').setup {
         symbol_in_winbar = { enable = false },
-        callhiearachy = { layout = 'float' },
+        callhiearachy = {
+          layout = 'float',
+          keys = {
+            edit = 'e',
+            vsplit = 'v',
+            split = 's',
+            tabe = 't',
+            quit = 'q',
+            shuttle = '[w',
+            toggle_or_req = 'u',
+            close = '<C-c>k',
+          }
+        },
         code_action = {
           show_server_name = true,
         },
+        outline = {
+          keys = {
+            toggle_or_jump = 'o',
+            jump = 'e',
+            quit = 'q',
+          }
+        }
       }
     end,
   }
