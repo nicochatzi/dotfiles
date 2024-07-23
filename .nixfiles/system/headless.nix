@@ -5,7 +5,7 @@
     isNormalUser = true;
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" ];
   };
 
   environment.variables = with pkgs; {

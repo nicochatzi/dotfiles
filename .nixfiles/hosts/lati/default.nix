@@ -12,7 +12,10 @@
   ];
 
   networking.hostName = "lati";
-  services.xserver.xkb.layout = "gb";
+  services.xserver.xkb = {
+    layout = "gb";
+    options = "caps:escape";
+  };
 
   powerManagement.enable = true;
 }

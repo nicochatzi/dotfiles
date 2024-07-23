@@ -46,15 +46,10 @@
     windowManager = { i3.enable = true; };
     autoRepeatDelay = 250;
     autoRepeatInterval = 25;
-    xkb = {
-      variant = "";
-      options = "caps:escape";
-    };
     displayManager = {
       lightdm = {
         enable = true;
         greeter.enable = true;
-        # greeters.gtk.enable = true;
         greeters.slick = {
           enable = true;
           # draw-user-backgrounds = true;
@@ -83,7 +78,7 @@
     isNormalUser = true;
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
       # system
       i3

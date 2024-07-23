@@ -38,11 +38,18 @@
       qemu.swtpm.enable = true;
     };
     # https://nixos.wiki/wiki/Docker
-    docker = { enable = true; };
+    docker = {
+      enable = false;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
     # https://nixos.wiki/wiki/Podman
     podman = {
-      enable = false;
+      enable = true;
       dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
   };
 
@@ -131,10 +138,18 @@
     awscli2
     tokei
     just
+    dive
+    podman-compose
+
+    (pkgs.writeScriptBin "docker" ''
+      command ${pkgs.podman}/bin/podman "$@"
+    '')
+    (pkgs.writeScriptBin "docker-compose" ''
+      command ${pkgs.podman-compose}/bin/podman-compose "$@"
+    '')
 
     # languages
     (python312.withPackages (py: [ py.requests ]))
-    docker
     cmake
     ninja
     gnumake

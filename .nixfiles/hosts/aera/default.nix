@@ -8,5 +8,8 @@
   ];
 
   networking.hostName = "aera";
-  services.xserver.xkb.layout = "gb";
+  services.xserver.xkb = {
+    layout = "gb";
+    options = "caps:escape";
+  };
 }
