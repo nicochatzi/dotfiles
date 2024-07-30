@@ -126,7 +126,8 @@ install_cargo_extensions() {
     hyperfine \
     bottom \
     bat \
-    flamegraph
+    flamegraph \
+    watchexec-cli
 }
 
 install_language_servers() {

@@ -1,18 +1,9 @@
 local on_attach = require 'lang.on_attach'
 local lsp = require 'lspconfig'
-local configs = require 'lspconfig.configs'
-
-configs.ltex_ls = {
-  default_config = {
-    cmd = { 'ltex-ls' },
-    filetypes = { 'ltex', 'markdown' },
-    name = 'ltex_ls',
-  }
-}
 
 -- server settings
 local servers = {
-  ltex_ls = {
+  ltex = {
     enabled = { 'latex', 'tex', 'bib', 'markdown' },
     language = 'en-US',
     diagnosticSeverity = 'information',
@@ -21,10 +12,13 @@ local servers = {
       enablePickyRules = true,
       motherTongue = 'en-US',
     },
+    use_spellfile = true,
     trace = { server = 'verbose' },
-    dictionary = {},
     disabledRules = {},
     hiddenFalsePositives = {},
+    dictionary = {
+      ['en-US'] = { vim.fn.expand("~/.config/nvim/spell/en.utf-8.add") }
+    }
   },
   robotframework_ls = {},
   ruff = {

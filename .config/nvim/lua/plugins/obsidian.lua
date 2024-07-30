@@ -31,10 +31,29 @@ return {
     'nvim-telescope/telescope.nvim',
   },
   opts = {
-    mappings = {},
-    -- mappings = {
-    --   ["fo"] = require("obsidian.mapping").gf_passthrough(),
-    -- },
+    mappings = {
+      -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
+      ["gf"] = {
+        action = function()
+          return require("obsidian").util.gf_passthrough()
+        end,
+        opts = { noremap = false, expr = true, buffer = true },
+      },
+      -- Toggle check-boxes.
+      ["<leader>ch"] = {
+        action = function()
+          return require("obsidian").util.toggle_checkbox()
+        end,
+        opts = { buffer = true },
+      },
+      -- Smart action depending on context, either follow link or toggle checkbox.
+      ["<cr>"] = {
+        action = function()
+          return require("obsidian").util.smart_action()
+        end,
+        opts = { buffer = true, expr = true },
+      }
+    },
     workspaces = {
       {
         name = 'dev',
@@ -45,7 +64,7 @@ return {
     notes_subdir = 'notes',
     -- Optional, set the log level for Obsidian. This is an integer corresponding to one of the log
     -- levels defined by "vim.log.levels.*" or nil, which is equivalent to DEBUG (1).
-    log_level = vim.log.levels.DEBUG,
+    log_level = vim.log.levels.WARN,
     daily_notes = {
       folder = 'dev/dailies',
       date_format = '%Y-%m-%d',
