@@ -52,7 +52,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.wildmenu = true
 
 -- https://github.com/rmagatti/auto-session?tab=readme-ov-file#recommended-sessionoptions-config
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -70,15 +70,23 @@ vim.g.markdown_folding = 1 -- enable markdown folding
 
 vim.o.spell = true
 vim.o.spelllang = 'en_us'
+vim.o.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
 
-vim.cmd([[
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "spectre_panel" },
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
+
+vim.cmd [[
     autocmd InsertEnter * :set norelativenumber
     autocmd InsertLeave * :set relativenumber
-]])
+]]
 
-vim.cmd([[autocmd BufRead,BufNewFile *.mdx setfiletype markdown]])
-vim.cmd([[autocmd BufRead,BufNewFile *.mir setfiletype rust]])
-vim.cmd([[autocmd BufRead,BufNewFile *.ll setfiletype llvm]])
-vim.cmd([[autocmd BufRead,BufNewFile *.mojo setfiletype python]])
+vim.cmd [[autocmd BufRead,BufNewFile *.mdx setfiletype markdown]]
+vim.cmd [[autocmd BufRead,BufNewFile *.mir setfiletype rust]]
+vim.cmd [[autocmd BufRead,BufNewFile *.ll setfiletype llvm]]
+vim.cmd [[autocmd BufRead,BufNewFile *.mojo setfiletype python]]
 vim.cmd([[autocmd BufRead,BufNewFile flake.lock setfiletype json]])
 vim.cmd([[autocmd BufRead,BufNewFile *.service* set ft=systemd]])

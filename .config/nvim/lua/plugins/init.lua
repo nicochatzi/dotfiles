@@ -65,7 +65,7 @@ return {
         -- },
         log_level = vim.log.levels.DEBUG,
         adapters = {
-          require('rustaceanvim.neotest'){
+          require('rustaceanvim.neotest') {
             args = { '--no-capture' },
             dap_adapter = 'codelldb',
           },

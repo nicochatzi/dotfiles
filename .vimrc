@@ -35,6 +35,7 @@ set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 set spell spelllang=en_us
+let &spellfile=expand('~/.config/nvim/spell/en.utf-8.add')
 
 " theming
 """"""""""""""""""""""""""""""""

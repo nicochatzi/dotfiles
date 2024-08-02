@@ -1,6 +1,9 @@
-DSP
+TODO
+buildroot
 backend
-backends
-Novation
-self/!
-CEOS
+MGMT
+sysroot
+rootfs
+Realtime
+timestamp
+realtime

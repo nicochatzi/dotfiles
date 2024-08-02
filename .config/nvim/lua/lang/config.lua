@@ -1,6 +1,11 @@
 local on_attach = require 'lang.on_attach'
 local lsp = require 'lspconfig'
 
+local words = {}
+for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
+  table.insert(words, word)
+end
+
 -- server settings
 local servers = {
   ltex = {
@@ -17,7 +22,7 @@ local servers = {
     disabledRules = {},
     hiddenFalsePositives = {},
     dictionary = {
-      ['en-US'] = { vim.fn.expand("~/.config/nvim/spell/en.utf-8.add") }
+      ['en-US'] = words
     }
   },
   robotframework_ls = {},
@@ -33,12 +38,15 @@ local servers = {
     settings = {
       pyright = {
         -- Using Ruff's import organizer
-        disableOrganizeImports = true,
+        -- disableOrganizeImports = true,
       },
       python = {
         analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
           -- Ignore all files for analysis to exclusively use Ruff for linting
-          ignore = { '*' },
+          -- ignore = { '*' },
+          ignore = {},
         },
       },
     },

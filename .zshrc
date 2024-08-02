@@ -73,6 +73,12 @@ alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
+checkrs() {
+  cargo clippy --all-features --all-targets -- -D warnings
+  cargo deny --log-level error check advisories bans sources
+  cargo machete
+}
+
 we() {
     local filter_flag=""
     local zparseopts_return
