@@ -51,7 +51,8 @@ local servers = {
       },
     },
   },
-  eslint = {},
+  -- eslint = {},
+  biome = {},
   jsonls = {},
   html = {},
   cssls = {},
@@ -136,6 +137,20 @@ local server_setups = {
       }
     }
   end,
+  biome = function()
+    lsp.biome.setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      cmd = { 'npx', 'biome', 'lsp-proxy' },
+      filetypes = { "javascript", "javascriptreact", "json", "jsonc", "typescript", "typescript.tsx", "typescriptreact", "astro", "svelte", "vue", "css" },
+      settings = servers['biome'],
+      autostart = true,
+      single_file_support = true,
+      flags = {
+        debounce_text_changes = 150,
+      }
+    }
+  end
 }
 
 for server_name, server_config in pairs(servers) do
