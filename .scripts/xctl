@@ -95,13 +95,13 @@ use-flake FLAKE="":
 
 
 # pipe to copy to system clipboard
+[macos]
 cp:
-  #!/usr/bin/env bash
-  if [[ {{os()}} == "macos" ]]; then
-    pbcopy
-  else
-    xclip -selection clipboard
-  fi
+  pbcopy
+
+[linux]
+cp:
+  xclip -selection clipboard
 
 # "light" or "dark"?
 theme:
