@@ -196,4 +196,6 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
+[[ -s "/home/nico/.gvm/scripts/gvm" ]] && source "/home/nico/.gvm/scripts/gvm"
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
