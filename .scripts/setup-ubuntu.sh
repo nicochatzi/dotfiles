@@ -150,6 +150,15 @@ install_language_servers() {
     ruff
 }
 
+setup_desktop() {
+  sudo apt install -y i3 lightdm slick-greeter lxappearance brightnessctl
+  sudo dpkg-reconfigure lightdm
+  sudo chmod +s "$(which brightnessctl)"
+
+  xset r rate 150 50
+  setxkbmap -option caps:escape
+}
+
 sudo apt-get update
 
 echo "~> Installing system packages"
@@ -172,6 +181,9 @@ install_cargo_extensions
 
 echo "~> Installing terminal UI tools"
 install_tui
+
+echo "~> Setup desktop"
+setup_desktop
 
 echo "~> Installing dotfiles"
 curl https://raw.githubusercontent.com/nicochatzi/dotfiles/main/.scripts/install-dotfiles.sh \

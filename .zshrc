@@ -73,6 +73,15 @@ alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
+get_theme() { ~/.scripts/xctl theme }
+delta() { command delta --$(get_theme) "$@" }
+bat() { command bat --theme=gruvbox-$(get_theme) "$@" }
+btm() {
+  local theme="gruvbox" # default is dark
+  if [[ $(get_theme) == "light" ]]; then theme="nord-light"; fi
+  command btm --enable_gpu --theme="$theme" "$@"
+}
+
 checkrs() {
   cargo clippy --all-features --all-targets -- -D warnings
   cargo deny --log-level error check advisories bans sources
