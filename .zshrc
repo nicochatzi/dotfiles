@@ -27,11 +27,6 @@ else
   export VISUAL='nvim'
 fi
 
-# don't go into vim-mode if we're already in vim
-if [[ -z "$VIMRUNTIME" ]]; then
-    bindkey -v
-fi
-
 [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
 [ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
 
@@ -136,10 +131,8 @@ alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias j='just'
 alias jl='just --list --unsorted'
-alias f='nvim $(find `pwd` -type f | fzf)'
-alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
-whattheme() { ~/.scripts/xctl theme }
+alias whattheme='~/.scripts/xctl theme'
 delta() { command delta --$(whattheme) "$@" }
 bat() { command bat --theme=gruvbox-$(whattheme) "$@" }
 btm() {
@@ -194,6 +187,11 @@ nv() {
 function clear-screen-and-scrollback() { clear && printf '\e[3J' && zle reset-prompt }
 zle -N clear-screen-and-scrollback
 
+# don't go into vim-mode if we're already in vim
+if [[ -z "$VIMRUNTIME" ]]; then
+    bindkey -v
+fi
+
 # bind the clear to B so that i don't accidentally press it when using a vim motion
 bindkey '^B' clear-screen-and-scrollback
 bindkey '^Z' autosuggest-accept
@@ -236,6 +234,6 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
