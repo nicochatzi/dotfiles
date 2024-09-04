@@ -253,10 +253,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Remove trailing whitespace on save
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-  pattern = { '*' },
-  command = [[%s/\s\+$//e]],
-})
+-- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+--   pattern = { '*' },
+--   command = [[%s/\s\+$//e]],
+-- })
 
 -- Buffers!
 local function close_all_but_visible_buffers()
