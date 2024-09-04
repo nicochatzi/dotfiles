@@ -1,5 +1,36 @@
 # zmodload zsh/zprof
 
+if [[ $TERM == xterm-256color && -n $TMUX ]]; then
+    export TERM=tmux-256color
+fi
+
+export PATH="$HOME/code/me/aud/out:$PATH"
+export PATH="$HOME/.scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+export RUST_BACKTRACE=1
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt globdots
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+  export VISUAL='vim'
+else
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+fi
+
+[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+[ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
+
 # -----------------------------
 # zinit
 # -----------------------------
@@ -27,7 +58,9 @@ else
   fpath=(~/.zsh/completions $fpath)
 fi
 
-autoload bashcompinit && bashcompinit
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
+
 zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
 if [[ ! -f $zcompdump || $ZSH_COMPDUMP_CHANGED -eq 1 ]]; then
   compinit -C -d $zcompdump
@@ -113,6 +146,7 @@ btm() {
   if [[ $(get_theme) == "light" ]]; then theme="nord-light"; fi
   command btm --enable_gpu --theme="$theme" "$@"
 }
+watch() { command watch --color "$@" }
 
 checkrs() {
   cargo clippy --all-features --all-targets -- -D warnings
@@ -190,7 +224,6 @@ echo -ne '\e[5 q'
 # FZF config
 export FZF_DEFAULT_OPTS='--height 100% --layout=reverse --no-mouse'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
-setopt globdots
 
 zstyle ':completion:complete:*:options' sort false
 
