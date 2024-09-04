@@ -65,6 +65,7 @@ tmux-sesh NAME CMD="" CLEAR="":
   tmux attach-session -t "{{NAME}}"
 
 # direnv setup: from shell template or shells to use
+[group('direnv')]
 use-nix *SHELLS:
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
@@ -82,6 +83,7 @@ use-nix *SHELLS:
   direnv allow
 
 # direnv setup: from flake template or copied flake
+[group('direnv')]
 use-flake FLAKE="":
   #!/usr/bin/env bash
   cd {{invocation_directory()}};
@@ -93,6 +95,19 @@ use-flake FLAKE="":
   fi
   direnv allow
 
+[group('direnv')]
+use-pyenv VENV_NAME:
+  #!/usr/bin/env bash
+  echo '#vim:ft=bash
+  if which pyenv > /dev/null; then
+    export PYENV_ROOT="$(pyenv root)"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    pyenv activate {{VENV_NAME}}
+  fi
+  ' >> {{invocation_directory()}}/.envrc
 
 # pipe to copy to system clipboard
 [macos]
@@ -140,7 +155,7 @@ theme-set MODE: (theme-common-set MODE)
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
   DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
-  GTK_CONFIG="$HOME/.config/gtk-3.0"
+  GTK_CONFIG="$HOME/.config/gtk-4.0"
   ROFI_CONFIG="$HOME/.config/rofi"
   BRAVE_CONFIG="$HOME/.config/chrome-theme"
   declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
@@ -276,22 +291,26 @@ fetch-all DIR="~/code":
     'xctl _info "fetching: $(pwd)" && git fetch --all' \;
 
 # run cargo clean in all cargo projects in a dir
+[group('clean')]
 clean-cargo DIR="~/code":
   find {{DIR}} -name Cargo.toml -execdir sh -c \
     'xctl _info "cleaning: $(pwd)" && cargo clean' \;
 
 # rm -rf node_modules in all npm projects in a dir
+[group('clean')]
 clean-npm DIR="~/code":
   find {{DIR}} -name package.json -execdir sh -c \
     'xctl _info "cleaning: $(pwd)" && rm -rf node_modules' \;
 
 # clean up docker containers
+[group('clean')]
 clean-docker:
   docker kill $(docker ps -q)
   docker rm $(docker ps -a -q)
   docker system prune -a
 
 # clean up podman containers
+[group('clean')]
 clean-podman:
   podman stop $(podman ps -q)
   podman rm $(podman ps -a -q)
@@ -299,12 +318,14 @@ clean-podman:
 
 # https://nixos.org/guides/nix-pills/garbage-collector
 # collect all the nixos/nix garbage
+[group('nix')]
 nix-gc:
   nix-store --gc
   nix-store --optimise
   sudo nix-collect-garbage
 
 # nixos-rebuild switch
+[group('nix')]
 nix-rebuild:
   #!/usr/bin/env zsh
   . ~/.zshrc
