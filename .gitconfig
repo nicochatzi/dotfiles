@@ -14,10 +14,10 @@
   defaultBranch = main
 [core]
   editor = vim
-  pager = delta --line-numbers -- $(xctl theme)
+  pager = delta --line-numbers --$(xctl theme)
   excludesfile = ~/.gitignore_global
 [interactive]
-  diffFilter = delta --color-only --line-numbers -- $(xctl theme)
+  diffFilter = delta --color-only --line-numbers --$(xctl theme)
 [fetch]
   prune = true
 [pull]

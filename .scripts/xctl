@@ -16,7 +16,7 @@ _warn MSG:
 top:
   #!/usr/bin/env zsh
   . ~/.zshrc
-  btm --basic --mem_as_value
+  btm --basic --process_memory_as_value
 
 # connect HDMI-1 monitor to laptop
 hdmi-screen POSITION="above" SCALE="1":
