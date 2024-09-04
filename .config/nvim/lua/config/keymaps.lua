@@ -7,42 +7,42 @@ vim.keymap.set({ 'n', 'v' }, '<C-Z>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 local function toggle_or_focus_neotree(source)
-    local bufnr = vim.api.nvim_get_current_buf()
-    local is_neo_tree = vim.bo[bufnr].filetype == "neo-tree"
+  local bufnr = vim.api.nvim_get_current_buf()
+  local is_neo_tree = vim.bo[bufnr].filetype == "neo-tree"
 
-    -- Function to get the current Neotree source
-    local function get_neo_tree_source()
-        local neo_tree_source = vim.b[bufnr].neo_tree_source
-        return neo_tree_source
+  -- Function to get the current Neotree source
+  local function get_neo_tree_source()
+    local neo_tree_source = vim.b[bufnr].neo_tree_source
+    return neo_tree_source
+  end
+
+  -- Find the Neotree window if it exists
+  local neo_tree_win
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local win_buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[win_buf].filetype == "neo-tree" then
+      neo_tree_win = win
+      break
     end
+  end
 
-    -- Find the Neotree window if it exists
-    local neo_tree_win
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        local win_buf = vim.api.nvim_win_get_buf(win)
-        if vim.bo[win_buf].filetype == "neo-tree" then
-            neo_tree_win = win
-            break
-        end
-    end
-
-    if is_neo_tree then
-        local current_source = get_neo_tree_source()
-        if current_source == source then
-            -- If we're in Neotree and on the same source, close it
-            vim.cmd.Neotree("close")
-        else
-            -- If we're in Neotree but on a different source, switch to the new source
-            vim.cmd.Neotree(source)
-        end
-    elseif neo_tree_win then
-        -- If Neotree is open but not focused, focus it and switch to the specific source
-        vim.api.nvim_set_current_win(neo_tree_win)
-        vim.cmd.Neotree(source)
+  if is_neo_tree then
+    local current_source = get_neo_tree_source()
+    if current_source == source then
+      -- If we're in Neotree and on the same source, close it
+      vim.cmd.Neotree("close")
     else
-        -- If Neotree is not open, open it with the specific source
-        vim.cmd.Neotree(source)
+      -- If we're in Neotree but on a different source, switch to the new source
+      vim.cmd.Neotree(source)
     end
+  elseif neo_tree_win then
+    -- If Neotree is open but not focused, focus it and switch to the specific source
+    vim.api.nvim_set_current_win(neo_tree_win)
+    vim.cmd.Neotree(source)
+  else
+    -- If Neotree is not open, open it with the specific source
+    vim.cmd.Neotree(source)
+  end
 end
 
 local function pick_window_and_switch()
@@ -54,10 +54,14 @@ local function pick_window_and_switch()
 end
 
 -- panels
-vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end, { noremap = true, desc = "Toggle or focus filesystem tree" })
-vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end, { noremap = true, desc = "Toggle or focus git status" })
-vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end, { noremap = true, desc = "Toggle or focus document symbols" })
-vim.keymap.set('n', '<leader>D', function()  toggle_or_focus_neotree("diagnostics") end, { noremap = true, desc = "Toggle or focus diagnostics" })
+vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end,
+  { noremap = true, desc = "Toggle or focus filesystem tree" })
+vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end,
+  { noremap = true, desc = "Toggle or focus git status" })
+vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end,
+  { noremap = true, desc = "Toggle or focus document symbols" })
+vim.keymap.set('n', '<leader>D', function() toggle_or_focus_neotree("diagnostics") end,
+  { noremap = true, desc = "Toggle or focus diagnostics" })
 vim.keymap.set('n', '<leader>T', ':Neotest summary<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>W', pick_window_and_switch, { noremap = true })
 
@@ -252,11 +256,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- Remove trailing whitespace on save
--- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
---   pattern = { '*' },
---   command = [[%s/\s\+$//e]],
--- })
+vim.keymap.set('n', '<leader>rw', function() vim.cmd [[ %s/\s\+$//e ]] end,
+  { desc = 'Remove trailing whitespace' })
 
 -- Buffers!
 local function close_all_but_visible_buffers()
@@ -287,4 +288,3 @@ local function close_all_but_visible_buffers()
 end
 
 vim.keymap.set('n', '<leader>bt', close_all_but_visible_buffers, { noremap = true })
-

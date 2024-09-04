@@ -62,6 +62,7 @@ local servers = {
   marksman = {},
   asm_lsp = {},
   tflint = {},
+  terraformls = {},
   gopls = {},
   clangd = {},
   cmake = {},
