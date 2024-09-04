@@ -1,5 +1,9 @@
 # zmodload zsh/zprof
 
+# -----------------------------
+# env vars
+# -----------------------------
+
 if [[ $TERM == xterm-256color && -n $TMUX ]]; then
     export TERM=tmux-256color
 fi
@@ -13,6 +17,27 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 setopt INC_APPEND_HISTORY
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+  export VISUAL='vim'
+else
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+fi
+
+# don't go into vim-mode if we're already in vim
+if [[ -z "$VIMRUNTIME" ]]; then
+    bindkey -v
+fi
+
+[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+[ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
+
+# -----------------------------
+# zinit
+# -----------------------------
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -37,9 +62,10 @@ else
   fpath=(~/.zsh/completions $fpath)
 fi
 
-autoload -Uz compinit
-compinit -d "${XDG_CACHE_HOME:-$HOME/.cache/zcompdump}"
-
+autoload bashcompinit && bashcompinit
+if [[ -z $ZSH_COMPDUMP ]]; then
+  autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache/zcompdump}"
+fi
 
 zinit light romkatv/powerlevel10k
 zinit light Aloxaf/fzf-tab
@@ -49,19 +75,59 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light unixorn/fzf-zsh-plugin
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-  export VISUAL='vim'
-else
-  export EDITOR='nvim'
-  export VISUAL='nvim'
-fi
+use_nvm_version() {
+    if [ -f .nvmrc ]; then
+        nvm use 2>/dev/null || {
+            nvm install && nvm use;
+        }
+    fi
+}
 
-# only go into vim-mode if we're already in vim!
-if [[ -z "$VIMRUNTIME" ]]; then
-    bindkey -v
-fi
+install_precommit_hooks() {
+    if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
+        echo "pre-commit config found. Installing hooks..."
+        pre-commit install
+    fi
+}
+
+autoload -U add-zsh-hook
+add-zsh-hook chpwd use_nvm_version
+add-zsh-hook chpwd install_precommit_hooks
+
+# -----------------------------
+# lazy env loaders
+# -----------------------------
+
+load_nvm() {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+
+nvm() {
+  unset -f nvm
+  load_nvm
+  nvm "$@"
+}
+
+load_pyenv() {
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/shims:$PATH"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+}
+
+pyenv() {
+  unset -f pyenv
+  load_pyenv
+  pyenv "$@"
+}
+
+# -----------------------------
+# aliases
+# -----------------------------
 
 alias tree="tree -C"
 alias l="eza -lam --icons=auto"
@@ -73,9 +139,9 @@ alias jl='just --list --unsorted'
 alias f='nvim $(find `pwd` -type f | fzf)'
 alias luamake="/home/nico/code/extern/lua-language-server/3rd/luamake/luamake"
 
-get_theme() { ~/.scripts/xctl theme }
-delta() { command delta --$(get_theme) "$@" }
-bat() { command bat --theme=gruvbox-$(get_theme) "$@" }
+whattheme() { ~/.scripts/xctl theme }
+delta() { command delta --$(whattheme) "$@" }
+bat() { command bat --theme=gruvbox-$(whattheme) "$@" }
 btm() {
   local theme="gruvbox" # default is dark
   if [[ $(get_theme) == "light" ]]; then theme="nord-light"; fi
@@ -120,21 +186,9 @@ nv() {
     fi
 }
 
-cod() {
-  selected=$(find "$HOME/code" -type d -name .git -prune \
-    | xargs dirname {} \
-    | fzf --height=10 --prompt="projects: ")
-  cd $selected
-}
-
-# cd hooks
-cd() {
-    builtin cd "$@"
-    if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
-        echo "pre-commit config found. Installing hooks..."
-        pre-commit install
-    fi
-}
+# -----------------------------
+# zstyle
+# -----------------------------
 
 # Bindings and Widgets
 function clear-screen-and-scrollback() { clear && printf '\e[3J' && zle reset-prompt }
@@ -183,28 +237,5 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
 eval "$(direnv hook zsh)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
-[ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/shims:$PATH"
-
-  if ! [ -d "$PYENV_ROOT/plugins/pyenv-virtualenv" ]; then
-    git clone https://github.com/pyenv/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
-  fi
-
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-
-[[ -s "/home/nico/.gvm/scripts/gvm" ]] && source "/home/nico/.gvm/scripts/gvm"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
