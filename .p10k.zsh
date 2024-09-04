@@ -45,6 +45,7 @@
     time                      # current time
     virtualenv
     pyenv
+    node_version
     nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
     # =========================[ Line #2 ]=========================
@@ -69,12 +70,19 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
 
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
-  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+  typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION=' $(python --version | sed "s/Python //")'
 
   typeset -g POWERLEVEL9K_RUST_VERSION_FOREGROUND=$red
   typeset -g POWERLEVEL9K_RUST_VERSION_PROJECT_ONLY=true
   typeset -g POWERLEVEL9K_RUST_VERSION_VISUAL_IDENTIFIER_EXPANSION=''
+
+  # Customize the node_version content to include an icon
+  typeset -g POWERLEVEL9K_NODE_VERSION_CONTENT_EXPANSION=' $(node --version | sed "s/v//")'
+  typeset -g POWERLEVEL9K_NODE_VERSION_PROJECT_ONLY=true
+  typeset -g POWERLEVEL9K_NODE_VERSION_FOREGROUND=$green
+  typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=none
 
   #[ nix_shell: nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html) ]##
   typeset -g POWERLEVEL9K_NIX_SHELL_FOREGROUND=$magenta
