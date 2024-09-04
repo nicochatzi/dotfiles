@@ -4,11 +4,16 @@ if [[ $TERM == xterm-256color && -n $TMUX ]]; then
     export TERM=tmux-256color
 fi
 
+export ZVM_INSTALL="$HOME/.zvm/self"
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+export RUST_BACKTRACE=1
+
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.zvm/bin:$PATH"
+export PATH="$ZVM_INSTALL/:$PATH"
 
-export RUST_BACKTRACE=1
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000
 export SAVEHIST=10000
