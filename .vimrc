@@ -48,10 +48,11 @@ endif
 
 colorscheme gruvbox
 
-if str2nr(system('~/.scripts/is-light-mode; echo $?')) == 0
-  set background=light
+let g:theme_bg = system('~/.scripts/xctl theme')
+if g:theme_bg == "light\n"
+    set background=light
 else
-  set background=dark
+    set background=dark
 endif
 
 hi Normal guibg=NONE ctermbg=NONE
