@@ -32,6 +32,7 @@
     context                   # user@host
     dir                       # current directory
     vcs                       # git status
+    status
     command_execution_time    # previous command duration
     # =========================[ Line #2 ]=========================
     newline                   # \n
@@ -41,10 +42,9 @@
   # Right prompt segments.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    command_execution_time    # previous command duration
     time                      # current time
-    virtualenv
     pyenv
+    virtualenv
     node_version
     nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
@@ -59,6 +59,11 @@
   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=           # no segment icons
 
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
+  typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$red
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$red
 
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
@@ -69,14 +74,16 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='|'
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
 
-  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
+  typeset -g POWERLEVEL9K_PYENV_FOREGROUND=$green
+
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$blue
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION=' $(python --version | sed "s/Python //")'
 
   typeset -g POWERLEVEL9K_RUST_VERSION_FOREGROUND=$red
   typeset -g POWERLEVEL9K_RUST_VERSION_PROJECT_ONLY=true
-  typeset -g POWERLEVEL9K_RUST_VERSION_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_RUST_VERSION_CONTENT_EXPANSION=" $(rustc --version | awk -F' ' '{print $2}')"
 
   # Customize the node_version content to include an icon
   typeset -g POWERLEVEL9K_NODE_VERSION_CONTENT_EXPANSION=' $(node --version | sed "s/v//")'
@@ -94,7 +101,7 @@
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE="%F{$magenta}%n@%m%f"
   typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_CONTENT_EXPANSION=
 
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=5
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=$yellow
