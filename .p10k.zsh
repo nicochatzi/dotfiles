@@ -8,6 +8,11 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
+function prompt_zig_version() {
+  [[ -n $(find . -maxdepth 1 -name "*.zig" 2>/dev/null) ]] || return
+  p10k segment -f 39 -t zig_version
+}
+
 () {
   emulate -L zsh -o extended_glob
 
@@ -48,6 +53,7 @@
     node_version
     nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
+    zig_version
     # =========================[ Line #2 ]=========================
     newline                   # \n
   )
@@ -127,6 +133,9 @@
   typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+  typeset -g POWERLEVEL9K_ZIG_VERSION_FOREGROUND=$red
+  typeset -g POWERLEVEL9K_ZIG_VERSION_CONTENT_EXPANSION='⚡$(zig version)'
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
