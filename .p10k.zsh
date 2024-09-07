@@ -135,7 +135,7 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
   typeset -g POWERLEVEL9K_ZIG_VERSION_FOREGROUND=$red
-  typeset -g POWERLEVEL9K_ZIG_VERSION_CONTENT_EXPANSION='⚡$(zig version)'
+  typeset -g POWERLEVEL9K_ZIG_VERSION_CONTENT_EXPANSION=' $(zig version)'
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
