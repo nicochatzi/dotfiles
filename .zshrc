@@ -4,9 +4,10 @@ if [[ $TERM == xterm-256color && -n $TMUX ]]; then
     export TERM=tmux-256color
 fi
 
+export RUST_BACKTRACE=1
 export ZVM_INSTALL="$HOME/.zvm/self"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
-export RUST_BACKTRACE=1
+mkdir -p $TF_PLUGIN_CACHE_DIR
 
 export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
@@ -19,7 +20,7 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 
 setopt inc_append_history
-setopt share_history
+# setopt share_history
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt globdots
@@ -148,7 +149,7 @@ delta() { command delta --$(whattheme) "$@" }
 bat() { command bat --theme=gruvbox-$(whattheme) "$@" }
 btm() {
   local theme="gruvbox" # default is dark
-  if [[ $(get_theme) == "light" ]]; then theme="nord-light"; fi
+  if [[ $(whattheme) == "light" ]]; then theme="nord-light"; fi
   command btm --enable_gpu --theme="$theme" "$@"
 }
 watch() { command watch --color "$@" }
