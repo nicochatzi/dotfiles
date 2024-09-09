@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Battery Timer
+
+[Timer]
+OnBootSec=10s
+OnUnitInactiveSec=30s
+Unit=check-battery.service
+
+[Install]
+WantedBy=timers.target
+

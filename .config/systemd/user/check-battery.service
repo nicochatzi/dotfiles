@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Battery Level
+
+[Install]
+WantedBy=default.target
+
+[Service]
+ExecStart=/home/nico/.scripts/xctl check-battery 20
+

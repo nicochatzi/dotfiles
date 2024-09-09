@@ -13,16 +13,75 @@ _warn MSG:
   echo -e "\033[0;33mwarn: {{MSG}}\033[0m"
 
 # system monitor
+[group('cli')]
 top:
   #!/usr/bin/env zsh
   . ~/.zshrc
   btm --basic --process_memory_as_value
 
+# pipe to copy to system clipboard
+[group('cli')]
+[macos]
+cp:
+  pbcopy
+
+[group('cli')]
+[linux]
+cp:
+  xclip -selection clipboard
+
+# extract a semver from a string
+[group('cli')]
+semver:
+  grep -oP '(\d+\.\d+\.\d+)' | head -1
+
+# patch the interpreter of a binary to use the nix link-loader
+[group('cli')]
+patchelf BIN:
+  #!/usr/bin/env bash
+  nix_shell_ld_path=$(nix-shell --run 'echo $LD_LIBRARY_PATH')
+  nix_linker=$(echo $nix_shell_ld_path | tr ':' '\n' | grep ld-linux | head -n 1)
+  patchelf --set-interpreter "$nix_linker" "$binary"
+
+# https://xkcd.com/1168/
+[group('cli')]
+comp FILE:
+  tar -xzvf {{FILE}}
+
+# convert a string to UPPER CASE
+[group('cli')]
+to-upper:
+  tr '[:lower:]' '[:upper:]'
+
+# convert a string to lower case
+[group('cli')]
+to-lower:
+  tr '[:upper:]' '[:lower:]'
+
+# convert a string to kebab-case
+[group('cli')]
+to-kebab:
+  sed 's/[ _]/-/g'
+
+# convert a string to snake_case
+[group('cli')]
+to-snake:
+  sed 's/[- ]/_/g'
+
+# launch an HTTP server from current dir
+[group('cli')]
+serve PORT="8080":
+  python -m http.server \
+    -d {{invocation_directory()}} \
+    {{PORT}}
+
 # connect HDMI-1 monitor to laptop
+[group('hdmi')]
 hdmi-screen POSITION="above" SCALE="1":
   xrandr --output HDMI-1 --auto --{{POSITION}} --scale {{SCALE}} eDP-1
 
 # connect and default to HDMI-1 audio
+[group('hdmi')]
 hdmi-audio POSITION="above": (hdmi-screen POSITION)
   pulseaudio --kill && pulseaudio --start
   pactl load-module module-alsa-sink device=hw:0,3
@@ -30,6 +89,7 @@ hdmi-audio POSITION="above": (hdmi-screen POSITION)
   amixer -c 0 set IEC958 unmute
 
 # focus a terminal window or launch a new one
+[group('term')]
 term-open TITLE CMD DIR="$HOME":
   #!/usr/bin/env bash
   if ! i3-msg "[title=\"{{TITLE}}\"] focus"; then
@@ -37,10 +97,12 @@ term-open TITLE CMD DIR="$HOME":
   fi
 
 # run python REPL with useful python packages
+[group('term')]
 term-py:
   nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
 
 # fuzzy find and switch tmux session
+[group('tmux')]
 tmux-switch:
   tmux list-sessions \
     | sed "s/:.*//" \
@@ -48,6 +110,7 @@ tmux-switch:
     | xargs -I {} tmux switch-client -t {}
 
 # create a tmux session if it doesn't exist and attach to it
+[group('tmux')]
 tmux-sesh NAME CMD="" CLEAR="":
   #!/usr/bin/env bash
   if ! tmux has-session -t "{{NAME}}" 2>/dev/null; then
@@ -109,16 +172,8 @@ use-pyenv VENV_NAME:
   fi
   ' >> {{invocation_directory()}}/.envrc
 
-# pipe to copy to system clipboard
-[macos]
-cp:
-  pbcopy
-
-[linux]
-cp:
-  xclip -selection clipboard
-
 # "light" or "dark"?
+[group('theme')]
 theme:
   #!/usr/bin/env bash
   if [[ "$(readlink "$HOME/.config/alacritty/theme.toml")" == *light* ]]; then
@@ -127,6 +182,7 @@ theme:
     echo "dark"
   fi
 
+[group('theme')]
 _theme-set-alacritty MODE:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -134,6 +190,7 @@ _theme-set-alacritty MODE:
   ln -sf "$ALACRITTY_CONFIG/{{MODE}}.toml" "$ALACRITTY_CONFIG/theme.toml"
   touch "$ALACRITTY_CONFIG/alacritty.toml"
 
+[group('theme')]
 _theme-set-nvim MODE:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -147,20 +204,21 @@ _theme-set-nvim MODE:
       -cc "colorscheme ${mode_nvim[{{MODE}}]}"
   done
 
+[group('theme')]
 theme-common-set MODE: (_theme-set-alacritty MODE) (_theme-set-nvim MODE)
 
 # set theme to "light" or "dark"
+[group('theme')]
 theme-set MODE: (theme-common-set MODE)
   #!/usr/bin/env bash
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
   DUNST_CONFIG="$HOME/.config/dunst/dunstrc"
-  GTK_CONFIG="$HOME/.config/gtk-4.0"
   ROFI_CONFIG="$HOME/.config/rofi"
   BRAVE_CONFIG="$HOME/.config/chrome-theme"
   declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
   declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
-  declare -A mode_border=( ["light"]="#458588" ["dark"]="#54546d" )
+  declare -A mode_border=( ["light"]="#458588" ["dark"]="#947fb8" )
   declare -A mode_wallpaper=( ["light"]="gruvbox-light-blue.png" ["dark"]="gruvbox-dark-blue.png" )
   declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
   declare -A mode_urgency_normal_fg=( ["light"]="#282828" ["dark"]="#efd8a5" )
@@ -169,7 +227,8 @@ theme-set MODE: (theme-common-set MODE)
   nitrogen --save --set-zoom-fill \
     "$HOME/.nixfiles/assets/${mode_wallpaper[{{MODE}}]}"
   # misc / immediate
-  ln -sf "$GTK_CONFIG/{{MODE}}.ini" "$GTK_CONFIG/settings.ini"
+  ln -sf "$HOME/.config/gtk-4.0/{{MODE}}.ini" "$HOME/.config/gtk-4.0/settings.ini"
+  ln -sf "$HOME/.config/gtk-3.0/{{MODE}}.ini" "$HOME/.config/gtk-3.0/settings.ini"
   ln -sf "$ROFI_CONFIG/{{MODE}}.rasi" "$ROFI_CONFIG/theme.rasi"
   ln -sf "$BRAVE_CONFIG/{{MODE}}.json" "$BRAVE_CONFIG/manifest.json"
   rm -f "$BRAVE_CONFIG"/Cached\ Theme.pak
@@ -196,6 +255,7 @@ theme-set MODE: (theme-common-set MODE)
   i3-msg reload
 
 # toggle between light and dark themes
+[group('theme')]
 theme-toggle:
   #!/usr/bin/env bash
   if [[ $(just -f {{justfile()}} theme) == "light" ]]; then
@@ -207,11 +267,13 @@ theme-toggle:
 FEEDS_STATE_DIR:="${HOME}/.local/share/feeds"
 
 # follow the feeds log
+[group('feeds')]
 feeds-log:
   mkdir -p {{FEEDS_STATE_DIR}}
   tail -fn10 {{FEEDS_STATE_DIR}}/log
 
 # check for new items in feeds and notify
+[group('feeds')]
 feeds-check:
   mkdir -p {{FEEDS_STATE_DIR}} && touch {{FEEDS_STATE_DIR}}/log
   nix-shell feeds/shell.nix \
@@ -219,6 +281,7 @@ feeds-check:
     >> {{FEEDS_STATE_DIR}}/log
 
 # parse through unread items and open the selected one
+[group('feeds')]
 feeds-find:
   #!/usr/bin/env bash
   store=`ls {{FEEDS_STATE_DIR}} | fzf`
@@ -226,43 +289,6 @@ feeds-find:
   if [ -n "$selected" ]; then \
     xdg-open `echo "$selected" | sed 's/.* - //'`; \
   fi
-
-# extract a semver from a string
-semver:
-  grep -oP '(\d+\.\d+\.\d+)' | head -1
-
-# patch the interpreter of a binary to use the nix link-loader
-patchelf BIN:
-  #!/usr/bin/env bash
-  nix_shell_ld_path=$(nix-shell --run 'echo $LD_LIBRARY_PATH')
-  nix_linker=$(echo $nix_shell_ld_path | tr ':' '\n' | grep ld-linux | head -n 1)
-  patchelf --set-interpreter "$nix_linker" "$binary"
-
-# https://xkcd.com/1168/
-comp FILE:
-  tar -xzvf {{FILE}}
-
-# convert a string to UPPER CASE
-to-upper:
-  tr '[:lower:]' '[:upper:]'
-
-# convert a string to lower case
-to-lower:
-  tr '[:upper:]' '[:lower:]'
-
-# convert a string to kebab-case
-to-kebab:
-  sed 's/[ _]/-/g'
-
-# convert a string to snake_case
-to-snake:
-  sed 's/[- ]/_/g'
-
-# launch an HTTP server from current dir
-serve PORT="8080":
-  python -m http.server \
-    -d {{invocation_directory()}} \
-    {{PORT}}
 
 DOCK_DEV:="dock/dev"
 DOCK_BASE:="dock/base"
@@ -354,3 +380,12 @@ touchpad-toggle:
     | grep -q disabled \
     && gsettings set org.gnome.desktop.peripherals.touchpad send-events 'enabled' \
     || gsettings set org.gnome.desktop.peripherals.touchpad send-events 'disabled'
+
+check-battery THRESHOLD='20':
+  #!/usr/bin/env bash
+  battery_level=$(cat /sys/class/power_supply/BAT0/capacity)
+  is_on_ac=$(cat /sys/class/power_supply/AC/online)
+  if [ "$battery_level" -lt {{THRESHOLD}} ] && [ "$is_on_ac" -eq 0 ]; then
+    dunstify -u critical -h string:x-dunst-stack-tag:battery \
+      "Low Battery" "Battery level is low: $battery_level%"
+  fi
