@@ -43,8 +43,9 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.timeout = true
-vim.o.updatetime = 100
 vim.o.timeoutlen = 100
+-- ms of doing nothing, swap file will be written to disk
+vim.o.updatetime = 50
 
 -- Set completeopt to have a better completion experience
 -- this
@@ -79,6 +80,13 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitgraph",
+  callback = function()
+    vim.opt_local.spell = false
+  end
+})
+
 vim.cmd [[
     autocmd InsertEnter * :set norelativenumber
     autocmd InsertLeave * :set relativenumber
@@ -90,3 +98,5 @@ vim.cmd [[autocmd BufRead,BufNewFile *.ll setfiletype llvm]]
 vim.cmd [[autocmd BufRead,BufNewFile *.mojo setfiletype python]]
 vim.cmd([[autocmd BufRead,BufNewFile flake.lock setfiletype json]])
 vim.cmd([[autocmd BufRead,BufNewFile *.service* set ft=systemd]])
+vim.cmd([[autocmd BufRead,BufNewFile *.service.ts set ft=typescript]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tf set ft=terraform]])

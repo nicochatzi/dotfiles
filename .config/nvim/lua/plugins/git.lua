@@ -10,6 +10,43 @@ return {
   },
 
   {
+    'isakbm/gitgraph.nvim',
+    opts = {
+      symbols = {
+        merge_commit = '󰘬',
+        merge_commit_end = '',
+        commit = '',
+        commit_end = '●',
+      },
+      format = {
+        timestamp = '%H:%M:%S %Y-%m-%d',
+        fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag', 'message' },
+      },
+      hooks = {
+        -- Check diff of a commit
+        on_select_commit = function(commit)
+          vim.notify('DiffviewOpen ' .. commit.hash .. '^!')
+          vim.cmd(':DiffviewOpen ' .. commit.hash .. '^!')
+        end,
+        -- Check diff from commit a -> commit b
+        on_select_range_commit = function(from, to)
+          vim.notify('DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+          vim.cmd(':DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+        end,
+      },
+    },
+    keys = {
+      {
+        "<leader>gl",
+        function()
+          require('gitgraph').draw({}, { all = true, max_count = 1000 })
+        end,
+        desc = "GitGraph - Draw",
+      },
+    },
+  },
+
+  {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },

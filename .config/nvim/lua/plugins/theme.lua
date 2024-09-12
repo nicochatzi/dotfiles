@@ -91,6 +91,13 @@ return {
       vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { fg = colors.light, bg = 'none' })
       -- vim.api.nvim_set_hl(0, 'NeoTreeTabActive', { bg = 'none' })
       vim.api.nvim_set_hl(0, 'NeoTreeTabInactive', { bg = 'none' })
+
+      vim.api.nvim_set_hl(0, 'GitGraphHash', { bg = 'none', fg = colors.teal })
+      vim.api.nvim_set_hl(0, 'GitGraphTimestamp', { bg = 'none', fg = colors.green })
+      vim.api.nvim_set_hl(0, 'GitGraphAuthor', { bg = 'none', fg = colors.bblue })
+      vim.api.nvim_set_hl(0, 'GitGraphBranchName', { bg = 'none', fg = colors.red })
+      vim.api.nvim_set_hl(0, 'GitGraphBranchTag', { bg = 'none', fg = colors.pink })
+      vim.api.nvim_set_hl(0, 'GitGraphBranchMsg', { bg = 'none', fg = colors.orange })
     end,
   },
 }

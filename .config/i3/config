@@ -58,11 +58,11 @@ bindsym $mod+Shift+m $open_term mixer_pad \
 bindsym $mod+m $open_term top_pad \
   "~/.scripts/xctl top"
 
-bindsym $mod+p $open_term py_pad \
-  "~/.scripts/xctl tmux-sesh py_repl '~/.scripts/xctl term-py' clear"
+bindsym $mod+p $open_term calc_pad \
+  "~/.scripts/xctl tmux-sesh calc '~/.scripts/xctl term-py' clear"
 
-bindsym $mod+n $open_term notes_pad_full \
-  "~/.scripts/xctl tmux-sesh notes 'nv ~/obsidian/dev/' clear" $HOME/obsidian/dev
+bindsym $mod+n $open_term obs_pad_full \
+  "~/.scripts/xctl tmux-sesh obs 'nv ~/obsidian/dev/' clear" $HOME/obsidian/dev
 
 # Window Modifications
 for_window [class=".*"] border pixel 1
@@ -224,7 +224,7 @@ bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t ima
 
 set $bg #282828
 set $text #83A598
-set $border #54546d
+set $border #947fb8
 
 set $grey #54546d
 set $white #dcd7ba

@@ -112,4 +112,3 @@ tztime time {
   format = " <span color='#458588' size='medium'> </span> %H:%M:%S "
   locale = "en_IN.UTF-8"
 }
-

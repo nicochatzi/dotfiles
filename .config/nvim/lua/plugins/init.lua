@@ -91,6 +91,9 @@ return {
     cmd = 'Spectre',
     config = function()
       require('spectre').setup {
+        live_update = true,
+        lnum_for_results = false,
+        is_block_ui_break = true,
         mapping = {
           ['open_in_split'] = {
             map = '<c-s>',

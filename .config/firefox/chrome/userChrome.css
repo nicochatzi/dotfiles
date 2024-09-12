@@ -55,3 +55,19 @@
     color: var(--chrome-text-color) !important;
   }
 }
+
+/* sideberry config */
+/* @media (prefers-color-scheme: dark) { */
+/* 	#root.root { */
+/* 		--frame-bg: #282828; */
+/* 		--toolbar-bg: #282828; */
+/* 	} */
+/* } */
+/**/
+/* @media (prefers-color-scheme: light) { */
+/* 	#root.root { */
+/* 		--frame-bg: #FBF1C7; */
+/* 		--toolbar-bg: #FBF1C7; */
+/* 	} */
+/* } */
+/**/
