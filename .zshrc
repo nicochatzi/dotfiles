@@ -36,6 +36,7 @@ fi
 
 [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
 [ -s "$HOME/.snc-env" ] && \. "$HOME/.snc-env"
+[ -s "$HOME/.creds" ] && \. "$HOME/.creds"
 
 # -----------------------------
 # zinit

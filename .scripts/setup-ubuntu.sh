@@ -151,11 +151,11 @@ install_language_servers() {
 }
 
 setup_desktop() {
-  sudo apt install -y i3 lightdm slick-greeter lxappearance brightnessctl
+  sudo apt install -y i3 lightdm slick-greeter lxappearance brightnessctl maim
   sudo dpkg-reconfigure lightdm
   sudo chmod +s "$(which brightnessctl)"
 
-  xset r rate 150 50
+  xset r rate 200 50
   setxkbmap -option caps:escape
 }
 

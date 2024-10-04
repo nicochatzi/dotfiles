@@ -77,8 +77,8 @@ serve PORT="8080":
 
 # connect HDMI-1 monitor to laptop
 [group('hdmi')]
-hdmi-screen POSITION="above" SCALE="1":
-  xrandr --output HDMI-1 --auto --{{POSITION}} --scale {{SCALE}} eDP-1
+hdmi-screen POSITION="above" SCALE="1.0":
+  xrandr --output HDMI-A-0 --auto --{{POSITION}} --scale {{SCALE}} eDP
 
 # connect and default to HDMI-1 audio
 [group('hdmi')]
@@ -99,7 +99,12 @@ term-open TITLE CMD DIR="$HOME":
 # run python REPL with useful python packages
 [group('term')]
 term-py:
-  nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
+  #!/usr/bin/env bash
+  if [ command -v nix-shell ]; then
+    nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
+  else
+    python
+  fi
 
 # fuzzy find and switch tmux session
 [group('tmux')]

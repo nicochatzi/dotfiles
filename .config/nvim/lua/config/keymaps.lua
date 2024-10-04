@@ -10,7 +10,6 @@ local function toggle_or_focus_neotree(source)
   local bufnr = vim.api.nvim_get_current_buf()
   local is_neo_tree = vim.bo[bufnr].filetype == "neo-tree"
 
-  -- Function to get the current Neotree source
   local function get_neo_tree_source()
     local neo_tree_source = vim.b[bufnr].neo_tree_source
     return neo_tree_source
@@ -29,18 +28,14 @@ local function toggle_or_focus_neotree(source)
   if is_neo_tree then
     local current_source = get_neo_tree_source()
     if current_source == source then
-      -- If we're in Neotree and on the same source, close it
       vim.cmd.Neotree("close")
     else
-      -- If we're in Neotree but on a different source, switch to the new source
       vim.cmd.Neotree(source)
     end
   elseif neo_tree_win then
-    -- If Neotree is open but not focused, focus it and switch to the specific source
     vim.api.nvim_set_current_win(neo_tree_win)
     vim.cmd.Neotree(source)
   else
-    -- If Neotree is not open, open it with the specific source
     vim.cmd.Neotree(source)
   end
 end
@@ -62,14 +57,10 @@ vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_sy
   { noremap = true, desc = "Toggle or focus document symbols" })
 vim.keymap.set('n', '<leader>D', function() toggle_or_focus_neotree("diagnostics") end,
   { noremap = true, desc = "Toggle or focus diagnostics" })
+vim.keymap.set('n', '<leader>P', function() toggle_or_focus_neotree("dependencies") end,
+  { noremap = true, desc = "Toggle or focus dependencies" })
 vim.keymap.set('n', '<leader>T', ':Neotest summary<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>W', pick_window_and_switch, { noremap = true })
-
-
--- tabs
-vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>tt', ':tabonly<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { noremap = true })
 
 -- Resizing panes with Alt-H/J/K/L
 vim.api.nvim_set_keymap('n', '<M-h>', ':vertical resize -5<CR>', { noremap = true, silent = true })
@@ -102,6 +93,8 @@ vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
 -- git remaps
 vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen<CR>', { noremap = true, desc = "git diff" })
 vim.api.nvim_set_keymap('n', '<leader>gf', ':DiffviewFileHistory %<CR>', { noremap = true, desc = "git file history" })
+vim.api.nvim_set_keymap('v', '<leader>gf', ":'<,'>DiffviewFileHistory<CR>", { noremap = true, desc = "git line history" })
+vim.api.nvim_set_keymap('n', '<leader>gF', ":DiffviewFileHistory<CR>", { noremap = true, desc = "git project history" })
 
 -- package management
 vim.keymap.set('n', '<leader>vv', ':lua require\'crates\'.show_versions_popup() <CR>', { silent = true })
@@ -286,3 +279,39 @@ local function close_all_but_visible_buffers()
 end
 
 vim.keymap.set('n', '<leader>bt', close_all_but_visible_buffers, { noremap = true })
+
+--
+-- Of tabs and terms...
+--
+function _G.open_or_focus_terminal_tab()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == 'terminal' then
+      -- If terminal buffer exists, switch to it
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == buf then
+          vim.api.nvim_set_current_win(win)
+          return
+        end
+      end
+      vim.cmd('tabnew | b ' .. buf)
+      return
+    end
+  end
+  -- If no terminal buffer exists, create a new one
+  vim.cmd('tabnew | terminal')
+end
+function _G.goto_tab_n(n)
+  if n > 0 and n <= vim.fn.tabpagenr('$') then
+    vim.cmd('tabnext ' .. n)
+  end
+end
+local classic_term_exit ='<C-\\><C-n>'
+vim.keymap.set('t', '<C-w>', classic_term_exit , { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>tt', open_or_focus_terminal_tab, { noremap = true, silent = true })
+for i = 1, 9 do
+  vim.keymap.set('n', '<leader>t' .. i, function() goto_tab_n(i) end, { noremap = true, silent = true })
+end
+vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>to', ':tabonly<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { noremap = true })
+

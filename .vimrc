@@ -30,7 +30,7 @@ set backspace=indent,eol,start " OSX stupid backspace fix
 set completeopt=menu,menuone,preview,noselect,noinsert " configure as-you-type completions
 set list
 set lcs+=trail:.
-set guifont=JetBrainsMono_Nerd_Font:h11
+set guifont=JetBrainsMono_NF:h11
 set relativenumber
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
