@@ -30,6 +30,20 @@ cp:
 cp:
   xclip -selection clipboard
 
+[group('cli')]
+[linux]
+wifi:
+  #!/usr/bin/env bash
+
+  nmcli device wifi rescan
+  SSID=$(nmcli -t -f SSID device wifi list | fzf --height 40% --reverse --border --prompt "Select a Wi-Fi network: ")
+
+  if [ -n "$SSID" ]; then
+      nmcli device wifi connect "$SSID"
+  else
+      echo "No Wi-Fi network selected."
+  fi
+
 # extract a semver from a string
 [group('cli')]
 semver:
@@ -394,3 +408,4 @@ check-battery THRESHOLD='20':
     dunstify -u critical -h string:x-dunst-stack-tag:battery \
       "Low Battery" "Battery level is low: $battery_level%"
   fi
+

@@ -58,8 +58,8 @@ bindsym $mod+Shift+m $open_term mixer_pad \
 bindsym $mod+m $open_term top_pad \
   "~/.scripts/xctl top"
 
-bindsym $mod+p $open_term calc_pad \
-  "~/.scripts/xctl tmux-sesh calc '~/.scripts/xctl term-py' clear"
+bindsym $mod+p $open_term py_pad \
+  "~/.scripts/xctl tmux-sesh py '~/.scripts/xctl term-py' clear"
 
 bindsym $mod+n $open_term obs_pad_full \
   "~/.scripts/xctl tmux-sesh obs 'nv ~/obsidian/dev/' clear" $HOME/obsidian/dev
@@ -127,7 +127,7 @@ bindsym $mod+Shift+f resize set 100 ppt 100 ppt, move position 0 ppt 0 ppt
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+w layout toggle tabbed splitv
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating

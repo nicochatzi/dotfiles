@@ -27,4 +27,3 @@
   email = nico@htz.dev
 [includeIf "gitdir:~/code/snc/"]
   path = .gitconfig_snc
-

@@ -50,6 +50,8 @@
 #  - column: 1-based column
 #  - message: description of the item
 #  - context: unstyled lines of output, separated with escaped newlines (`\\n`)
+default_job = "clippy-all"
+
 [export]
 enabled = false
 path = ".bacon-locations"
@@ -58,15 +60,22 @@ line_format = "{kind} {path}:{line}:{column} {message}"
 # Uncomment and change the key-bindings you want to define
 # (some of those ones are the defaults and are just here
 #  for illustration)
-# [keybindings]
+[keybindings]
+a = "job:check-all"
+i = "job:initial"
+c = "job:clippy-all"
+d = "job:doc-open"
+t = "job:test"
+r = "job:run"
+l = "job:ltest"
+# ctrl-c = "quit"
+# q = "quit"
 # esc = "back"
 # g = "scroll-to-top"
 # shift-g = "scroll-to-bottom"
 # k = "scroll-lines(-1)"
 # j = "scroll-lines(1)"
-# ctrl-c = "quit"
 # ctrl-q = "quit"
-# q = "quit"
 # F5 = "rerun"
 # s = "toggle-summary"
 # w = "toggle-wrap"
@@ -78,20 +87,11 @@ line_format = "{kind} {path}:{line}:{column} {message}"
 # PageUp = "scroll-pages(-1)"
 # PageDown = "scroll-pages(1)"
 # Space = "scroll-pages(1)"
-# a = "job:check-all"
-# i = "job:initial"
-# c = "job:clippy"
-# c = "job:clippy-all"
-# d = "job:doc-open"
-# t = "job:test"
-# r = "job:run"
-
-default_job = "clippy-all"
 
 [jobs.lbuild]
 command = ["cargo", "lbuild", "--all-targets", "--color", "always"]
-need_stdout = false
+need_stdout = true
 
 [jobs.ltest]
 command = ["cargo", "ltest", "--all-targets", "--color", "always"]
-need_stdout = false
+need_stdout = true

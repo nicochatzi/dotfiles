@@ -4,7 +4,7 @@ if [[ $TERM == xterm-256color && -n $TMUX ]]; then
     export TERM=tmux-256color
 fi
 
-export RUST_BACKTRACE=1
+# export RUST_BACKTRACE=1
 export ZVM_INSTALL="$HOME/.zvm/self"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 mkdir -p $TF_PLUGIN_CACHE_DIR
@@ -13,6 +13,7 @@ export PATH="$HOME/code/me/aud/out:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.zvm/bin:$PATH"
+export PATH="$HOME/.local/go/bin:$PATH"
 export PATH="$ZVM_INSTALL/:$PATH"
 
 export HISTFILE=~/.zsh_history
@@ -67,6 +68,7 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+complete -C aws_completer aws
 
 zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
 if [[ ! -f $zcompdump || $ZSH_COMPDUMP_CHANGED -eq 1 ]]; then
@@ -144,6 +146,8 @@ alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias j='just'
 alias jl='just --list --unsorted'
+alias ai='llm -m claude-3.5-sonnet'
+alias nvsql="nvim '+SQLua'"
 
 alias whattheme='~/.scripts/xctl theme'
 delta() { command delta --$(whattheme) "$@" }

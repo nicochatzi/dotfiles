@@ -8,49 +8,49 @@ end
 
 -- server settings
 local servers = {
-  ltex = {
-    enabled = { 'latex', 'tex', 'bib', 'markdown' },
-    language = 'en-US',
-    diagnosticSeverity = 'information',
-    setenceCacheSize = 2000,
-    additionalRules = {
-      enablePickyRules = true,
-      motherTongue = 'en-US',
-    },
-    use_spellfile = true,
-    trace = { server = 'verbose' },
-    disabledRules = {},
-    hiddenFalsePositives = {},
-    dictionary = {
-      ['en-US'] = words
-    }
-  },
-  robotframework_ls = {},
-  ruff = {
-    init_options = {
-      settings = {
-        logLevel = "debug",
-        logFile = "~/.local/state/nvim/ruff.log"
-      }
-    }
-  },
-  pyright = {
-    settings = {
-      pyright = {
-        -- Using Ruff's import organizer
-        -- disableOrganizeImports = true,
-      },
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          -- Ignore all files for analysis to exclusively use Ruff for linting
-          -- ignore = { '*' },
-          ignore = {},
-        },
-      },
-    },
-  },
+  -- ltex = {
+  --   enabled = { 'latex', 'tex', 'bib', 'markdown' },
+  --   language = 'en-US',
+  --   diagnosticSeverity = 'information',
+  --   setenceCacheSize = 2000,
+  --   additionalRules = {
+  --     enablePickyRules = true,
+  --     motherTongue = 'en-US',
+  --   },
+  --   use_spellfile = true,
+  --   trace = { server = 'verbose' },
+  --   disabledRules = {},
+  --   hiddenFalsePositives = {},
+  --   dictionary = {
+  --     ['en-US'] = words
+  --   }
+  -- },
+  -- robotframework_ls = {},
+  -- ruff = {
+  --   init_options = {
+  --     settings = {
+  --       logLevel = "debug",
+  --       logFile = "~/.local/state/nvim/ruff.log"
+  --     }
+  --   }
+  -- },
+  -- pyright = {
+  --   settings = {
+  --     pyright = {
+  --       -- Using Ruff's import organizer
+  --       -- disableOrganizeImports = true,
+  --     },
+  --     python = {
+  --       analysis = {
+  --         autoSearchPaths = true,
+  --         useLibraryCodeForTypes = true,
+  --         -- Ignore all files for analysis to exclusively use Ruff for linting
+  --         -- ignore = { '*' },
+  --         ignore = {},
+  --       },
+  --     },
+  --   },
+  -- },
   -- eslint = {},
   biome = {},
   jsonls = {},

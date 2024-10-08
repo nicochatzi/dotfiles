@@ -7,8 +7,22 @@ return {
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
     'mrbjarksen/neo-tree-diagnostics.nvim',
+    { dir = '/home/nico/.config/nvim/plugins/neo-tree-dependencies.nvim' },
   },
   opts = {
+    default_component_configs = {
+      container = {
+        enable_character_fade = false
+      },
+      file_size = {
+        enabled = true,
+        required_width = 50,
+      },
+      symlink_target = {
+        enabled = true,
+        required_width = 80,
+      },
+    },
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
@@ -27,6 +41,7 @@ return {
       'git_status',
       'document_symbols',
       'diagnostics',
+      'dependencies',
     },
     window = {
       position = 'right',
@@ -72,6 +87,17 @@ return {
         },
       },
     },
+    source_selector = {
+      winbar = true,
+      statusline = false,
+      sources = {
+        { source = 'filesystem', display_name = '  ' },
+        { source = 'git_status', display_name = '  ' },
+        { source = 'document_symbols', display_name = '  ' },
+        { source = 'diagnostics', display_name = '  ' },
+        { source = 'dependencies', display_name = '  ' },
+      },
+    },
     filesystem = {
       filtered_items = {
         visible = true,
@@ -84,23 +110,12 @@ return {
         leave_files_open = true,
       },
     },
-    source_selector = {
-      winbar = true,
-      statusline = false,
-      sources = {
-        { source = 'filesystem', display_name = ' 󰉓 ' },
-        { source = 'git_status', display_name = ' 󰊢 ' },
-        { source = 'document_symbols', display_name = '  ' },
-        { source = 'diagnostics', display_name = '  ' },
-      },
-    },
     buffers = {
       follow_current_file = {
         enabled = true,
         leave_files_open = true,
       },
     },
-    -- These are the defaults
     diagnostics = {
       auto_preview = {
         -- May also be set to `true`
@@ -167,5 +182,12 @@ return {
         -- Macro = { icon = ' ', hl = 'Macro' },
       }
     },
+    dependencies = {
+      bind_to_cwd = true,
+      follow_current_file = {
+        enabled = true,
+        leave_files_open = true,
+      },
+    }
   },
 }

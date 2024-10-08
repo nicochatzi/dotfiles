@@ -37,17 +37,8 @@ function prompt_zig_version() {
     context                   # user@host
     dir                       # current directory
     vcs                       # git status
-
-    pyenv
-    virtualenv
-    node_version
-    nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
-    rust_version
-    zig_version
-
-    time                      # current time
+    status
     command_execution_time    # previous command duration
-    status                    # exit code of the last command
 
     # =========================[ Line #2 ]=========================
     newline                   # \n
@@ -57,28 +48,21 @@ function prompt_zig_version() {
   # Right prompt segments.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    # time                      # current time
-    # pyenv
-    # virtualenv
-    # node_version
-    # nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
-    # rust_version
-    # zig_version
-    # # =========================[ Line #2 ]=========================
-    # newline                   # \n
+    time                      # current time
+    pyenv
+    virtualenv
+    node_version
+    nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
+    rust_version
+    zig_version
+    # =========================[ Line #2 ]=========================
+    newline                   # \n
   )
-
-  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP=true
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
-  typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-  typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=false
-  typeset -g POWERLEVEL9K_UTF8_CONDITIONALLY_WIDE_CHARACTERS=false
 
   typeset -g POWERLEVEL9K_BACKGROUND=                            # transparent background
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_{LEFT,RIGHT}_WHITESPACE=  # no surrounding whitespace
-  typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR="\e[38;5;5m ⟩ \e[0m"  # separate segments with a space
-  typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=        # no end-of-line symbol
+  typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '  # separate segments with a space
+  typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=       # no end-of-line symbol
   typeset -g POWERLEVEL9K_VISUAL_IDENTIFIER_EXPANSION=           # no segment icons
 
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
@@ -87,6 +71,8 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$red
+
+  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS}_FOREGROUND=$magenta
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS}_FOREGROUND=$red
@@ -130,7 +116,7 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_VCS_FOREGROUND=$grey
   typeset -g POWERLEVEL9K_VCS_LOADING_TEXT=
   typeset -g POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0
-  typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$blue
+  typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$cyan
   typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind)
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=':'
   typeset -g POWERLEVEL9K_VCS_COMMIT_ICON=':'
@@ -145,6 +131,10 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
   typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=true
 
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+  typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
   typeset -g POWERLEVEL9K_ZIG_VERSION_FOREGROUND=$red
   typeset -g POWERLEVEL9K_ZIG_VERSION_CONTENT_EXPANSION=' $(zig version)'
 
@@ -158,3 +148,4 @@ typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'
+
