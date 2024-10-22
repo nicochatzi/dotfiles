@@ -81,6 +81,7 @@ install_tui() {
     sccache \
     tmux \
     alacritty \
+    kitty \
   )
 
   install_system_packages "${packages[@]}"
@@ -128,6 +129,10 @@ install_cargo_extensions() {
     bat \
     flamegraph \
     watchexec-cli
+
+  cargo install --locked \
+    yazi-fm \
+    yazi-cli
 }
 
 install_language_servers() {

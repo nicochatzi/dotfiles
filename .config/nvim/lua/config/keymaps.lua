@@ -49,15 +49,15 @@ local function pick_window_and_switch()
 end
 
 -- panels
-vim.keymap.set('n', '<leader>E', function() toggle_or_focus_neotree("filesystem") end,
+vim.keymap.set('n', '<leader>E', ":Neotree filesystem toggle<CR>",
   { noremap = true, desc = "Toggle or focus filesystem tree" })
-vim.keymap.set('n', '<leader>G', function() toggle_or_focus_neotree("git_status") end,
+vim.keymap.set('n', '<leader>G', ":Neotree git_status toggle<CR>",
   { noremap = true, desc = "Toggle or focus git status" })
-vim.keymap.set('n', '<leader>S', function() toggle_or_focus_neotree("document_symbols") end,
+vim.keymap.set('n', '<leader>S', ":Neotree document_symbols toggle<CR>",
   { noremap = true, desc = "Toggle or focus document symbols" })
-vim.keymap.set('n', '<leader>D', function() toggle_or_focus_neotree("diagnostics") end,
+vim.keymap.set('n', '<leader>D', ":Neotree diagnostics toggle<CR>",
   { noremap = true, desc = "Toggle or focus diagnostics" })
-vim.keymap.set('n', '<leader>P', function() toggle_or_focus_neotree("dependencies") end,
+vim.keymap.set('n', '<leader>P', ":Neotree dependencies toggle<CR>",
   { noremap = true, desc = "Toggle or focus dependencies" })
 vim.keymap.set('n', '<leader>T', ':Neotest summary<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>W', pick_window_and_switch, { noremap = true })

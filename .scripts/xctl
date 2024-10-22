@@ -107,7 +107,7 @@ hdmi-audio POSITION="above": (hdmi-screen POSITION)
 term-open TITLE CMD DIR="$HOME":
   #!/usr/bin/env bash
   if ! i3-msg "[title=\"{{TITLE}}\"] focus"; then
-    eval alacritty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
+    eval kitty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
   fi
 
 # run python REPL with useful python packages

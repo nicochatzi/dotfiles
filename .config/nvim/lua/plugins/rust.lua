@@ -39,11 +39,22 @@ return {
           on_attach = require 'lang.on_attach',
           default_settings = {
             ['rust-analyzer'] = {
+              cachePriming = {
+                enable = true,
+                numThreads = 'physical'
+              },
               cargo = {
                 allFeatures = true,
                 autoReload = true,
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
+                buildScripts = {
+                  enable = true,
+                  invocationStrategy = 'per_workspace',
+                  overrideCommand = nil,
+                  rebuildOnSave = true,
+                  useRustcWrapper = true
+                },
               },
               procMacro = {
                 enable = true,
