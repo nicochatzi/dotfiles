@@ -1,0 +1,4 @@
+[manager]
+prepen = [
+  { on = [ "E" ], run = "plugin eza-preview",  desc = "Toggle tree/list dir preview" },
+]
