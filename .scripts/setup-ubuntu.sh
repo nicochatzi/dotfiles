@@ -84,6 +84,9 @@ install_tui() {
     kitty \
   )
 
+  # https://github.com/AppImage/AppImageKit/wiki/FUSE
+  # sudo add-apt-repository universe && apt install libfuse2t64 -y
+
   install_system_packages "${packages[@]}"
 
   bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"

@@ -7,8 +7,9 @@
   ca = commit --amend
   cl = clone --recursive
   f = fetch --all
-  l = log --decorate --graph --all --oneline
   ll = log --decorate --graph --all
+  ls = !git ll --oneline
+  l = !git ls -n 10
   fix = !git reset --soft HEAD~0 && git commit --amend
 [init]
   defaultBranch = main

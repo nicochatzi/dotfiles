@@ -1,8 +1,8 @@
 return {
   {
     'mrcjkb/rustaceanvim',
-    version = '^4', -- Recommended
-    lazy = false,   -- This plugin is already lazy
+    version = '^5',
+    lazy = false, -- This plugin is already lazy
     config = function()
       local codelldb = require('lang.codelldb')
       local codelldb_path = codelldb.codelldb_path
@@ -41,9 +41,10 @@ return {
             ['rust-analyzer'] = {
               cachePriming = {
                 enable = true,
-                numThreads = 'physical'
+                numThreads = 4,
               },
               cargo = {
+                numThreads = 4,
                 allFeatures = true,
                 autoReload = true,
                 loadOutDirsFromCheck = true,
@@ -74,7 +75,31 @@ return {
                 enable = true,
                 allTargets = true,
                 command = 'clippy',
-                extraArgs = { '--', '-D', 'clippy::all' },
+                extraArgs = {
+                  '--',
+                  '-D', 'clippy::all',
+                  '-W', 'clippy::pedantic',
+                  '-W', 'clippy::nursery',
+                  '-A', 'clippy::missing-errors-doc',
+                  '-A', 'clippy::wildcard-imports',
+                  -- from clippy::restriction
+                  '-W', 'clippy::allow_attributes_without_reason',
+                  '-W', 'clippy::clone_on_ref_ptr',
+                  '-W', 'clippy::dbg_macro',
+                  '-W', 'clippy::default_numeric_fallback',
+                  '-W', 'clippy::empty_structs_with_brackets',
+                  '-W', 'clippy::filetype_is_file',
+                  '-W', 'clippy::format_push_string',
+                  '-W', 'clippy::infinite_loop',
+                  '-W', 'clippy::let_underscore_must_use',
+                  '-W', 'clippy::multiple_unsafe_ops_per_block',
+                  '-W', 'clippy::mutex_atomic',
+                  '-W', 'clippy::rc_mutex',
+                  '-D', 'clippy::if_then_some_else_none',
+                  '-D', 'clippy::alloc_instead_of_core',
+                  '-D', 'clippy::empty_enum_variants_with_brackets',
+                  '-D', 'clippy::assertions_on_result_states',
+                },
               },
               lens = {
                 enable = true,
@@ -115,7 +140,7 @@ return {
     'Saecki/crates.nvim',
     event = { 'BufReadPre Cargo.toml' },
     dependencies = { 'nvim-lua/plenary.nvim' },
-    version = 'v0.3.x',
+    tag = 'stable',
     opts = {},
   },
 

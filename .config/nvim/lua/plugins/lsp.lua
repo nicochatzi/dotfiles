@@ -47,6 +47,13 @@ return {
     },
     config = function()
       require('lspsaga').setup {
+        ui = {
+          code_action = "󰌶",
+          diagnostic = "",
+        },
+        lightbulb = {
+          virtual_text = false,
+        },
         symbol_in_winbar = { enable = false },
         callhiearachy = {
           layout = 'float',

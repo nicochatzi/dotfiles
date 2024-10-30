@@ -12,11 +12,39 @@ return {
   {
     'isakbm/gitgraph.nvim',
     opts = {
+      -- symbols = {
+      --   merge_commit = '󰘬',
+      --   merge_commit_end = '',
+      --   commit = '',
+      --   commit_end = '●',
+      -- },
       symbols = {
-        merge_commit = '󰘬',
-        merge_commit_end = '',
-        commit = '',
-        commit_end = '●',
+        merge_commit = '',
+        commit = '',
+        merge_commit_end = '',
+        commit_end = '',
+
+        -- Advanced symbols
+        GVER = '',
+        GHOR = '',
+        GCLD = '',
+        GCRD = '╭',
+        GCLU = '',
+        GCRU = '',
+        GLRU = '',
+        GLRD = '',
+        GLUD = '',
+        GRUD = '',
+        GFORKU = '',
+        GFORKD = '',
+        GRUDCD = '',
+        GRUDCU = '',
+        GLUDCD = '',
+        GLUDCU = '',
+        GLRDCL = '',
+        GLRDCR = '',
+        GLRUCL = '',
+        GLRUCR = '',
       },
       format = {
         timestamp = '%H:%M:%S %Y-%m-%d',
