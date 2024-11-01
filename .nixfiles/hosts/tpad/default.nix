@@ -8,7 +8,7 @@
     ../../services/hibernate.nix
     ../../services/bluetooth.nix
     ../../services/battery.nix
-    ../../services/feeds.nix
+    # ../../services/feeds.nix
   ];
 
   networking.hostName = "tpad";

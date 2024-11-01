@@ -5,7 +5,7 @@
       wantedBy = [ "default.target" ];
       path = [ pkgs.nix pkgs.bash ];
       serviceConfig = {
-        ExecStart = "${pkgs.just}/bin/just -f xctl feeds_check";
+        ExecStart = "${pkgs.just}/bin/just -f ~/.scripts/xctl feeds-check";
         WorkingDirectory = "/home/nico/.scripts/";
       };
       environment = {

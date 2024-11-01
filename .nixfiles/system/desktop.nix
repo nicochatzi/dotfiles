@@ -49,10 +49,8 @@
     displayManager = {
       lightdm = {
         enable = true;
-        greeter.enable = true;
         greeters.slick = {
           enable = true;
-          # draw-user-backgrounds = true;
           font.name = "JetBrains Mono";
         };
       };
@@ -78,7 +76,7 @@
     isNormalUser = true;
     description = "nico";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "lightdm" ];
     packages = with pkgs; [
       # system
       i3
@@ -99,7 +97,9 @@
       neovim-remote
       tmux
       zsh
+      fzf
       alacritty
+      kitty
       firefox
       # privacy
       ledger-live-desktop
@@ -117,19 +117,6 @@
       obsidian
       pre-commit
       kicad
-
-      # wrapped commands
-      (pkgs.writeScriptBin "delta" ''
-        command ${pkgs.delta}/bin/delta --$(xctl theme) "$@"
-      '')
-      (pkgs.writeScriptBin "bat" ''
-        command ${pkgs.bat}/bin/bat --theme=gruvbox-$(xctl theme) "$@"
-      '')
-      (pkgs.writeScriptBin "btm" ''
-        color="gruvbox"
-        if [[ $(xctl theme) == "light" ]]; then color="gruvbox-light"; fi
-        command ${pkgs.bottom}/bin/btm --color $color "$@"
-      '')
     ];
   };
 

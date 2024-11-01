@@ -73,8 +73,9 @@
   };
 
   networking = {
+    networkmanager.enable = true;
     wireless.iwd = {
-      enable = true;
+      enable = false;
       settings = {
         Settings = { AutoConnect = true; };
         General.EnableNetworkConfiguration = true;
@@ -129,6 +130,8 @@
     parallel
     jq
     bat
+    bottom
+    delta
     du-dust
     eza
     fd
@@ -165,6 +168,7 @@
     yarn
     protobuf
     rustup
+    bacon
     espup
     valgrind
     kcachegrind

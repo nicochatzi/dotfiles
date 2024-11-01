@@ -250,7 +250,11 @@ theme-set MODE: (theme-common-set MODE)
   nitrogen --save --set-zoom-fill \
     "$HOME/.nixfiles/assets/${mode_wallpaper[{{MODE}}]}"
   # misc / immediate
-  ln -sf "$HOME/.config/gtk-4.0/{{MODE}}.ini" "$HOME/.config/gtk-4.0/settings.ini"
+
+  if [ -d "$HOME/.config/gtk-4.0" ]; then
+    ln -sf "$HOME/.config/gtk-4.0/{{MODE}}.ini" "$HOME/.config/gtk-4.0/settings.ini"
+  fi
+
   ln -sf "$HOME/.config/gtk-3.0/{{MODE}}.ini" "$HOME/.config/gtk-3.0/settings.ini"
   ln -sf "$ROFI_CONFIG/{{MODE}}.rasi" "$ROFI_CONFIG/theme.rasi"
   ln -sf "$BRAVE_CONFIG/{{MODE}}.json" "$BRAVE_CONFIG/manifest.json"
