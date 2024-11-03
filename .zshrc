@@ -85,14 +85,6 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light unixorn/fzf-zsh-plugin
 
-use_nvm_version() {
-    if [ -f .nvmrc ]; then
-        nvm use 2>/dev/null || {
-            nvm install && nvm use;
-        }
-    fi
-}
-
 install_precommit_hooks() {
     if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
         echo "pre-commit config found. Installing hooks..."
@@ -101,39 +93,52 @@ install_precommit_hooks() {
 }
 
 autoload -U add-zsh-hook
-add-zsh-hook chpwd use_nvm_version
 add-zsh-hook chpwd install_precommit_hooks
 
 # -----------------------------
 # lazy env loaders
 # -----------------------------
 
-load_nvm() {
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
+if command -v nvm >/dev/null 2>&1; then 
+  load_nvm() {
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  }
 
-nvm() {
-  unset -f nvm
-  load_nvm
-  nvm "$@"
-}
+  nvm() {
+    unset -f nvm
+    load_nvm
+    nvm "$@"
+  }
 
-load_pyenv() {
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/shims:$PATH"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-}
+  use_nvm_version() {
+      if [ -f .nvmrc ]; then
+          nvm use 2>/dev/null || {
+              nvm install && nvm use;
+          }
+      fi
+  }
 
-pyenv() {
-  unset -f pyenv
-  load_pyenv
-  pyenv "$@"
-}
+  add-zsh-hook chpwd use_nvm_version
+fi
+
+if command -v pyenv >/dev/null 2>&1; then
+  load_pyenv() {
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/shims:$PATH"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  }
+
+  pyenv() {
+    unset -f pyenv
+    load_pyenv
+    pyenv "$@"
+  }
+fi
 
 # -----------------------------
 # aliases

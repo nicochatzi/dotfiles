@@ -39,7 +39,7 @@
     };
     # https://nixos.wiki/wiki/Docker
     docker = {
-      enable = false;
+      enable = true;
       rootless = {
         enable = true;
         setSocketVariable = true;
@@ -47,7 +47,7 @@
     };
     # https://nixos.wiki/wiki/Podman
     podman = {
-      enable = true;
+      enable = false;
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
@@ -114,6 +114,7 @@
   environment.systemPackages = with pkgs; [
     # tools
     zsh
+    pkg-config
     openssl
     vim
     curl
@@ -142,14 +143,14 @@
     tokei
     just
     dive
-    podman-compose
+    docker-compose
 
-    (pkgs.writeScriptBin "docker" ''
-      command ${pkgs.podman}/bin/podman "$@"
-    '')
-    (pkgs.writeScriptBin "docker-compose" ''
-      command ${pkgs.podman-compose}/bin/podman-compose "$@"
-    '')
+    # (pkgs.writeScriptBin "docker" ''
+    #   command ${pkgs.podman}/bin/podman "$@"
+    # '')
+    # (pkgs.writeScriptBin "docker-compose" ''
+    #   command ${pkgs.podman-compose}/bin/podman-compose "$@"
+    # '')
 
     # languages
     (python312.withPackages (py: [ py.requests ]))

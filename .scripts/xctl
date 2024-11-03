@@ -159,7 +159,9 @@ use-nix *SHELLS:
     done
   else
     echo "use nix" > $(pwd)/.envrc
-    echo "with import <nixpkgs> {}; mkShell { packages = [ pkg-config ]; }" > $(pwd)/shell.nix
+    echo "with import <nixpkgs> {};
+    mkShell { packages = [ pkg-config openssl ]; }
+    " > $(pwd)/shell.nix
     echo "using local nix shell"
   fi
   direnv allow
@@ -177,6 +179,29 @@ use-flake FLAKE="":
   fi
   direnv allow
 
+# setup a nix devshell for a python env
+[group('direnv')]
+use-venv:
+  #!/usr/bin/env bash
+  cd {{invocation_directory()}}
+  echo "with import <nixpkgs> { };
+  mkShell {
+    name = \"`basename $(pwd)`\";
+    buildInputs =
+      [ python312 pyenv openssl zlib bzip2 readline sqlite xz tk libffi gcc ];
+    shellHook = ''
+      VENV_DIR=\".venv\"
+      if [ ! -d \"\$VENV_DIR\" ]; then
+        python3 -m venv \"\$VENV_DIR\"
+      fi
+      source \"\$VENV_DIR/bin/activate\"
+    '';
+  }
+  " > shell.nix
+  echo "use nix" > .envrc
+  direnv allow
+
+# setup a pyenv (not for nix!)
 [group('direnv')]
 use-pyenv VENV_NAME:
   #!/usr/bin/env bash
@@ -189,7 +214,29 @@ use-pyenv VENV_NAME:
     eval "$(pyenv virtualenv-init -)"
     pyenv activate {{VENV_NAME}}
   fi
-  ' >> {{invocation_directory()}}/.envrc
+  ' > {{invocation_directory()}}/.envrc
+
+# setup a nix shell for fnm (nvm)
+[group('direnv')]
+use-nvm:
+  #!/usr/bin/env bash
+  cd {{invocation_directory()}}
+  touch .envrc
+  echo "with import <nixpkgs> { };
+
+  mkShell {
+    packages = [ pkg-config openssl fnm ];
+    shellHook = ''
+      eval \"$(fnm env --use-on-cd --shell bash)\"
+      fnm use 2>/dev/null || {
+        fnm install && fnm use;
+      }
+      fnm use
+    '';
+  }
+  " > shell.nix
+  echo 'use nix' > .envrc
+  direnv allow
 
 # "light" or "dark"?
 [group('theme')]
