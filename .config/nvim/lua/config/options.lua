@@ -1,3 +1,6 @@
+-- prevent unnecessary screen redraws during macro execution and other operations.
+vim.opt.lazyredraw = true
+
 vim.opt.list = true
 -- vim.opt.listchars.trail = '.'
 -- vim.opt.listchars = {

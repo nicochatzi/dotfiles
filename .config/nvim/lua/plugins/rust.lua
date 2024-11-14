@@ -37,15 +37,16 @@ return {
         server = {
           capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
           on_attach = require 'lang.on_attach',
+          cmd = { 'ra-multiplex' },
           default_settings = {
             ['rust-analyzer'] = {
               cachePriming = {
                 enable = true,
-                numThreads = 4,
+                numThreads = 8,
               },
               cargo = {
-                numThreads = 4,
-                allFeatures = true,
+                numThreads = 8,
+                allFeatures = false,
                 autoReload = true,
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
@@ -144,9 +145,9 @@ return {
     opts = {},
   },
 
-  {
-    'alopatindev/cargo-limit',
-    ft = 'rust',
-    build = 'cargo install cargo-limit nvim-send',
-  },
+  -- {
+  --   'alopatindev/cargo-limit',
+  --   ft = 'rust',
+  --   build = 'cargo install cargo-limit nvim-send',
+  -- },
 }

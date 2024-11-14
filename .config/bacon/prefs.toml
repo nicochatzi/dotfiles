@@ -50,7 +50,7 @@
 #  - column: 1-based column
 #  - message: description of the item
 #  - context: unstyled lines of output, separated with escaped newlines (`\\n`)
-default_job = "clippy-all"
+default_job = "test"
 
 [export]
 enabled = false
@@ -97,6 +97,10 @@ l = "job:ltest"
 
 [jobs.lbuild]
 command = ["cargo", "lbuild", "--all-targets", "--color", "always"]
+need_stdout = true
+
+[jobs.test]
+command = ["cargo", "nextest", "run", "--all-targets", "--color", "always"]
 need_stdout = true
 
 [jobs.ltest]
