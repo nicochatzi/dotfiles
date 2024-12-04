@@ -14,6 +14,7 @@ export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.zvm/bin:$PATH"
 export PATH="$HOME/.local/go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export PATH="$ZVM_INSTALL/:$PATH"
 
 export HISTFILE=~/.zsh_history
@@ -259,5 +260,7 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# eval "$(starship init zsh)"
 
 # zprof
