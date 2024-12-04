@@ -41,7 +41,7 @@ return {
       'nvim-tree/nvim-web-devicons',
       'MunifTanjim/nui.nvim',
       'mrbjarksen/neo-tree-diagnostics.nvim',
-      { dir = '/home/nico/.config/nvim/plugins/neo-tree-dependencies.nvim' },
+      -- { dir = '/home/nico/.config/nvim/plugins/neo-tree-dependencies.nvim' },
     },
     opts = {
       default_component_configs = {
@@ -75,7 +75,7 @@ return {
         'git_status',
         'document_symbols',
         'diagnostics',
-        'dependencies',
+        -- 'dependencies',
       },
       window = {
         position = 'right',
@@ -129,7 +129,7 @@ return {
           { source = 'git_status', display_name = '  ' },
           { source = 'document_symbols', display_name = '  ' },
           { source = 'diagnostics', display_name = '  ' },
-          { source = 'dependencies', display_name = '  ' },
+          -- { source = 'dependencies', display_name = '  ' },
         },
       },
       filesystem = {
@@ -216,13 +216,13 @@ return {
           -- Macro = { icon = ' ', hl = 'Macro' },
         }
       },
-      dependencies = {
-        bind_to_cwd = true,
-        follow_current_file = {
-          enabled = true,
-          leave_files_open = true,
-        },
-      }
+      -- dependencies = {
+      --   bind_to_cwd = true,
+      --   follow_current_file = {
+      --     enabled = true,
+      --     leave_files_open = true,
+      --   },
+      -- }
     },
   }
 }

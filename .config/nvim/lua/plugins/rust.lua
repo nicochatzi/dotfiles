@@ -42,11 +42,11 @@ return {
             ['rust-analyzer'] = {
               cachePriming = {
                 enable = true,
-                numThreads = 8,
+                -- numThreads = 8,
               },
               cargo = {
-                numThreads = 8,
-                allFeatures = false,
+                -- numThreads = 8,
+                allFeatures = true,
                 autoReload = true,
                 loadOutDirsFromCheck = true,
                 runBuildScripts = true,
@@ -75,12 +75,13 @@ return {
               checkOnSave = {
                 enable = true,
                 allTargets = true,
+                allFeatures = true,
                 command = 'clippy',
                 extraArgs = {
                   '--',
                   '-D', 'clippy::all',
                   '-W', 'clippy::pedantic',
-                  '-W', 'clippy::nursery',
+                  -- '-W', 'clippy::nursery',
                   '-A', 'clippy::missing-errors-doc',
                   '-A', 'clippy::wildcard-imports',
                   -- from clippy::restriction
