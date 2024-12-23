@@ -22,8 +22,8 @@ return {
   {
     "yetone/avante.nvim",
     cmd = { 'AvanteAsk' }, -- auto mapped to <leader>aa
-    lazy = false,
-    version = false,       -- set this if you want to always pull the latest change
+    lazy = true,
+    -- version = false,
     opts = {
       -- add any opts here
     },
@@ -45,7 +45,7 @@ return {
           -- recommended settings
           default = {
             embed_image_as_base64 = false,
-            prompt_for_file_name = false,
+            prompt_for_file_name = true,
             drag_and_drop = {
               insert_mode = true,
             },

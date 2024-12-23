@@ -41,49 +41,49 @@ return {
     }
   },
 
-  {
-    'nvim-neotest/neotest',
-    event = 'VeryLazy',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'antoinemadec/FixCursorHold.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-neotest/neotest-python',
-      'nvim-neotest/neotest-plenary',
-      'rouge8/neotest-rust',
-      'lawrence-laz/neotest-zig',
-      'alfaix/neotest-gtest',
-      'nvim-neotest/neotest-vim-test',
-    },
-    config = function()
-      require('neotest').setup {
-        -- floating = {
-        --   border = "rounded",
-        --   max_height = 0.85,
-        --   max_width = 0.85,
-        --   options = {}
-        -- },
-        log_level = vim.log.levels.DEBUG,
-        adapters = {
-          require('rustaceanvim.neotest') {
-            args = { '--no-capture' },
-            dap_adapter = 'codelldb',
-          },
-          require('neotest-python') {
-            dap = { justMyCode = false },
-          },
-          require('neotest-zig'),
-          require('neotest-gtest'),
-          require('neotest-plenary'),
-          require("neotest-vim-test") {
-            ignore_file_types = {
-              'python', 'vim', 'lua', 'cpp', 'zig', 'rust',
-            },
-          },
-        },
-      }
-    end
-  },
+  -- {
+  --   'nvim-neotest/neotest',
+  --   event = 'VeryLazy',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'antoinemadec/FixCursorHold.nvim',
+  --     'nvim-treesitter/nvim-treesitter',
+  --     'nvim-neotest/neotest-python',
+  --     'nvim-neotest/neotest-plenary',
+  --     'rouge8/neotest-rust',
+  --     'lawrence-laz/neotest-zig',
+  --     'alfaix/neotest-gtest',
+  --     'nvim-neotest/neotest-vim-test',
+  --   },
+  --   config = function()
+  --     require('neotest').setup {
+  --       -- floating = {
+  --       --   border = "rounded",
+  --       --   max_height = 0.85,
+  --       --   max_width = 0.85,
+  --       --   options = {}
+  --       -- },
+  --       log_level = vim.log.levels.DEBUG,
+  --       adapters = {
+  --         require('rustaceanvim.neotest') {
+  --           args = { '--no-capture' },
+  --           dap_adapter = 'codelldb',
+  --         },
+  --         require('neotest-python') {
+  --           dap = { justMyCode = false },
+  --         },
+  --         require('neotest-zig'),
+  --         require('neotest-gtest'),
+  --         require('neotest-plenary'),
+  --         require("neotest-vim-test") {
+  --           ignore_file_types = {
+  --             'python', 'vim', 'lua', 'cpp', 'zig', 'rust',
+  --           },
+  --         },
+  --       },
+  --     }
+  --   end
+  -- },
 
   {
     -- global search and replace utils
