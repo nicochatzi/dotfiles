@@ -100,7 +100,7 @@ add-zsh-hook chpwd install_precommit_hooks
 # lazy env loaders
 # -----------------------------
 
-if command -v nvm >/dev/null 2>&1; then 
+if command -v nvm >/dev/null 2>&1; then
   load_nvm() {
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -122,6 +122,24 @@ if command -v nvm >/dev/null 2>&1; then
   }
 
   add-zsh-hook chpwd use_nvm_version
+fi
+
+if command -v fnm >/dev/null 2>&1; then
+  fnm() {
+    unset -f fnm
+    eval "$(fnm env --use-on-cd --shell zsh)"
+    fnm "$@"
+  }
+
+  use_fnm_version() {
+      if [ -f .nvmrc ]; then
+          fnm use --silent-if-unchanged 2>/dev/null || {
+              fnm install && fnm use;
+          }
+      fi
+  }
+
+  add-zsh-hook chpwd use_fnm_version
 fi
 
 if command -v pyenv >/dev/null 2>&1; then
