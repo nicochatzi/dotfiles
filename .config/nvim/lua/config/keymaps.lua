@@ -95,6 +95,7 @@ vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen<CR>', { noremap = true
 vim.api.nvim_set_keymap('n', '<leader>gf', ':DiffviewFileHistory %<CR>', { noremap = true, desc = "git file history" })
 vim.api.nvim_set_keymap('v', '<leader>gf', ":'<,'>DiffviewFileHistory<CR>", { noremap = true, desc = "git line history" })
 vim.api.nvim_set_keymap('n', '<leader>gF', ":DiffviewFileHistory<CR>", { noremap = true, desc = "git project history" })
+vim.api.nvim_set_keymap('n', '<leader>gb', ":Gitsigns blame<CR>", { noremap = true, desc = "git blame for file" })
 
 -- package management
 vim.keymap.set('n', '<leader>vv', ':lua require\'crates\'.show_versions_popup() <CR>', { silent = true })

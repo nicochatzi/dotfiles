@@ -34,23 +34,23 @@ local servers = {
   --     }
   --   }
   -- },
-  -- pyright = {
-  --   settings = {
-  --     pyright = {
-  --       -- Using Ruff's import organizer
-  --       -- disableOrganizeImports = true,
-  --     },
-  --     python = {
-  --       analysis = {
-  --         autoSearchPaths = true,
-  --         useLibraryCodeForTypes = true,
-  --         -- Ignore all files for analysis to exclusively use Ruff for linting
-  --         -- ignore = { '*' },
-  --         ignore = {},
-  --       },
-  --     },
-  --   },
-  -- },
+  pyright = {
+    settings = {
+      pyright = {
+        -- Using Ruff's import organizer
+        -- disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          -- Ignore all files for analysis to exclusively use Ruff for linting
+          -- ignore = { '*' },
+          ignore = {},
+        },
+      },
+    },
+  },
   -- eslint = {},
   biome = {},
   jsonls = {},
