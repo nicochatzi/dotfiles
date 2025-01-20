@@ -280,5 +280,6 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # eval "$(starship init zsh)"
+eval "$(fzf --zsh)"
 
 # zprof
