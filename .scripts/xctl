@@ -461,3 +461,9 @@ check-battery THRESHOLD='20':
       "Low Battery" "Battery level is low: $battery_level%"
   fi
 
+# upgrade apt packages, firmware, and rust bins
+[linux]
+upgrade:
+  sudo apt update && sudo apt upgrade -y
+  fwupdmgr update
+  cargo install-update -a --locked
