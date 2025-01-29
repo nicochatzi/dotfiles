@@ -52,6 +52,7 @@ local servers = {
     },
   },
   -- eslint = {},
+  prettier = {},
   biome = {},
   jsonls = {},
   html = {},
