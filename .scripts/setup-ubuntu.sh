@@ -15,6 +15,8 @@ install_base_packages() {
     git \
     python3 \
     pkg-config \
+    ninja-build \
+    unzip \
     build-essential \
     lld \
     openssl \
@@ -23,8 +25,13 @@ install_base_packages() {
 
   install_system_packages "${packages[@]}"
 
-  sudo apt install python3-pip
-  sudo apt install pipx
+  sudo apt install -y \
+    python3-pip \
+    pipx
+
+  curl -sfL https://direnv.net/install.sh | bash
+
+  curl https://pyenv.run | bash
 }
 
 install_languages() {
@@ -54,33 +61,24 @@ install_node() {
   echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 
   sudo apt update
-  sudo apt install nodejs
-  sudo apt install yarn
+  sudo apt install -y \
+    nodejs
 
-  npm i -g n
+  sudo npm i -g yarn n
 }
 
 install_tui() {
   local packages=(\
     zsh \
-    just \
-    fzf \
     fd-find \
-    eza \
     tig \
-    neovim \
-    bat \
     fd \
     procs \
-    dust \
-    bottom \
     zplug \
     git-delta \
-    ripgrep \
     watchexec \
     sccache \
     tmux \
-    alacritty \
     kitty \
   )
 
@@ -88,6 +86,14 @@ install_tui() {
   # sudo add-apt-repository universe && apt install libfuse2t64 -y
 
   install_system_packages "${packages[@]}"
+
+  # link fdfind to fd
+  ln -s "$(which fdfind)" ~/.local/bin/fd
+
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+
+  snap install nvim --classic
 
   bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 
@@ -113,7 +119,9 @@ install_jetbrains_font() {
 }
 
 install_cargo_extensions() {
-  cargo install \
+  cargo install cargo-binstall
+
+  cargo binstall \
     cargo-watch \
     cargo-show-asm \
     cargo-nextest \
@@ -131,9 +139,14 @@ install_cargo_extensions() {
     bottom \
     bat \
     flamegraph \
-    watchexec-cli
-
-  cargo install --locked \
+    just \
+    eza \
+    ripgrep \
+    bacon \
+    du-dust \
+    watchexec-cli \
+    fnm \
+    diesel_cli \
     yazi-fm \
     yazi-cli
 }
@@ -141,9 +154,11 @@ install_cargo_extensions() {
 install_language_servers() {
   rustup component add rust-analyzer
 
-  cargo install asm-lsp
-  cargo install --git https://github.com/oxalica/nil nil
-  cargo install taplo-cli --locked
+  cargo binstall \
+    asm-lsp \
+    taplo-cli
+
+  # cargo install --git https://github.com/oxalica/nil nil
 
   sudo npm i -g \
     dockerfile-language-server-nodejs \
@@ -154,12 +169,23 @@ install_language_servers() {
     python3-pylsp \
     pylint
 
+  sudo snap install \
+    marksman
+
   pipx install \
     ruff
+
+  # build lua lsp from source
+  mkdir -p ~/.local/share
+  git clone --depth=1 https://github.com/LuaLS/lua-language-server.git ~/.local/share/lua-language-server
+  cd ~/.local/share/lua-language-server
+  ./make.sh
+  ln -sf ~/.local/share/lua-language-server/bin/lua-language-server ~/.local/bin/lua-language-server
+  cd -
 }
 
 setup_desktop() {
-  sudo apt install -y i3 lightdm slick-greeter lxappearance brightnessctl maim
+  sudo apt install -y i3 nitrogen picom rofi lightdm slick-greeter lxappearance brightnessctl maim
   sudo dpkg-reconfigure lightdm
   sudo chmod +s "$(which brightnessctl)"
 
