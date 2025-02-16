@@ -52,7 +52,7 @@ local servers = {
     },
   },
   -- eslint = {},
-  prettier = {},
+  -- prettier = {},
   biome = {},
   jsonls = {},
   html = {},

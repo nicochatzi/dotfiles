@@ -138,6 +138,8 @@ return {
     end
   },
 
+  { "cordx56/rustowl", dependencies = { "neovim/nvim-lspconfig" } },
+
   {
     'Saecki/crates.nvim',
     event = { 'BufReadPre Cargo.toml' },
