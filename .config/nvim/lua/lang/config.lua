@@ -68,6 +68,9 @@ local servers = {
   clangd = {},
   cmake = {},
   zls = {},
+  -- rustowl = {
+  --   trigger = { hover = false }
+  -- },
   -- rust_analyzer = {},
   -- luau_lsp = {},
   ts_ls = {},

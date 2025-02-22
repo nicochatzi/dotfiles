@@ -315,4 +315,3 @@ end
 vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>to', ':tabonly<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { noremap = true })
-

@@ -138,7 +138,10 @@ return {
     end
   },
 
-  { "cordx56/rustowl", dependencies = { "neovim/nvim-lspconfig" } },
+  -- {
+  --   "cordx56/rustowl",
+  --   dependencies = { "neovim/nvim-lspconfig" }
+  -- },
 
   {
     'Saecki/crates.nvim',

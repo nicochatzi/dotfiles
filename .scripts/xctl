@@ -19,6 +19,30 @@ top:
   . ~/.zshrc
   btm --basic --process_memory_as_value
 
+[group('sec')]
+[linux]
+check-net:
+  #!/usr/bin/env bash
+
+  echo "[+] Checking UFW Firewall Status..."
+  sudo ufw status verbose || echo "[-] UFW not installed or inactive."
+
+  echo "[+] Listing all services and their ports"
+  sudo ss -tulnp
+
+  echo "[+] Detecting Public IP Address..."
+  PUBLIC_IP=$(curl -s -4 icanhazip.com)
+  if [[ -z "$PUBLIC_IP" ]]; then
+    echo "[-] Failed to retrieve public IP."
+    exit 1
+  fi
+  echo "Your Public IP: $PUBLIC_IP"
+
+  echo "[+] Scanning Open Ports on Public IP..."
+  nmap -Pn "$PUBLIC_IP" || echo "[-] Nmap scan failed."
+
+  echo "[+] Security check complete."
+
 # pipe to copy to system clipboard
 [group('cli')]
 [macos]
@@ -85,7 +109,7 @@ to-snake:
 # launch an HTTP server from current dir
 [group('cli')]
 serve PORT="8080":
-  python -m http.server \
+  python3 -m http.server \
     -d {{invocation_directory()}} \
     {{PORT}}
 
@@ -113,12 +137,13 @@ term-open TITLE CMD DIR="$HOME":
 # run python REPL with useful python packages
 [group('term')]
 term-py:
-  #!/usr/bin/env bash
-  if [ command -v nix-shell ]; then
-    nix-shell ~/.nixfiles/shells/py.nix --run "ipython --no-banner"
-  else
-    python
-  fi
+  #!/usr/bin/env zsh
+  eval "$(pyenv init --path)" && \
+  eval "$(pyenv init -)" && \
+  eval "$(pyenv virtualenv-init -)" && \
+  pyenv shell calc && \
+  pyenv version && \
+  python3
 
 # fuzzy find and switch tmux session
 [group('tmux')]

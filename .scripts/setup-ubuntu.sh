@@ -20,6 +20,7 @@ install_base_packages() {
     build-essential \
     lld \
     openssl \
+    pulseaudio \
     libssl-dev
   )
 

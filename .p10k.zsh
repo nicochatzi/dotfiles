@@ -118,7 +118,7 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS=0
   typeset -g POWERLEVEL9K_VCS_{INCOMING,OUTGOING}_CHANGESFORMAT_FOREGROUND=$cyan
   typeset -g POWERLEVEL9K_VCS_GIT_HOOKS=(vcs-detect-changes git-untracked git-aheadbehind)
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=':'
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=':'
   typeset -g POWERLEVEL9K_VCS_COMMIT_ICON=':'
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED}_ICON=
   typeset -g POWERLEVEL9K_VCS_DIRTY_ICON=':'
