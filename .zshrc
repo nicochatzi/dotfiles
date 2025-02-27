@@ -169,6 +169,7 @@ alias l="eza -lam --icons=auto"
 alias ll="eza -lamhUuH --icons=auto --git"
 alias t="eza -a -T -L 2 --icons=auto"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias c='cargo'
 alias j='just'
 alias jl='just --list --unsorted'
 alias ai='llm -m claude-3.5-sonnet'
