@@ -2,9 +2,6 @@
 t = "nextest run"
 rr = "run --release"
 
-[build]
-jobs = 8
-
 [net]
 retry = 3
 git-fetch-with-cli = true
