@@ -492,3 +492,14 @@ upgrade:
   sudo apt update && sudo apt upgrade -y
   fwupdmgr update
   cargo install-update -a --locked
+
+
+notifs:
+  #!/usr/bin/env bash
+  logdir="$HOME/notifications"
+  cd "$logdir" || exit 1
+  file="$(ls *.jsonl 2>/dev/null | sort -r | fzf --prompt='Date > ' --height=40% --reverse)"
+  [[ -z "$file" ]] && exit 0
+  bat --paging=always --language=json "$file"
+
+
