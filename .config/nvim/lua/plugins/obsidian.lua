@@ -27,7 +27,7 @@ return {
   },
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'hrsh7th/nvim-cmp',
+    -- 'hrsh7th/nvim-cmp',
     'nvim-telescope/telescope.nvim',
   },
   opts = {
@@ -73,7 +73,7 @@ return {
       enable = true,
     },
     completion = {
-      nvim_cmp = true,
+      -- nvim_cmp = false,
       min_chars = 2,
     },
     -- Where to put new notes created from completion. Valid options are

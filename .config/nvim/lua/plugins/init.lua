@@ -268,8 +268,11 @@ return {
   --   cmd = 'SQLua',
   --   config = function() require('sqlua').setup() end
   -- },
-  --
-  -- {
-  --   "rest-nvim/rest.nvim",
-  -- }
+
+  {
+    "rest-nvim/rest.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    }
+  }
 }

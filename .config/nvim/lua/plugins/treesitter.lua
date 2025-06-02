@@ -18,6 +18,7 @@ local treesitter_config = {
     'linkerscript',
     'llvm',
     'make',
+    'http',
     'markdown',
     'markdown_inline',
     'mermaid',

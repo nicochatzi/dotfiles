@@ -280,7 +280,7 @@ return {
         always_divide_middle = false,
       },
       sections = {
-        lualine_a = {},
+        lualine_a = { },
         lualine_b = { {
           'branch',
           color = { fg = colors.bblue, bg = 'none' },

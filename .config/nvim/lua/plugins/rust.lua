@@ -1,7 +1,7 @@
 return {
   {
     'mrcjkb/rustaceanvim',
-    -- version = '^5',
+    -- version = '^6',
     lazy = false, -- This plugin is already lazy
     config = function()
       local codelldb = require('lang.codelldb')
@@ -35,9 +35,9 @@ return {
           },
         },
         server = {
-          capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+          -- capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
           on_attach = require 'lang.on_attach',
-          -- cmd = { 'ra-multiplex' }, -- no longer required, rustaceanvim will auto-detect ra-multiplex, if running
+          cmd = { 'ra-multiplex' }, -- no longer required, rustaceanvim will auto-detect ra-multiplex, if running
           default_settings = {
             ['rust-analyzer'] = {
               cachePriming = {
