@@ -54,6 +54,7 @@ function prompt_zig_version() {
     node_version
     nix_shell                 # https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html
     rust_version
+    kubecontext
     zig_version
     # =========================[ Line #2 ]=========================
     newline                   # \n
@@ -126,6 +127,12 @@ function prompt_zig_version() {
   typeset -g POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON=':⇡'
   typeset -g POWERLEVEL9K_VCS_{COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=1
   typeset -g POWERLEVEL9K_VCS_CONTENT_EXPANSION='${${${P9K_CONTENT/⇣* :⇡/⇣⇡}// }//:/ }'
+
+  typeset -g POWERLEVEL9K_KUBECONTEXT_FOREGROUND=$magenta
+  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|k9s|kubectx|kubens'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_CLASSES=(
+    '*prod*' 1   # foreground color 1 = red
+  )
 
   typeset -g POWERLEVEL9K_TIME_FOREGROUND=$grey
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
