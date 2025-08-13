@@ -1,0 +1,143 @@
+add_newline = true
+
+scan_timeout = 10
+command_timeout = 200
+
+format = """$username$hostname\
+$directory\
+$git_branch$git_status$git_metrics\
+$status\
+$cmd_duration
+$character"""
+
+right_format = """\
+$c\
+$cpp\
+$lua\
+$python\
+$nodejs\
+$nix_shell\
+$rust\
+$swift\
+$zig\
+$terraform\
+$aws\
+$kubernetes\
+$time\
+"""
+
+palette = "p10k_like"
+
+[palettes.p10k_like]
+grey = "#6c6c6c"
+red = "#d27e9a"
+yellow = "#e6c384"
+blue = "#7e9cd8"
+magenta = "#947fb8"
+cyan = "#66ffdd"
+green = "#5faf94"
+white = "#dcd7ba"
+
+[username]
+# style = "fg:magenta"
+show_always = false
+format = "[$user]($style)"
+
+[hostname]
+style = "fg:magenta"
+ssh_only = true
+format = "[@$hostname]($style)"
+
+[directory]
+style = "fg:blue"
+truncation_length = 5
+truncate_to_repo = false
+read_only = ""
+
+[git_branch]
+symbol = " "
+style = "fg:grey"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "fg:yellow"
+staged = "="
+modified = "!"
+untracked = "?"
+deleted = "✘"
+conflicted = "="
+stashed = "$"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇣⇡"
+format = "[$all_status$ahead_behind]($style) "
+
+[status]
+style = "fg:red"
+symbol = "✘"
+format = "[$symbol $status]($style) "
+disabled = false
+map_symbol = false
+pipestatus = false
+recognize_signal_code = true
+
+[cmd_duration]
+style = "fg:yellow"
+min_time = 1000
+show_milliseconds = true
+format = "[$duration]($style) "
+
+[character]
+success_symbol = "[→](fg:magenta)"
+error_symbol = "[→](fg:red)"
+vicmd_symbol = "[|](fg:magenta)"
+vimcmd_replace_one_symbol = "[|](fg:magenta)"
+vimcmd_replace_symbol = "[|](fg:magenta)"
+vimcmd_visual_symbol = "[|](fg:magenta)"
+# use_symbol_for_status = true
+
+[time]
+disabled = false
+time_format = "%H:%M:%S"
+style = "fg:grey"
+format = "[$time]($style)"
+
+[python]
+style = "fg:green"
+pyenv_version_name = true
+detect_extensions = ["py"]
+detect_files = [".python-version","Pipfile","pyproject.toml","requirements.txt","poetry.lock"]
+format = "[ ${pyenv_prefix}${version}]($style) "
+python_binary = "python"
+
+[nodejs]
+style = "fg:green"
+symbol = " "
+detect_files = ["package.json",".node-version",".nvmrc","pnpm-lock.yaml","yarn.lock","bun.lockb"]
+format = "[$symbol$version]($style) "
+disabled = false
+
+[nix_shell]
+style = "fg:magenta"
+symbol = "󱄅 "
+format = "[$symbol$name]($style) "
+heuristic = true
+
+[rust]
+style = "fg:red"
+symbol = " "
+detect_files = ["Cargo.toml","rust-toolchain","rust-project.json"]
+format = "[$symbol$version]($style) "
+disabled = false
+
+[kubernetes]
+style = "fg:magenta"
+symbol = ""
+format = "[$context]($style) "
+disabled = false
+
+[custom.zig]
+style = "fg:yellow"
+symbol = " "
+format = "[$symbol$version]($style) "
+disabled = false

@@ -48,13 +48,6 @@ fi
 # zinit
 # -----------------------------
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -82,13 +75,19 @@ else
   compinit -d $zcompdump
 fi
 
-zinit light romkatv/powerlevel10k
-zinit light Aloxaf/fzf-tab
-zinit ice depth"1";
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
-zinit light unixorn/fzf-zsh-plugin
+# zinit light Aloxaf/fzf-tab
+# zinit ice depth"1";
+# zinit light zsh-users/zsh-completions
+# zinit light zsh-users/zsh-syntax-highlighting
+# zinit light zsh-users/zsh-autosuggestions
+# zinit light unixorn/fzf-zsh-plugin
+
+zinit wait lucid for \
+  Aloxaf/fzf-tab \
+  zsh-users/zsh-completions \
+  zsh-users/zsh-autosuggestions \
+  zdharma-continuum/fast-syntax-highlighting \
+  unixorn/fzf-zsh-plugin
 
 install_precommit_hooks() {
     if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then
@@ -174,14 +173,16 @@ alias j='just'
 alias jl='just --list --unsorted'
 alias ai='llm -m claude-3.5-sonnet'
 alias nvsql="nvim '+SQLua'"
+alias k='kubectl'
+alias tv='tidy-viewer'
 
-alias whattheme='~/.scripts/xctl theme'
-delta() { command delta --$(whattheme) "$@" }
-bat() { command bat --theme=gruvbox-$(whattheme) "$@" }
+__WT_CACHE="${__WT_CACHE:-$(~/.scripts/xctl theme 2>/dev/null || echo dark)}"
+delta() { command delta --$__WT_CACHE "$@" }
+bat() { command bat --theme=gruvbox-$__WT_CACHE "$@" }
 btm() {
   local theme="gruvbox" # default is dark
-  if [[ $(whattheme) == "light" ]]; then theme="nord-light"; fi
-  command btm --enable_gpu --theme="$theme" "$@"
+  if [[ $__WT_CACHE == "light" ]]; then theme="nord-light"; fi
+  command btm --theme="$theme" "$@"
 }
 watch() { command watch --color "$@" }
 
@@ -279,9 +280,7 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview \
 
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
 # zprof
@@ -298,4 +297,7 @@ zinit light-mode for \
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[[ -s "/home/nico/.gvm/scripts/gvm" ]] && source "/home/nico/.gvm/scripts/gvm"
+# [[ -s "/home/nico/.gvm/scripts/gvm" ]] && source "/home/nico/.gvm/scripts/gvm"
+
+# opencode
+export PATH=/home/nico/.opencode/bin:$PATH
