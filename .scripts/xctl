@@ -302,9 +302,17 @@ _theme-set-nvim MODE:
 [group('theme')]
 theme-common-set MODE: (_theme-set-kitty MODE) (_theme-set-alacritty MODE) (_theme-set-nvim MODE)
 
+[group('theme')]
+theme-set-wall MODE: #!/usr/bin/env bash
+  #!/usr/bin/env bash
+  set -euo pipefail
+  declare -A mode_wallpaper=( ["light"]="solid-light.png" ["dark"]="solid-dark.png" )
+  nitrogen --save --set-zoom-fill \
+    "$HOME/.nixfiles/assets/${mode_wallpaper[{{MODE}}]}"
+
 # set theme to "light" or "dark"
 [group('theme')]
-theme-set MODE: (theme-common-set MODE)
+theme-set MODE: (theme-common-set MODE) (theme-set-wall MODE)
   #!/usr/bin/env bash
   set -euo pipefail
   I3_CONFIG="$HOME/.config/i3/config"
@@ -314,13 +322,10 @@ theme-set MODE: (theme-common-set MODE)
   declare -A mode_bg=( ["light"]="#FBF1C7" ["dark"]="#282828" )
   declare -A mode_text=( ["light"]="#076678" ["dark"]="#83A598" )
   declare -A mode_border=( ["light"]="#458588" ["dark"]="#947fb8" )
-  declare -A mode_wallpaper=( ["light"]="solid-light.png" ["dark"]="solid-dark.png" )
   declare -A mode_background=( ["light"]="#FBF1C7cc" ["dark"]="#282828cc" )
   declare -A mode_urgency_normal_fg=( ["light"]="#282828" ["dark"]="#efd8a5" )
   declare -A mode_urgency_critical_fg=( ["light"]="#880808" ["dark"]="#BF616A" )
 
-  nitrogen --save --set-zoom-fill \
-    "$HOME/.nixfiles/assets/${mode_wallpaper[{{MODE}}]}"
   # misc / immediate
 
   if [ -d "$HOME/.config/gtk-4.0" ]; then

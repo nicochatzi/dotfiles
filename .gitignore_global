@@ -4,3 +4,8 @@
 .rgignore
 shell.nix
 .DS_Store
+.crush
+.claude
+CRUSH.md
+CLAUDE.md
+CLAUDE.local.md
