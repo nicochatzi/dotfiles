@@ -273,14 +273,18 @@ return {
         icons_enabled = true,
         disabled_filetypes = {
           statusline = {},
-          winbar = { 'neo-tree' },
+          winbar = {
+            'neo-tree',
+            'rest_nvim_result',
+            'http',
+          },
         },
         component_separators = { left = '|', right = '|' },
         section_separators = { left = '|', right = '|' },
         always_divide_middle = false,
       },
       sections = {
-        lualine_a = { },
+        lualine_a = {},
         lualine_b = { {
           'branch',
           color = { fg = colors.bblue, bg = 'none' },

@@ -37,7 +37,7 @@ return {
         server = {
           -- capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
           on_attach = require 'lang.on_attach',
-          cmd = { 'ra-multiplex' }, -- no longer required, rustaceanvim will auto-detect ra-multiplex, if running
+          -- cmd = { 'ra-multiplex' }, -- no longer required, rustaceanvim will auto-detect ra-multiplex, if running
           default_settings = {
             ['rust-analyzer'] = {
               cachePriming = {

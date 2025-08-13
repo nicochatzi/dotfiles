@@ -103,4 +103,5 @@ vim.cmd([[autocmd BufRead,BufNewFile flake.lock setfiletype json]])
 vim.cmd([[autocmd BufRead,BufNewFile *.service* set ft=systemd]])
 vim.cmd([[autocmd BufRead,BufNewFile *.service.ts set ft=typescript]])
 vim.cmd([[autocmd BufRead,BufNewFile *.tf set ft=terraform]])
+vim.cmd([[autocmd BufRead,BufNewFile *.alloy set ft=terraform]])
 

@@ -262,17 +262,50 @@ return {
     end,
   },
 
-  -- {
-  --   'xemptuous/sqlua.nvim',
-  --   lazy = true,
-  --   cmd = 'SQLua',
-  --   config = function() require('sqlua').setup() end
-  -- },
+  {
+    'xemptuous/sqlua.nvim',
+    lazy = true,
+    cmd = 'SQLua',
+    config = function() require('sqlua').setup() end
+  },
 
   {
     "rest-nvim/rest.nvim",
+    ft = { "http", "rest" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-    }
+      opts = function(_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "http")
+      end,
+    },
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "json" },
+        callback = function()
+          vim.api.nvim_set_option_value("formatprg", "jq", { scope = 'local' })
+        end,
+      })
+
+      require('rest-nvim').setup {
+        result_split_horizontal = false, -- open results in a horizontal split
+        result_split_in_place = true,    -- open results in the same split as the request
+        skip_ssl_verification = false,   -- skip ssl verification, useful for self-signed certificates
+        env_file = '.env',               -- env file to load variables from
+        custom_dynamic_variables = {},   -- custom dynamic variables to use in requests
+        highlight = { enabled = true },  -- highlight request type
+        clients = {
+          curl = {
+            statistics = {
+              { id = "time_total",    winbar = "take", title = "Time taken" },
+              { id = "size_download", winbar = "size", title = "Download size" },
+            },
+          }
+        }
+      }
+
+      -- keymaps
+      vim.keymap.set('n', '<leader>hr', ':Rest run<CR>', { noremap = true })
+    end,
   }
 }
