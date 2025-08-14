@@ -75,8 +75,8 @@ else
   compinit -d $zcompdump
 fi
 
+zinit light Aloxaf/fzf-tab
 zinit wait lucid for \
-  Aloxaf/fzf-tab \
   zsh-users/zsh-completions \
   zsh-users/zsh-autosuggestions \
   zdharma-continuum/fast-syntax-highlighting \
@@ -169,6 +169,7 @@ alias nvsql="nvim '+SQLua'"
 alias k='kubectl'
 alias tv='tidy-viewer'
 alias py='python3'
+alias y='yazi'
 
 __WT_CACHE="${__WT_CACHE:-$(~/.scripts/xctl theme 2>/dev/null || echo dark)}"
 delta() { command delta --$__WT_CACHE "$@" }
@@ -179,12 +180,6 @@ btm() {
   command btm --theme="$theme" "$@"
 }
 watch() { command watch --color "$@" }
-
-checkrs() {
-  cargo clippy --all-features --all-targets -- -D warnings
-  cargo deny --log-level error check advisories bans sources
-  cargo machete
-}
 
 we() {
     local filter_flag=""
