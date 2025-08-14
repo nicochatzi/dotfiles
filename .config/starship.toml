@@ -65,8 +65,8 @@ staged = "="
 modified = "!"
 untracked = "?"
 deleted = "✘"
-conflicted = "="
-stashed = "$"
+conflicted = "!="
+stashed = "S"
 ahead = "⇡"
 behind = "⇣"
 diverged = "⇣⇡"
@@ -104,11 +104,13 @@ format = "[$time]($style)"
 
 [python]
 style = "fg:green"
-pyenv_version_name = true
+symbol = " "
+pyenv_version_name = false
 detect_extensions = ["py"]
 detect_files = [".python-version","Pipfile","pyproject.toml","requirements.txt","poetry.lock"]
-format = "[ ${pyenv_prefix}${version}]($style) "
-python_binary = "python"
+format = "[$symbol$virtualenv $version]($style) "
+python_binary = ["python3", "python"]
+disabled = false
 
 [nodejs]
 style = "fg:green"
