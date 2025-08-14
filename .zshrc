@@ -75,13 +75,6 @@ else
   compinit -d $zcompdump
 fi
 
-# zinit light Aloxaf/fzf-tab
-# zinit ice depth"1";
-# zinit light zsh-users/zsh-completions
-# zinit light zsh-users/zsh-syntax-highlighting
-# zinit light zsh-users/zsh-autosuggestions
-# zinit light unixorn/fzf-zsh-plugin
-
 zinit wait lucid for \
   Aloxaf/fzf-tab \
   zsh-users/zsh-completions \
@@ -167,14 +160,15 @@ alias tree="tree -C"
 alias l="eza -lam --icons=auto"
 alias ll="eza -lamhUuH --icons=auto --git"
 alias t="eza -a -T -L 2 --icons=auto"
+alias tt="eza -lamhUuH -T -L 2 --icons auto --git"
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias c='cargo'
 alias j='just'
 alias jl='just --list --unsorted'
-alias ai='llm -m claude-3.5-sonnet'
 alias nvsql="nvim '+SQLua'"
 alias k='kubectl'
 alias tv='tidy-viewer'
+alias py='python3'
 
 __WT_CACHE="${__WT_CACHE:-$(~/.scripts/xctl theme 2>/dev/null || echo dark)}"
 delta() { command delta --$__WT_CACHE "$@" }
