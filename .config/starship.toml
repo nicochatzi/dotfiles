@@ -138,7 +138,14 @@ symbol = ""
 format = "[$context]($style) "
 disabled = false
 
-[custom.zig]
+[lua]
+style = "fg:cyan"
+symbol = " "
+detect_files = ["*.lua",".stylua.toml"]
+format = "[$symbol$version]($style) "
+disabled = false
+
+[zig]
 style = "fg:yellow"
 symbol = " "
 format = "[$symbol$version]($style) "
