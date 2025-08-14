@@ -267,6 +267,24 @@ zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
 zstyle ':fzf-tab:complete:*:*' fzf-preview \
     'if test -f $realpath; then; bat --color=always $realpath; else; eza -a -T -L 1 --icons --color=always $realpath; fi'
 
+#
+# just recipes completion
+#
+_just_recipes() {
+  local -a recipes
+  recipes=(${(ps: :)$(just --summary --unsorted 2>/dev/null)})
+  compadd -a recipes
+}
+compdef _just_recipes just
+compdef _just_recipes j
+
+zstyle ':completion:*:*:just:*' menu yes select
+zstyle ':completion:*:*:j:*' menu yes select
+
+zstyle ':fzf-tab:complete:just:*' fzf-preview 'just --show $word 2>/dev/null || just --list --unsorted'
+zstyle ':fzf-tab:complete:j:*' fzf-preview 'just --show $word 2>/dev/null || just --list --unsorted'
+
+
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 eval "$(starship init zsh)"
