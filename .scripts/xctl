@@ -278,6 +278,13 @@ _theme-set-kitty MODE:
   kitten themes --reload-in=all {{MODE}}
 
 [group('theme')]
+_theme-set-ghostty MODE:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  CFG="$HOME/.config/ghostty/themes"
+  ln -sf "$CFG/{{MODE}}.conf" "$CFG/current-theme.conf"
+
+[group('theme')]
 _theme-set-alacritty MODE:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -300,7 +307,7 @@ _theme-set-nvim MODE:
   done
 
 [group('theme')]
-theme-common-set MODE: (_theme-set-kitty MODE) (_theme-set-alacritty MODE) (_theme-set-nvim MODE)
+theme-common-set MODE: (_theme-set-kitty MODE) (_theme-set-alacritty MODE) (_theme-set-ghostty MODE) (_theme-set-nvim MODE)
 
 [group('theme')]
 theme-set-wall MODE: #!/usr/bin/env bash
