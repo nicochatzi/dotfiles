@@ -35,7 +35,7 @@ font pango:JetBrainsMono NF 10
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-set $fullscreen resize set 100 ppt 100 ppt
+set $fullscreen resize set 100 ppt 100 ppt, move position 0 ppt 0 ppt
 set $halfscreen resize set 1080 900, move position 480 100
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -56,7 +56,7 @@ bindsym $mod+t $open_term term_pad_full \
 bindsym $mod+Shift+m $open_term mixer_pad \
   alsamixer
 
-bindsym $mod+m $open_term top_pad \
+bindsym $mod+m $open_term top_pad_full \
   "~/.scripts/xctl top"
 
 bindsym $mod+p $open_term py_pad \
@@ -69,7 +69,7 @@ bindsym $mod+n $open_term obs_pad_full \
 for_window [class=".*"] border pixel 1
 set $scratchpad_action floating enable, move scratchpad, scratchpad show
 for_window [title="^.*pad$"] $scratchpad_action $halfscreen
-for_window [title="^.*pad_full$"] $scratchpad_action, $fullscreen
+for_window [title="^.*_full$"] $scratchpad_action, $fullscreen
 # toggle between scratchpad view
 bindsym $mod+Tab scratchpad show
 
