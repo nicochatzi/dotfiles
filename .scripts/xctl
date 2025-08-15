@@ -16,7 +16,7 @@ _warn MSG:
 [group('cli')]
 top:
   #!/usr/bin/env zsh
-  btop --update 500
+  btop
 
 [group('sec')]
 [linux]
@@ -147,7 +147,7 @@ term-py:
   eval "$(pyenv virtualenv-init -)" && \
   pyenv shell calc && \
   pyenv version && \
-  python3
+  ipython
 
 # fuzzy find and switch tmux session
 [group('tmux')]
