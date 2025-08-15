@@ -60,7 +60,7 @@ style = "fg:grey"
 format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "fg:yellow"
+style = "fg:cyan"
 staged = "="
 modified = "!"
 untracked = "?"

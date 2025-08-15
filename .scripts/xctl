@@ -16,8 +16,7 @@ _warn MSG:
 [group('cli')]
 top:
   #!/usr/bin/env zsh
-  . ~/.zshrc
-  btm --basic --process_memory_as_value
+  btop --update 500
 
 [group('sec')]
 [linux]
@@ -131,7 +130,12 @@ hdmi-audio POSITION="above": (hdmi-screen POSITION)
 term-open TITLE CMD DIR="$HOME":
   #!/usr/bin/env bash
   if ! i3-msg "[title=\"{{TITLE}}\"] focus"; then
-    eval kitty --title "{{TITLE}}" --working-directory="{{DIR}}" -e "{{CMD}}"
+    cmd="{{CMD}}"
+    printf -v q '%q' "$cmd"
+    ghostty \
+      --title="{{TITLE}}" \
+      --working-directory="{{DIR}}" \
+      --initial-command="exec /usr/bin/zsh -lc $q; exec /usr/bin/zsh -l"
   fi
 
 # run python REPL with useful python packages

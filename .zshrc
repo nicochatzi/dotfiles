@@ -76,11 +76,11 @@ else
 fi
 
 zinit light Aloxaf/fzf-tab
-zinit wait lucid for \
-  zsh-users/zsh-completions \
-  zsh-users/zsh-autosuggestions \
-  zdharma-continuum/fast-syntax-highlighting \
-  unixorn/fzf-zsh-plugin
+zinit ice depth"1";
+zinit light zsh-users/zsh-completions
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+zinit light unixorn/fzf-zsh-plugin
 
 install_precommit_hooks() {
     if [ -f .pre-commit-config.yaml ] && ! [ -f .git/hooks/pre-commit ]; then

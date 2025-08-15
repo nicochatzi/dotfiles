@@ -48,7 +48,7 @@ bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/xctl theme-toggle
 set $open_term exec --no-startup-id ~/.scripts/xctl term-open
 
 bindsym $mod+Return exec --no-startup-id \
-  kitty
+  ghostty
 
 bindsym $mod+t $open_term term_pad_full \
   "~/.scripts/xctl tmux-sesh dev"

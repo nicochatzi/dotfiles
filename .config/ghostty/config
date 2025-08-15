@@ -1,11 +1,15 @@
 # Include the active theme
 config-file = ~/.config/ghostty/themes/current-theme.conf
 
+gtk-gsk-renderer = default
 alpha-blending = native
 window-padding-x = 0
 window-padding-y = 0
 window-decoration = none
 window-save-state = always
+window-decoration = none
+window-padding-balance = true
+resize-overlay = never
 
 font-family = "JetBrains Mono"
 font-size = 12
@@ -24,4 +28,5 @@ quit-after-last-window-closed = true
 shell-integration = zsh
 bold-is-bright = true
 auto-update = check
+auto-update-channel = stable
 
