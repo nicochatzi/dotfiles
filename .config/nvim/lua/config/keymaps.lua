@@ -1,6 +1,6 @@
 -- folds
 vim.keymap.set('n', 'zR', ':lua require\'ufo\'.openAllFolds()<CR>')
-vim.keymap.set('n', 'zM', ':lua require\'ufo\'.closeAllFolds<CR>')
+vim.keymap.set('n', 'zM', ':lua require\'ufo\'.closeAllFolds()<CR>')
 
 -- `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<C-Z>', '<Nop>', { silent = true })
@@ -104,7 +104,7 @@ vim.keymap.set('n', '<leader>vd', ':lua require\'crates\'.show_dependencies_popu
 vim.keymap.set('n', '<leader>vg', ':lua require\'crates\'.open_repository() <CR>', { silent = true })
 vim.keymap.set(
   'n',
-  '<leader>vv',
+  '<leader>vc',
   ':lua require\'package-info\'.change_version() <CR>',
   { silent = true, noremap = true }
 )

@@ -163,6 +163,7 @@ return {
 
   {
     'p00f/godbolt.nvim',
+    event = 'VeryLazy',
     cmd = 'Godbolt',
     opts = {
       languages = {

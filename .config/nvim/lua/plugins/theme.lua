@@ -65,8 +65,7 @@ return {
       require('config.theme')
 
       -- cursor line highlights
-      vim.api.nvim_set_hl(0, 'CursorLine', { fg = colors.light, bg = colors.dark })
-      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = colors.light, bg = 'none' })
+      vim.api.nvim_set_hl(0, 'LineNr', { fg = colors.grey, bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = colors.yellow, bg = 'none' })
       vim.api.nvim_set_hl(0, 'CursorLine', { fg = 'none' })
       vim.api.nvim_set_hl(0, 'TelescopeSelection', { bg = colors.dark, fg = 'none' })

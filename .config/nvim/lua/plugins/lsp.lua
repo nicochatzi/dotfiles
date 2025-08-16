@@ -26,14 +26,23 @@ return {
       -- },
       {
         'j-hui/fidget.nvim',
-        branch = 'legacy',
+        tag = "*",
         opts = {
-          window = {
-            blend = 0,
-            border = 'none',
+          notification = {
+            window = {
+              normal_hl = "Comment",
+              winblend = 0,
+              border = "none",
+            },
           },
-        },
-      },
+          progress = {
+            display = {
+              render_limit = 32,
+              done_ttl = 10
+            }
+          },
+        }
+      }
     },
     config = function()
       require('lang.config')
