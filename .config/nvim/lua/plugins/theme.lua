@@ -97,6 +97,9 @@ return {
       vim.api.nvim_set_hl(0, 'GitGraphBranchName', { bg = 'none', fg = colors.red })
       vim.api.nvim_set_hl(0, 'GitGraphBranchTag', { bg = 'none', fg = colors.pink })
       vim.api.nvim_set_hl(0, 'GitGraphBranchMsg', { bg = 'none', fg = colors.orange })
+
+      vim.api.nvim_set_hl(0, 'TroubleNormal', { bg = 'none', fg = colors.orange })
+      vim.api.nvim_set_hl(0, 'TroubleNormalNC', { bg = 'none', fg = colors.orange })
     end,
   },
 }
