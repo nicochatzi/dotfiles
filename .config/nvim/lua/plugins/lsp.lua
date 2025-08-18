@@ -26,7 +26,7 @@ return {
       -- },
       {
         'j-hui/fidget.nvim',
-        tag = "*",
+        tag = "v1.6.1",
         opts = {
           notification = {
             window = {
