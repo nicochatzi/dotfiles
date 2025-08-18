@@ -1,0 +1,145 @@
+#compdef tokio-console
+
+autoload -U is-at-least
+
+_tokio-console() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'--log=[Log level filter for the console'\''s internal diagnostics]:LOG_FILTER: ' \
+'*-W+[Enable lint warnings]:WARNINGS:(self-wakes lost-waker never-yielded)' \
+'*--warn=[Enable lint warnings]:WARNINGS:(self-wakes lost-waker never-yielded)' \
+'-A+[Allow lint warnings]:ALLOW_WARNINGS: ' \
+'--allow=[Allow lint warnings]:ALLOW_WARNINGS: ' \
+'--log-dir=[Path to a directory to write the console'\''s internal logs to]:LOG_DIRECTORY:_files -/' \
+'--lang=[Overrides the terminal'\''s default language]:LANG: ' \
+'--ascii-only=[Explicitly use only ASCII characters]:ASCII_ONLY:(true false)' \
+'--colorterm=[Overrides the value of the \`COLORTERM\` environment variable]:truecolor:(24bit truecolor)' \
+'(--no-colors --colorterm)--palette=[Explicitly set which color palette to use]:PALETTE:(8 16 256 all off)' \
+'--no-duration-colors=[Disable color-coding for duration units]:COLOR_DURATIONS:(true false)' \
+'--no-terminated-colors=[Disable color-coding for terminated tasks]:COLOR_TERMINATED:(true false)' \
+'--retain-for=[How long to continue displaying completed tasks and dropped resources after they have been closed]:RETAIN_FOR: ' \
+'--no-colors[Disable ANSI colors entirely]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+'::target_addr -- The address of a console-enabled process to connect to:_urls' \
+":: :_tokio-console_commands" \
+"*::: :->tokio-console" \
+&& ret=0
+    case $state in
+    (tokio-console)
+        words=($line[2] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:tokio-console-command-$line[2]:"
+        case $line[2] in
+            (gen-config)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(gen-completion)
+_arguments "${_arguments_options[@]}" \
+'--install[]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':shell:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_tokio-console__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:tokio-console-help-command-$line[1]:"
+        case $line[1] in
+            (gen-config)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(gen-completion)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_tokio-console_commands] )) ||
+_tokio-console_commands() {
+    local commands; commands=(
+'gen-config:Generate a \`console.toml\` config file with the default configuration values, overridden by any provided command-line arguments' \
+'gen-completion:Generate shell completions' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'tokio-console commands' commands "$@"
+}
+(( $+functions[_tokio-console__gen-completion_commands] )) ||
+_tokio-console__gen-completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'tokio-console gen-completion commands' commands "$@"
+}
+(( $+functions[_tokio-console__help__gen-completion_commands] )) ||
+_tokio-console__help__gen-completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'tokio-console help gen-completion commands' commands "$@"
+}
+(( $+functions[_tokio-console__gen-config_commands] )) ||
+_tokio-console__gen-config_commands() {
+    local commands; commands=()
+    _describe -t commands 'tokio-console gen-config commands' commands "$@"
+}
+(( $+functions[_tokio-console__help__gen-config_commands] )) ||
+_tokio-console__help__gen-config_commands() {
+    local commands; commands=()
+    _describe -t commands 'tokio-console help gen-config commands' commands "$@"
+}
+(( $+functions[_tokio-console__help_commands] )) ||
+_tokio-console__help_commands() {
+    local commands; commands=(
+'gen-config:Generate a \`console.toml\` config file with the default configuration values, overridden by any provided command-line arguments' \
+'gen-completion:Generate shell completions' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'tokio-console help commands' commands "$@"
+}
+(( $+functions[_tokio-console__help__help_commands] )) ||
+_tokio-console__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'tokio-console help help commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_tokio-console" ]; then
+    _tokio-console "$@"
+else
+    compdef _tokio-console tokio-console
+fi

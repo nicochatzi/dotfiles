@@ -290,8 +290,6 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
-# zprof
-
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -308,3 +306,6 @@ zinit light-mode for \
 
 # opencode
 export PATH=/home/nico/.opencode/bin:$PATH
+. "/home/nico/.deno/env"
+
+# zprof
