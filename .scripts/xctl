@@ -508,7 +508,8 @@ upgrade:
   sudo apt update && sudo apt upgrade -y
   fwupdmgr update
   cargo install-update -a --locked
-
+  sudo snap refresh
+  sudo npm update --location=global
 
 notifs:
   #!/usr/bin/env bash
