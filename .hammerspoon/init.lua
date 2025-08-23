@@ -4,8 +4,8 @@ local winman = require('lib/winman')
 hotkey.setup {
   mods = { "alt" },
   key = '1',
-  app_name = 'Alacritty',
-  bundle_id = 'org.alacritty',
+  app_name = 'Ghostty',
+  bundle_id = 'org.ghostty',
   -- app_name = 'Kitty',
   -- bundle_id = 'net.kovidgoyal.kitty',
   scaled = true,
@@ -14,8 +14,8 @@ hotkey.setup {
 hotkey.setup {
   mods = { "alt" },
   key = '2',
-  app_name = 'Arc',
-  bundle_id = 'company.thebrowser.Browser',
+  app_name = 'Firefox',
+  bundle_id = 'com.firefox',
 }
 
 winman.setup {

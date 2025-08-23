@@ -311,10 +311,10 @@ _theme-set-nvim MODE:
   done
 
 [group('theme')]
-theme-common-set MODE: (_theme-set-kitty MODE) (_theme-set-alacritty MODE) (_theme-set-ghostty MODE) (_theme-set-nvim MODE)
+theme-common-set MODE: (_theme-set-ghostty MODE) (_theme-set-nvim MODE)
 
 [group('theme')]
-theme-set-wall MODE: #!/usr/bin/env bash
+theme-set-wall MODE:
   #!/usr/bin/env bash
   set -euo pipefail
   declare -A mode_wallpaper=( ["light"]="solid-light.png" ["dark"]="solid-dark.png" )
