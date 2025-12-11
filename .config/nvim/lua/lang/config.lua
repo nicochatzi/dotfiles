@@ -1,5 +1,4 @@
 local on_attach = require 'lang.on_attach'
-local lsp = require 'lspconfig'
 
 local words = {}
 for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
@@ -40,14 +39,14 @@ local servers = {
   --   }
   -- },
   -- robotframework_ls = {},
-  -- ruff = {
-  --   init_options = {
-  --     settings = {
-  --       logLevel = "debug",
-  --       logFile = "~/.local/state/nvim/ruff.log"
-  --     }
-  --   }
-  -- },
+  ruff = {
+    init_options = {
+      settings = {
+        logLevel = "debug",
+        logFile = "~/.local/state/nvim/ruff.log"
+      }
+    }
+  },
   pyright = {
     settings = {
       pyright = {
@@ -72,7 +71,7 @@ local servers = {
   html = {},
   cssls = {},
   bashls = {},
-  sqls = {},
+  sqlls = {},
   mdx_analyzer = {},
   marksman = {},
   asm_lsp = {},
@@ -127,91 +126,74 @@ capabilities.workspace.diagnostic = { refreshSupport = true }
 capabilities.textDocument = capabilities.textDocument or {}
 capabilities.textDocument.diagnostic = { dynamicRegistration = false }
 
+-- Set global defaults for all LSP servers
+vim.lsp.config('*', {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  root_markers = { '.git' },
+  flags = {
+    debounce_text_changes = 150,
+  }
+})
 
--- manual overrides for lspconfig settings on certain servers
-local server_setups = {
-  -- ['rust-analyzer'] = function()
-  --   require('lang.rust')(capabilities, on_attach)
-  -- end,
-  nil_ls = function()
-    lsp.nil_ls.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'nil' },
-      filetypes = { 'nix' },
-      settings = servers['nil_ls'],
-      autostart = true,
-      single_file_support = true,
-      flags = {
-        debounce_text_changes = 150,
-      }
-    }
-  end,
-  biome = function()
-    lsp.biome.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'biome', 'lsp-proxy' },
-      filetypes = { "javascript", "javascriptreact", "json", "jsonc", "typescript", "typescript.tsx", "typescriptreact", "astro", "svelte", "vue", "css" },
-      settings = servers['biome'],
-      autostart = true,
-      single_file_support = true,
-      flags = {
-        debounce_text_changes = 150,
-      }
-    }
-  end,
-  jsonls = function()
-    lsp.jsonls.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'vscode-json-language-server', '--stdio' },
-      settings = servers['jsonls'],
-      autostart = true,
-      single_file_support = true,
-      flags = { debounce_text_changes = 150 },
-    }
-  end,
-  html = function()
-    lsp.html.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'vscode-html-language-server', '--stdio' },
-      settings = servers['html'],
-      autostart = true,
-      single_file_support = true,
-      flags = { debounce_text_changes = 150 },
-    }
-  end,
-  cssls = function()
-    lsp.cssls.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      cmd = { 'vscode-css-language-server', '--stdio' },
-      settings = servers['cssls'],
-      autostart = true,
-      single_file_support = true,
-      flags = { debounce_text_changes = 150 },
-    }
-  end,
-}
+-- Configure specific servers with custom settings
+-- nil_ls (Nix language server)
+vim.lsp.config('nil_ls', {
+  cmd = { 'nil' },
+  filetypes = { 'nix' },
+  root_markers = { 'flake.nix', '.git' },
+  settings = servers['nil_ls'],
+})
 
+-- biome (JS/TS/JSON formatter and linter)
+vim.lsp.config('biome', {
+  cmd = { 'biome', 'lsp-proxy' },
+  filetypes = { "javascript", "javascriptreact", "json", "jsonc", "typescript", "typescript.tsx", "typescriptreact", "astro", "svelte", "vue", "css" },
+  root_markers = { 'biome.json', 'biome.jsonc', '.git' },
+  settings = servers['biome'],
+})
+
+-- jsonls (JSON language server)
+vim.lsp.config('jsonls', {
+  cmd = { 'vscode-json-language-server', '--stdio' },
+  filetypes = { 'json', 'jsonc' },
+  root_markers = { '.git' },
+  settings = servers['jsonls'],
+})
+
+-- html (HTML language server)
+vim.lsp.config('html', {
+  cmd = { 'vscode-html-language-server', '--stdio' },
+  filetypes = { 'html', 'htm' },
+  root_markers = { '.git' },
+  settings = servers['html'],
+})
+
+-- cssls (CSS language server)
+vim.lsp.config('cssls', {
+  cmd = { 'vscode-css-language-server', '--stdio' },
+  filetypes = { 'css', 'scss', 'less' },
+  root_markers = { '.git' },
+  settings = servers['cssls'],
+})
+
+-- Configure remaining servers with default settings
 for server_name, server_config in pairs(servers) do
-  if server_setups[server_name] then
-    server_setups[server_name]()
-  else
-    lsp[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
+  -- Skip servers that were already configured above
+  if server_name ~= 'nil_ls' and server_name ~= 'biome' and
+      server_name ~= 'jsonls' and server_name ~= 'html' and server_name ~= 'cssls' then
+    vim.lsp.config(server_name, {
       settings = server_config,
-      autostart = true,
-      single_file_support = true,
-      flags = {
-        debounce_text_changes = 150,
-      }
-    }
+    })
   end
 end
+
+-- Enable all configured servers
+local server_names = {}
+for server_name, _ in pairs(servers) do
+  table.insert(server_names, server_name)
+end
+vim.lsp.enable(server_names)
 
 require('lang.clangd')
 
