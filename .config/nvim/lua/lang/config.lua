@@ -136,8 +136,7 @@ vim.lsp.config('*', {
   }
 })
 
--- Configure specific servers with custom settings
--- nil_ls (Nix language server)
+-- Configure servers with custom commands or special settings
 vim.lsp.config('nil_ls', {
   cmd = { 'nil' },
   filetypes = { 'nix' },
@@ -145,7 +144,6 @@ vim.lsp.config('nil_ls', {
   settings = servers['nil_ls'],
 })
 
--- biome (JS/TS/JSON formatter and linter)
 vim.lsp.config('biome', {
   cmd = { 'biome', 'lsp-proxy' },
   filetypes = { "javascript", "javascriptreact", "json", "jsonc", "typescript", "typescript.tsx", "typescriptreact", "astro", "svelte", "vue", "css" },
@@ -153,35 +151,52 @@ vim.lsp.config('biome', {
   settings = servers['biome'],
 })
 
--- jsonls (JSON language server)
 vim.lsp.config('jsonls', {
   cmd = { 'vscode-json-language-server', '--stdio' },
   filetypes = { 'json', 'jsonc' },
-  root_markers = { '.git' },
   settings = servers['jsonls'],
 })
 
--- html (HTML language server)
 vim.lsp.config('html', {
   cmd = { 'vscode-html-language-server', '--stdio' },
   filetypes = { 'html', 'htm' },
-  root_markers = { '.git' },
   settings = servers['html'],
 })
 
--- cssls (CSS language server)
 vim.lsp.config('cssls', {
   cmd = { 'vscode-css-language-server', '--stdio' },
   filetypes = { 'css', 'scss', 'less' },
-  root_markers = { '.git' },
-  settings = servers['cssls'],
+})
+
+-- ruff only has init_options, no settings
+vim.lsp.config('ruff', {
+  init_options = servers['ruff'].init_options,
+})
+
+-- pyright has settings nested under .settings key
+vim.lsp.config('pyright', {
+  settings = servers['pyright'].settings,
+})
+
+-- lua_ls settings are at top level (Lua = {...})
+vim.lsp.config('lua_ls', {
+  settings = servers['lua_ls'],
+})
+
+-- yamlls settings are at top level
+vim.lsp.config('yamlls', {
+  settings = servers['yamlls'],
 })
 
 -- Configure remaining servers with default settings
 for server_name, server_config in pairs(servers) do
-  -- Skip servers that were already configured above
-  if server_name ~= 'nil_ls' and server_name ~= 'biome' and
-      server_name ~= 'jsonls' and server_name ~= 'html' and server_name ~= 'cssls' then
+  -- Skip servers that were already explicitly configured above
+  local configured_servers = {
+    nil_ls = true, biome = true, jsonls = true, html = true, cssls = true,
+    ruff = true, pyright = true, lua_ls = true, yamlls = true
+  }
+  
+  if not configured_servers[server_name] then
     vim.lsp.config(server_name, {
       settings = server_config,
     })
