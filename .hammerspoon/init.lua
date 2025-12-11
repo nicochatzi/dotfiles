@@ -1,21 +1,36 @@
 local hotkey = require('lib/hotkey')
 local winman = require('lib/winman')
 
+-- find bundle id quickly in Hammerspoon console with:
+-- hs.application.get("Safari"):bundleID()
+
 hotkey.setup {
   mods = { "alt" },
   key = '1',
-  app_name = 'Ghostty',
-  bundle_id = 'org.ghostty',
-  -- app_name = 'Kitty',
-  -- bundle_id = 'net.kovidgoyal.kitty',
-  scaled = true,
+  app_name = 'Safari',
+  bundle_id = 'com.apple.Safari',
 }
 
 hotkey.setup {
   mods = { "alt" },
   key = '2',
-  app_name = 'Firefox',
-  bundle_id = 'com.firefox',
+  app_name = 'Ghostty',
+  bundle_id = 'com.mitchellh.ghostty',
+  scaled = true,
+}
+
+hotkey.setup {
+  mods = { "alt" },
+  key = '3',
+  app_name = 'Proton Mail',
+  bundle_id = 'ch.protonmail.desktop',
+}
+
+hotkey.setup {
+  mods = { "alt" },
+  key = '4',
+  app_name = 'Music',
+  bundle_id = 'com.apple.Music',
 }
 
 winman.setup {
