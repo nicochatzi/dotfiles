@@ -1,7 +1,7 @@
 # Include the active theme
 config-file = ~/.config/ghostty/themes/current-theme.conf
 
-gtk-gsk-renderer = default
+# gtk-gsk-renderer = default
 alpha-blending = native
 window-padding-x = 0
 window-padding-y = 0
@@ -30,3 +30,4 @@ bold-is-bright = true
 auto-update = check
 auto-update-channel = stable
 
+macos-option-as-alt = true
