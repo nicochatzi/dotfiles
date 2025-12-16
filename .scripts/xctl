@@ -285,25 +285,26 @@ _theme-set-kitty MODE:
 _theme-set-ghostty MODE:
   #!/usr/bin/env bash
   set -euo pipefail
-  CFG="$HOME/.config/ghostty/themes"
-  ln -sf "$CFG/{{MODE}}.conf" "$CFG/current-theme.conf"
+  cd "$HOME/.config/ghostty/themes" && \
+    ln -sf "./{{MODE}}.conf" "current-theme.conf"
 
 [group('theme')]
 _theme-set-alacritty MODE:
   #!/usr/bin/env bash
   set -euo pipefail
-  ALACRITTY_CONFIG="$HOME/.config/alacritty"
-  ln -sf "$ALACRITTY_CONFIG/{{MODE}}.toml" "$ALACRITTY_CONFIG/theme.toml"
-  touch "$ALACRITTY_CONFIG/alacritty.toml"
+  cd "$HOME/.config/alacritty" && \
+    ln -sf "./{{MODE}}.toml" "theme.toml" && \
+    touch "alacritty.toml"
 
 [group('theme')]
 _theme-set-nvim MODE:
   #!/usr/bin/env bash
   set -euo pipefail
-  NVIM_CONFIG="$HOME/.config/nvim/lua/config"
+  cd "$HOME/.config/nvim/lua/config/colors/" && \
+    ln -sf "./{{MODE}}.lua" "init.lua"
+  cd "$HOME/.config/nvim/lua/config/theme/" && \
+    ln -sf "./{{MODE}}.lua" "init.lua"
   declare -A mode_nvim=( ["light"]="kanagawa-lotus" ["dark"]="kanagawa" )
-  ln -sf "$NVIM_CONFIG/colors/{{MODE}}.lua" "$NVIM_CONFIG/colors/init.lua"
-  ln -sf "$NVIM_CONFIG/theme/{{MODE}}.lua" "$NVIM_CONFIG/theme/init.lua"
   for SERVER in $(nvr --serverlist); do
     nvr --nostart --servername "$SERVER" \
       -cc "lua vim.api.nvim_set_option('background', '{{MODE}}')" \
