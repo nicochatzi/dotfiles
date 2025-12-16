@@ -92,11 +92,11 @@ if command -v pre-commit >/dev/null 2>&1; then
 fi
 
 if command -v fnm >/dev/null 2>&1; then
-  fnm() {
-    unset -f fnm;
-    eval "$(fnm env --use-on-cd --shell zsh)";
-    fnm "$@";
-  }
+  # fnm() {
+  #   unset -f fnm;
+  #   eval "$(fnm env --use-on-cd --shell zsh)";
+  #   fnm "$@";
+  # }
 
   use_fnm_version() {
     if [ -f .nvmrc ]; then
@@ -132,6 +132,27 @@ elif command -v nvm >/dev/null 2>&1; then
   add-zsh-hook chpwd use_nvm_version
 fi
 
+[ -s "$HOME/.fnm/env" ] && eval "$(fnm env --use-on-cd --shell zsh)"
+
+if command -v pyenv >/dev/null 2>&1; then
+  load_pyenv() {
+      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+  }
+
+  pyenv() {
+    unset -f pyenv
+    load_pyenv
+    pyenv "$@"
+  }
+fi
+
+# -----------------------------
+# aliases
+# -----------------------------
+
+alias tree="tree -C"
 alias l="eza -lam --icons=auto"
 alias ll="eza -lamhUuH --icons=auto --git"
 alias tree="eza -a -T -L 1 --icons=auto"
