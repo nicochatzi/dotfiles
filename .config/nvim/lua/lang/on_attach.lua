@@ -1,8 +1,22 @@
 return function(client, bufnr)
-  -- https://github.com/astral-sh/ruff/blob/main/crates/ruff_server/docs/setup/NEOVIM.md
   if client.name == 'ruff' then
-    -- Disable hover in favor of Pyright
     client.server_capabilities.hoverProvider = false
+  end
+
+  if client.name == 'biome' then
+    client.server_capabilities.renameProvider = nil
+    client.server_capabilities.definitionProvider = nil
+    client.server_capabilities.referencesProvider = nil
+    client.server_capabilities.hoverProvider = nil
+    client.server_capabilities.implementationProvider = nil
+    client.server_capabilities.typeDefinitionProvider = nil
+    client.server_capabilities.signatureHelpProvider = nil
+    client.server_capabilities.completionProvider = nil
+  end
+
+  if client.name == 'ts_ls' or client.name == 'tsserver' then
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   end
 
   -- inlay hints on by default
@@ -17,21 +31,6 @@ return function(client, bufnr)
   --     callback = vim.lsp.codelens.refresh,
   --   })
   -- end
-
-  -- Configure diagnostic signs using the new API
-  vim.diagnostic.config({
-    signs = {
-      text = {
-        [vim.diagnostic.severity.ERROR] = "󰅚",
-        [vim.diagnostic.severity.WARN] = "󰀪",
-        [vim.diagnostic.severity.INFO] = "󰋽",
-        [vim.diagnostic.severity.HINT] = "󰌶",
-      },
-    },
-    virtual_text = {
-      prefix = "󰄮",
-    },
-  })
 
   -- setup all the keymaps to use when LSP is attached
   local nmap = function(keys, func, desc)

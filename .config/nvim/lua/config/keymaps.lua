@@ -80,15 +80,22 @@ vim.keymap.set('n', '<leader>tsa', ':lua require("neotest").run.attach()<CR>', {
 vim.keymap.set('n', '<leader>tsd', ':lua require("neotest").run.run({strategy = "dap"})<CR>', { noremap = true })
 
 -- c/cpp/cmake remaps
-vim.keymap.set('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
-vim.keymap.set('n', '<leader>co', ':CMakeOpen<CR>')
-vim.keymap.set('n', '<leader>cs', ':CMakeSettings<CR>')
-vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>')
-vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>')
-vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>')
-vim.keymap.set('n', '<leader>cc', ':CMakeSelectCwd<CR>')
-vim.keymap.set('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
-vim.keymap.set('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {"cmake", "c", "cpp"},
+  callback = function ()
+    vim.schedule(function()
+      vim.api.nvim_set_keymap('n', '<leader>ch', ':ClangdSwitchSourceHeader<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>co', ':CMakeOpen<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cs', ':CMakeSettings<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cb', ':CMakeBuild<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cd', ':CMakeDebug<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cg', ':CMakeGenerate<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cc', ':CMakeSelectCwd<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>cp', ':CMakeSelectBuildPreset<CR>')
+      vim.api.nvim_set_keymap('n', '<leader>ct', ':CMakeSelectBuildTarget<CR>')
+    end)
+  end
+})
 
 -- git remaps
 vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen<CR>', { noremap = true, desc = "git diff" })
@@ -301,13 +308,15 @@ function _G.open_or_focus_terminal_tab()
   -- If no terminal buffer exists, create a new one
   vim.cmd('tabnew | terminal')
 end
+
 function _G.goto_tab_n(n)
   if n > 0 and n <= vim.fn.tabpagenr('$') then
     vim.cmd('tabnext ' .. n)
   end
 end
-local classic_term_exit ='<C-\\><C-n>'
-vim.keymap.set('t', '<C-w>', classic_term_exit , { noremap = true, silent = true })
+
+local classic_term_exit = '<C-\\><C-n>'
+vim.keymap.set('t', '<C-w>', classic_term_exit, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>tt', open_or_focus_terminal_tab, { noremap = true, silent = true })
 for i = 1, 9 do
   vim.keymap.set('n', '<leader>t' .. i, function() goto_tab_n(i) end, { noremap = true, silent = true })

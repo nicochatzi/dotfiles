@@ -102,7 +102,7 @@ vim.filetype.add({
     ll = "llvm",
     mojo = "python",
     tf = "terraform",
-    alloy = "terraform",
+    -- alloy = "terraform",
     service = "systemd",
     service_ts = "typescript",
   },

@@ -323,5 +323,9 @@ return {
     opts = {
       picker_integration = true,
     },
-  }
+  },
+
+  {
+    'grafana/vim-alloy',
+  },
 }

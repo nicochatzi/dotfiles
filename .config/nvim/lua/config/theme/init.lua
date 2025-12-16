@@ -1,1 +1,1 @@
-/Users/nicochatzi/.config/nvim/lua/config/theme/dark.lua
+./dark.lua
