@@ -2,6 +2,10 @@
 config-file = ~/.config/ghostty/themes/current-theme.conf
 
 # gtk-gsk-renderer = default
+gtk-single-instance = true
+# gtk-gsk-renderer = default
+# gtk-adwaita = false
+
 alpha-blending = native
 window-padding-x = 0
 window-padding-y = 0
@@ -17,7 +21,7 @@ font-feature = "liga"
 adjust-cell-width = 2%
 adjust-cell-height = -2
 
-cursor-opacity = 0.7
+cursor-opacity = 0.8
 mouse-hide-while-typing = true
 
 clipboard-read = ask
