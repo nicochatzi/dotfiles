@@ -37,4 +37,9 @@ fi
 if [ -d "$HOME/.scripts" ] ; then
   PATH="$HOME/.scripts:$PATH"
 fi
+
+if [ -d "$HOME/.deno/env" ] ; then
+  . "$HOME/.deno/env"
+fi
+
 . "$HOME/.cargo/env"
