@@ -18,6 +18,11 @@ exec --no-startup-id picom
 exec --no-startup-id setxkbmap -option caps:swapescape
 exec --no-startup-id xset r rate 200 50
 
+# disable power saving and screen blanking
+exec --no-startup-id xset -dpms
+exec --no-startup-id xset s off
+exec --no-startup-id xset s noblank
+
 smart_borders on
 focus_follows_mouse no
 
