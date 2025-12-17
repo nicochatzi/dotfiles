@@ -101,9 +101,8 @@ fi
 
 if command -v fnm >/dev/null 2>&1; then
 
-eval "$(fnm env --use-on-cd --shell zsh)";
+  eval "$(fnm env --use-on-cd --shell zsh)"
 
-if command -v fnm >/dev/null 2>&1; then
   use_fnm_version() {
     if [ -f .nvmrc ]; then
         fnm use --silent-if-unchanged 2>/dev/null || {
