@@ -61,6 +61,22 @@ fpath=( "$HOME/.zfunc" "${fpath[@]}" )
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [[ -r "$ZINIT_HOME/zinit.zsh" ]] && source "$ZINIT_HOME/zinit.zsh"
 
+autoload -Uz compinit bashcompinit
+zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
+mkdir -p "${zcompdump:h}"
+if [[ ! -f $zcompdump || $ZSH_COMPDUMP_CHANGED -eq 1 ]]; then
+  compinit -C -d $zcompdump
+else
+  compinit -d $zcompdump
+fi
+bashcompinit
+(( $+commands[terraform] )) && complete -o nospace -C /usr/bin/terraform terraform
+(( $+commands[aws_completer] )) && complete -C aws_completer aws
+zstyle ':completion:*:commands' rehash 1
+
+compdef _cargo c
+compdef _rustup rustup
+
 if typeset -f zinit >/dev/null 2>&1; then
   zinit ice wait lucid
   zinit light zsh-users/zsh-completions
@@ -70,14 +86,6 @@ if typeset -f zinit >/dev/null 2>&1; then
   zinit light unixorn/fzf-zsh-plugin
   zinit light romkatv/zsh-defer
 fi
-
-autoload -Uz compinit bashcompinit
-zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
-mkdir -p "${zcompdump:h}"
-compinit -C -d "$zcompdump"
-bashcompinit
-(( $+commands[terraform] )) && complete -o nospace -C /usr/bin/terraform terraform
-(( $+commands[aws_completer] )) && complete -C aws_completer aws
 
 autoload -U add-zsh-hook
 
@@ -92,12 +100,10 @@ if command -v pre-commit >/dev/null 2>&1; then
 fi
 
 if command -v fnm >/dev/null 2>&1; then
-  # fnm() {
-  #   unset -f fnm;
-  #   eval "$(fnm env --use-on-cd --shell zsh)";
-  #   fnm "$@";
-  # }
 
+eval "$(fnm env --use-on-cd --shell zsh)";
+
+if command -v fnm >/dev/null 2>&1; then
   use_fnm_version() {
     if [ -f .nvmrc ]; then
         fnm use --silent-if-unchanged 2>/dev/null || {
@@ -131,8 +137,6 @@ elif command -v nvm >/dev/null 2>&1; then
 
   add-zsh-hook chpwd use_nvm_version
 fi
-
-[ -s "$HOME/.fnm/env" ] && eval "$(fnm env --use-on-cd --shell zsh)"
 
 if command -v pyenv >/dev/null 2>&1; then
   load_pyenv() {

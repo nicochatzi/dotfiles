@@ -512,6 +512,14 @@ upgrade:
   sudo snap refresh
   sudo npm update --location=global
 
+# upgrade packages
+[macos]
+upgrade:
+  brew upgrade
+  rustup update
+  cargo install-update -a --locked
+  sudo npm update --location=global
+
 notifs:
   #!/usr/bin/env bash
   logdir="$HOME/notifications"
