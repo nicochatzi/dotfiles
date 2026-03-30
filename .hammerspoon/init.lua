@@ -7,8 +7,8 @@ local winman = require('lib/winman')
 hotkey.setup {
   mods = { "alt" },
   key = '1',
-  app_name = 'Safari',
-  bundle_id = 'com.apple.Safari',
+  app_name = 'Vivaldi',
+  bundle_id = 'com.vivaldi.Vivaldi',
 }
 
 hotkey.setup {
